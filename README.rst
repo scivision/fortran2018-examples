@@ -10,7 +10,7 @@ Prereq
 ======
 Runs anywhere, on Linux do::
 
-    sudo apt-get install cmake gfotran libopenmpi-dev
+    sudo apt-get install cmake gfortran libopenmpi-dev
 
 Build
 =====
