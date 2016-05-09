@@ -14,7 +14,7 @@ addons:
     sources:
     - ubuntu-toolchain-r-test
     packages:
-    - gfortran-5
+    - gfortran-4.9
     - libopenmpi-dev
 
 before_install:
