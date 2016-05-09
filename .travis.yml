@@ -11,7 +11,16 @@ git:
   
 addons:
   apt:
-    packages: ['gfortran','libopenmpi-dev']
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - gfortran-5
+    - libopenmpi-dev
+
+before_install:
+    - mkdir -p $HOME/.local/bin
+    - ln -fs /usr/bin/gfortran-5 "$HOME/.local/bin/gfortran" 
+    - gfortran --version
 
 script: 
     - cd bin
