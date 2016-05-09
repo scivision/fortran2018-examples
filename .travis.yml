@@ -14,6 +14,6 @@ apt:
 
 script: 
     - cd bin
-    - cmake ..
+    - FC=gfortran cmake ..
     - make VERBOSE=1
 
