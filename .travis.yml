@@ -8,8 +8,9 @@ notifications:
 
 git:
   depth: 1
-
-apt:
+  
+addons:
+  apt:
     packages: ['gfortran','libopenmpi-dev']
 
 script: 
