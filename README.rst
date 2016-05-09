@@ -1,3 +1,6 @@
+.. image:: https://travis-ci.org/scienceopen/fortran2015-examples.svg?branch=master
+    :target: https://travis-ci.org/scienceopen/fortran2015-examples
+
 ====================
 fortran2015-examples
 ====================

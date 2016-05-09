@@ -1,0 +1,25 @@
+language: c
+
+sudo: true
+dist: trusty
+
+notifications:
+  email: false
+
+git:
+  depth: 1
+
+addons:
+    apt:
+        sources: ['ubuntu-toolchain-r-test']
+        packages: ['gfortran-5','libopenmpi-dev']
+
+env: 
+    - COMP=gfortran-5
+
+
+script: 
+    - cd bin
+    - FC=$COMP cmake ..
+    - make VERBOSE=1
+
