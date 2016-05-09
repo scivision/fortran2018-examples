@@ -1,6 +1,8 @@
 cmake_minimum_required (VERSION 2.8.12)
 project(fortran2015examples Fortran)
 
+
+# ------- Hello.f90  MPI Fortran example ----------------
 find_package(MPI REQUIRED)
 set(CMAKE_Fortran_COMPILER ${MPI_Fortran_COMPILER}) #wrapper compiler mpif90
 # FIXME these lines should work, but used wrapper compiler mpif90 instead
@@ -14,3 +16,5 @@ set(CMAKE_Fortran_COMPILER ${MPI_Fortran_COMPILER}) #wrapper compiler mpif90
 add_executable(hello hello.f90)
 #target_link_libraries(hello ${MPI_Fortran_LIBRARIES})
 
+# ------- testNaN.f90  NaN sentinel Fortran example ----------------
+add_executable(nan testnan.f90)

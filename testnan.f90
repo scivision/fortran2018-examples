@@ -23,6 +23,7 @@ print *,'IEEE sp',nan_ieee_sp, 'isnan: ',isnan(nan_ieee_sp)
 print *,'IEEE dp',nan_ieee_dp, 'isnan: ',isnan(nan_ieee_dp)
 print *,'IEEE zp',nan_ieee_zp, 'isnan: ',isnan(real(nan_ieee_zp))
 !ieee_is_nan work on real part only as well. think of the bit pattern definition.
+print *,'NaN hexadecimal representations:'
 print '(Z32)',nan_ieee_sp,nan_ieee_dp,nan_ieee_zp
 
 ! for single prec.:
