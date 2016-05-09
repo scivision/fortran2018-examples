@@ -9,17 +9,11 @@ notifications:
 git:
   depth: 1
 
-addons:
-    apt:
-        sources: ['ubuntu-toolchain-r-test']
-        packages: ['gfortran-5','libopenmpi-dev']
-
-env: 
-    - COMP=gfortran-5
-
+apt:
+    packages: ['gfortran','libopenmpi-dev']
 
 script: 
     - cd bin
-    - FC=$COMP cmake ..
+    - cmake ..
     - make VERBOSE=1
 
