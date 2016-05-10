@@ -1,9 +1,11 @@
 cmake_minimum_required (VERSION 2.8.12)
 project(fortran2015examples Fortran)
 
+add_compile_options(-march=native -Wall -Wextra -Wpedantic -Werror=array-bounds)
+
 # ------- Hello.f90  MPI Fortran example ----------------
 find_package(MPI)
-if(MPI_FOUND)
+if(MPI_Fortran_COMPILER)
     set(CMAKE_Fortran_COMPILER ${MPI_Fortran_COMPILER}) #wrapper compiler mpif90
     # FIXME these lines should work, but used wrapper compiler mpif90 instead
     # consider mpif90 --showme
