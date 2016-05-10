@@ -19,7 +19,7 @@ addons:
 
 before_install:
     - mkdir -p $HOME/.local/bin
-    - ln -fs /usr/bin/gfortran-5 "$HOME/.local/bin/gfortran" 
+    - ln -fs /usr/bin/gfortran-4.9 "$HOME/.local/bin/gfortran" 
     - gfortran --version
 
 script: 
