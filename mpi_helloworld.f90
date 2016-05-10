@@ -20,7 +20,7 @@ program main
 
 !  Get the individual process ID.
   call MPI_Comm_rank ( MPI_COMM_WORLD, id, error )
-!
+
 !  Print a message.
 if (id == 0) then
     wtime = MPI_Wtime ( )
