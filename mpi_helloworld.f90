@@ -7,10 +7,10 @@ program main
    use iso_fortran_env, only: dp=>real64
 
     implicit none
-
+character(len=10) :: time
   integer error, id, p
   real(dp) wtime
-  character(len=10) time
+
 
 !  Initialize MPI.
   call MPI_Init ( error )
@@ -26,8 +26,6 @@ if (id == 0) then
     wtime = MPI_Wtime ( )
     print *, 'number of processes: ', p
 end if
-
-call date_and_time (time = time )
 
 print *, 'Process ', id, time
 

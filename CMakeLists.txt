@@ -15,8 +15,10 @@ if(MPI_Fortran_COMPILER)
     #include_directories(${MPI_Fortran_INCLUDE_PATH})
     #list(APPEND CMAKE_Fortran_LINK_FLAGS ${MPI_Fortran_LINK_FLAGS})
 
-    add_executable(hello hello.f90)
+    add_executable(hello mpi_helloworld.f90)
     #target_link_libraries(hello ${MPI_Fortran_LIBRARIES})
+    
+    add_executable(pass mpi_pass.f90)
 endif()
 # ------- testNaN.f90  NaN sentinel Fortran example ----------------
 add_executable(nan testnan.f90)
