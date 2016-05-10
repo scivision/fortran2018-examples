@@ -26,9 +26,18 @@ Build
 
 OpenMPI
 =======
+
+Hello World MPI
+---------------
 To run the simplest sort of multi-threaded Fortran program using MPI-2, assuming you have a CPU with 8 virtual cores like an Intel Core i7::
 
     mpirun -np 8 hello
+
+Message Passing MPI
+-------------------
+Pass data between two MPI threads::
+
+    ./pass
 
 Quiet NaN
 =========
@@ -43,3 +52,13 @@ For a standards-based way to handle all floating point types, you might consider
     use, intrinsic :: ieee_arithmetic, only: ieee_value, ieee_quiet_nan
     nan_ieee = ieee_value(1.,ieee_quiet_nan)
 
+This is in program::
+
+    ./nan
+
+Writing to /dev/null
+====================
+Sometimes when modifying an old Fortran subroutine to load as a module in a new Fortran program, the old submodule writes a lot of unnecessary data to disk, that can be the primary compute time consumption of the submodule.
+You can simply repoint the "open" statements to /dev/null or as backup, a scratch file on systems that don't support /dev/null in::
+
+    ./null
