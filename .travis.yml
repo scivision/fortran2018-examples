@@ -14,12 +14,11 @@ addons:
     sources:
     - ubuntu-toolchain-r-test
     packages:
-    - gfortran-4.9
-    - libopenmpi-dev
+    - gfortran-5
 
 before_install:
     - mkdir -p $HOME/.local/bin
-    - ln -fs /usr/bin/gfortran-4.9 "$HOME/.local/bin/gfortran" 
+    - ln -fs /usr/bin/gfortran-5 "$HOME/.local/bin/gfortran" 
     - gfortran --version
 
 script: 
