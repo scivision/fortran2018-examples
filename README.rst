@@ -37,7 +37,7 @@ Message Passing MPI
 -------------------
 Pass data between two MPI threads::
 
-    ./pass
+    mpirun -np 2 pass
 
 Quiet NaN
 =========
