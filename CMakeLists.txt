@@ -24,3 +24,6 @@ endif()
 add_executable(nan testnan.f90)
 # ------- null file example ------------
 add_executable(null devnull.f90)
+#---------- string example
+add_executable(split split_string.f90)
+
