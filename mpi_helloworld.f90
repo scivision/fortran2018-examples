@@ -27,7 +27,7 @@ if (id == 0) then
     print *, 'number of processes: ', p
 end if
 
-print *, 'Process ', id, time
+print *, 'Process ', id
 
 if ( id == 0 ) then
     print *,'HELLO_MPI: Normal end of execution'
