@@ -7,7 +7,7 @@ program main
    use iso_fortran_env, only: dp=>real64
 
     implicit none
-character(len=10) :: time
+
   integer error, id, p
   real(dp) wtime
 

@@ -3,7 +3,7 @@ project(fortran2015examples Fortran)
 
 add_compile_options(-march=native -Wall -Wextra -Wpedantic -Werror=array-bounds)
 
-# ------- Hello.f90  MPI Fortran example ----------------
+# ------- MPI Fortran examples ----------------
 find_package(MPI)
 if(MPI_Fortran_COMPILER)
     set(CMAKE_Fortran_COMPILER ${MPI_Fortran_COMPILER}) #wrapper compiler mpif90
@@ -17,8 +17,10 @@ if(MPI_Fortran_COMPILER)
 
     add_executable(hello mpi_helloworld.f90)
     #target_link_libraries(hello ${MPI_Fortran_LIBRARIES})
-    
+
     add_executable(pass mpi_pass.f90)
 endif()
 # ------- testNaN.f90  NaN sentinel Fortran example ----------------
 add_executable(nan testnan.f90)
+# ------- null file example ------------
+add_executable(null devnull.f90)
