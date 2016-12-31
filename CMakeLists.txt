@@ -23,7 +23,7 @@ endif()
 # ------- testNaN.f90  NaN sentinel Fortran example ----------------
 add_executable(nan testnan.f90)
 # ------- null file example ------------
-add_executable(null devnull.f90)
+add_executable(null devnull.f90 perf.f90)
 #---------- string example
 add_executable(split split_string.f90)
 
