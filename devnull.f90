@@ -1,30 +1,46 @@
 program nulltest
 use, intrinsic :: iso_fortran_env, only : dp=>REAL64
 implicit none
-! this program does platform independent null file writing behavior
+! Benchmarks platform independent null file writing behavior
 ! NUL or NUL: works on Windows 10
-! Unix is used for Mac, Linux, BSD, Unix, WSL, Cygwin...
+! /dev/null is used for Mac, Linux, BSD, Unix, WSL, Cygwin...
+!
+! Flush() is used to avoid merely buffering the data, giving artificial results.
+! in a real program, the amount of data written to disk is substantial 
+! on each iteration, and the buffer would naturally get flushed.
+! Yes, the benchmark is more aggressive than normal use--that's why 
+! filesystem buffering is used by Fortran and programs in general.
+!
+! The point of this program is to show that by inserting '/dev/null' 
+! as the filename for file outputs you never use, big speedups can result 
+! from modifying a single parameter (the file name).
+! This saves you from commenting out lines, using IF statements and possibly
+! making mistakes in doing so.
+! 
+!
 character(len=*),parameter :: nulunix='/dev/null', nulwin='NUL',fout='out.txt'
-integer,parameter :: Nrun=10000000
+integer,parameter :: Nrun=1000000
 integer ios,u
-character(len=80) afn
 real(dp) tnul, tscratch, tfile, writetime
 
 !---  BENCHMARK NUL -----------
+! status='old' is used as a failsafe, to avoid creating an actual file 
+! in case of mistake. It is not necessary to specify status='old'.
 open(newunit=u,file=nulunix,status='old',iostat=ios)
 if (ios.ne.0) open(newunit=u,file=nulwin,status='old',iostat=ios)
 if (ios.ne.0) error stop 'could not open a NULL file handle'
 
 tnul = writetime(u,Nrun)
-print *,'nul: ',tnul,' ms.'
+print '(A10,F10.3,A)','nul: ',tnul,' ms'
 !---- BENCHMARK SCRATCH --------------
 open(newunit=u,status='scratch')
 tscratch = writetime(u,Nrun)
-print *,'scratch: ',tscratch,' ms.'
+print '(A10,F10.3,A)','scratch: ',tscratch,' ms'
 !---- BENCHMARK FILE --------
+! note that open() default position=asis, access=sequential
 open(newunit=u,status='unknown',file=fout)
 tfile = writetime(u,Nrun)
-print *,'file: ',tfile,' ms.'
+print '(A10,F10.3,A)','file: ',tfile,' ms'
 
 
 end program
@@ -43,7 +59,8 @@ tmin  = huge(0_i64) ! need to avoid SAVE behavior by not assigning at initializa
 do j=1,3
     call system_clock(tic)
     do i=1,Nrun
-        write(u,*) 'into nothingness I go....',i
+        write(u,'(A30,I12)') 'into nothingness I go....',i
+        flush(u)
     enddo
     call system_clock(toc)
     if (toc-tic < tmin) tmin = toc-tic
