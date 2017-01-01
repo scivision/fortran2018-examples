@@ -1,4 +1,6 @@
 program test_nan
+! Note that -Ofast and -ffast-math break this program--
+! NaN are not IEEE compiliant if using -Ofast or -ffast-math.
 
 use, intrinsic :: iso_c_binding, only: sp=>C_FLOAT, dp=>C_DOUBLE, zp=>C_DOUBLE_COMPLEX
 use, intrinsic :: ieee_arithmetic, only: ieee_value, ieee_quiet_nan
@@ -19,18 +21,17 @@ nan_bit = transfer(Z'7FC00000',1.)
 
 ! --------- print results
 
-print *,'IEEE sp',nan_ieee_sp, 'isnan: ',isnan(nan_ieee_sp)
-print *,'IEEE dp',nan_ieee_dp, 'isnan: ',isnan(nan_ieee_dp)
-print *,'IEEE zp',nan_ieee_zp, 'isnan: ',isnan(real(nan_ieee_zp))
-!ieee_is_nan work on real part only as well. think of the bit pattern definition.
-print *,'NaN hexadecimal representations:'
-print '(Z32)',nan_ieee_sp,nan_ieee_dp,nan_ieee_zp
+print *,'IEEE  value  isnan  hex'
+print '(A4,2X,F5.1,6X,L1,2X,Z16)','sp',nan_ieee_sp,isnan(nan_ieee_sp),nan_ieee_sp
+print '(A4,2X,F5.1,6X,L1,2X,Z16)','dp',nan_ieee_dp,isnan(nan_ieee_dp),nan_ieee_dp
+print '(A4,2X,F5.1,6X,L1,2X,Z16)','zp',real(nan_ieee_zp),isnan(real(nan_ieee_zp)),nan_ieee_zp
+print '(A4,2X,F5.1,6X,L1,2X,Z16)','bit',nan_bit,isnan(nan_bit),nan_bit
+!ieee_is_nan works on real part only, by the bit pattern definition.
+
 
 ! for single prec.:
 ! gfortran 6.0: FFC00000
 ! ifort 14.0: 7FC00000
 
-print *,'bit_pattern',nan_bit, 'isnan: ',isnan(nan_bit)
-print '(Z32)',nan_bit
 
 end program test_nan
