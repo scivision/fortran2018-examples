@@ -11,9 +11,13 @@ Easy examples of scientific computing with modern, powerful, easy Fortran 2015 s
 
 Prereq
 ======
-Runs anywhere, on Linux do::
+Linux/Windows/BSD::
 
-    sudo apt-get install cmake gfortran libopenmpi-dev
+    apt install cmake gfortran libopenmpi-dev
+
+Mac::
+
+    brew install gcc cmake open-mpi
 
 Build
 =====
@@ -56,10 +60,13 @@ This is in program::
 
     ./nan
 
+NOTE: you must NOT use ``-Ofast`` or ``-ffast-math`` because IEEE standards are broken by them and NaN detection will intermittently fail!
+
 Writing to /dev/null
 ====================
 Sometimes when modifying an old Fortran subroutine to load as a module in a new Fortran program, the old submodule writes a lot of unnecessary data to disk, that can be the primary compute time consumption of the submodule.
-You can simply repoint the "open" statements to /dev/null or as backup, a scratch file on systems that don't support /dev/null in::
+You can simply repoint the "open" statements to ``/dev/null``.
+Benchmarks of NUL vs. scratch vs. file in ::
 
     ./null
 
@@ -73,5 +80,4 @@ This splits a string once around a delimiter::
     ./split
 
 And notes that it is probably best to use fixed length CHARACTER longer than you'll need.
-If you're trying to load and parse a complicated text file, it is perhaps better to load that
-file first in Python, parse it, then pass it to Fortran via f2py (load Fortran code as a Python module).
+If you're trying to load and parse a complicated text file, it is perhaps better to load that file first in Python, parse it, then pass it to Fortran via f2py (load Fortran code as a Python module).
