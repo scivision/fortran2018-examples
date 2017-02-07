@@ -81,3 +81,13 @@ This splits a string once around a delimiter::
 
 And notes that it is probably best to use fixed length CHARACTER longer than you'll need.
 If you're trying to load and parse a complicated text file, it is perhaps better to load that file first in Python, parse it, then pass it to Fortran via f2py (load Fortran code as a Python module).
+
+f2py
+====
+simple f2py demo::
+
+    f2py -c fib3.f90 -m fib3
+
+    python -c "import fib3; print(fib3.fib(8))"
+
+> [ 0. 1. 1. 2. 3. 5. 8. 13.]
