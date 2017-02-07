@@ -1,7 +1,10 @@
 Subroutine FIB(A,N)
+implicit none
 !     CALCULATE FIRST N FIBONACCI NUMBERS
       INTEGER, Intent(in) :: N
       REAL*8, Intent(out) :: A(N)
+
+      integer i
 
 DO I=1,N
     IF (I.EQ.1) THEN

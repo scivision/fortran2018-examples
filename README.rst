@@ -46,7 +46,7 @@ Pass data between two MPI threads::
 Quiet NaN
 =========
 We might choose to use NaN as a sentinal value, where instead of returning separate "OK" logical variable from a function or subroutine, if a failure happens, we return NaN in one of the important variables.
-There was a classical way to do this that was type specific, by setting the NaN bit pattern for your data type. 
+There was a classical way to do this that was type specific, by setting the NaN bit pattern for your data type.
 For example, for single-precision real you'd type::
 
     nan_bit = transfer(Z'7FF80000',1.)
@@ -88,6 +88,10 @@ simple f2py demo::
 
     f2py -c fib3.f90 -m fib3
 
+This creates a fib3*.so (Linux/Mac)  or fib3*.pyd (Windows), which is used by::
+
     python -c "import fib3; print(fib3.fib(8))"
 
-> [ 0. 1. 1. 2. 3. 5. 8. 13.]
+This prints
+
+    [0. 1. 1. 2. 3. 5. 8. 13.]
