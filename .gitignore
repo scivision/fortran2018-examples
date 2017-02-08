@@ -1,3 +1,4 @@
+*.pyd
 bin/
 
 # Compiled Object files
