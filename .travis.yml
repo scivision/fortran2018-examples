@@ -9,6 +9,7 @@ git:
 matrix:
   include:
     - os: linux
+      dist: trusty # not ubuntu 12.04
       addons:
         apt:
           sources: ['ubuntu-toolchain-r-test']
@@ -28,5 +29,5 @@ script:
     - cmake ..
     - make VERBOSE=1
 
-    - ./bin/nan
-    - ./bin/split
+    - ./nan
+    - ./split
