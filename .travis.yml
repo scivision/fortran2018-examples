@@ -9,8 +9,6 @@ git:
 matrix:
   include:
     - os: linux
-      sudo: true
-      dist: trusty
       addons:
         apt:
           sources: ['ubuntu-toolchain-r-test']
@@ -21,7 +19,6 @@ matrix:
         - gfortran --version
 
     - os: osx
-      osx_image: xcode7.3 # or whatever the latest is
       before_install:
         - brew update
         - brew install gcc
@@ -31,3 +28,5 @@ script:
     - cmake ..
     - make VERBOSE=1
 
+    - ./bin/nan
+    - ./bin/split

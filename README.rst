@@ -1,5 +1,5 @@
-.. image:: https://travis-ci.org/scienceopen/fortran2015-examples.svg?branch=master
-    :target: https://travis-ci.org/scienceopen/fortran2015-examples
+.. image:: https://travis-ci.org/scivision/fortran2015-examples.svg?branch=master
+    :target: https://travis-ci.org/scivision/fortran2015-examples
 
 ====================
 fortran2015-examples
@@ -62,16 +62,27 @@ This is in program::
 
 NOTE: you must NOT use ``-Ofast`` or ``-ffast-math`` because IEEE standards are broken by them and NaN detection will intermittently fail!
 
+File Handling in Fortran
+========================
+Despite its half-century year old roots, Fortran 
+
+
 Writing to /dev/null
-====================
+--------------------
 Sometimes when modifying an old Fortran subroutine to load as a module in a new Fortran program, the old submodule writes a lot of unnecessary data to disk, that can be the primary compute time consumption of the submodule.
 You can simply repoint the "open" statements to ``/dev/null``.
-Benchmarks of NUL vs. scratch vs. file in ::
+Benchmarks of NUL vs. scratch vs. file in::
 
     ./null
 
-Strings
-=======
+Read-only files and deletion in Fortran
+---------------------------------------
+The ``readonly`` program shows that even operation system read-only files can be deleted by Fortran, like ``rm -f`` with the ``close(u,status='delete')`` option::
+
+    ./readonly
+
+String handling in Fortran
+==========================
 
 Split strings about delimiter
 -----------------------------
