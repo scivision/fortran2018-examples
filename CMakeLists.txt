@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 2.8.12)
 project(fortran2015examples Fortran)
 
-add_compile_options(-march=native -Wall -Wextra -Wpedantic -Werror=array-bounds)
+add_compile_options(-march=native -Wall -Wextra -Wpedantic -Werror=array-bounds -g)
 
 # ------- MPI Fortran examples ----------------
 find_package(MPI)
@@ -26,4 +26,5 @@ add_executable(nan testnan.f90)
 add_executable(null devnull.f90 perf.f90)
 #---------- string example
 add_executable(split split_string.f90)
-
+# --------- test safe readonly file open --
+add_executable(readonly fileopen-readonly.f90)
