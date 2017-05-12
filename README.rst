@@ -32,10 +32,17 @@ The CMake script automatically walks through the subdirectories::
 
 NetCDF
 ======
+This example writes then reads a NetCDF file from Fortran::
+
+    ./netcdf/writencdf
+
+    ./netcdf/readncdf
 
 HDF5
 ====
+This example writes then reads an HDF5 file from Fortran::
 
+    ./hdf5/hdf5demo
 
 OpenMPI
 =======
@@ -44,13 +51,13 @@ Hello World MPI
 ---------------
 To run the simplest sort of multi-threaded Fortran program using MPI-2, assuming you have a CPU with 8 virtual cores like an Intel Core i7::
 
-    mpirun -np 8 hello
+    mpirun -np 8 mpi/hello
 
 Message Passing MPI
 -------------------
 Pass data between two MPI threads::
 
-    mpirun -np 2 pass
+    mpirun -np 2 mpi/pass
 
 Quiet NaN
 =========

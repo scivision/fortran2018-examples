@@ -15,8 +15,8 @@ git:
 addons:
   apt:
     sources: ['ubuntu-toolchain-r-test']
-    packages: ['gfortran-5','libhdf5-dev'] 
-#'libopenmpi-dev' wrong version mpi
+    packages: ['gfortran-5'] 
+#'libopenmpi-dev' 'libhdf5-dev' wrong version mpi
 # 'libnetcdff-dev' not in image repos
 
 before_install:
