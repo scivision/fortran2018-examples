@@ -27,6 +27,10 @@ if(HDF5_FOUND)
    
     add_executable(hdf5array hdf5array.f90)
     
+    add_executable(stest test.f90)
+    
     add_executable(h5simple hdf5simple.f90)
+    
+    
 
 endif()

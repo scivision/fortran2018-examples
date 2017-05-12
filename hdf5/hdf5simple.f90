@@ -35,8 +35,7 @@ CALL H5Fcreate_F(filename, H5F_ACC_TRUNC_F,fid,error)
 if (error /= 0) error stop 'could not open HDF5 library'
 !---------- write array to HDF5
 !call h5ltmake_dataset_double_f(fid,dsname,rank,data_dims,array,error)  
- call h5ltmake_dataset_f(fid,dsname,rank,data_dims, &
-                         h5kind_to_type(dp,H5_REAL_KIND),array,error)  
+ call h5ltmake_dataset_f(fid,dsname,rank,data_dims, H5T_NATIVE_DOUBLE, array, error)   ! h5kind_to_type(dp,H5_REAL_KIND)
 if (error /= 0) error stop 'could not write data'
 !----------- close file
 call H5Fclose_F(fid,error)
