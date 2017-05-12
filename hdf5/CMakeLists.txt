@@ -11,7 +11,9 @@ add_compile_options(-Warray-bounds -fexceptions -g)
 find_package(HDF5 COMPONENTS Fortran HL) 
 if(HDF5_FOUND)
     # this line enables (optional) wrapper compiler h5fc).
-    set(CMAKE_Fortran_COMPILER ${HDF5_Fortran_COMPILER_EXECUTABLE})
+    # USE **EITHER** this compiler OR link libraries. 
+    # DOING BOTH CAUSES SUBTLE ERROR MESSAGES!! DON'T DO BOTH!!
+    #set(CMAKE_Fortran_COMPILER ${HDF5_Fortran_COMPILER_EXECUTABLE})
 
     message(STATUS "Compiling your HDF5 using program with " ${CMAKE_Fortran_COMPILER})
 

@@ -43,6 +43,14 @@ HDF5
 This example writes then reads an HDF5 file from Fortran::
 
     ./hdf5/hdf5demo
+    
+Note
+----
+DO NOT USE BOTH `H5FC` wrapper compiler and specify the Fortran HDF5 libraries (in the CMake file). 
+This can cause version conflicts if you have multiple versions of HDF5 installed.
+It causes non-obvious errors that can waste your time.
+
+In my opinion NOT using the wrapper compiler may be safer so that's what the CMake file does.
 
 OpenMPI
 =======
