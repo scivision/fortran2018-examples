@@ -13,9 +13,9 @@ Prereq
 ======
 Linux/Windows/BSD::
 
-    apt install cmake gfortran libopenmpi-dev libnetcdff-dev
+    apt install cmake gfortran libhdf5-dev libopenmpi-dev libnetcdff-dev
 
-Yes that's two "ff" in libnetcdff-dev
+Yes that's two "ff" in `libnetcdff-dev`
 
 Mac::
 
