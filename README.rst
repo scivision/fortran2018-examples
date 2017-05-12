@@ -13,7 +13,9 @@ Prereq
 ======
 Linux/Windows/BSD::
 
-    apt install cmake gfortran libopenmpi-dev
+    apt install cmake gfortran libopenmpi-dev libnetcdff-dev
+
+Yes that's two "ff" in libnetcdff-dev
 
 Mac::
 
@@ -21,11 +23,18 @@ Mac::
 
 Build
 =====
-::
+The CMake script automatically walks through the subdirectories::
 
     cd bin
     cmake ..
     make
+
+
+NetCDF
+======
+
+HDF5
+====
 
 
 OpenMPI

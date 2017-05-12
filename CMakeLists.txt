@@ -7,6 +7,8 @@ add_subdirectory(hdf5)
 
 add_subdirectory(mpi)
 
+add_subdirectory(netcdf)
+
 add_compile_options(-march=native -Wall -Wextra -Wpedantic -Werror=array-bounds -g)
 
 # ------- testNaN.f90  NaN sentinel Fortran example ----------------
