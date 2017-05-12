@@ -10,7 +10,7 @@ IMPLICIT NONE
 CHARACTER(LEN=*), PARAMETER :: filename = "floatscience.h5" ! File name
 CHARACTER(LEN=*), PARAMETER :: dsname = "my_image"          ! Dataset name
 INTEGER,parameter :: rank=1  ! rank of user array
-
+integer, parameter :: length=9
 ! -------- initialize HDF5 -----------
 INTEGER(HID_T) :: fid        ! File identifier
 INTEGER(HSIZE_T) :: data_dims(rank)  ! size of array
@@ -21,16 +21,20 @@ INTEGER, PARAMETER :: dp = SELECTED_REAL_KIND(15,307) ! double-precision float
 integer(HID_T) :: sptype, dptype
 
 INTEGER :: error ! Error flag
-
+integer :: i
 
 
 !----------------------
 ! data to write (arbitrary)
-REAL(dp) :: array(9)
-array = [1., 2., 3., 4., 5., 6., 7., 8., 9.]
+REAL(dp) :: array(length)
+do i = 1,length
+    array(i) = dble(i)
+end do  
 
 data_dims = size(array)
 !---------- Initialize FORTRAN interface
+call h5open_f(error) 
+!--- create file
 CALL H5Fcreate_F(filename, H5F_ACC_TRUNC_F,fid,error)
 if (error /= 0) error stop 'could not open HDF5 library'
 !---------- write array to HDF5
