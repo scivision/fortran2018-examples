@@ -20,11 +20,10 @@ addons:
 # 'libnetcdff-dev' not in image repos
 
 before_install:
+# mac brew has no hdf5 or netcdf
     - if [[ $TRAVIS_OS_NAME == osx ]]; then
         brew update;
         brew install gcc;
-        brew install hdf5;
-        brew install netcdf --with-fortran;
       else
         mkdir -p $HOME/.local/bin;
         ln -fs /usr/bin/gfortran-5 "$HOME/.local/bin/gfortran";
