@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 2.8.12)
-project(fortran2015mpi Fortran) 
+project(fortran2015demo Fortran) 
 
 # ------- MPI Fortran examples ----------------
 find_package(MPI)
