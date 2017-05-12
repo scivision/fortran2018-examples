@@ -33,6 +33,7 @@ install:
     - gfortran --version
 
 script: 
+    - mkdir -p bin
     - cd bin
     - cmake ..
     - make VERBOSE=1
