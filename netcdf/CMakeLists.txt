@@ -1,13 +1,16 @@
 cmake_minimum_required (VERSION 2.8.12)
 project(fortran2015demo Fortran)
 
+# https://github.com/jedbrown/cmake-modules/blob/master/FindNetCDF.cmake
+#
+# apt install libnetcdff-dev     # note two "ff"
+
 find_package(netCDF)
 if(netCDF_DIR)
     list(APPEND CMAKE_MODULE_PATH ${netCDF_DIR})
 
-#    add_definitions(${netCDF_C_COMPILER_FLAGS})
-
     include_directories(${netCDF_INCLUDE_DIR})
+    message(STATUS "netCDF_INCLUDE_DIR " ${netCDF_INCLUDE_DIR})
 
 # note the second "ff"
     add_executable(writencdf simple_xy_wr.f90)

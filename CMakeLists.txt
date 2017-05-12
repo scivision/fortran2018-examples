@@ -1,8 +1,6 @@
 cmake_minimum_required (VERSION 3.2.2)
 project(fortran2015demo Fortran) 
 
-# if h5fc not found and you have Anaconda/Miniconda Python installed, try
-# PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin cmake ..
 add_subdirectory(hdf5)
 
 add_subdirectory(mpi)
