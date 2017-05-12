@@ -10,6 +10,4 @@ if(HDF5_Fortran_COMPILER_EXECUTABLE)
     set(CMAKE_Fortran_COMPILER ${HDF5_Fortran_COMPILER_EXECUTABLE})
 
     add_executable(hdf5demo hdf5demo.f90)
-else()
-    message('error' 'hdf5')
 endif()
