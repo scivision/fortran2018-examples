@@ -17,6 +17,7 @@
 
 program simple_xy_wr
   use netcdf
+  USE ISO_FORTRAN_ENV, ONLY : stderr=>ERROR_UNIT 
   implicit none
 
   ! This is the name of the data file we will create.
@@ -87,8 +88,8 @@ contains
     integer, intent ( in) :: status
     
     if(status /= nf90_noerr) then 
-      print *, trim(nf90_strerror(status))
-      stop "Stopped"
+      write(stderr, *)  trim(nf90_strerror(status))
+      error stop
     end if
   end subroutine check  
 end program simple_xy_wr
