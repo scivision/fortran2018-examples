@@ -1,30 +1,39 @@
 language: c
 
+os:
+  - linux
+  - osx
+
+dist: trusty # not ubuntu 12.04
+
 notifications:
   email: false
 
 git:
   depth: 3
 
-matrix:
-  include:
-    - os: linux
-      dist: trusty # not ubuntu 12.04
-      addons:
-        apt:
-          sources: ['ubuntu-toolchain-r-test']
-          packages: ['gfortran-5']
-      before_install:
-        - mkdir -p $HOME/.local/bin
-        - ln -fs /usr/bin/gfortran-5 "$HOME/.local/bin/gfortran" 
-        - gfortran --version
+addons:
+  apt:
+    sources: ['ubuntu-toolchain-r-test']
+    packages: ['gfortran-5'] 
+#'libopenmpi-dev' 'libhdf5-dev' wrong version mpi
+# 'libnetcdff-dev' not in image repos
 
-    - os: osx
-      before_install:
-        - brew update
-        - brew install gcc
+before_install:
+# mac brew has no hdf5 or netcdf
+    - if [[ $TRAVIS_OS_NAME == osx ]]; then
+        brew update;
+        brew install gcc;
+      else
+        mkdir -p $HOME/.local/bin;
+        ln -fs /usr/bin/gfortran-5 "$HOME/.local/bin/gfortran";
+      fi 
+
+install:
+    - gfortran --version
 
 script: 
+    - mkdir -p bin
     - cd bin
     - cmake ..
     - make VERBOSE=1

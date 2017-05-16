@@ -13,7 +13,9 @@ Prereq
 ======
 Linux/Windows/BSD::
 
-    apt install cmake gfortran libopenmpi-dev
+    apt install cmake gfortran libhdf5-dev libopenmpi-dev libnetcdff-dev
+
+Yes that's two "ff" in `libnetcdff-dev`
 
 Mac::
 
@@ -21,12 +23,34 @@ Mac::
 
 Build
 =====
-::
+The CMake script automatically walks through the subdirectories::
 
     cd bin
     cmake ..
     make
 
+
+NetCDF
+======
+This example writes then reads a NetCDF file from Fortran::
+
+    ./netcdf/writencdf
+
+    ./netcdf/readncdf
+
+HDF5
+====
+This example writes then reads an HDF5 file from Fortran::
+
+    ./hdf5/hdf5demo
+    
+Note
+----
+DO NOT USE BOTH `H5FC` wrapper compiler and specify the Fortran HDF5 libraries (in the CMake file). 
+This can cause version conflicts if you have multiple versions of HDF5 installed.
+It causes non-obvious errors that can waste your time.
+
+In my opinion NOT using the wrapper compiler may be safer so that's what the CMake file does.
 
 OpenMPI
 =======
@@ -35,13 +59,13 @@ Hello World MPI
 ---------------
 To run the simplest sort of multi-threaded Fortran program using MPI-2, assuming you have a CPU with 8 virtual cores like an Intel Core i7::
 
-    mpirun -np 8 hello
+    mpirun -np 8 mpi/hello
 
 Message Passing MPI
 -------------------
 Pass data between two MPI threads::
 
-    mpirun -np 2 pass
+    mpirun -np 2 mpi/pass
 
 Quiet NaN
 =========
