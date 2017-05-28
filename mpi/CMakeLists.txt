@@ -11,7 +11,8 @@ if(MPI_Fortran_COMPILER)   # MPI_FOUND is not used
     
     add_definitions(${MPI_Fortran_COMPILE_FLAGS})
     include_directories(${MPI_Fortran_INCLUDE_PATH})
-    add_compile_options(${MPI_Fortran_LINK_FLAGS} -pthread)
+  #  add_compile_options(${MPI_Fortran_LINK_FLAGS} -pthread)
+    add_compile_options(-pthread)
     
 #    message(STATUS "MPI_Fortran_LIBRARIES " ${MPI_Fortran_LIBRARIES})
 
@@ -28,3 +29,8 @@ endif()
 # mpif90 --showme
 #
 # gfortran -I/usr/lib/openmpi/include -pthread -I/usr/lib/openmpi/lib -Wl,-rpath -Wl,/usr/lib/openmpi/lib -Wl,--enable-new-dtags -L/usr/lib/openmpi/lib -lmpi_usempif08 -lmpi_usempi_ignore_tkr -lmpi_mpifh -lmp
+
+# make VERBOSE=1
+#
+#/usr/bin/f95  -I/usr/lib/openmpi/include -I/usr/lib/openmpi/lib  -Wl,-rpath,/usr/lib/openmpi/lib /usr/lib/openmpi/lib/libmpi_usempif08.so /usr/lib/openmpi/lib/libmpi_usempi_ignore_tkr.so /usr/lib/openmpi/lib/libmpi_mpifh.so /usr/lib/openmpi/lib/libmpi.so 
+

@@ -18,11 +18,10 @@ if(HDF5_FOUND)
     message(STATUS "Compiling your HDF5 using program with " ${CMAKE_Fortran_COMPILER})
 
     INCLUDE_DIRECTORIES (${HDF5_INCLUDE_DIR})
-    message(STATUS "HDF5_INCLUDE_DIR: " ${HDF5_Fortran_INCLUDE_DIRS})
+#    message(STATUS "HDF5_INCLUDE_DIR: " ${HDF5_Fortran_INCLUDE_DIRS})
     
-    # 
     link_libraries(${HDF5_Fortran_LIBRARIES} ${HDF5_Fortran_HL_LIBRARIES})
-    message(STATUS "HDF5_Fortran_HL_LIBRARIES "  ${HDF5_Fortran_HL_LIBRARIES})
+    #message(STATUS "HDF5_Fortran_HL_LIBRARIES "  ${HDF5_Fortran_HL_LIBRARIES})
 
     
     add_executable(hdf5demo hdf5demo.f90)
@@ -30,9 +29,7 @@ if(HDF5_FOUND)
     add_executable(hdf5array hdf5array.f90)
     
     add_executable(stest test.f90)
-    
+
     add_executable(h5simple hdf5simple.f90)
-    
-    
 
 endif()
