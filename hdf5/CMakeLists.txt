@@ -1,5 +1,8 @@
 cmake_minimum_required (VERSION 3.2.2) # 3.2.2 required for HDF5
 project(fortran2015demo Fortran)
+# INTEL COMPILER: https://software.intel.com/en-us/articles/performance-tools-for-software-developers-building-hdf5-with-intel-compilers
+
+
 # https://support.hdfgroup.org/ftp/HDF5/current/src/unpacked/release_docs/USING_HDF5_CMake.txt
 # https://github.com/Kitware/CMake/blob/master/Modules/FindHDF5.cmake
 
@@ -15,7 +18,7 @@ if(HDF5_FOUND)
     # DOING BOTH CAUSES SUBTLE ERROR MESSAGES!! DON'T DO BOTH!!
     #set(CMAKE_Fortran_COMPILER ${HDF5_Fortran_COMPILER_EXECUTABLE})
 
-    message(STATUS "Compiling your HDF5 using program with " ${CMAKE_Fortran_COMPILER})
+    message(STATUS "Compiling your HDF5-using program with " ${CMAKE_Fortran_COMPILER})
 
     INCLUDE_DIRECTORIES (${HDF5_INCLUDE_DIR})
 #    message(STATUS "HDF5_INCLUDE_DIR: " ${HDF5_Fortran_INCLUDE_DIRS})

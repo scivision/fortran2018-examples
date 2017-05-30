@@ -27,11 +27,42 @@ The CMake script automatically walks through the subdirectories::
 
     cd bin
     cmake ..
-    make
+    make -k
+
+If wanting to use Intel compiler, do
+
+    cd bin
+    FC=ifort CC=icc CXX=icpc cmake ..
+    make -k
+
+Programs
+========
+If using the Intel compiler instead of GNU compiler, the NetCDF and HDF5 programs will need to be compiled with the Intel compiler.
+
+Call Fortran from C++
+---------------------
+You can easily use Fortran subroutines and functions from C and C++.
+
+    ./cxx/cxxfort
+
+The key factors in calling a Fortran module from C or C++ include:
+
+    * use the standard C binding to define variable and bind functions/subroutines
+
+            use,intrinsic:: iso_c_binding, only: c_int, c_float, c_double
+
+            integer(c_int) :: N
+            real(c_double) :: X
+
+            subroutine cool(X,N) bind(c)
+      
+      the ``bind(c)`` makes the name ``cool`` available to C/C++.  
+
+See ``cxx/cxxfort.f90`` and ``fun.f90`` for a simple exmaple.
 
 
 NetCDF
-======
+------
 This example writes then reads a NetCDF file from Fortran::
 
     ./netcdf/writencdf
@@ -39,13 +70,13 @@ This example writes then reads a NetCDF file from Fortran::
     ./netcdf/readncdf
 
 HDF5
-====
+----
 This example writes then reads an HDF5 file from Fortran::
 
     ./hdf5/hdf5demo
     
 Note
-----
+~~~~
 DO NOT USE BOTH `H5FC` wrapper compiler and specify the Fortran HDF5 libraries (in the CMake file). 
 This can cause version conflicts if you have multiple versions of HDF5 installed.
 It causes non-obvious errors that can waste your time.
@@ -53,22 +84,22 @@ It causes non-obvious errors that can waste your time.
 In my opinion NOT using the wrapper compiler may be safer so that's what the CMake file does.
 
 OpenMPI
-=======
+-------
 
 Hello World MPI
----------------
+~~~~~~~~~~~~~~~
 To run the simplest sort of multi-threaded Fortran program using MPI-2, assuming you have a CPU with 8 virtual cores like an Intel Core i7::
 
     mpirun -np 8 mpi/hello
 
 Message Passing MPI
--------------------
+~~~~~~~~~~~~~~~~~~~
 Pass data between two MPI threads::
 
     mpirun -np 2 mpi/pass
 
 Quiet NaN
-=========
+---------
 We might choose to use NaN as a sentinal value, where instead of returning separate "OK" logical variable from a function or subroutine, if a failure happens, we return NaN in one of the important variables.
 There was a classical way to do this that was type specific, by setting the NaN bit pattern for your data type.
 For example, for single-precision real you'd type::
@@ -87,12 +118,12 @@ This is in program::
 NOTE: you must NOT use ``-Ofast`` or ``-ffast-math`` because IEEE standards are broken by them and NaN detection will intermittently fail!
 
 File Handling in Fortran
-========================
+------------------------
 Despite its half-century year old roots, Fortran 
 
 
 Writing to /dev/null
---------------------
+~~~~~~~~~~~~~~~~~~~~~
 Sometimes when modifying an old Fortran subroutine to load as a module in a new Fortran program, the old submodule writes a lot of unnecessary data to disk, that can be the primary compute time consumption of the submodule.
 You can simply repoint the "open" statements to ``/dev/null``.
 Benchmarks of NUL vs. scratch vs. file in::
@@ -100,13 +131,13 @@ Benchmarks of NUL vs. scratch vs. file in::
     ./null
 
 Read-only files and deletion in Fortran
----------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 The ``readonly`` program shows that even operation system read-only files can be deleted by Fortran, like ``rm -f`` with the ``close(u,status='delete')`` option::
 
     ./readonly
 
 String handling in Fortran
-==========================
+--------------------------
 
 Split strings about delimiter
 -----------------------------
@@ -118,7 +149,7 @@ And notes that it is probably best to use fixed length CHARACTER longer than you
 If you're trying to load and parse a complicated text file, it is perhaps better to load that file first in Python, parse it, then pass it to Fortran via f2py (load Fortran code as a Python module).
 
 f2py
-====
+----
 simple f2py demo::
 
     f2py -c fib3.f90 -m fib3
