@@ -29,7 +29,7 @@ The CMake script automatically walks through the subdirectories::
     cmake ..
     make -k
 
-If wanting to use Intel compiler, do
+If wanting to use Intel compiler, do::
 
     cd bin
     FC=ifort CC=icc CXX=icpc cmake ..
@@ -41,13 +41,13 @@ If using the Intel compiler instead of GNU compiler, the NetCDF and HDF5 program
 
 Call Fortran from C++
 ---------------------
-You can easily use Fortran subroutines and functions from C and C++.
+You can easily use Fortran subroutines and functions from C and C++::
 
     ./cxx/cxxfort
 
 The key factors in calling a Fortran module from C or C++ include:
 
-    * use the standard C binding to define variable and bind functions/subroutines
+    * use the standard C binding to define variable and bind functions/subroutines::
 
             use,intrinsic:: iso_c_binding, only: c_int, c_float, c_double
 
