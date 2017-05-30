@@ -37,7 +37,12 @@ If wanting to use Intel compiler, do::
 
 Programs
 ========
-If using the Intel compiler instead of GNU compiler, the NetCDF and HDF5 programs will need to be compiled with the Intel compiler.
+Most people use the GNU compiler.
+
+If using the Intel compiler instead of GNU compiler:
+
+* the NetCDF and HDF5 programs will need to be compiled with the Intel compiler.
+* you need to ``source compilervars.sh`` as usual with the Intel compiler or you will get ``*.so missing`` errors.
 
 Call Fortran from C++
 ---------------------
@@ -47,16 +52,16 @@ You can easily use Fortran subroutines and functions from C and C++::
 
 The key factors in calling a Fortran module from C or C++ include:
 
-    * use the standard C binding to define variable and bind functions/subroutines::
+* use the standard C binding to define variable and bind functions/subroutines::
 
-            use,intrinsic:: iso_c_binding, only: c_int, c_float, c_double
+        use,intrinsic:: iso_c_binding, only: c_int, c_float, c_double
 
-            integer(c_int) :: N
-            real(c_double) :: X
+        integer(c_int) :: N
+        real(c_double) :: X
 
-            subroutine cool(X,N) bind(c)
-      
-      the ``bind(c)`` makes the name ``cool`` available to C/C++.  
+        subroutine cool(X,N) bind(c)
+  
+  the ``bind(c)`` makes the name ``cool`` available to C/C++.  
 
 See ``cxx/cxxfort.f90`` and ``fun.f90`` for a simple exmaple.
 
