@@ -29,11 +29,6 @@ The CMake script automatically walks through the subdirectories::
     cmake ..
     make -k
 
-If wanting to use Intel compiler, do::
-
-    cd bin
-    FC=ifort CC=icc CXX=icpc cmake ..
-    make -k
 
 Programs
 ========
@@ -43,6 +38,11 @@ If using the Intel compiler instead of GNU compiler:
 
 * the NetCDF and HDF5 programs will need to be compiled with the Intel compiler.
 * you need to ``source compilervars.sh`` as usual with the Intel compiler or you will get ``*.so missing`` errors.
+* for Intel compiler, build with::
+
+        cd bin
+        FC=ifort CC=icc CXX=icpc cmake ..
+        make -k
 
 Call Fortran from C++
 ---------------------
