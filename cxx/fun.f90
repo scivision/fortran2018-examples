@@ -5,7 +5,7 @@ module mytest
 
 contains
    
-    subroutine yourmsg(z,N)
+    subroutine yourmsg(z,N) bind(c)
 
     real(dp),intent(in) :: z(N)
     integer(c_int), intent(in) :: N

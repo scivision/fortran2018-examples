@@ -3,7 +3,7 @@
 #include <vector>
 
 
-extern "C" void __mytest_MOD_yourmsg(float [],int*);
+extern "C" void yourmsg(float [],int*);
 
 
 int main()
@@ -16,7 +16,7 @@ int main()
         x[i] = 2.*i;
     }
 
-    __mytest_MOD_yourmsg(&x.front(), &N);
+    yourmsg(&x.front(), &N);
 
     
     return EXIT_SUCCESS;
