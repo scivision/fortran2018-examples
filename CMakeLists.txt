@@ -2,10 +2,9 @@ cmake_minimum_required (VERSION 3.2.2)
 project(fortran2015demo Fortran) 
 
 add_subdirectory(hdf5)
-
 add_subdirectory(mpi)
-
 add_subdirectory(netcdf)
+add_subdirectory(cxx)
 
 add_compile_options(-march=native -Wall -Wextra -Wpedantic -Werror=array-bounds -g)
 
