@@ -159,10 +159,22 @@ simple f2py demo::
 
     f2py -c fib3.f90 -m fib3
 
-This creates a fib3*.so (Linux/Mac)  or fib3*.pyd (Windows), which is used by::
+This creates a `fib3*.so` (Linux/Mac)  or `fib3*.pyd` (Windows), which is used by::
 
     python -c "import fib3; print(fib3.fib(8))"
 
-This prints
+> [0. 1. 1. 2. 3. 5. 8. 13.]
 
-    [0. 1. 1. 2. 3. 5. 8. 13.]
+or
+
+    python -c "import fib3; print(fib3.fib3.fib(1478))"
+
+> [  0.  1.  1. ...,
+>   8.07763763e+307   1.30698922e+308    inf]
+
+Note the file `.f2py_f2cmap`, which is vital to proper assigning of real and complex data types, particularly double precision.
+
+    dict(real= dict(sp='float', dp='double'),
+    complex = dict(sp='complex_float',dp="complex_double"))
+
+
