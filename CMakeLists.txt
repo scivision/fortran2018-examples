@@ -19,5 +19,4 @@ add_executable(null devnull.f90 perf.f90)
 add_executable(split split_string.f90)
 # --------- test safe readonly file open --
 add_executable(readonly fileopen-readonly.f90)
-# ------ fibonacci
-add_executable(fib fib3.f90)
+

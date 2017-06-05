@@ -17,7 +17,7 @@ addons:
     sources: 
         - ubuntu-toolchain-r-test
     packages: 
-        - gfortran-5
+        - gfortran-6
 #'libopenmpi-dev' # wrong version mpi
         - libhdf5-dev 
         - libnetcdf-dev
@@ -30,7 +30,7 @@ before_install:
         brew install gcc;
       else
         mkdir -p $HOME/.local/bin;
-        ln -fs /usr/bin/gfortran-5 "$HOME/.local/bin/gfortran";
+        ln -fs /usr/bin/gfortran-6 "$HOME/.local/bin/gfortran";
       fi 
 
     - gfortran --version

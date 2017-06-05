@@ -19,7 +19,7 @@ implicit none
 ! 
 !
 character(len=*),parameter :: nulunix='/dev/null', nulwin='NUL',fout='out.txt'
-integer,parameter :: Nrun=1000000
+integer,parameter :: Nrun=1000
 integer ios,u
 real(dp) tnul, tscratch, tfile, writetime
 
@@ -27,8 +27,8 @@ real(dp) tnul, tscratch, tfile, writetime
 ! status='old' is used as a failsafe, to avoid creating an actual file 
 ! in case of mistake. It is not necessary to specify status='old'.
 open(newunit=u,file=nulunix,status='old',iostat=ios)
-if (ios.ne.0) open(newunit=u,file=nulwin,status='old',iostat=ios)
-if (ios.ne.0) error stop 'could not open a NULL file handle'
+if (ios /= 0) open(newunit=u,file=nulwin,status='old',iostat=ios)
+if (ios /= 0) error stop 'could not open a NULL file handle'
 
 tnul = writetime(u,Nrun)
 print '(A10,F10.3,A)','nul: ',tnul,' ms'
@@ -59,7 +59,7 @@ tmin  = huge(0_i64) ! need to avoid SAVE behavior by not assigning at initializa
 do j=1,3
     call system_clock(tic)
     do i=1,Nrun
-        write(u,'(A30,I12)') 'into nothingness I go....',i
+        write(u,*) 'into nothingness I go....',i
         flush(u)
     enddo
     call system_clock(toc)
