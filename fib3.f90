@@ -1,31 +1,30 @@
-program runfib
+module fib3
+! https://gcc.gnu.org/onlinedocs/gfortran/ISO_005fC_005fBINDING.html
+    use, intrinsic :: iso_c_binding, only: sp=>C_FLOAT, dp=>C_DOUBLE!, qp=c_long_double
 
-    use iso_c_binding, only: dp=>C_DOUBLE
     implicit none
 
-    integer, parameter :: N=1500
-    real(dp) :: A(N)
-
-    call fib(A)
+    real(sp),parameter :: pi32 = 4.*atan(1.)
+    real(dp),parameter :: pi64 = 4._dp*atan(1._dp)
+    !real(qp),parameter :: pi128 = 4._qp*atan(1._qp)
     
-    print *,A
 
 contains
 
-    Pure Subroutine FIB(A)
+    pure subroutine FIB(A,n)
+
     !     CALCULATE FIRST N FIBONACCI NUMBERS
+    integer, intent(in) :: n
+    real(dp), Intent(out) :: A(n)
 
-          REAL(dp), Intent(out) :: A(:)
+    integer i
 
-          integer i,n
-          n = size(A)
+    A(:2) = [0, 1]
 
-    A(1:2) = [0., 1.]
-
-    DO I=3,N
+    do I=3,N
         A(I) = A(I-1) + A(I-2)
-    ENDDO
+    enddo
 
-    END Subroutine Fib
+    end subroutine Fib
 
-end program runfib
+end module

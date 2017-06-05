@@ -14,10 +14,14 @@ git:
 
 addons:
   apt:
-    sources: ['ubuntu-toolchain-r-test']
-    packages: ['gfortran-5'] 
-#'libopenmpi-dev' 'libhdf5-dev' wrong version mpi
-# 'libnetcdff-dev' not in image repos
+    sources: 
+        - ubuntu-toolchain-r-test
+    packages: 
+        - gfortran-6
+#'libopenmpi-dev' # wrong version mpi
+ #       - libhdf5-dev  # hdf5 is wrong version api
+        - libnetcdf-dev
+#        - libnetcdff-dev # not in image repos
 
 before_install:
 # mac brew has no hdf5 or netcdf
@@ -26,17 +30,17 @@ before_install:
         brew install gcc;
       else
         mkdir -p $HOME/.local/bin;
-        ln -fs /usr/bin/gfortran-5 "$HOME/.local/bin/gfortran";
+        ln -fs /usr/bin/gfortran-6 "$HOME/.local/bin/gfortran";
       fi 
 
-install:
     - gfortran --version
 
-script: 
+install:
     - mkdir -p bin
     - cd bin
     - cmake ..
-    - make VERBOSE=1
+    - make
 
+script: 
     - ./nan
     - ./split
