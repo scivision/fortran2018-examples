@@ -120,6 +120,13 @@ This is in program::
 
     ./nan
 
+In Fortran 2003, ``real(z'abcd0000')`` is equivalent to ``transfer(z'abcd0000',1.)`` by Fortran 2003.
+However, where you are deliberately setting NaN you will get 
+
+> Error: Result of FLOAT is NaN 
+
+so use ``transfer()`` for the case where you're deliberately setting ``NaN``.
+
 NOTE: you must NOT use ``-Ofast`` or ``-ffast-math`` because IEEE standards are broken by them and NaN detection will intermittently fail!
 
 File Handling in Fortran
