@@ -19,7 +19,7 @@ addons:
     packages: 
         - gfortran-6
 #'libopenmpi-dev' # wrong version mpi
-        - libhdf5-dev 
+ #       - libhdf5-dev  # hdf5 is wrong version api
         - libnetcdf-dev
 #        - libnetcdff-dev # not in image repos
 
