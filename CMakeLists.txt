@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.2.2)
+cmake_minimum_required (VERSION 2.8.12)
 project(fortran2015demo Fortran) 
 
 add_subdirectory(hdf5)
@@ -6,8 +6,11 @@ add_subdirectory(mpi)
 add_subdirectory(netcdf)
 add_subdirectory(cxx)
 
-add_compile_options(-march=native -Wall -Wextra -Wpedantic -Werror=array-bounds -g)
+if(${CMAKE_Fortran_COMPILER_ID} STREQUAL "Intel")
+    set(FFLAGS ${FFLAGS} -Wall -Wextra -Wpedantic -Werror=array-bounds)
+endif()
 
+add_compile_options(-march=native -g ${FFLAGS})
 # ------- testNaN.f90  NaN sentinel Fortran example ----------------
 add_executable(nan testnan.f90)
 # ------- null file example ------------

@@ -11,11 +11,11 @@ project(C++linkexample CXX Fortran)
 
 if(${CMAKE_Fortran_COMPILER_ID} STREQUAL "Intel")
     message(STATUS "be sure you have in your ~/.bashrc source compilervars.sh")
-    set(IFORTLIBS ${IFORTLIBS} svml imf intlc ifcoremt ifport)
+    set(FLIBS ${FLIBS} svml imf intlc ifcoremt ifport)
 endif()
 
 add_library(mylibrary SHARED fun.f90)
-target_link_libraries(mylibrary INTERFACE ${IFORTLIBS})
+target_link_libraries(mylibrary INTERFACE ${FLIBS})
 
 # add_executable(cxxfort cxxfort.cpp fun.f90) # could just do this
 
