@@ -16,8 +16,10 @@ nan_ieee_dp = ieee_value(1.,ieee_quiet_nan)
 nan_ieee_zp = ieee_value(1.,ieee_quiet_nan)
 
 ! this is a bit-pattern way to get NaN by IEEE754 definition
-! https://www.doc.ic.ac.uk/~eedwards/compsys/float/nan.html
 nan_bit = transfer(Z'7FC00000',1.) 
+! this is equivalent to transfer() by Fortran 2003
+!nan_bit = real(z'7fc00000')  ! however, you will get Error: Result of FLOAT is NaN so use transfer() for the case where you're deliberately setting NaN
+
 
 ! --------- print results
 

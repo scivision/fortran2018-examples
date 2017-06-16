@@ -31,6 +31,10 @@ add_executable(null devnull.f90 perf.f90)
 add_executable(split split_string.f90)
 # --------- test safe readonly file open --
 add_executable(readonly fileopen-readonly.f90)
+
+add_executable(bitpat bitpat.f90)
+add_executable(charlen charlen.f90)
+
 # ------- SVD
 if(${CMAKE_Fortran_COMPILER_ID} STREQUAL "Intel")
     add_executable(svd intel_gesvd.f90)
