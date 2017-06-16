@@ -1,5 +1,5 @@
 module mytest
-    use, intrinsic:: iso_c_binding, only: dp=>C_DOUBLE, c_int
+    use, intrinsic:: iso_c_binding, only: dp=>c_double, c_int
 
     Implicit none
 
@@ -11,8 +11,9 @@ contains
     integer(c_int), intent(in) :: N
 
     integer :: i
-    
-    print *,sqrt(z)
+
+    print *,'z',z    
+    print *,'sqrt(z)',sqrt(z)
 
     end subroutine yourmsg
 

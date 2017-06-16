@@ -2,14 +2,13 @@
 #include <cstdlib>
 #include <vector>
 
-
-extern "C" void yourmsg(float [],int*);
+extern "C" void yourmsg(double [],int*);
 
 
 int main()
 {
     int N = 3;
-    std::vector<float> x((std::size_t(N)));
+    std::vector<double> x((std::size_t(N)));
 
     for (std::vector<double>::size_type i = 0; i < x.size(); i++)
     {
@@ -18,6 +17,6 @@ int main()
 
     yourmsg(&x.front(), &N);
 
-    
+
     return EXIT_SUCCESS;
 }
