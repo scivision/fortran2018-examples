@@ -18,10 +18,10 @@ addons:
     sources: 
         - ubuntu-toolchain-r-test
     packages: 
-        - gfortran-6
+        - gfortran-5
 #'libopenmpi-dev' # wrong version mpi
-        - libhdf5-dev # old version
-        - libnetcdf-dev
+ #       - libhdf5-dev # old version
+ #       - libnetcdf-dev
 #        - libnetcdff-dev # not in image repos
 
 before_install:
