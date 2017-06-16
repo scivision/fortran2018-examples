@@ -6,6 +6,7 @@ add_subdirectory(cxx)
 if(${CMAKE_Fortran_COMPILER_ID} STREQUAL "Intel")
     set(FFLAGS ${FFLAGS} -check all)
 else()
+# if you've compiled these libraries with ifort, you can move them up to use with ifort
     add_subdirectory(hdf5)
     add_subdirectory(mpi)
     add_subdirectory(netcdf)
