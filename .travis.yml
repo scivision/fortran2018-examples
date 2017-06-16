@@ -4,7 +4,8 @@ os:
   - linux
   - osx
 
-dist: trusty # not ubuntu 12.04
+# >= trusty required
+dist: trusty
 
 notifications:
   email: false
