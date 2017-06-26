@@ -6,6 +6,8 @@ implicit none
 
 ! NOTE that 9/5.0_dp  /=  9/5.0, even when the assigned variable is real(dp) !!
 
+! NOTE: using gfortran option "-fdefault-real-8" fixes these problems!
+
 real(sp) :: huge32 = 9/5.0_sp
 real(dp) :: huge64 = 9/5.0_dp
 real(qp) :: huge128 = 9/5.0_qp
