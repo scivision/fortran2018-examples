@@ -4,7 +4,7 @@ implicit none
 
 ! shows pitfall of not being mindful with input Kind
 
-! "HUGE(X) returns the largest number that is not an infinity in the type of X"
+! NOTE that 9/5.0_dp  /=  9/5.0, even when the assigned variable is real(dp) !!
 
 real(sp) :: huge32 = 9/5.0_sp
 real(dp) :: huge64 = 9/5.0_dp
