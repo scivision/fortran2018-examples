@@ -38,7 +38,7 @@ if (sizeof(hugeint64) /= 8) then
     error stop
 endif
 
-print *,'64-bit variable with 32-bit constants auto-cast',imdouble
+print *,'64-bit variable with 32-bit constants',imdouble
 print *,'64-bit variable, 32-bit constants equal to all 64-bit constants?',imdouble==huge64
 print *,'32-bit',huge32
 print *,'64-bit',huge64
@@ -48,7 +48,7 @@ print *,'64-bit Integer',hugeint64
 print *,'kinds  sp dp qp i64'
 print *,sp,dp,qp,i64
 
-! 64-bit variable with 32-bit constants auto-cast   1.7999999523162842     
+!  64-bit variable with 32-bit constants   1.7999999523162842     
 ! 64-bit variable, 32-bit constants equal to all 64-bit constants? F
 ! 32-bit   1.79999995    
 ! 64-bit   1.8000000000000000     
@@ -56,6 +56,14 @@ print *,sp,dp,qp,i64
 ! 64-bit Integer                    1
 ! kinds  sp dp qp i64
 !           4           8          16           8
+! Bit Patterns:
+! 11011011111111111100110011001100110011000000000000000000000000000000
+! 11011011111111111100110011001100110011001100110011001100110011001101
 
+
+print *,'Bit Patterns:'
+
+print '(B0)','64-bit variable with 32-bit constants',imdouble
+print '(B0)','64-bit variable with 64-bit constants',huge64
 
 end program
