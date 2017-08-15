@@ -7,6 +7,9 @@ program helloworld
 !
 ! prereqs:  Ubuntu 17.04 or newer:
 ! apt install libcoarrays-dev
+!
+! or use Intel ifort:
+! ifort -coarray coarray_helloworld.f90
 
 use, intrinsic:: iso_fortran_env, only: dp=>real64, int64
 implicit none
@@ -21,6 +24,8 @@ if (this_image() == 1) then
 end if
 
 print *, 'Process ', this_image()
+
+sync all  ! semaphore
 
 if ( this_image() == 1 ) then
     call system_clock(toc)
