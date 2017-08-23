@@ -33,10 +33,10 @@ end if
 !---------------------------------
 dx = 1.0_wp / interval
 
-do i= 0 , 10 ! arbitrary limits
-    x= dx *( i -0.5_wp )
+do i= 0, 10 ! arbitrary limits
+    x = dx * (i - 0.5_wp)
     f = 4.0_wp / (1.0_wp + x**2)
-    psum = psum +f
+    psum = psum + f
 end do
 call co_sum(psum)
 pi = dx * psum
