@@ -1,7 +1,5 @@
 program coarray_pi
-!  Future: this example not yet working.
 !  Michael Hirsch, Ph.D.
-! example from: http://www.eneagrid.enea.it/tutorial/fanfarillo2014/AFanfarillo_20141219_CoarrayENEA.pdf
 
 ! Compilation:
 ! gfortran -fcoarray=lib coarray_pi.f90 -lcaf_mpi
@@ -71,16 +69,16 @@ call co_sum(psum)!, stat=stat,errmsg=emsg)
 !   error stop
 !endif
 
-if (this_image() == 1)  then
+if (im == 1)  then
     print *,'pi:',pi,'  iterated pi: ',psum
     print '(A,E10.3)', 'pi error',pi - psum
 endif
 
-if ( this_image() == 1 ) then
+if (im == 1) then
     call system_clock(toc)
     call system_clock(count_rate=rate)
     telaps = real((toc - tic),wp)  / rate
-    print '(A,F7.3,A)', 'Elapsed wall clock time', telaps, ' seconds.'
+    print '(A,F8.3,A)', 'Elapsed wall clock time', telaps, ' seconds.'
 end if
 
 end program
