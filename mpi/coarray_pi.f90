@@ -30,32 +30,42 @@ real(wp), parameter :: x0 = -1.0_wp
 real(wp), parameter :: x1 = 1.0_wp
 integer, parameter :: Ni = int((x1-x0) / dx)    ! (1 - (-1)) / interval
 real(wp), parameter :: pi = 4.0_wp*atan(1.0_wp)
-real(wp), codimension[*] :: psum
+real(wp) :: psum[*] = 0.0_wp ! this is a scalar coarray
 real(wp) :: f,x
-integer :: i, stat
+integer :: i, stat, im, Nimg
 character :: emsg
 
+im = this_image()
+Nimg = num_images()
+
 !---------------------------------
-if (this_image() == 1) then
+if (im == 1) then
     call system_clock(tic)
     print *, 'number of Fortran coarray images:', num_images()
+    print *,'approximating pi in ',Ni,' steps.'
 end if
 !---------------------------------
 
-print *,'approximating pi in ',Ni,' steps.'
-
-do i = 1, Ni-1 ! number of user-chosen intervals
+do i = im, Ni-1, Nimg ! Each image works on a subset of the problem
     x = x0 + i*dx
     f = dx / sqrt(1.0_wp - x**2)
     psum = psum + f
 !    print *,x,f,psum
 end do
 
-call co_sum(psum, stat=stat,errmsg=emsg)
-if (stat /= 0) then
-   write (stderr,*) emsg
-   error stop
+! ---- alternative to co_sum for Intel 2017 that doesn't have working co_sum (!!!)
+sync all
+if (im==1) then
+  do i = 2, Nimg
+    psum = psum + psum[i]
+  enddo 
 endif
+! --- co_sum is much simpler!
+!call co_sum(psum, stat=stat,errmsg=emsg)  
+!if (stat /= 0) then
+!   write (stderr,*) emsg
+!   error stop
+!endif
 
 if (this_image() == 1)  then
     print *,'pi:',pi,'  iterated pi: ',psum
