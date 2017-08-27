@@ -5,15 +5,19 @@ program coarray_pi
 
 ! Compilation:
 ! gfortran -fcoarray=lib coarray_pi.f90 -lcaf_mpi
+! mpirun -np 4 ./a.out
+! Note that if you don't use mpirun for gfortran, only a single image will spawn.
 ! 
 ! test with single process
 ! gfortran -fcoarray=single coarray_pi.f90
+! ./a.out
 !
 ! gfortran prereqs:  Ubuntu 17.04 / Debian Stretch 9 or newer:
 ! apt install libcoarrays-dev
 !
 ! or use Intel 
 ! ifort -coarray coarray_pi.f90
+! ifort ./a.out will automatically spawn images = number of virtual cores, mpirun not needed as with gfortran.
 !
 ! This demo program implements calculation:
 ! $$ \pi = \int^1_{-1} \frac{dx}{\sqrt{1-x^2}} 
@@ -54,14 +58,14 @@ do i = im, Ni-1, Nimg ! Each image works on a subset of the problem
 end do
 
 ! ---- alternative to co_sum for Intel 2017 that doesn't have working co_sum (!!!)
-sync all
-if (im==1) then
-  do i = 2, Nimg
-    psum = psum + psum[i]
-  enddo 
-endif
-! --- co_sum is much simpler!
-!call co_sum(psum, stat=stat,errmsg=emsg)  
+!sync all
+!if (im==1) then
+ ! do i = 2, Nimg
+!    psum = psum + psum[i]
+ ! enddo 
+!endif
+! --- co_sum is much simpler, but not working on ifort 2017 yet
+call co_sum(psum)!, stat=stat,errmsg=emsg)  
 !if (stat /= 0) then
 !   write (stderr,*) emsg
 !   error stop
