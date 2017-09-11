@@ -32,7 +32,7 @@ print *,'128-bit PI',pi128
 
 ! both ifort and gfortran allows "q" to specify real128 literal, "d" to specify real64 literal, and "e" for real32 literal.
 
-! Normaly one should use "e" as the separator to avoid silent type conflictions
+! One should use "e" as the separator and a trailing _wp to avoid silent type conflicts
 
 ! this line is only true for default real32
 print *,3.14159265358979323846264338327950280 == 3.14159274
