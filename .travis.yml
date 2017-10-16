@@ -18,9 +18,9 @@ git:
 
 addons:
   apt:
-    sources: 
+    sources:
       - ubuntu-toolchain-r-test
-    packages: 
+    packages:
       - gfortran-7
 #'libopenmpi-dev' # wrong version mpi
  #       - libhdf5-dev # old version
@@ -32,16 +32,16 @@ before_install:
     - if [[ $TRAVIS_OS_NAME == osx ]]; then
         brew update;
         brew install gcc;
-      fi 
+      fi
 
     - gfortran --version
 
 install:
-    - mkdir -p bin
-    - cd bin
-    - cmake ..
-    - make
+  - mkdir -p bin
+  - cd bin
+  - cmake ..
+  - make
 
-script: 
+script:
     - ./nan
     - ./split
