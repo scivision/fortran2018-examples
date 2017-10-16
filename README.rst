@@ -25,7 +25,10 @@ Build
 =====
 The CMake script automatically walks through the subdirectories::
 
+.. code:: bash
+
     cd bin
+
     cmake ..
     make -k
 
@@ -38,11 +41,13 @@ If using the Intel compiler instead of GNU compiler:
 
 * the NetCDF and HDF5 programs will need to be compiled with the Intel compiler.
 * you need to ``source compilervars.sh`` as usual with the Intel compiler or you will get ``*.so missing`` errors.
-* for Intel compiler, build with::
+* for Intel compiler, build with
 
-        cd bin
-        FC=ifort CC=icc CXX=icpc cmake ..
-        make -k
+  .. code:: bash
+
+    cd bin
+    FC=ifort CC=icc CXX=icpc cmake ..
+    make -k
 
 Call Fortran from C++
 ---------------------
@@ -52,14 +57,16 @@ You can easily use Fortran subroutines and functions from C and C++::
 
 The key factors in calling a Fortran module from C or C++ include:
 
-* use the standard C binding to define variable and bind functions/subroutines::
+* use the standard C binding to define variable and bind functions/subroutines
 
-        use,intrinsic:: iso_c_binding, only: c_int, c_float, c_double
+  .. code:: fortran
 
-        integer(c_int) :: N
-        real(c_double) :: X
+    use,intrinsic:: iso_c_binding, only: c_int, c_float, c_double
 
-        subroutine cool(X,N) bind(c)
+    integer(c_int) :: N
+    real(c_double) :: X
+
+    subroutine cool(X,N) bind(c)
   
   the ``bind(c)`` makes the name ``cool`` available to C/C++.  
 
@@ -93,13 +100,17 @@ OpenMPI
 
 Hello World MPI
 ~~~~~~~~~~~~~~~
-To run the simplest sort of multi-threaded Fortran program using MPI-2, assuming you have a CPU with 8 virtual cores like an Intel Core i7::
+To run the simplest sort of multi-threaded Fortran program using MPI-2, assuming you have a CPU with 8 virtual cores like an Intel Core i7
+
+.. code:: bash
 
     mpirun -np 8 mpi/hello
 
 Message Passing MPI
 ~~~~~~~~~~~~~~~~~~~
-Pass data between two MPI threads::
+Pass data between two MPI threads
+
+.. code:: bash
 
     mpirun -np 2 mpi/pass
 
@@ -107,11 +118,15 @@ Quiet NaN
 ---------
 We might choose to use NaN as a sentinal value, where instead of returning separate "OK" logical variable from a function or subroutine, if a failure happens, we return NaN in one of the important variables.
 There was a classical way to do this that was type specific, by setting the NaN bit pattern for your data type.
-For example, for single-precision real you'd type::
+For example, for single-precision real you'd type
+
+.. code:: fortran
 
     nan_bit = transfer(Z'7FF80000',1.)
 
-For a standards-based way to handle all floating point types, you might consider::
+For a standards-based way to handle all floating point types, you might consider
+
+.. code:: fortran
 
     use, intrinsic :: ieee_arithmetic, only: ieee_value, ieee_quiet_nan
     nan_ieee = ieee_value(1.,ieee_quiet_nan)
@@ -162,11 +177,16 @@ If you're trying to load and parse a complicated text file, it is perhaps better
 
 f2py
 ----
-simple f2py demo::
+simple f2py demo
+
+.. code:: bash
+
 
     f2py -c fib3.f90 -m fib3
 
-This creates a `fib3*.so` (Linux/Mac)  or `fib3*.pyd` (Windows), which is used by::
+This creates a `fib3*.so` (Linux/Mac)  or `fib3*.pyd` (Windows), which is used by
+
+.. code:: bash
 
     python -c "import fib3; print(fib3.fib(8))"
 
@@ -174,12 +194,16 @@ This creates a `fib3*.so` (Linux/Mac)  or `fib3*.pyd` (Windows), which is used b
 
 or
 
+.. code:: bash
+
     python -c "import fib3; print(fib3.fib3.fib(1478))"
 
 > [  0.  1.  1. ...,
 >   8.07763763e+307   1.30698922e+308    inf]
 
 Note the file `.f2py_f2cmap`, which is vital to proper assigning of real and complex data types, particularly double precision.
+
+.. code:: python
 
     dict(real= dict(sp='float', dp='double'),
     complex = dict(sp='complex_float',dp="complex_double"))

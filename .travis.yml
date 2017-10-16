@@ -3,6 +3,8 @@ language: c
 os:
   - linux
   - osx
+  
+env: FC=gfortran-7
 
 # >= trusty required
 dist: trusty
@@ -17,9 +19,9 @@ git:
 addons:
   apt:
     sources: 
-        - ubuntu-toolchain-r-test
+      - ubuntu-toolchain-r-test
     packages: 
-        - gfortran-5
+      - gfortran-7
 #'libopenmpi-dev' # wrong version mpi
  #       - libhdf5-dev # old version
  #       - libnetcdf-dev
@@ -30,9 +32,6 @@ before_install:
     - if [[ $TRAVIS_OS_NAME == osx ]]; then
         brew update;
         brew install gcc;
-      else
-        mkdir -p $HOME/.local/bin;
-        ln -fs /usr/bin/gfortran-5 "$HOME/.local/bin/gfortran";
       fi 
 
     - gfortran --version

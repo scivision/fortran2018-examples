@@ -5,6 +5,7 @@ Makefile
 CMakeCache.txt
 *.pyd
 bin/
+__pycache__/
 
 # Compiled Object files
 *.slo
