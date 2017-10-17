@@ -1,10 +1,11 @@
+# gfortran >= 6 is required by fortran2015-examples
 language: c
 
 os:
   - linux
   - osx
   
-env: FC=gfortran
+env: FC=gfortran-6
 
 # >= trusty required
 dist: trusty
@@ -19,7 +20,7 @@ git:
 addons:
   apt:
     packages:
-      - gfortran
+      - gfortran-6
 #'libopenmpi-dev' # wrong version mpi
  #       - libhdf5-dev # old version
  #       - libnetcdf-dev
@@ -30,6 +31,7 @@ before_install:
     - if [[ $TRAVIS_OS_NAME == osx ]]; then
         brew update;
         brew install gcc;
+        export FC=gfortran;
       fi
 
 install:
