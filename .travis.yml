@@ -19,6 +19,8 @@ git:
 
 addons:
   apt:
+    sources:
+      - ubuntu-toolchain-r-test
     packages:
       - gfortran-6
 #'libopenmpi-dev' # wrong version mpi
@@ -35,7 +37,6 @@ before_install:
       fi
 
 install:
-  - mkdir -p bin
   - cd bin
   - cmake ..
   - make
