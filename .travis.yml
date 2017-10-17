@@ -30,11 +30,11 @@ addons:
 
 before_install:
 # mac brew has no hdf5 or netcdf
-    - if [[ $TRAVIS_OS_NAME == osx ]]; then
-        brew update;
-        brew install gcc;
-        export FC=gfortran;
-      fi
+  - if [[ $TRAVIS_OS_NAME == osx ]]; then
+      brew update;
+      brew install gcc;
+      export FC=gfortran;
+    fi
 
 install:
   - cd bin
