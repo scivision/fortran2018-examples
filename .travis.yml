@@ -4,7 +4,7 @@ os:
   - linux
   - osx
   
-env: FC=gfortran-6
+env: FC=gfortran
 
 # >= trusty required
 dist: trusty
@@ -18,10 +18,8 @@ git:
 
 addons:
   apt:
-    sources:
-      - ubuntu-toolchain-r-test
     packages:
-      - gfortran-6
+      - gfortran
 #'libopenmpi-dev' # wrong version mpi
  #       - libhdf5-dev # old version
  #       - libnetcdf-dev
