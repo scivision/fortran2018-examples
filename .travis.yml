@@ -1,5 +1,6 @@
 # gfortran >= 6 is required by fortran2015-examples
 language: c
+fast_finish: true
 
 os:
   - linux
