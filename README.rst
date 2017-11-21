@@ -1,10 +1,12 @@
-.. image:: https://travis-ci.org/scivision/fortran2015-examples.svg?branch=master
-    :target: https://travis-ci.org/scivision/fortran2015-examples
+.. image:: https://travis-ci.org/scivision/fortran2018-examples.svg?branch=master
+    :target: https://travis-ci.org/scivision/fortran2018-examples
 
-====================
-fortran2015-examples
-====================
-Easy examples of scientific computing with modern, powerful, easy Fortran 2015 standard
+=====================
+Fortran 2018 Examples
+=====================
+
+Easy examples of scientific computing with modern, powerful, easy Fortran 2018 standard.
+Fortran 2018 began as the TS18508 extension, formerly known as Fortran 2015.
 
 .. contents::
 
@@ -15,7 +17,7 @@ Linux/Windows/BSD::
 
     apt install cmake gfortran libhdf5-dev libopenmpi-dev libnetcdff-dev
 
-Yes that's two "ff" in `libnetcdff-dev`
+Yes that's two ``ff`` in ``libnetcdff-dev``
 
 Mac::
 

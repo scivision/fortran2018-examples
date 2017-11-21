@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 3.2.2)
-project(fortran2015demo Fortran)
+project(fortran2018_netcdf Fortran)
 
 # https://github.com/jedbrown/cmake-modules/blob/master/FindNetCDF.cmake
 #

@@ -1,7 +1,7 @@
 cmake_minimum_required (VERSION 2.8.12)
-project(fortran2015demo Fortran)
+project(fortran2018demo Fortran)
 
-# ------- Fortran 2015 coarray examples -------
+# ------- Fortran 2018 coarray examples -------
 # Coarrays are easier to use than MPI and more general as an intrinsic part of Fortran 2008.
 # this requires libcoarrays-dev, which is in Ubuntu 17.04 and newer.
 # or use Intel mpif90
