@@ -33,7 +33,8 @@ add_executable(null devnull.f90 perf.f90)
 add_executable(split split_string.f90)
 # --------- test safe readonly file open --
 add_executable(readonly fileopen-readonly.f90)
-# --------
+# -------- pause replacement
+add_executable(justwait replace_pause.f90)
 
 add_executable(overwrite_stdout overwrite_stdout.f90)
 add_executable(bitpat bitpat.f90)
