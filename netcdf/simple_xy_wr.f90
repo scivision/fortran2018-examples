@@ -21,7 +21,7 @@ program simple_xy_wr
   implicit none
 
   ! This is the name of the data file we will create.
-  character (len = *), parameter :: FILE_NAME = "simple_xy.nc"
+  character(*), parameter :: FILE_NAME = "simple_xy.nc"
 
   ! We are writing 2D data, a 6 x 12 grid. 
   integer, parameter :: NDIMS = 2
@@ -85,7 +85,7 @@ program simple_xy_wr
 
 contains
   subroutine check(status)
-    integer, intent ( in) :: status
+    integer, intent (in) :: status
     
     if(status /= nf90_noerr) then 
       write(stderr, *)  trim(nf90_strerror(status))
