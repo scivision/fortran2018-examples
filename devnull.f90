@@ -46,8 +46,8 @@ print '(A10,F10.3,A)','file: ',tfile,' ms'
 end program
 
 real(dp) function writetime(u,Nrun)
-use, intrinsic :: iso_fortran_env, only : dp=>REAL64,i64=>INT64
-use perf, only : init_random_seed, sysclock2ms
+use, intrinsic :: iso_fortran_env, only: dp=>REAL64,i64=>INT64
+use perf, only: sysclock2ms
 implicit none
 integer, intent(in) :: u,Nrun
 integer(i64) :: tic,toc,tmin
