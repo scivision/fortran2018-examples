@@ -1,37 +1,37 @@
 ! recommend using all lower case filenames and no spaces.
 ! plays sound in Fortran 2003+
-    program mysound
-    use,intrinsic:: iso_fortran_env,only: error_unit,input_unit
-    implicit none
+program mysound
+use,intrinsic:: iso_fortran_env,only: error_unit
+implicit none
 
-    ! configure ffplay -- could make if/else to allow other players
-    character(*),parameter :: playexe='ffplay'
-    character(*),parameter :: cmdopts='-autoexit -loglevel quiet -nodisp'
+! configure ffplay -- could make if/else to allow other players
+character(*),parameter :: playexe='ffplay'
+! -autoexit clips off the end of the sound slightly, but otherwise thread hangs open even after Fortran program ends.
+character(*),parameter :: cmdopts='-autoexit -loglevel quiet -nodisp'
 
-    character(1000) :: fn
-    character(1000) :: cmd
-    logical :: fexist = .false.
-    integer :: ios, fsize, u=-1
+character(1000) :: fn
+character(1000) :: pcmd
+!logical :: fexist = .false.
+integer :: ios!, fsize, u=-1
 
-    print *,'input sound file to playback'
-    read(input_unit,'(A)') fn    ! use (A)  NOT * or it will clip on '/'
+call get_command_argument(1,fn,status=ios)
+if (ios/=0) error stop 'please include audio filename in command'
 
-    open(newunit=u,file=fn,status='old',iostat=ios,action='read')
-    if (ios==0) inquire(unit=u,opened=fexist,size=fsize) ! file and not directory
-    close(u)
+!open(newunit=u,file=fn,status='old',iostat=ios,action='read')
+!if (ios==0) inquire(unit=u,opened=fexist,size=fsize) ! file and not directory
+!close(u)
 
-    ! fsize <= 256 is a little arbitrary--seems there's not yet a compiler-standard way to discriminate between files and diretories.
-    if (.not.fexist .or. ios/=0 .or. fsize<=256) then
-        write(error_unit,*) 'did not find FILE ',trim(fn)
-        error stop 'file I/O error'
-    endif
+! fsize <= 256 is a little arbitrary--seems there's not yet a compiler-standard way to discriminate between files and diretories.
+!if (.not.fexist .or. ios/=0 .or. fsize<=256) then
+!    write(error_unit,*) 'did not find FILE ',trim(fn)
+!    error stop 'file I/O error'
+!endif
 
-    print *,'playing ',trim(fn)
+pcmd = playexe//' '//cmdopts//' '//trim(fn)
 
-    cmd = playexe//' '//cmdopts//' '//trim(fn)
-    print *,trim(cmd) ! for debugging
+print *,trim(pcmd) ! for debugging
 
-    ! exitstat only works for wait=.true. by Fortran 2008 spec.
-    call execute_command_line(cmd, wait=.false.)
+! exitstat only works for wait=.true. by Fortran 2008 spec.
+call execute_command_line(pcmd, wait=.false.)
 
-    end program
+end program

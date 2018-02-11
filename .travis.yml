@@ -42,3 +42,4 @@ install:
 script:
     - ./nan
     - ./split
+    - ./hugeprec

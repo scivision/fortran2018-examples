@@ -40,6 +40,9 @@ add_executable(overwrite_stdout overwrite_stdout.f90)
 add_executable(bitpat bitpat.f90)
 add_executable(charlen charlen.f90)
 add_executable(termio terminal_io.f90)
+add_executable(hugeprec huge_precision.f90)
+add_executable(playsound play_sound.f90)
+add_executable(precprob precision_problems.f90)
 
 # ------- SVD
 if(${CMAKE_Fortran_COMPILER_ID} STREQUAL "Intel")
