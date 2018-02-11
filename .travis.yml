@@ -1,19 +1,15 @@
-# gfortran >= 6 is required by fortran2015-examples
+# gfortran >= 6 is required
 language: c
 fast_finish: true
 
 os:
   - linux
-#  - osx
+  - osx
   
 env: FC=gfortran-6
 
-# >= trusty required
-dist: trusty
-group: edge
+group: travis_latest
 
-notifications:
-  email: false
 
 git:
   depth: 3
@@ -33,7 +29,8 @@ before_install:
 # mac brew has no hdf5 or netcdf
   - if [[ $TRAVIS_OS_NAME == osx ]]; then
       brew update;
-      brew install gcc;
+      brew install gcc || true;
+      brew link --overwrite gcc;
       export FC=gfortran;
     fi
 
