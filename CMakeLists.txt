@@ -44,6 +44,12 @@ add_executable(hugeprec huge_precision.f90)
 add_executable(playsound play_sound.f90)
 add_executable(precprob precision_problems.f90)
 
+
+add_library(assert assert.f90)
+
+add_executable(testall Test.f90)
+target_link_libraries(testall assert)
+
 # ------- SVD
 if(${CMAKE_Fortran_COMPILER_ID} STREQUAL "Intel")
     add_executable(svd intel_gesvd.f90)

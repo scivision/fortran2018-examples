@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 3.2.2)
-project(fortran2018_netcdf Fortran)
+project(test_netcdf Fortran)
 
 # https://github.com/jedbrown/cmake-modules/blob/master/FindNetCDF.cmake
 #
@@ -7,6 +7,7 @@ project(fortran2018_netcdf Fortran)
 
 find_package(netCDF)
 if(netCDF_DIR)  # there isn't a NETCDF_FOUND variable yet in libnetcdff-dev
+    message(STATUS "NetCDF found:" ${netCDF_DIR})
     include_directories(${netCDF_INCLUDE_DIR})
 #    message(STATUS "netCDF_INCLUDE_DIR " ${netCDF_INCLUDE_DIR})
 

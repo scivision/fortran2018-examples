@@ -33,6 +33,10 @@ The CMake script automatically walks through the subdirectories::
 
     cmake ..
     make -k
+    
+If you have Anaconda Python installed, this can override system prereqs. Try workaround by::
+
+    PATH=/usr/bin:/usr/include cmake ..
 
 
 Programs
