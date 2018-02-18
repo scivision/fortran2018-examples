@@ -35,7 +35,7 @@ if (isclose(inf,nan)) error stop
 ! denormal
 if (wp==sp.and.isclose(1e-44_wp, 0._wp, atol=0._wp)) error stop 'single precision denormal' 
 if (wp==dp.and.isclose(1e-323_wp, 0._wp, atol=0._wp)) error stop 'double precision denormal' 
-if (wp==qp.and.isclose(1e-4965_wp, 0._wp, atol=0._wp)) error stop 'double precision denormal' 
+if (wp==qp.and.isclose(1e-4965_wp, 0._wp, atol=0._wp)) error stop 'quad precision denormal' 
 
 !print*,nan,inf
 !-------
