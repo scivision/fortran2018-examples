@@ -4,19 +4,16 @@ program coarray_iter
 ! example from: http://www.eneagrid.enea.it/tutorial/fanfarillo2014/AFanfarillo_20141219_CoarrayENEA.pdf
 
 ! Compilation:
-! gfortran -fcoarray=lib coarray_iter.f90 -lcaf_mpi
+! gfortran -fcoarray=lib iter.f90 -lcaf_mpi
 ! mpirun -np 4 ./a.out
 ! Note that if you don't use mpirun for gfortran, only a single image will spawn.
 ! 
 ! test with single process
-! gfortran -fcoarray=single coarray_iter.f90
+! gfortran -fcoarray=single iter.f90
 ! ./a.out
 !
-! gfortran prereqs:  Ubuntu 17.04 / Debian Stretch 9 or newer:
-! apt install libcoarrays-dev
-!
-! or use Intel 
-! ifort -coarray coarray_iter.f90
+! or Intel 
+! ifort -coarray iter.f90
 ! ifort ./a.out will automatically spawn images = number of virtual cores, mpirun not needed as with gfortran.
 !
 ! This demo program implements calculation:

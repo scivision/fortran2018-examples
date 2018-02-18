@@ -1,11 +1,5 @@
 cmake_minimum_required (VERSION 2.8.12)
-project(fortran2018demo Fortran)
-
-# ------- Fortran 2018 coarray examples -------
-# Coarrays are easier to use than MPI and more general as an intrinsic part of Fortran 2008.
-# this requires libcoarrays-dev, which is in Ubuntu 17.04 and newer.
-# or use Intel mpif90
-#add_executable(hello coarray_helloworld.f90)
+project(mpidemo Fortran)
 
 # ------- MPI Fortran examples ----------------
 find_package(MPI)
@@ -22,11 +16,11 @@ if(MPI_Fortran_COMPILER)   # MPI_FOUND is not used
 
 #    message(STATUS "MPI_Fortran_LIBRARIES " ${MPI_Fortran_LIBRARIES})
 
-    add_executable(mpi_hello mpi_helloworld.f90)
+    add_executable(mpi_hello helloworld.f90)
     target_link_libraries(mpi_hello ${MPI_Fortran_LIBRARIES})
 
-    add_executable(pass mpi_pass.f90)
-    target_link_libraries(pass ${MPI_Fortran_LIBRARIES})
+    add_executable(mpi_pass thread_pass.f90)
+    target_link_libraries(mpi_pass ${MPI_Fortran_LIBRARIES})
 else()
     message(WARNING "MPI not setup" ${MPI_Fortran_COMPILE_FLAGS})
 endif()

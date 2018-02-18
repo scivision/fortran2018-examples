@@ -5,9 +5,6 @@ program helloworld
 ! Compilation:
 ! gfortran -fcoarray=lib coarray_helloworld.f90 -lcaf_mpi
 !
-! prereqs:  Ubuntu 17.04 or newer:
-! apt install libcoarrays-dev
-!
 ! or use Intel ifort:
 ! ifort -coarray coarray_helloworld.f90
 

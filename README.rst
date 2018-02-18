@@ -13,15 +13,17 @@ Fortran 2018 began as the TS18508 extension, formerly known as Fortran 2015.
 
 Prereq
 ======
-Linux/Windows/BSD::
 
-    apt install cmake gfortran libhdf5-dev libopenmpi-dev libnetcdff-dev
+* Linux/Windows/BSD::
 
-Yes that's two ``ff`` in ``libnetcdff-dev``
+    apt install cmake gfortran libhdf5-dev libopenmpi-dev libnetcdff-dev libcoarrays-dev open-coarrays-bin
 
-Mac::
+  Yes that's two ``ff`` in ``libnetcdff-dev``
+  
+* Mac::
 
-    brew install gcc cmake open-mpi
+    brew install gcc cmake open-mpi opencoarrays
+
 
 Build
 =====
@@ -101,16 +103,30 @@ It causes non-obvious errors that can waste your time.
 
 In my opinion NOT using the wrapper compiler may be safer so that's what the CMake file does.
 
+Coarray
+-------
+Coarray support from Fortran 2008/2018 is native Fortran high-level abstractions that are supported by a range of libraries, including OpenMPI.
+Coarray examples are under``coarray/``.
+
+Hello World
+~~~~~~~~~~~
+
+.. code:: bash
+
+    mpirun -np 8 coarray/coarray_hello
+    
+
 OpenMPI
 -------
+Under the ``mpi/`` directory:
 
-Hello World MPI
+Hello World
 ~~~~~~~~~~~~~~~
 To run the simplest sort of multi-threaded Fortran program using MPI-2, assuming you have a CPU with 8 virtual cores like an Intel Core i7
 
 .. code:: bash
 
-    mpirun -np 8 mpi/hello
+    mpirun -np 8 mpi/mpi_hello
 
 Message Passing MPI
 ~~~~~~~~~~~~~~~~~~~
@@ -118,7 +134,7 @@ Pass data between two MPI threads
 
 .. code:: bash
 
-    mpirun -np 2 mpi/pass
+    mpirun -np 2 mpi/mpi_pass
 
 Quiet NaN
 ---------

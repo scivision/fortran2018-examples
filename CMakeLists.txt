@@ -3,18 +3,19 @@ project(fortran2018demo Fortran)
 
 add_subdirectory(cxx)
 
-if(${CMAKE_Fortran_COMPILER_ID} STREQUAL "Intel")
+if(${CMAKE_Fortran_COMPILER_ID} STREQUAL Intel)
     set(FFLAGS ${FFLAGS} -check all)
-else()
+elseif(${CMAKE_Fortran_COMPILER_ID} STREQUAL GNU)
     add_executable(proc pragma.f90)
 # if you've compiled these libraries with ifort, you can move them up to use with ifort
     add_subdirectory(hdf5)
     add_subdirectory(mpi)
+    add_subdirectory(coarray)
     add_subdirectory(netcdf)
-    set(FFLAGS ${FFLAGS} -march=native -Wall -Wextra -pedantic -Werror=array-bounds)
+    set(FFLAGS ${FFLAGS} -march=native -Wall -Wextra -Wpedantic -Werror=array-bounds -fbacktrace)
 endif()
 
-add_compile_options( -g ${FFLAGS})
+add_compile_options(-g ${FFLAGS})
 #------------------------
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 # https://software.intel.com/en-us/articles/intel-mkl-link-line-advisor
@@ -43,7 +44,6 @@ add_executable(termio terminal_io.f90)
 add_executable(hugeprec huge_precision.f90)
 add_executable(playsound play_sound.f90)
 add_executable(precprob precision_problems.f90)
-
 
 add_library(assert assert.f90)
 
