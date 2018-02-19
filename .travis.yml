@@ -26,13 +26,12 @@ git:
 #        - libnetcdff-dev # not in image repos
 
 before_install:
-# mac brew has no hdf5 or netcdf
   - if [[ $TRAVIS_OS_NAME == osx ]]; then
       brew update;
       brew install gcc || true;
       brew link --overwrite gcc;
       export FC=gfortran;
-      brew install opencoarrays;
+      brew install opencoarrays hdf5 netcdf;
     fi
   - if [[ $TRAVIS_OS_NAME == linux ]]; then
       export HOMEBREW_FORCE_VENDOR_RUBY=1;
@@ -51,3 +50,4 @@ script:
     - ./nan
     - ./split
     - ./hugeprec
+    - cafrun coarray/coarray_hello
