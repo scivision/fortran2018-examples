@@ -27,7 +27,7 @@ Prereq
 
 Build
 =====
-The CMake script automatically walks through the subdirectories::
+The CMake script automatically walks through the subdirectories:
 
 .. code:: bash
 
