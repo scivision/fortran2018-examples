@@ -5,7 +5,7 @@ character*(5) :: cb5  ! obsolete, don't use
 character(5)  :: c5   ! good to use
 character(*),parameter  :: ca(2)='hello'
 
-print *,len(cb5),len(c5),len(ca),size(ca)
+if (.not.all([len(cb5)==5,len(c5)==5,len(ca)==5,size(ca)==2])) error stop
 print *, ca
 
 
