@@ -1,59 +1,60 @@
 program openreadonly
+ ! NOTE: chmod is non-standard, and will crash ifort runtime.
 
+use, intrinsic :: iso_fortran_env, only: stderr=>error_unit
 implicit none
 
 character(*),parameter :: fnro='ro.txt'
-character(80) :: readout
-integer :: u,ios
-logical :: fexist
 
 !--- show read only file by filesystem is not safe from deletion ----
-! e.g. chmod -w ro.txt, is overridden by Fortran like rm -f
+  call createro(fnro)
+  call unlink(fnro) ! this is MY unlink, since the GNU extension is non-standard and crashes ifort runtimes.
+  print *,'deleted read-only: ',fnro
 
-call createro(fnro)
-
- call unlink(fnro,ios)
- if (ios /= 0) error stop 'could not delete readonly file'
- print *,'deleted read-only: ',fnro
-!----------- show delete on close
-call createro(fnro)
-
-open(newunit=u, file=fnro, form='formatted', status='old', iostat=ios, action='read')
- if (ios /= 0) error stop 'could not open readonly file to read'
-
- read(u, iostat=ios, fmt=*) readout
- if (ios /= 0) error stop 'could not read file'
-! ios=0 for normal read reaching end of file.
-
- print*,readout
-
- close(u, status='delete') 
-
-inquire(file=fnro, exist=fexist)
-
-print *,fnro,' exists? ',fexist 
-
-end program
+contains
 
 
 subroutine createro(fn)
-implicit none
-! creates readonly file 
-character(*),intent(in) :: fn
-character(*),parameter :: txt='i am read only'
-integer u,ios
+  ! creates readonly file 
+  character(*),intent(in) :: fn
+  character(*),parameter :: txt='i am read only'
+  integer u,ios
 
-open(newunit=u, file=fn, form='formatted', status='unknown', iostat=ios, action='write')
- if (ios /= 0) error stop 'could not create readonly file'
+  open(newunit=u, file=fn, form='formatted', status='unknown', iostat=ios, action='write')
+   if (ios /= 0) error stop 'could not create readonly file'
 
-call chmod(fn,'-w',ios)
- if (ios /= 0) error stop 'could not create readonly file'
 
-write(u,iostat=ios,fmt=*) txt
- if (ios /= 0) error stop 'could not write file'
+  write(u,iostat=ios,fmt=*) txt
+   if (ios /= 0) error stop 'could not write file'
 
- close(u)
+  close(u)
 
-print *,'created read-only: ',fn
+  print *,'created read-only: ',fn
 
 end subroutine
+
+
+subroutine unlink(fn)
+  character(*), intent(in) :: fn
+  integer :: u, ios
+  logical :: fexist
+
+! Fortran-standard way to delete a file.
+  open(newunit=u, file=fn, status='old')
+  close(u, status='delete', iostat=ios)
+  
+  if (ios/=0) then
+    write(stderr,*) 'failed to delete',fn,ios
+    error stop
+  endif
+  
+  inquire(file=fn, exist=fexist)
+  
+  if (fexist) then 
+    write(stderr,*) 'failed to delete',fn
+    error stop
+  endif
+  
+end subroutine unlink
+
+end program
