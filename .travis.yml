@@ -6,7 +6,7 @@ os:
   - linux
   - osx
   
-env: FC=gfortran-6
+env: FC=gfortran
 
 group: travis_latest
 
@@ -14,12 +14,12 @@ group: travis_latest
 git:
   depth: 3
 
-addons:
-  apt:
-    sources:
-      - ubuntu-toolchain-r-test
-    packages:
-      - gfortran-6
+#addons:
+#  apt:
+#    sources:
+#      - ubuntu-toolchain-r-test
+#    packages:
+#      - gfortran-6
 #'libopenmpi-dev' # wrong version mpi
  #       - libhdf5-dev # old version
  #       - libnetcdf-dev
@@ -32,7 +32,7 @@ before_install:
       brew install gcc || true;
       brew link --overwrite gcc;
       export FC=gfortran;
-      brew install opencoarrays
+      brew install opencoarrays;
     fi
   - if [[ $TRAVIS_OS_NAME == linux ]]; then
       git clone https://github.com/Linuxbrew/brew.git ~/.linuxbrew;
