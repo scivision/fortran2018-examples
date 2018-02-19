@@ -35,10 +35,8 @@ before_install:
       brew install opencoarrays;
     fi
   - if [[ $TRAVIS_OS_NAME == linux ]]; then
-      git clone https://github.com/Linuxbrew/brew.git ~/.linuxbrew;
       export HOMEBREW_FORCE_VENDOR_RUBY=1;
-      
-      ~/.linuxbrew/install.sh;
+      sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)";
       brew install gcc opencoarrays;
     fi
     
