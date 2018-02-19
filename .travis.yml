@@ -32,7 +32,16 @@ before_install:
       brew install gcc || true;
       brew link --overwrite gcc;
       export FC=gfortran;
+      brew install opencoarrays
     fi
+  - if [[ $TRAVIS_OS_NAME == linux ]]; then
+      git clone https://github.com/Linuxbrew/brew.git ~/.linuxbrew;
+      export HOMEBREW_FORCE_VENDOR_RUBY=1;
+      
+      ~/.linuxbrew/install.sh;
+      brew install gcc opencoarrays;
+    fi
+    
 
 install:
   - cd bin
