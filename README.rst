@@ -36,19 +36,26 @@ The CMake script automatically walks through the subdirectories::
     cmake ..
     make -k
     
-If you have Anaconda Python installed, this can override system prereqs. Try workaround by::
+If you have Anaconda Python or Intel Fortran installed, this can override system prereqs. Workaround:
+
+.. code:: bash
 
     PATH=/usr/bin:/usr/include cmake ..
+    make
+    
+    
+ifort Intel
+-----------
+Be sure you have the `Intel Parallel Studio Cluster Edition <https://www.scivision.co/install-intel-compiler-icc-icpc-ifort/>`_ that has ``mpiifort``.
 
+.. code:: bash
 
-Programs
-========
-Most people use the GNU compiler.
-
-If using the Intel compiler instead of GNU compiler:
-
-* the NetCDF and HDF5 programs will need to be compiled with the Intel compiler.
-* you need to ``source compilervars.sh`` as usual with the Intel compiler or you will get ``*.so missing`` errors.
+    FC=ifort CC=icc CXX=icpc cmake ..
+    make
+    
+    
+* the NetCDF and HDF5 libraries will need to be manually compiled with the Intel compiler.
+* need to ``source compilervars.sh`` as usual with the Intel compiler or you will get ``*.so missing`` errors.
 * for Intel compiler, build with
 
   .. code:: bash
@@ -56,6 +63,11 @@ If using the Intel compiler instead of GNU compiler:
     cd bin
     FC=ifort CC=icc CXX=icpc cmake ..
     make -k
+    
+
+Programs
+========
+
 
 Call Fortran from C++
 ---------------------
