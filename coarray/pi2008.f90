@@ -43,11 +43,13 @@ do i = im, Ni-1, num_images() ! Each image works on a subset of the problem
 end do
 
 ! --- co_sum is much simpler, but not working on ifort 2017 yet
-call co_sum(psum)!, stat=stat,errmsg=emsg)  
-!if (stat /= 0) then
-!   write (stderr,*) emsg
-!   error stop
-!endif
+! ---- alternative to Fortran 2018 co_sum for Fortran 2008 
+sync all
+if (im==1) then
+  do i = 2, num_images()
+    psum = psum + psum[i]
+  enddo 
+endif
 
 if (im == 1)  then
     print *,'pi:',pi,'  iterated pi: ',psum
@@ -58,7 +60,7 @@ if (im == 1) then
     call system_clock(toc)
     call system_clock(count_rate=rate)
     telaps = real((toc - tic),wp)  / rate
-    print '(A,E9.3,A,I3,A)', 'Elapsed wall clock time ', telaps, ' seconds, using',num_images(),' images.'
+    print '(A,E10.3,A,I3,A)', 'Elapsed wall clock time ', telaps, ' seconds, using',num_images(),' images.'
 end if
 
 end program

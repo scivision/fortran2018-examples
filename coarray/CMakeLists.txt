@@ -9,6 +9,7 @@ project(coarraydemo Fortran)
 
 if(${CMAKE_Fortran_COMPILER_ID} STREQUAL Intel)
     add_compile_options(-coarray=shared)
+    link_libraries(-coarray=shared) # seems silly but that's what's needed at object code step for ifort
 elseif(${CMAKE_Fortran_COMPILER_ID} STREQUAL GNU)
     add_compile_options(-fcoarray=lib)
     set(FCAF ${FCAF} caf_mpi)
@@ -18,9 +19,10 @@ endif()
 add_executable(coarray_hello helloworld.f90)
 target_link_libraries(coarray_hello ${FCAF})
 
-if(${CMAKE_Fortran_COMPILER_ID} STREQUAL GNU)
+if(${CMAKE_Fortran_COMPILER_ID} STREQUAL Intel)
+    add_executable(coarray_pi pi2008.f90)
+elseif(${CMAKE_Fortran_COMPILER_ID} STREQUAL GNU)
 # Intel 2018 does not yet support Fortran 2018 co_sum
     add_executable(coarray_pi pi.f90)
-    target_link_libraries(coarray_pi assert ${FCAF})
 endif()
-
+target_link_libraries(coarray_pi ${FCAF})
