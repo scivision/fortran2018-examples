@@ -2,6 +2,7 @@ cmake_minimum_required (VERSION 2.8.12)
 project(fortran2018demo Fortran)
 
 add_subdirectory(cxx)
+add_subdirectory(coarray)
 
 if(${CMAKE_Fortran_COMPILER_ID} STREQUAL Intel)
     set(FFLAGS ${FFLAGS} -check all -traceback -warn -debug extended)
@@ -10,7 +11,6 @@ elseif(${CMAKE_Fortran_COMPILER_ID} STREQUAL GNU)
 # if you've compiled these libraries with ifort, you can move them up to use with ifort
     add_subdirectory(hdf5)
     add_subdirectory(mpi)
-    add_subdirectory(coarray)
     add_subdirectory(netcdf)
     set(FFLAGS ${FFLAGS} -march=native -Wall -Wextra -Wpedantic -Werror=array-bounds -fbacktrace -fcheck=all)
 endif()

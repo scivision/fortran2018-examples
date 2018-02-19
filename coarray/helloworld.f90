@@ -3,10 +3,10 @@ program helloworld
 !  Michael Hirsch, Ph.D.
 
 ! Compilation:
-! gfortran -fcoarray=lib coarray_helloworld.f90 -lcaf_mpi
+! gfortran -fcoarray=lib helloworld.f90 -lcaf_mpi
 !
 ! or use Intel ifort:
-! ifort -coarray coarray_helloworld.f90
+! ifort -coarray helloworld.f90
 
 use, intrinsic:: iso_fortran_env, only: dp=>real64, int64
 implicit none
