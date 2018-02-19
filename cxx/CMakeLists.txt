@@ -9,6 +9,9 @@ project(C++linkexample CXX Fortran)
 
 # https://stackoverflow.com/tags/fortran-iso-c-binding/info
 
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 if(${CMAKE_Fortran_COMPILER_ID} STREQUAL "Intel")
     message(STATUS "be sure you have in your ~/.bashrc source compilervars.sh")
     set(FLIBS ${FLIBS} svml imf intlc ifcoremt ifport)
