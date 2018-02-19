@@ -1,46 +1,36 @@
 program coarray_pi
-!  Michael Hirsch, Ph.D.
-
-! Compilation:
-! gfortran -fcoarray=lib pi.f90 -lcaf_mpi
-! mpirun -np 4 ./a.out
-! NOTE: if you don't use mpirun for gfortran, only a single image will spawn.
-! 
-! test with single process
-! gfortran -fcoarray=single pi.f90
-! ./a.out
-!
-! or Intel :
-! ifort -coarray pi.f90
-! ifort ./a.out will automatically spawn images = number of virtual cores, mpirun not needed as with gfortran.
-!
-! This demo program implements calculation:
+! implements calculation:
 ! $$ \pi = \int^1_{-1} \frac{dx}{\sqrt{1-x^2}} 
 
-use, intrinsic:: iso_fortran_env, only: wp=>real64, dp=>real64, int64, stderr=>error_unit
+use, intrinsic:: iso_fortran_env, only: dp=>real64, int64, stderr=>error_unit
 implicit none
 
-
-integer(int64) :: rate,tic,toc
-real(dp) :: telaps
-
-real(wp), parameter :: dx = 1e-9_wp ! arbitrary
+integer, parameter :: wp = dp
 real(wp), parameter :: x0 = -1.0_wp, x1 = 1.0_wp
-integer, parameter :: Ni = int((x1-x0) / dx)    ! (1 - (-1)) / interval
 real(wp), parameter :: pi = 4._wp*atan(1.0_wp)
 real(wp) :: psum[*]  ! this is a scalar coarray
-real(wp) :: f,x
-integer :: i, stat, im
-character :: emsg
+integer(int64) :: rate,tic,toc
+real(wp) :: f,x,telaps, dx
+integer :: i, stat, im, Ni
+character(16) :: cbuf
 
 psum = 0._wp
 
+if (command_argument_count() > 0) then
+  call get_command_argument(1, cbuf)
+  read(cbuf,*, iostat=stat) dx
+  if (stat/=0) error stop 'must input real number for resolution e.g. 1e-6'
+else
+  dx = 1e-6
+endif
+  
+Ni = int((x1-x0) / dx)    ! (1 - (-1)) / interval
 im = this_image()
 
 !---------------------------------
 if (im == 1) then
     call system_clock(tic)
-    print *, 'number of Fortran coarray images:', num_images()
+    print '(A,I3)', 'number of Fortran coarray images:', num_images()
     print *,'approximating pi in ',Ni,' steps.'
 end if
 !---------------------------------
@@ -75,7 +65,7 @@ if (im == 1) then
     call system_clock(toc)
     call system_clock(count_rate=rate)
     telaps = real((toc - tic),wp)  / rate
-    print '(A,F8.3,A)', 'Elapsed wall clock time', telaps, ' seconds, using',num_images(),'images.'
+    print '(A,E9.3,A,I3,A)', 'Elapsed wall clock time ', telaps, ' seconds, using',num_images(),' images.'
 end if
 
 end program

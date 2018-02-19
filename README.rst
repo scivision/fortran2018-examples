@@ -107,6 +107,7 @@ Coarray
 -------
 Coarray support from Fortran 2008/2018 is native Fortran high-level abstractions that are supported by a range of libraries, including OpenMPI.
 Coarray examples are under``coarray/``.
+By using ``htop`` or other CPU monitor, you can see that multiple CPU cores are used.
 
 Hello World
 ~~~~~~~~~~~
@@ -118,12 +119,18 @@ Hello World
     
 Pi
 --
-Compute value of Pi iteratively
+Compute value of Pi iteratively:
 
 .. code:: bash
 
     cafrun coarray/coarray_pi
     
+You can optionally specify the resolution of Pi, say 1e-:
+
+.. code:: bash
+
+    cafrun coarray/coarray_pi 1e-8
+     
 
 OpenMPI
 -------
