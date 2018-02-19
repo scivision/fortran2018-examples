@@ -20,6 +20,7 @@ addons:
       - ubuntu-toolchain-r-test
     packages:
       - gfortran-6
+      - gcc-6
 #'libopenmpi-dev' # wrong version mpi
  #       - libhdf5-dev # old version
  #       - libnetcdf-dev
