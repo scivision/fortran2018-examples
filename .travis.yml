@@ -6,7 +6,7 @@ os:
   - linux
   - osx
   
-env: FC=gfortran
+env: FC=gfortran-6
 
 group: travis_latest
 
@@ -14,12 +14,12 @@ group: travis_latest
 git:
   depth: 3
 
-#addons:
-#  apt:
-#    sources:
-#      - ubuntu-toolchain-r-test
-#    packages:
-#      - gfortran-6
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - gfortran-6
 #'libopenmpi-dev' # wrong version mpi
  #       - libhdf5-dev # old version
  #       - libnetcdf-dev
@@ -33,12 +33,13 @@ before_install:
       export FC=gfortran;
       brew install opencoarrays hdf5 netcdf;
     fi
-  - if [[ $TRAVIS_OS_NAME == linux ]]; then
-      export HOMEBREW_FORCE_VENDOR_RUBY=1;
-      sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)";
-      export PATH="/home/travis/.linuxbrew/bin:$PATH";
-      brew install gcc opencoarrays;
-    fi
+# takes 15 minutes to setup on Travis for Linux.    
+#  - if [[ $TRAVIS_OS_NAME == linux ]]; then
+#      export HOMEBREW_FORCE_VENDOR_RUBY=1;
+#      sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)";
+#      export PATH="/home/travis/.linuxbrew/bin:$PATH";
+#      brew install gcc opencoarrays;
+#    fi
     
 
 install:
@@ -50,4 +51,4 @@ script:
     - ./nan
     - ./split
     - ./hugeprec
-    - cafrun coarray/coarray_hello
+    - ./coarray/coarray_hello

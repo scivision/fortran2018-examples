@@ -11,8 +11,12 @@ if(${CMAKE_Fortran_COMPILER_ID} STREQUAL Intel)
     add_compile_options(-coarray=shared)
     link_libraries(-coarray=shared) # seems silly but that's what's needed at object code step for ifort
 elseif(${CMAKE_Fortran_COMPILER_ID} STREQUAL GNU)
+  if ($ENV{TRAVIS}) # on Travis-CI
+    add_compile_options(-fcoarray=single)
+  else()
     add_compile_options(-fcoarray=lib)
     set(FCAF ${FCAF} caf_mpi)
+  endif()
 endif()
 
 
