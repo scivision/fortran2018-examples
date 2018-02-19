@@ -101,7 +101,7 @@ DO NOT USE BOTH `H5FC` wrapper compiler and specify the Fortran HDF5 libraries (
 This can cause version conflicts if you have multiple versions of HDF5 installed.
 It causes non-obvious errors that can waste your time.
 
-In my opinion NOT using the wrapper compiler may be safer so that's what the CMake file does.
+In my opinion NOT using the wrapper compiler may be "safer" so that's what the CMake file does.
 
 Coarray
 -------
@@ -113,7 +113,16 @@ Hello World
 
 .. code:: bash
 
-    mpirun -np 8 coarray/coarray_hello
+    cafrun coarray/coarray_hello
+    
+    
+Pi
+--
+Compute value of Pi iteratively
+
+.. code:: bash
+
+    cafrun coarray/coarray_pi
     
 
 OpenMPI
@@ -126,7 +135,7 @@ To run the simplest sort of multi-threaded Fortran program using MPI-2, assuming
 
 .. code:: bash
 
-    mpirun -np 8 mpi/mpi_hello
+    mpirun -np 4 mpi/mpi_hello
 
 Message Passing MPI
 ~~~~~~~~~~~~~~~~~~~

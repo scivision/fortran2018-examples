@@ -24,10 +24,10 @@ implicit none
 integer(int64) :: rate,tic,toc
 real(dp) :: telaps
 
-real(wp), parameter :: dx = 0.000000001_wp ! arbitrary
+real(wp), parameter :: dx = 1e-9_wp ! arbitrary
 real(wp), parameter :: x0 = -1.0_wp, x1 = 1.0_wp
 integer, parameter :: Ni = int((x1-x0) / dx)    ! (1 - (-1)) / interval
-real(wp), parameter :: pi = 4*atan(1.0_wp)
+real(wp), parameter :: pi = 4._wp*atan(1.0_wp)
 real(wp) :: psum[*]  ! this is a scalar coarray
 real(wp) :: f,x
 integer :: i, stat, im

@@ -11,15 +11,15 @@ if(${CMAKE_Fortran_COMPILER_ID} STREQUAL Intel)
     add_compile_options(-coarray)
 elseif(${CMAKE_Fortran_COMPILER_ID} STREQUAL GNU)
     add_compile_options(-fcoarray=lib)
+    set(FCAF ${FCAF} caf_mpi)
 endif()
 
-add_executable(hello helloworld.f90)
-add_executable(pi pi.f90)
-add_executable(iter iter.f90)
+add_library(assert assert.f90)
 
+add_executable(coarray_hello helloworld.f90)
+target_link_libraries(coarray_hello ${FCAF})
 
+add_executable(coarray_pi pi.f90)
+target_link_libraries(coarray_pi assert ${FCAF})
 
-# make VERBOSE=1
-#
-#/usr/bin/f95  -I/usr/lib/openmpi/include -I/usr/lib/openmpi/lib  -Wl,-rpath,/usr/lib/openmpi/lib /usr/lib/openmpi/lib/libmpi_usempif08.so /usr/lib/openmpi/lib/libmpi_usempi_ignore_tkr.so /usr/lib/openmpi/lib/libmpi_mpifh.so /usr/lib/openmpi/lib/libmpi.so
 
