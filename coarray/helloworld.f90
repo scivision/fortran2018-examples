@@ -20,10 +20,11 @@ if (this_image() == 1) then
     print *, 'number of Fortran coarray images:', num_images()
 end if
 
+sync all ! semaphore, ensures message above is printed at top.
+
 print *, 'Process ', this_image()
 
-sync all  ! semaphore
-
+sync all ! semaphore, ensures all have printed before toc
 if ( this_image() == 1 ) then
     call system_clock(toc)
     call system_clock(count_rate=rate)
