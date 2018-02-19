@@ -4,7 +4,7 @@ project(fortran2018demo Fortran)
 add_subdirectory(cxx)
 
 if(${CMAKE_Fortran_COMPILER_ID} STREQUAL Intel)
-    set(FFLAGS ${FFLAGS} -check all)
+    set(FFLAGS ${FFLAGS} -check all -traceback -warn -debug extended)
 elseif(${CMAKE_Fortran_COMPILER_ID} STREQUAL GNU)
     add_executable(proc pragma.f90)
 # if you've compiled these libraries with ifort, you can move them up to use with ifort
@@ -12,7 +12,7 @@ elseif(${CMAKE_Fortran_COMPILER_ID} STREQUAL GNU)
     add_subdirectory(mpi)
     add_subdirectory(coarray)
     add_subdirectory(netcdf)
-    set(FFLAGS ${FFLAGS} -march=native -Wall -Wextra -Wpedantic -Werror=array-bounds -fbacktrace)
+    set(FFLAGS ${FFLAGS} -march=native -Wall -Wextra -Wpedantic -Werror=array-bounds -fbacktrace -fcheck=all)
 endif()
 
 add_compile_options(-g ${FFLAGS})
@@ -51,7 +51,7 @@ add_executable(testall Test.f90)
 target_link_libraries(testall assert)
 
 # ------- SVD
-if(${CMAKE_Fortran_COMPILER_ID} STREQUAL "Intel")
+if(MKL_FOUND)
     add_executable(svd intel_gesvd.f90)
     target_link_libraries(svd ${FLIBS})
 endif()

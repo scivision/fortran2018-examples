@@ -22,8 +22,10 @@ print '(A,5I12)','exp',j
 
 print '(A,5I12)','BOZ',i
 
-print *, all(i==j), i(1)==536870912, j(1)==536870912
-
-print *, k1==20583, k==17315143744_int64
+if (.not.all(i==j)) error stop 'bit pattern mismatch'
+if (.not.i(1)==536870912) error stop 'bit pattern mismatch'
+if (.not.j(1)==536870912) error stop 'bit pattern mismatch'
+if (.not.k1==20583) error stop 'bit pattern mismatch'
+if (.not.k==17315143744_int64) error stop 'bit pattern mismatch'
 
 end program
