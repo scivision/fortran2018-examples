@@ -5,17 +5,16 @@ module mytest
 
 contains
    
-    subroutine yourmsg(z,N) bind(c)
+    pure subroutine timestwo(z,z2,N) bind(c)
+    ! elemental is not allowed with BIND(C)
 
     real(dp),intent(in) :: z(N)
     integer(c_int), intent(in) :: N
+    real(dp),intent(out) :: z2(N)
 
-    integer :: i
-
-    print *,'z',z    
-    print *,'sqrt(z)',sqrt(z)
-
-    end subroutine yourmsg
+    z2 = 2*z
+    
+    end subroutine timestwo
 
 
 end module mytest
