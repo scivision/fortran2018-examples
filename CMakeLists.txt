@@ -15,7 +15,7 @@ elseif(${CMAKE_Fortran_COMPILER_ID} STREQUAL GNU)
     set(FFLAGS ${FFLAGS} -march=native -Wall -Wextra -Wpedantic -Werror=array-bounds -fbacktrace -fcheck=all)
 endif()
 
-add_compile_options(-g ${FFLAGS})
+add_compile_options(-O3 -g ${FFLAGS})
 #------------------------
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
 # https://software.intel.com/en-us/articles/intel-mkl-link-line-advisor
