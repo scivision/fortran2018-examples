@@ -37,6 +37,7 @@ before_install:
   - if [[ $TRAVIS_OS_NAME == linux ]]; then
       export HOMEBREW_FORCE_VENDOR_RUBY=1;
       sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)";
+      export PATH="/home/travis/.linuxbrew/bin:$PATH";
       brew install gcc opencoarrays;
     fi
     
