@@ -1,18 +1,14 @@
 cmake_minimum_required (VERSION 2.8.12)
 project(fortran2018demo Fortran)
 
-add_subdirectory(cxx)
-add_subdirectory(mpi)
-add_subdirectory(coarray)
-
 if(${CMAKE_Fortran_COMPILER_ID} STREQUAL Intel)
     set(FFLAGS ${FFLAGS} -check all -traceback -warn -debug extended)
 elseif(${CMAKE_Fortran_COMPILER_ID} STREQUAL GNU)
+    set(FFLAGS ${FFLAGS} -march=native -Wall -Wextra -Wpedantic -Werror=array-bounds -fbacktrace -fcheck=all)
     add_executable(proc pragma.f90)
 # if you've compiled these libraries with ifort, you can move them up to use with ifort
     add_subdirectory(hdf5)
     add_subdirectory(netcdf)
-    set(FFLAGS ${FFLAGS} -march=native -Wall -Wextra -Wpedantic -Werror=array-bounds -fbacktrace -fcheck=all)
 endif()
 
 add_compile_options(-O3 -g ${FFLAGS})
@@ -26,6 +22,10 @@ if(MKL_FOUND)
 
     set(FLIBS ${FLIBS} mkl_blas95_lp64 mkl_lapack95_lp64 mkl_gf_lp64 mkl_tbb_thread mkl_core tbb stdc++ pthread dl m)
 endif()
+
+add_subdirectory(cxx)
+add_subdirectory(mpi)
+add_subdirectory(coarray)
 # ------- testNaN.f90  NaN sentinel Fortran example ----------------
 add_executable(nan testnan.f90)
 # ------- null file example ------------
