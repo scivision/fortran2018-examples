@@ -8,7 +8,7 @@ character(*),parameter :: fnro='ro.txt'
 
 !--- show read only file by filesystem is not safe from deletion ----
   call createro(fnro)
-  call unlink(fnro) ! this is MY unlink, since the GNU extension is non-standard and crashes ifort runtimes.
+  call deletefile(fnro) ! this is MY unlink, since the GNU extension is non-standard and crashes ifort runtimes.
   print *,'deleted read-only: ',fnro
 
 contains
@@ -34,7 +34,7 @@ subroutine createro(fn)
 end subroutine
 
 
-subroutine unlink(fn)
+subroutine deletefile(fn)
   character(*), intent(in) :: fn
   integer :: u, ios
   logical :: fexist
@@ -55,6 +55,6 @@ subroutine unlink(fn)
     error stop
   endif
   
-end subroutine unlink
+end subroutine deletefile
 
 end program

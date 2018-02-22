@@ -1,23 +1,23 @@
 program float_prec
-use,intrinsic:: iso_fortran_env, only: sp=>real32, dp=>real64, qp=>real128, stderr=>error_unit
+use,intrinsic:: iso_fortran_env, stderr=>error_unit
 implicit none
 
-real(sp) :: pi32 = 4*atan(1.0_sp)
-real(dp) :: pi64 = 4*atan(1.0_dp)
-real(qp) :: pi128 = 4*atan(1.0_qp)
+real(real32) :: pi32 = 4*atan(1.0_real32)
+real(real64) :: pi64 = 4*atan(1.0_real64)
+real(real128) :: pi128 = 4*atan(1.0_real128)
 
-if (sizeof(pi64) /= 8) then
-    write(stderr,*) 'expected 8-byte real but you have real bytes: ', sizeof(pi64)
+if (storage_size(pi64) /= 64) then
+    write(stderr,*) 'expected real64 but you have real bits: ', storage_size(pi64)
     error stop
 endif
 
-if (sizeof(pi32) /= 4) then
-    write(stderr,*) 'expected 4-byte real but you have real bytes: ', sizeof(pi32)
+if (storage_size(pi32) /= 32) then
+    write(stderr,*) 'expected real32 but you have real bits: ', storage_size(pi32)
     error stop
 endif
 
-if (sizeof(pi128) /= 16) then
-    write(stderr,*) 'expected 16-byte real but you have real bytes: ', sizeof(pi128)
+if (storage_size(pi128) /= 128) then
+    write(stderr,*) 'expected real128 but you have real bits: ', storage_size(pi128)
     error stop
 endif
 

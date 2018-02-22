@@ -1,5 +1,5 @@
 program prec
-use,intrinsic:: iso_fortran_env, only: sp=>real32, dp=>real64, qp=>real128, stderr=>error_unit, i64=>int64
+use,intrinsic:: iso_fortran_env, stderr=>error_unit
 implicit none
 
 ! shows pitfall of not being mindful with input Kind
@@ -9,36 +9,36 @@ implicit none
 ! NOTE: using gfortran option "-fdefault-real-8" fixes these problems!
 ! NOTE: using ifort option "-r8" fixes these problems!
 
-real(sp) :: huge32 = 9/5.0_sp
-real(dp) :: huge64 = 9/5.0_dp
-real(qp) :: huge128 = 9/5.0_qp
-integer(i64) :: hugeint64 = 9/5_i64
+real(real32) :: huge32 = 9/5.0_real32
+real(real64) :: huge64 = 9/5.0_real64
+real(real128) :: huge128 = 9/5.0_real128
+integer(int64) :: hugeint64 = 9/5_int64
 
-real(dp) :: imdouble = 9/5.
+real(real64) :: imdouble = 9/5.
 
-if (sizeof(imdouble) /= 8) then
-    write(stderr,*) 'expected 8-byte real but you have real bytes: ', sizeof(huge64)
-    error stop
+if (storage_size(imdouble) /= 64) then
+  write(stderr,*) 'expected real64 but you have real bits: ', storage_size(imdouble)
+  error stop
 endif
 
-if (sizeof(huge64) /= 8) then
-    write(stderr,*) 'expected 8-byte real but you have real bytes: ', sizeof(huge64)
-    error stop
+if (storage_size(huge64) /= 64) then
+  write(stderr,*) 'expected real64 but you have real bits: ', storage_size(huge64)
+  error stop
 endif
 
-if (sizeof(huge32) /= 4) then
-    write(stderr,*) 'expected 4-byte real but you have real bytes: ', sizeof(huge32)
-    error stop
+if (storage_size(huge32) /= 32) then
+  write(stderr,*) 'expected real32 but you have real bits: ', storage_size(huge32)
+  error stop
 endif
 
-if (sizeof(huge128) /= 16) then
-    write(stderr,*) 'expected 16-byte real but you have real bytes: ', sizeof(huge128)
-    error stop
+if (storage_size(huge128) /= 128) then
+  write(stderr,*) 'expected real128 but you have real bits: ', storage_size(huge128)
+  error stop
 endif
 
-if (sizeof(hugeint64) /= 8) then
-    write(stderr,*) 'expected 8-byte integer but you have integer bytes: ', sizeof(hugeint64)
-    error stop
+if (storage_size(hugeint64) /= 64) then
+  write(stderr,*) 'expected int64 but you have integer bits: ', storage_size(hugeint64)
+  error stop
 endif
 
 print *,'64-bit variable with 32-bit constants',imdouble
@@ -48,8 +48,6 @@ print *,'64-bit',huge64
 print *,'128-bit',huge128
 print *,'64-bit Integer',hugeint64
 
-print *,'kinds  sp dp qp i64'
-print *,sp,dp,qp,i64
 
 !  64-bit variable with 32-bit constants   1.7999999523162842     
 ! 64-bit variable, 32-bit constants equal to all 64-bit constants? F

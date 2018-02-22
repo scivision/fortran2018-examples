@@ -1,5 +1,5 @@
 program huge_prec
-use,intrinsic:: iso_fortran_env, only: sp=>real32, dp=>real64, qp=>real128, stderr=>error_unit, i64=>int64
+use,intrinsic:: iso_fortran_env, stderr=>error_unit
 implicit none
 
 ! shows pitfall of not being mindful with input Kind. Need to be decimal for real kinds!
@@ -9,11 +9,11 @@ implicit none
 ! Compare with S. 5.19, pg. 87 of "Introduction to Programming with Fortran: With Coverage of Fortran 90, 95, 2003, 2008 and 77", 3rd. Ed.,
 ! By Ian Chivers, Jane Sleightholme"
 
-real(sp), parameter :: huge32 = huge(1.0_sp)
-real(dp), parameter :: huge64 = huge(1.0_dp)
-real(qp), parameter :: huge128 = huge(1.0_qp)
-complex(qp), parameter :: ch256 = (huge128,huge128)
-integer(i64), parameter :: hugeint64 = huge(1_i64)
+real(real32), parameter :: huge32 = huge(1.0_real32)
+real(real64), parameter :: huge64 = huge(1.0_real64)
+real(real128), parameter :: huge128 = huge(1.0_real128)
+complex(real128), parameter :: ch256 = (huge128,huge128)
+integer(int64), parameter :: hugeint64 = huge(1_int64)
 
 ! check 32-bit real
 if (storage_size(huge32) /= 32) then
@@ -30,7 +30,7 @@ if (storage_size(huge64) /= 64) then
     error stop
 endif
 
-if (huge64 /= 1.7976931348623157E+308_dp) write(stderr,*) 'warning: huge64 was ',huge64,'instead of 1.7976931348623157E+308'
+if (huge64 /= 1.7976931348623157E+308_real64) write(stderr,*) 'warning: huge64 was ',huge64,'instead of 1.7976931348623157E+308'
 
 ! Check 128-bit real
 if (storage_size(huge128) /= 128) then
@@ -38,7 +38,7 @@ if (storage_size(huge128) /= 128) then
     error stop
 endif
 
-if (huge128 /= 1.18973149535723176508575932662800702E+4932_qp) write(stderr,*) 'warning: huge128 was ',huge128,&
+if (huge128 /= 1.18973149535723176508575932662800702E+4932_real128) write(stderr,*) 'warning: huge128 was ',huge128,&
     'instead of 1.18973149535723176508575932662800702E+4932'
     
 ! check 256-bit complex
@@ -57,7 +57,7 @@ if (storage_size(hugeint64) /= 64) then
     error stop
 endif
 
-if (hugeint64 /= 9223372036854775807_i64) write(stderr,*) 'warning: hugeint64 was ',hugeint64,'instead of 9223372036854775807'
+if (hugeint64 /= 9223372036854775807_int64) write(stderr,*) 'warning: hugeint64 was ',hugeint64,'instead of 9223372036854775807'
 
 
 print *,'32-bit real Huge',huge32
@@ -66,8 +66,6 @@ print *,'128-bit real Huge',huge128
 print *,'256-bit complex huge',ch256,'consisting of',storage_size(ch256),'bits'
 print *,'64-bit integer Huge',hugeint64
 
-print *,'kinds  sp dp qp i64'
-print *,sp,dp,qp,i64
 
 ! Must use decimal point inside Huge() or you'll get INCORRECT:
 ! 32-bit Huge INCORRECT   2.14748365E+09

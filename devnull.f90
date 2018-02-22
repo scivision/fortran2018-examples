@@ -1,5 +1,6 @@
 program nulltest
-use, intrinsic :: iso_fortran_env, only : dp=>REAL64
+use, intrinsic:: iso_fortran_env
+use perf, only: wp, sysclock2ms
 implicit none
 ! Benchmarks platform independent null file writing behavior
 ! NUL or NUL: works on Windows 10
@@ -21,7 +22,7 @@ implicit none
 character(len=*),parameter :: nulunix='/dev/null', nulwin='NUL',fout='out.txt'
 integer,parameter :: Nrun=1000
 integer ios,u
-real(dp) tnul, tscratch, tfile, writetime
+real(wp) tnul, tscratch, tfile
 
 !---  BENCHMARK NUL -----------
 ! status='old' is used as a failsafe, to avoid creating an actual file 
@@ -43,30 +44,30 @@ tfile = writetime(u,Nrun)
 print '(A10,F10.3,A)','file: ',tfile,' ms'
 
 
-end program
+contains
 
-real(dp) function writetime(u,Nrun)
-use, intrinsic :: iso_fortran_env, only: dp=>REAL64,i64=>INT64
-use perf, only: sysclock2ms
-implicit none
-integer, intent(in) :: u,Nrun
-integer(i64) :: tic,toc,tmin
-integer, volatile :: i
-integer j
+real(wp) function writetime(u,Nrun)
 
-tmin  = huge(0_i64) ! need to avoid SAVE behavior by not assigning at initialization
+  integer, intent(in) :: u,Nrun
+  integer(int64) :: tic,toc,tmin
+  integer, volatile :: i
+  integer j
 
-do j=1,3
+  tmin  = huge(0_int64) ! need to avoid SAVE behavior by not assigning at initialization
+
+  do j=1,3
     call system_clock(tic)
     do i=1,Nrun
-        write(u,*) 'into nothingness I go....',i
-        flush(u)
+      write(u,*) 'into nothingness I go....',i
+      flush(u)
     enddo
     call system_clock(toc)
     if (toc-tic < tmin) tmin = toc-tic
-enddo
+  enddo
 
-writetime = sysclock2ms(tmin)
-close(u)
+  writetime = sysclock2ms(tmin)
+   close(u)
 
-end function
+end function writetime
+
+end program

@@ -64,6 +64,13 @@ Be sure you have the `Intel Parallel Studio Cluster Edition <https://www.scivisi
     FC=ifort CC=icc CXX=icpc cmake ..
     make -k
     
+    
+Intel MKL
+---------
+To mitigate the case where MKL is installed, but not yet 
+`compiled for Gfortran <https://www.scivision.co/intel-mkl-lapack95-gfortran/>`_, 
+the examples requiring LAPACK95 or other MKL-specific modules are enabled with the ``cmake -Dusemkl ..`` option.
+
 
 Programs
 ========

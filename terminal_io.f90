@@ -1,5 +1,5 @@
 program terminal_io
-use,intrinsic:: iso_fortran_env, only: input_unit, output_unit, error_unit
+use, intrinsic:: iso_fortran_env
 implicit none
 
 character(80) :: txt
