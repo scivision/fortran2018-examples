@@ -53,3 +53,4 @@ script:
     - ./split
     - ./hugeprec
     - ./coarray/coarray_hello
+    - ./testall
