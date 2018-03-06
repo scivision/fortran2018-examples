@@ -62,6 +62,7 @@ impure elemental subroutine assert_isclose(actual, desired, rtol, atol, equal_na
 ! rtol: relative tolerance
 ! atol: absolute tolerance
 ! equal_nan: consider NaN to be equal?
+! err_msg: message to print on mismatch
 !
 ! rtol overrides atol when both are specified
 
@@ -72,8 +73,7 @@ impure elemental subroutine assert_isclose(actual, desired, rtol, atol, equal_na
   
  
   if (.not.isclose(actual,desired,rtol,atol,equal_nan)) then
-    if(present(err_msg)) write(stderr,*) err_msg
-    write(stderr,*) 'actual',actual,'desired',desired
+    write(stderr,*) merge(err_msg,'',present(err_msg)),': actual',actual,'desired',desired
     error stop
   endif
 
