@@ -1,5 +1,6 @@
 image:
 - Visual Studio 2017
+- Ubuntu
 
 environment:
   MINGW_DIR: C:\mingw-w64\x86_64-7.2.0-posix-seh-rt_v5-rev1\mingw64\bin
@@ -33,8 +34,10 @@ after_build:
 - sh: ./hugeprec
 - sh: ./coarray/coarray_hello
 - sh: ./testall
+- sh: ./gitrev
 
 - cmd: nan
 - cmd: split
 - cmd: hugeprec
 - cmd: testall
+- cmd: gitrev

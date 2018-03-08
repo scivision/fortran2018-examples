@@ -76,6 +76,8 @@ target_link_libraries(testall assert)
 
 add_executable(sleepstd sleep_std.f90)
 
+add_executable(gitrev gitrev.f90)
+
 # ------- SVD
 if(MKL_FOUND AND usemkl)
     add_executable(svd intel_gesvd.f90)
