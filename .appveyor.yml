@@ -16,6 +16,7 @@ before_build:
 
 - sh: sudo apt -yq update > /dev/null
 - sh: sudo apt install -yq --no-install-suggests --no-install-recommends gfortran-5 cmake make > /dev/null
+- sh: FC=gfortran-5
 
 - cd bin
 
