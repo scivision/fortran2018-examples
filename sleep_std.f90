@@ -1,4 +1,6 @@
 program stdsleep
+! uses unistd.h for Fortran standard compliant sleep.
+! sleep() is a GNU extension, not standard Fortran.
 use, intrinsic:: iso_c_binding, only: c_int
 implicit none
 

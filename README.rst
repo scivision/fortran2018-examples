@@ -1,5 +1,8 @@
 .. image:: https://travis-ci.org/scivision/fortran2018-examples.svg?branch=master
     :target: https://travis-ci.org/scivision/fortran2018-examples
+    
+.. image:: https://ci.appveyor.com/api/projects/status/kk2gcmlw1l3pjxy5?svg=true
+    :target: https://ci.appveyor.com/project/scivision/fortran2018-examples
 
 =====================
 Fortran 2018 Examples
