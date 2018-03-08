@@ -13,8 +13,8 @@ subroutine log_gitrev(dir, logfn)
 
   implicit none
 
-  character(*), intent(in) :: dir
-  character(*), intent(in) :: logfn
+  character(*), intent(in) :: dir, logfn
+  
   character(:), allocatable :: logpath
   
   logpath =  dir // '/' // logfn
