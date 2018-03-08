@@ -44,8 +44,8 @@ endif()
 add_subdirectory(cxx)
 add_subdirectory(mpi)
 add_subdirectory(coarray)
-# ------- testNaN.f90  NaN sentinel Fortran example ----------------
-add_executable(nan testnan.f90)
+# ------- NaN sentinel Fortran example ----------------
+add_executable(nan nans.f90)
 # ------- null file example ------------
 add_executable(null devnull.f90 perf.f90)
 #---------- string example
