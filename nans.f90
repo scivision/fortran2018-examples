@@ -1,7 +1,8 @@
 program test_nan
 ! Note that -Ofast and -ffast-math break this program--
 ! NaN are not IEEE compiliant if using -Ofast or -ffast-math.
-! Gfortran >= 5 needed for ieee_arithmetic
+!
+! Gfortran >= 6 needed for ieee_arithmetic: ieee_is_nan
 
 use, intrinsic :: iso_c_binding, only: sp=>C_FLOAT, dp=>C_DOUBLE, qp=>C_LONG_DOUBLE, &
        zp=>C_DOUBLE_COMPLEX, zqp=>C_LONG_DOUBLE_COMPLEX

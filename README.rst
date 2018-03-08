@@ -224,7 +224,7 @@ Notes
 ~~~~~
 
 * must NOT use ``-Ofast`` or ``-ffast-math`` because IEEE standards are broken by them and NaN detection will intermittently fail!
-* ``gfortran`` >= 5 needed for ``ieee_arithmetic``
+* ``gfortran`` >= 6 needed for ``ieee_arithmetic: ieee_is_nan``
 
 
 
