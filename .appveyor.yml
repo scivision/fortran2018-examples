@@ -15,7 +15,7 @@ before_build:
 - cmd: set FC=%MINGW_DIR%\gfortran 
 
 - sh: sudo apt -yq update > /dev/null
-- sh: sudo apt install -yq --no-install-suggests --no-install-recommends gfortran cmake make > /dev/null
+- sh: sudo apt install -yq --no-install-suggests --no-install-recommends gfortran-5 cmake make > /dev/null
 
 - cd bin
 
@@ -37,5 +37,4 @@ after_build:
 - cmd: nan
 - cmd: split
 - cmd: hugeprec
-- cmd: coarray/coarray_hello
 - cmd: testall

@@ -1,4 +1,5 @@
 module assert
+! Gfortran >= 5 needed for ieee_arithmetic
 
   use, intrinsic:: iso_fortran_env, stderr=>error_unit
   use, intrinsic:: ieee_arithmetic
