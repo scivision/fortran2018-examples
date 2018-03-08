@@ -19,14 +19,13 @@ before_build:
 - cd bin
 
 build_script:
-- cmd: cmake -G "MinGW Makefiles" ../src
+- cmd: cmake -G "MinGW Makefiles" ..
 - cmd: mingw32-make
 
-- sh: cmake ../src
+- sh: cmake ..
 - sh: make
   
 after_build:
-- cd ..
 
 - sh: ./nan
 - sh: ./split
