@@ -29,16 +29,4 @@ build_script:
 - sh: make
   
 after_build:
-
-- sh: ./nan
-- sh: ./split
-- sh: ./hugeprec
-- sh: ./coarray/coarray_hello
-- sh: ./testall
-- sh: ./gitrev
-
-- cmd: nan
-- cmd: split
-- cmd: hugeprec
-- cmd: testall
-- cmd: gitrev
+- make test
