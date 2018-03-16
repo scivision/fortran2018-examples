@@ -1,6 +1,6 @@
 .. image:: https://travis-ci.org/scivision/fortran2018-examples.svg?branch=master
     :target: https://travis-ci.org/scivision/fortran2018-examples
-    
+
 .. image:: https://ci.appveyor.com/api/projects/status/kk2gcmlw1l3pjxy5?svg=true
     :target: https://ci.appveyor.com/project/scivision/fortran2018-examples
 
@@ -22,7 +22,7 @@ Prereq
     apt install cmake gfortran libhdf5-dev libopenmpi-dev libnetcdff-dev libcoarrays-dev open-coarrays-bin
 
   Yes that's two ``ff`` in ``libnetcdff-dev``
-  
+
 * Mac::
 
     brew install gcc cmake open-mpi opencoarrays
@@ -39,6 +39,8 @@ The CMake script automatically walks through the subdirectories:
     cmake ..
     make -k
     
+    make test
+
 If you have Anaconda Python or Intel Fortran installed, this can override system prereqs. Workaround:
 
 .. code:: bash
@@ -46,7 +48,9 @@ If you have Anaconda Python or Intel Fortran installed, this can override system
     PATH=/usr/bin:/usr/include cmake ..
     make
     
-    
+    make test
+
+
 ifort Intel
 -----------
 Be sure you have the `Intel Parallel Studio Cluster Edition <https://www.scivision.co/install-intel-compiler-icc-icpc-ifort/>`_ that has ``mpiifort``.
@@ -55,8 +59,8 @@ Be sure you have the `Intel Parallel Studio Cluster Edition <https://www.scivisi
 
     FC=ifort CC=icc CXX=icpc cmake ..
     make
-    
-    
+
+
 * the NetCDF and HDF5 libraries will need to be manually compiled with the Intel compiler.
 * need to ``source compilervars.sh`` as usual with the Intel compiler or you will get ``*.so missing`` errors.
 * for Intel compiler, build with
@@ -67,11 +71,13 @@ Be sure you have the `Intel Parallel Studio Cluster Edition <https://www.scivisi
     FC=ifort CC=icc CXX=icpc cmake ..
     make -k
     
-    
+    make test
+
+
 Intel MKL
 ---------
-To mitigate the case where MKL is installed, but not yet 
-`compiled for Gfortran <https://www.scivision.co/intel-mkl-lapack95-gfortran/>`_, 
+To mitigate the case where MKL is installed, but not yet
+`compiled for Gfortran <https://www.scivision.co/intel-mkl-lapack95-gfortran/>`_,
 the examples requiring LAPACK95 or other MKL-specific modules are enabled with the ``cmake -Dusemkl ..`` option.
 
 
@@ -97,8 +103,8 @@ The key factors in calling a Fortran module from C or C++ include:
     real(c_double) :: X
 
     subroutine cool(X,N) bind(c)
-  
-  the ``bind(c)`` makes the name ``cool`` available to C/C++.  
+
+  the ``bind(c)`` makes the name ``cool`` available to C/C++.
 
 See ``cxx/cxxfort.f90`` and ``fun.f90`` for a simple exmaple.
 
@@ -116,10 +122,13 @@ HDF5
 This example writes then reads an HDF5 file from Fortran::
 
     ./hdf5/hdf5demo
-    
+
+
+* HDF5 Fortran `Manual <https://support.hdfgroup.org/HDF5/doc/fortran/index.html>`_
+
 Note
 ~~~~
-DO NOT USE BOTH `H5FC` wrapper compiler and specify the Fortran HDF5 libraries (in the CMake file). 
+DO NOT USE BOTH `H5FC` wrapper compiler and specify the Fortran HDF5 libraries (in the CMake file).
 This can cause version conflicts if you have multiple versions of HDF5 installed.
 It causes non-obvious errors that can waste your time.
 
@@ -137,8 +146,8 @@ Hello World
 .. code:: bash
 
     cafrun coarray/coarray_hello
-    
-    
+
+
 Pi
 ~~
 Compute value of Pi iteratively:
@@ -146,14 +155,14 @@ Compute value of Pi iteratively:
 .. code:: bash
 
     cafrun coarray/coarray_pi
-    
+
 You can optionally specify the resolution of Pi, say 1e-:
 
 .. code:: bash
 
     cafrun coarray/coarray_pi 1e-8
-    
-    
+
+
 Comparing ``gfortran`` and ``ifort`` coarray performance (computation time in seconds on i7-4650, 4 threads).
 ``-O3`` was used for both compilers.
 Notice that ``ifort`` is over 5x faster than ``gfortran``.
@@ -214,9 +223,9 @@ This is in program::
     ./nan
 
 In Fortran 2003, ``real(z'abcd0000')`` is equivalent to ``transfer(z'abcd0000',1.)`` by Fortran 2003.
-However, where you are deliberately setting NaN you will get 
+However, where you are deliberately setting NaN you will get
 
-> Error: Result of FLOAT is NaN 
+> Error: Result of FLOAT is NaN
 
 so use ``transfer()`` for the case where you're deliberately setting ``NaN``.
 
@@ -230,7 +239,7 @@ Notes
 
 File Handling in Fortran
 ------------------------
-Despite its half-century year old roots, Fortran 
+Despite its half-century year old roots, Fortran
 
 
 Writing to /dev/null

@@ -71,8 +71,8 @@ add_executable(polymorph polymorphic.f90)
 add_library(assert assert.f90)
 add_executable(proc pragma.f90)
 
-add_executable(testall Test.f90 fib3.f90)
-target_link_libraries(testall assert)
+add_executable(testassert Test.f90 fib3.f90)
+target_link_libraries(testassert assert)
 
 add_executable(sleepstd sleep_std.f90)
 
@@ -83,3 +83,10 @@ if(MKL_FOUND AND usemkl)
     add_executable(svd intel_gesvd.f90)
     target_link_libraries(svd ${FLIBS})
 endif()
+
+#---------------------------
+enable_testing()
+add_test(NAME FortranNaN COMMAND nan)
+add_test(NAME Fortransplit COMMAND split)
+add_test(NAME FortranHugePrecision COMMAND hugeprec)
+add_test(NAME FortranAssert COMMAND testassert)

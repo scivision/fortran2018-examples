@@ -49,8 +49,7 @@ install:
   - make
 
 script:
-    - ./nan
-    - ./split
-    - ./hugeprec
-    - ./coarray/coarray_hello
-    - ./testall
+  - make test
+    
+on_failure:
+  - ctest -V
