@@ -96,13 +96,10 @@ call h5ltread_dataset_f(file_id, dsetname1, H5T_NATIVE_INTEGER, bufr1, dims, err
 !
 ! compare read and write buffers.
 !
-do i = 1, DIM1
- if ( buf1(i) .ne. bufr1(i) ) then
-   print *, 'read buffer differs from write buffer'
-   print *,  bufr1(i), ' and ',   buf1(i)
-   stop
-  endif
-end do
+
+if (.not.all(buf1 == bufr1)) error stop 'read buffer differs from write buffer'
+
+
 
 !-------------------------------------------------------------------------
 ! H5T_NATIVE_REAL 
@@ -120,14 +117,8 @@ call h5ltread_dataset_f(file_id, dsetname2, H5T_NATIVE_REAL, bufr2, dims, errcod
 
 !
 ! compare read and write buffers.
-!
-do i = 1, DIM1
- if ( buf2(i) .ne. bufr2(i) ) then
-   print *, 'read buffer differs from write buffer'
-   print *,  bufr2(i), ' and ',   buf2(i)
-   stop
-  endif
-end do
+if (.not.all(buf2 == bufr2)) error stop 'read buffer differs from write buffer'
+
 
 !-------------------------------------------------------------------------
 ! H5T_NATIVE_DOUBLE 

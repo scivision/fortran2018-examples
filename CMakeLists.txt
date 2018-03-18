@@ -1,18 +1,14 @@
 cmake_minimum_required (VERSION 2.8.12)
 project(fortran2018demo Fortran)
 
-# Polymorphic-like real kind program-wide
-if(realkind)
-    string(TOLOWER ${realkind} realkind)
-endif()
 
-if(realkind STREQUAL real32)   # -Drealkind=real32
+if(realbits EQUAL 32)   # -Drealbits=32
   file(WRITE kind.txt "integer,parameter :: wp=real32")
   message(STATUS "real kind: real32")
-elseif(realkind STREQUAL real64)
+elseif(realbits EQUAL 64)
   file(WRITE kind.txt "integer,parameter :: wp=real64")
   message(STATUS "real kind: real64")
-elseif(realkind STREQUAL real128)
+elseif(realbits EQUAL 128)
   file(WRITE kind.txt "integer,parameter :: wp=real128")
   message(STATUS "real kind: real128")
 else()
@@ -21,9 +17,9 @@ else()
 endif()
 
 if(${CMAKE_Fortran_COMPILER_ID} STREQUAL Intel)
-    set(FFLAGS ${FFLAGS} -check all -traceback -warn -debug extended)
+  list(APPEND FFLAGS -check all -traceback -warn -debug extended)
 elseif(${CMAKE_Fortran_COMPILER_ID} STREQUAL GNU)
-    set(FFLAGS ${FFLAGS} -march=native -Wall -Wextra -Wpedantic -Werror=array-bounds -fbacktrace -fcheck=all)
+  list(APPEND FFLAGS -march=native -Wall -Wextra -Wpedantic -Werror=array-bounds -fbacktrace -fcheck=all)
 # if you've compiled these libraries with ifort, you can move them up to use with ifort
     add_subdirectory(hdf5)
     add_subdirectory(netcdf)
