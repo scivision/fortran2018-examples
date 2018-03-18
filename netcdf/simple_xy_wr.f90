@@ -17,11 +17,11 @@
 
 program simple_xy_wr
   use netcdf
-  USE ISO_FORTRAN_ENV, ONLY : stderr=>ERROR_UNIT 
+
   implicit none
 
   ! This is the name of the data file we will create.
-  character(*), parameter :: FILE_NAME = "simple_xy.nc"
+  character(*), parameter :: fn = "simple_xy.nc"
 
   ! We are writing 2D data, a 6 x 12 grid. 
   integer, parameter :: NDIMS = 2
@@ -34,27 +34,40 @@ program simple_xy_wr
   
   ! This is the data array we will write. It will just be filled with
   ! a progression of integers for this example.
-  integer :: data_out(NY, NX)
+  integer :: dout(NY, NX), dat(ny,nx)
 
   ! Loop indexes, and error handling.
   integer :: x, y
 
   ! Create some pretend data. If this wasn't an example program, we
   ! would have some real data to write, for example, model output.
-  do x = 1, NX
-     do y = 1, NY
-        data_out(y, x) = (x - 1) * NY + (y - 1)
+  do concurrent (x = 1: NX)
+     do concurrent (y = 1: NY)
+        dout(y, x) = (x - 1) * NY + (y - 1)
      end do
   end do
 
-  ! Always check the return code of every netCDF function call. In
+
+call writenc(fn,dout)
+call readnc(fn,dat)
+
+if (.not.all(dat==dout)) error stop "NetCDF IO error"
+
+contains
+
+  subroutine writenc(fn,dout)
+  
+  character(*), intent(in) :: fn
+  integer, intent(in) :: dout(:,:)
+  
+    ! Always check the return code of every netCDF function call. In
   ! this example program, wrapping netCDF calls with "call check()"
   ! makes sure that any return which is not equal to nf90_noerr (0)
   ! will print a netCDF error message and exit.
 
   ! Create the netCDF file. The nf90_clobber parameter tells netCDF to
   ! overwrite this file, if it already exists.
-  call check( nf90_create(FILE_NAME, NF90_CLOBBER, ncid) )
+  call check( nf90_create(fn, NF90_CLOBBER, ncid) )
 
   ! Define the dimensions. NetCDF will hand back an ID for each. 
   call check( nf90_def_dim(ncid, "x", NX, x_dimid) )
@@ -75,21 +88,41 @@ program simple_xy_wr
   ! Write the pretend data to the file. Although netCDF supports
   ! reading and writing subsets of data, in this case we write all the
   ! data in one operation.
-  call check( nf90_put_var(ncid, varid, data_out) )
+  call check( nf90_put_var(ncid, varid, dout) )
 
   ! Close the file. This frees up any internal netCDF resources
   ! associated with the file, and flushes any buffers.
   call check( nf90_close(ncid) )
 
-  print *, "*** SUCCESS writing example file simple_xy.nc! "
+  end subroutine writenc
 
-contains
+
+  subroutine readnc(fn,dat)
+  
+  character(*), intent(in) :: fn
+  integer, intent(out) :: dat(:,:)
+  
+    ! Open the file. NF90_NOWRITE tells netCDF we want read-only access to
+  ! the file.
+  call check( nf90_open(fn, NF90_NOWRITE, ncid) )
+
+  ! Get the varid of the data variable, based on its name.
+  call check( nf90_inq_varid(ncid, "data", varid) )
+
+  ! Read the data.
+  call check( nf90_get_var(ncid, varid, dat) )
+
+  ! Check the data.
+  if (.not.all(dat==dout)) error stop 'r/w data mismatch'
+
+  ! Close the file, freeing all resources.
+  call check( nf90_close(ncid) )
+  
+  end subroutine readnc
+
   subroutine check(status)
     integer, intent (in) :: status
     
-    if(status /= nf90_noerr) then 
-      write(stderr, *)  trim(nf90_strerror(status))
-      error stop
-    end if
+    if(status /= nf90_noerr) error stop trim(nf90_strerror(status))
   end subroutine check  
 end program simple_xy_wr
