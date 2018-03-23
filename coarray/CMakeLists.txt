@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 2.8.12)
+cmake_minimum_required (VERSION 3.0)
 project(coarraydemo Fortran)
 
 # ------- Fortran 2018 coarray examples -------
@@ -11,6 +11,10 @@ if(${CMAKE_Fortran_COMPILER_ID} STREQUAL Intel)
     add_compile_options(-coarray=shared)
     link_libraries(-coarray=shared) # seems silly but that's what's needed at object code step for ifort
 elseif(${CMAKE_Fortran_COMPILER_ID} STREQUAL GNU)
+  if (${CMAKE_Fortran_COMPILER_VERSION} VERSION_LESS 7)
+    message(WARNING " At least Gfortran 7 required for Coarray Fortran")
+  endif()
+  
   if ($ENV{TRAVIS}) # on Travis-CI
     add_compile_options(-fcoarray=single)
   else()
@@ -30,3 +34,9 @@ elseif(${CMAKE_Fortran_COMPILER_ID} STREQUAL GNU)
     add_executable(coarray_pi pi.f90)
 endif()
 target_link_libraries(coarray_pi ${FCAF})
+
+
+enable_testing()
+
+add_test(NAME CoarrayHello COMMAND coarray_hello)
+add_test(NAME CoarrayPi COMMAND coarray_pi)

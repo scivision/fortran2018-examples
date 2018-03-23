@@ -1,5 +1,5 @@
-cmake_minimum_required (VERSION 2.8.12)
-project(fortran2018demo Fortran)
+cmake_minimum_required (VERSION 3.0)
+project(fortran2018demo Fortran C)
 
 
 if(realbits EQUAL 32)   # -Drealbits=32
@@ -33,8 +33,10 @@ find_package(MKL)
 if(MKL_FOUND)
     set(MKLROOT $ENV{MKLROOT})
     include_directories(${MKL_INCLUDE_DIRS} ${MKLROOT}/include/intel64/lp64)
+    
+    find_package(Threads REQUIRED)
 
-    set(FLIBS ${FLIBS} mkl_blas95_lp64 mkl_lapack95_lp64 mkl_gf_lp64 mkl_tbb_thread mkl_core tbb stdc++ pthread dl m)
+    set(FLIBS ${FLIBS} mkl_blas95_lp64 mkl_lapack95_lp64 mkl_gf_lp64 mkl_tbb_thread mkl_core tbb stdc++ ${CMAKE_THREAD_LIBS_INIT} ${CMAKE_DL_LIBS} m)
 endif()
 
 add_subdirectory(cxx)
@@ -87,3 +89,5 @@ add_test(NAME Fortransplit COMMAND split)
 add_test(NAME FortranHugePrecision COMMAND hugeprec)
 add_test(NAME FortranAssert COMMAND testassert)
 add_test(NAME FortranGit COMMAND gitrev)
+add_test(NAME FortranMicrosleep COMMAND sleepstd)
+add_test(NAME FortranGitRev COMMAND gitrev)
