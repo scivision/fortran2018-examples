@@ -1,9 +1,12 @@
 cmake_minimum_required (VERSION 3.0)
 project(mpidemo Fortran C)
 
+# for Gfortran + OpenMPI: 
+#    cmake -DMPI_Fortran_COMPILER=/usr/bin/mpif90.openmpi ..
+
 # ------- MPI Fortran examples ----------------
-find_package(MPI)
-if(MPI_Fortran_COMPILER)   # MPI_FOUND is not used
+find_package(MPI COMPONENTS Fortran)
+if(MPI_Fortran_FOUND)   # MPI_FOUND is not used
     # DON'T USE WRAPPER COMPILER AND FLAGS -- one or the other!
     #set(CMAKE_Fortran_COMPILER ${MPI_Fortran_COMPILER}) #wrapper compiler mpif90
     # consider mpif90 --showme
