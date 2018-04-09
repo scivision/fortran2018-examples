@@ -13,12 +13,9 @@ if(MPI_Fortran_FOUND)   # MPI_FOUND is not used
     # https://www.open-mpi.org/faq/?category=mpi-apps
     
     find_package(Threads REQUIRED)
+    add_compile_options(${MPI_Fortran_COMPILE_OPTIONS})
+    include_directories(${MPI_Fortran_INCLUDE_DIRS})
 
-    add_definitions(${MPI_Fortran_COMPILE_FLAGS})
-    include_directories(${MPI_Fortran_INCLUDE_PATH})
-  #  add_compile_options(${MPI_Fortran_LINK_FLAGS} -pthread)
-
-#    message(STATUS "MPI_Fortran_LIBRARIES " ${MPI_Fortran_LIBRARIES})
 
     add_executable(mpi_hello helloworld.f90)
     target_link_libraries(mpi_hello ${MPI_Fortran_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
