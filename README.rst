@@ -119,8 +119,7 @@ This example writes then reads a NetCDF file from Fortran::
 
 HDF5
 ----
-Note: for a true modern Fortan polymorphic, simple HDF5 read/write interface, please see
-`this package <https://github.com/scivision/hdf5_interface>`_.
+A true modern Fortan polymorphic, simple HDF5 read/write interface, is `my package <https://github.com/scivision/oo_hdf5_fortran/>`_.
 
 
 This example writes then reads an HDF5 file from Fortran::
