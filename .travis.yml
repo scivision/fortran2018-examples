@@ -5,11 +5,10 @@ fast_finish: true
 os:
   - linux
   - osx
-  
+
 env: FC=gfortran-6
 
 group: travis_latest
-
 
 git:
   depth: 3
@@ -34,14 +33,14 @@ before_install:
       export FC=gfortran;
       brew install opencoarrays hdf5 netcdf;
     fi
-# takes 15 minutes to setup on Travis for Linux.    
+# takes 15 minutes to setup on Travis for Linux.
 #  - if [[ $TRAVIS_OS_NAME == linux ]]; then
 #      export HOMEBREW_FORCE_VENDOR_RUBY=1;
 #      sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)";
 #      export PATH="/home/travis/.linuxbrew/bin:$PATH";
 #      brew install gcc opencoarrays;
 #    fi
-    
+
 
 install:
   - cd bin
@@ -50,6 +49,6 @@ install:
 
 script:
   - make test
-    
+
 on_failure:
   - ctest -V
