@@ -31,7 +31,7 @@ before_install:
       brew install gcc || true;
       brew link --overwrite gcc;
       export FC=gfortran;
-      brew install opencoarrays hdf5 netcdf;
+      brew install opencoarrays hdf5 netcdf open-mpi;
     fi
 # takes 15 minutes to setup on Travis for Linux.
 #  - if [[ $TRAVIS_OS_NAME == linux ]]; then
