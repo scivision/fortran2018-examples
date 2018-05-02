@@ -3,7 +3,8 @@ project(mpidemo Fortran C)
 enable_testing()
 
 # FIXME for some reason Travis OSX MPI doesn't work for Fortran
-if(ENV{TRAVIS_OS_NAME} STREQUAL osx)
+
+if($ENV{TRAVIS_OS_NAME} STREQUAL osx)
   return()
 endif()
 
