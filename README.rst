@@ -17,15 +17,8 @@ Fortran 2018 began as the TS18508 extension, formerly known as Fortran 2015.
 Prereq
 ======
 
-* Linux/Windows/BSD::
-
-    apt install cmake gfortran libhdf5-dev libopenmpi-dev libnetcdff-dev libcoarrays-dev open-coarrays-bin
-
-  Yes that's two ``ff`` in ``libnetcdff-dev``
-
-* Mac::
-
-    brew install gcc cmake open-mpi opencoarrays
+* Linux / Windows: ``apt install cmake gfortran libhdf5-dev libopenmpi-dev libnetcdff-dev libcoarrays-dev open-coarrays-bin``
+* Mac: ``brew install gcc cmake open-mpi opencoarrays``
 
 
 Build
@@ -37,7 +30,7 @@ The CMake script automatically walks through the subdirectories:
     cd bin
 
     cmake ..
-    make -k
+    make
     
     make test
 
@@ -80,6 +73,29 @@ To mitigate the case where MKL is installed, but not yet
 `compiled for Gfortran <https://www.scivision.co/intel-mkl-lapack95-gfortran/>`_,
 the examples requiring LAPACK95 or other MKL-specific modules are enabled with the ``cmake -Dusemkl ..`` option.
 
+
+Flang / Clang
+-------------
+Not every program runs yet with 
+`Flang <https://www.scivision.co/flang-compiler-build-tips/>`_ 
+since Flang lacks a lot of Fortran 2008 standard stuff--like ``error stop``
+
+
+.. code:: bash
+
+    FC=flang CC=clang CXX=clang++ cmake ..
+    make
+
+PGI
+===
+Not every program runs yet with 
+`PGI compilers <https://www.pgroup.com/products/community.htm>`_
+since PGI lacks a lot of Fortran 2008 standard stuff--like ``error stop``
+
+.. code:: bash
+
+    FC=pgf90 CC=pgcc CXX=pgc++ cmake ..
+    make
 
 Programs
 ========

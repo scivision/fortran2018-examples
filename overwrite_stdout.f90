@@ -5,10 +5,11 @@ use, intrinsic:: iso_fortran_env, only: stdout=>output_unit
 implicit none
 
 integer :: i
-integer, parameter :: N=12
+integer, parameter :: N=5
 
 do i = 1,N
-  write(stdout,'(A1,F7.3,A1)',advance='no') char(13),i/real(N),'%'
+  write(stdout,'(A1,F7.3,A1)',advance='no') achar(13),i/real(N)*100,'%'
+  flush(stdout) ! Fortran 2003, necessary for ifort
   
   call sleep(1)
 
