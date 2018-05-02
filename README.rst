@@ -62,7 +62,7 @@ Be sure you have the `Intel Parallel Studio Cluster Edition <https://www.scivisi
 
     cd bin
     FC=ifort CC=icc CXX=icpc cmake ..
-    make -k
+    make
     
     make test
 
@@ -86,6 +86,8 @@ since Flang lacks a lot of Fortran 2008 standard stuff--like ``error stop``
     FC=flang CC=clang CXX=clang++ cmake ..
     make
 
+    make test
+
 PGI
 ===
 Not every program runs yet with 
@@ -96,6 +98,9 @@ since PGI lacks a lot of Fortran 2008 standard stuff--like ``error stop``
 
     FC=pgf90 CC=pgcc CXX=pgc++ cmake ..
     make
+    
+    make test
+    
 
 Programs
 ========
