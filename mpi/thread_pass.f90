@@ -19,7 +19,7 @@ program main
 
 !  Find out the number of processes available.
   call MPI_Comm_size ( MPI_COMM_WORLD, num_procs, ierr )
-  if (num_procs.lt.2) stop 'must have at least 2 threads, try using mpirun -np 2 pass'
+  if (num_procs < 2) error stop 'must have at least 2 threads, try using mpirun -np 2 pass'
 
 !  Have Process 0 say hello.
   if ( rank == 0 ) then
