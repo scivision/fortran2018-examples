@@ -51,14 +51,12 @@ if(MKL_FOUND)
     set(FLIBS mkl_blas95_lp64 mkl_lapack95_lp64 mkl_gf_lp64 mkl_tbb_thread mkl_core tbb stdc++ ${CMAKE_THREAD_LIBS_INIT} ${CMAKE_DL_LIBS} m)
 endif()
 
-if(CMAKE_Fortran_COMPILER_ID IN_LIST "GNU;Intel;Flang")
-  add_subdirectory(cxx)
-endif()
+add_subdirectory(cxx)
 
-if(CMAKE_Fortran_COMPILER_ID IN_LIST "GNU;Intel")
-  add_subdirectory(mpi)
-  add_subdirectory(coarray)
-endif()
+add_subdirectory(mpi)
+
+add_subdirectory(coarray)
+
 # ------- NaN sentinel Fortran example ----------------
 add_executable(nan nans.f90)
 target_compile_options(nan PRIVATE ${FFLAGS})
@@ -74,7 +72,9 @@ target_compile_options(justwait PRIVATE ${FFLAGS})
 
 add_executable(termio terminal_io.f90)
 target_compile_options(termio PRIVATE ${FFLAGS})
-add_test(NAME FortranTerminalIO COMMAND bash -c "./termio <<< 0")
+if(NOT WIN32) # FIXME doable via windows command
+  add_test(NAME FortranTerminalIO COMMAND bash -c "./termio <<< 0")
+endif()
 
 add_executable(precprob precision_problems.f90)
 target_compile_options(precprob PRIVATE ${FFLAGS})
@@ -89,7 +89,8 @@ target_compile_options(sleepstd PRIVATE ${FFLAGS})
 add_test(NAME FortranMicrosleep COMMAND sleepstd)
 set_tests_properties(FortranMicrosleep PROPERTIES TIMEOUT 1)
 
-if(CMAKE_Fortran_COMPILER_ID IN_LIST "GNU;Intel")
+set(okcomp GNU Intel)
+if(CMAKE_Fortran_COMPILER_ID IN_LIST okcomp)
   add_executable(bitpat bitpat.f90)
   target_compile_options(bitpat PRIVATE ${FFLAGS})
   add_test(NAME FortranBitPattern COMMAND bitpat)
@@ -126,11 +127,7 @@ if(CMAKE_Fortran_COMPILER_ID IN_LIST "GNU;Intel")
   add_executable(proc pragma.f90)
   target_compile_options(proc PRIVATE ${FFLAGS})
   add_test(NAME FortranPragma COMMAND proc)
-  
-  add_executable(proc pragma.f90)
-  target_compile_options(proc PRIVATE ${FFLAGS})
-  add_test(NAME FortranPragma COMMAND proc)
-  
+    
   add_library(assert assert.f90)
   add_executable(testassert Test.f90 fib3.f90)
   target_link_libraries(testassert assert)

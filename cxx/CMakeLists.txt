@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.0)
+cmake_minimum_required (VERSION 3.3)
 project(C++linkexample CXX Fortran) 
 enable_testing()
 
@@ -9,6 +9,11 @@ enable_testing()
 # make
 
 # https://stackoverflow.com/tags/fortran-iso-c-binding/info
+
+set(okcomp GNU Intel Flang)
+if(NOT CMAKE_Fortran_COMPILER_ID IN_LIST okcomp)
+  return()
+endif()
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)

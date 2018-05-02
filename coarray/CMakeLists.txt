@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.0)
+cmake_minimum_required (VERSION 3.3)
 project(coarraydemo Fortran)
 enable_testing()
 # ------- Fortran 2018 coarray examples -------
@@ -7,23 +7,31 @@ enable_testing()
 # Linux:  apt install libcoarrays-dev open-coarrays-bin
 # Mac: brew install opencoarrays
 
+set(okcomp GNU Intel)
+if(NOT CMAKE_Fortran_COMPILER_ID IN_LIST okcomp)
+  return()
+endif()
+
 if(${CMAKE_Fortran_COMPILER_ID} STREQUAL Intel)
-    add_compile_options(-coarray=shared)
-    link_libraries(-coarray=shared) # seems silly but that's what's needed at object code step for ifort
+    set(coflags -coarray=shared)
+    set(OpenCoarrays_LIBRARIES -coarray=shared) 
 elseif(${CMAKE_Fortran_COMPILER_ID} STREQUAL GNU)
 
   find_package(OpenCoarrays)
   if(OpenCoarrays_FOUND)
     list(APPEND OpenCoarrays_LIBRARIES caf_mpi)
-    add_compile_options(-fcoarray=lib)
+    set(coflags -fcoarray=lib)
   else()
-    add_compile_options(-fcoarray=single)
+    set(coflags -fcoarray=single)
   endif()
 endif()
 
 
 add_executable(coarray_hello helloworld.f90)
+target_compile_options(coarray_hello PRIVATE ${FFLAGS} ${coflags})
 target_link_libraries(coarray_hello ${OpenCoarrays_LIBRARIES})
+add_test(NAME CoarrayHello COMMAND coarray_hello)
+
 
 if(${CMAKE_Fortran_COMPILER_ID} STREQUAL Intel)
   add_executable(coarray_pi pi2008.f90)
@@ -31,9 +39,7 @@ elseif(${CMAKE_Fortran_COMPILER_ID} STREQUAL GNU)
 # Intel 2018 does not yet support Fortran 2018 co_sum
   add_executable(coarray_pi pi.f90)
 endif()
+target_compile_options(coarray_pi PRIVATE ${FFLAGS} ${coflags})
 target_link_libraries(coarray_pi ${OpenCoarrays_LIBRARIES})
-
-
-add_test(NAME CoarrayHello COMMAND coarray_hello)
 add_test(NAME CoarrayPi COMMAND coarray_pi)
 
