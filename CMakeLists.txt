@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.3)
+cmake_minimum_required (VERSION 3.7)
 project(fortran2018demo Fortran C)
 enable_testing()
 
@@ -26,7 +26,12 @@ endif()
 if(${CMAKE_Fortran_COMPILER_ID} STREQUAL Intel)
   set(FFLAGS -check all -traceback -warn -debug extended)
 elseif(${CMAKE_Fortran_COMPILER_ID} STREQUAL GNU)
-  set(FFLAGS -march=native -Wall -Wextra -Wpedantic -Werror=array-bounds -fbacktrace -fcheck=all)
+  if(${CMAKE_Fortran_COMPILER_VERSION} VERSION_GREATER_EQUAL 8.1)
+    set(FFLAGS -std=f2018)
+  else()
+    set(FFLAGS -std=f2008ts)
+  endif()
+  list(APPEND FFLAGS -march=native -Wall -Wextra -Wpedantic -Werror=array-bounds -fbacktrace -fcheck=all)
 # if you've compiled these libraries with ifort, you can move them up to use with ifort
     add_subdirectory(hdf5)
     add_subdirectory(netcdf)
@@ -148,7 +153,7 @@ if(MKL_FOUND AND usemkl)
 endif()
 
 add_executable(overwrite_stdout overwrite_stdout.f90)
-target_compile_options(overwrite_stdout PRIVATE ${FFLAGS})
+target_compile_options(overwrite_stdout PRIVATE ${FFLAGS} -fall-intrinsics)
 add_test(NAME FortranOverwriteStdout COMMAND overwrite_stdout)
 set_tests_properties(FortranOverwriteStdout PROPERTIES TIMEOUT 6)
 

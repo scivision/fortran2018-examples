@@ -9,20 +9,21 @@ program splitstring
 
     use, intrinsic :: iso_fortran_env,  stdin=>input_unit
 
-    character(len=*),parameter :: mystr="hello.txt"
-    character(len=80) stem
+    character(*),parameter :: mystr="hello.txt"
+    character(:),allocatable :: stem
 
     stem = split(mystr,'.')
     print *, stem
 
 contains
 
-character(len=80)  function split(instr,  delm)
+  pure function split(instr,  delm)
 
-  character(len=*), intent(in) :: instr
-  character(len=1), intent(in) :: delm
+  character(*), intent(in) :: instr
+  character(1), intent(in) :: delm
+  character(:),allocatable :: split
 
-  integer  idx
+  integer :: idx
 
   idx = scan(instr,delm)
   split = instr(1:idx-1)
