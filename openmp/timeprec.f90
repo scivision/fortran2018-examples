@@ -1,8 +1,14 @@
 program wait_precision
 ! demonstrates  timing methods
-use, intrinsic:: iso_fortran_env, only: dp=>real64
+use, intrinsic:: iso_fortran_env, only: dp=>real64, int64
 
+integer(int64) :: tic,toc,rate
+
+call system_clock(count=tic,count_rate=rate)
 call timempi()
+call system_clock(toc)
+
+print '(A,ES12.5,A)','instrinsic time: ',(toc-tic)/real(rate,dp),' seconds.'
 
 contains
 
@@ -30,7 +36,7 @@ subroutine timempi()
   
   toc = omp_get_wtime()
   
-  print *,'Thread: ',omp_get_thread_num(),toc
+  print *,'Thread: ',omp_get_thread_num(),(toc-tic)/rate
 
   !$omp end parallel
 end subroutine timempi
