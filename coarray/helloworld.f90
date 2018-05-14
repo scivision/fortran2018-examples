@@ -1,5 +1,6 @@
 program helloworld
-!  Each process prints out a "Hello, world!" message with a process ID
+!  Each process prints out a "Hello, world!" message with a process ID.
+! at least int64 is used with system_clock to ensure adequate resolution < 1 ms.
 !  Michael Hirsch, Ph.D.
 
 ! Compilation:
@@ -8,16 +9,16 @@ program helloworld
 ! or use Intel ifort:
 ! ifort -coarray helloworld.f90
 
-use, intrinsic:: iso_fortran_env, only: dp=>real64, int64
+use, intrinsic:: iso_fortran_env, only: int64, dp=>real64
 implicit none
 
-integer(int64) :: rate,tic,toc
+integer(int64) :: rate,tic=0,toc
 real(dp) :: telaps
 
 ! Print a message.
 if (this_image() == 1) then
-    call system_clock(tic)
-    print *, 'number of Fortran coarray images:', num_images()
+  call system_clock(tic)
+  print *, 'number of Fortran coarray images:', num_images()
 end if
 
 sync all ! semaphore, ensures message above is printed at top.
@@ -25,11 +26,10 @@ sync all ! semaphore, ensures message above is printed at top.
 print *, 'Process ', this_image()
 
 sync all ! semaphore, ensures all have printed before toc
-if ( this_image() == 1 ) then
-    call system_clock(toc)
-    call system_clock(count_rate=rate)
-    telaps = (toc - tic) * 1000.0_dp/rate
-    print '(A,ES10.3,A)', 'Elapsed wall clock time', telaps, ' seconds.'
+if (this_image() == 1) then
+  call system_clock(count=toc, count_rate=rate)
+  telaps = (toc - tic) / real(rate, dp)
+  print *, 'Elapsed wall clock time', telaps, ' seconds.'
 end if
 
 end program
