@@ -62,6 +62,8 @@ add_subdirectory(mpi)
 
 add_subdirectory(coarray)
 
+add_subdirectory(openmp)
+
 # ------- NaN sentinel Fortran example ----------------
 add_executable(nan nans.f90)
 target_compile_options(nan PRIVATE ${FFLAGS})
