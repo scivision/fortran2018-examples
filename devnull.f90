@@ -1,5 +1,5 @@
 program nulltest
-use, intrinsic:: iso_fortran_env
+use, intrinsic:: iso_fortran_env, only: int64
 use perf, only: wp, sysclock2ms
 implicit none
 ! Benchmarks platform independent null file writing behavior
@@ -19,16 +19,16 @@ implicit none
 ! making mistakes in doing so.
 ! 
 !
-character(len=*),parameter :: nulunix='/dev/null', nulwin='NUL',fout='out.txt'
+character(*),parameter :: nulunix='/dev/null', nulwin='NUL',fout='out.txt'
 integer,parameter :: Nrun=1000
-integer ios,u
-real(wp) tnul, tscratch, tfile
+integer :: ios,u
+real(wp) :: tnul, tscratch, tfile
 
 !---  BENCHMARK NUL -----------
 ! status='old' is used as a failsafe, to avoid creating an actual file 
 ! in case of mistake. It is not necessary to specify status='old'.
-open(newunit=u,file=nulunix,status='old',iostat=ios)
-if (ios /= 0) open(newunit=u,file=nulwin,status='old',iostat=ios)
+open(newunit=u,file=nulunix,status='old',iostat=ios, action='write')
+if (ios /= 0) open(newunit=u,file=nulwin,status='old',iostat=ios, action='write')
 if (ios /= 0) error stop 'could not open a NULL file handle'
 
 tnul = writetime(u,Nrun)
@@ -39,7 +39,7 @@ tscratch = writetime(u,Nrun)
 print '(A10,F10.3,A)','scratch: ',tscratch,' ms'
 !---- BENCHMARK FILE --------
 ! note that open() default position=asis, access=sequential
-open(newunit=u,status='unknown',file=fout)
+open(newunit=u,status='replace',file=fout)
 tfile = writetime(u,Nrun)
 print '(A10,F10.3,A)','file: ',tfile,' ms'
 

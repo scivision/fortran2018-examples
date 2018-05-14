@@ -46,7 +46,7 @@ print *,'64-bit variable, 32-bit constants equal to all 64-bit constants?',imdou
 print *,'32-bit',huge32
 print *,'64-bit',huge64
 print *,'128-bit',huge128
-print *,'64-bit Integer',hugeint64
+print *,'64-bit Integer ',hugeint64
 
 
 !  64-bit variable with 32-bit constants   1.7999999523162842     
@@ -64,7 +64,7 @@ print *,'64-bit Integer',hugeint64
 
 print *,'Bit Patterns:'
 
-print '(B0)','64-bit variable with 32-bit constants',imdouble
-print '(B0)','64-bit variable with 64-bit constants',huge64
+print '(A,B0)','64-bit variable with 32-bit constants ',imdouble
+print '(A,B0)','64-bit variable with 64-bit constants ',huge64
 
 end program

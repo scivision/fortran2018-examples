@@ -1,6 +1,6 @@
 ! https://github.com/JuliaLang/julia/blob/master/test/perf/micro/perf.f90
 module perf
-  use, intrinsic :: iso_fortran_env
+  use, intrinsic :: iso_fortran_env, only: real64, int64
   implicit none
   include 'kind.txt' ! output by CMake
   private
@@ -9,7 +9,7 @@ module perf
   
 contains
 
-real(wp) function sysclock2ms(t)
+real(wp) function sysclock2ms(t) result(ms)
 ! Convert a number of clock ticks, as returned by system_clock called
 ! with integer(i64) arguments, to milliseconds
 
@@ -17,8 +17,8 @@ real(wp) function sysclock2ms(t)
   integer(int64) :: rate
   real(wp) ::  r
   call system_clock(count_rate=rate)
-  r = 1000._wp / rate
-  sysclock2ms = t * r
+  r = 1000._real64 / rate
+  ms = t * r
 end function sysclock2ms
 
 
@@ -39,7 +39,7 @@ subroutine assert(cond)
     logical, intent(in) :: cond
 
     if (.not. cond) then
-        error stop 'assertion failed, halting test'
+      error stop 'assertion failed, halting test'
     end if
 
 end subroutine assert
