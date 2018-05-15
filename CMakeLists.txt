@@ -160,7 +160,7 @@ if(MKL_FOUND AND usemkl)
 endif()
 
 add_executable(overwrite_stdout overwrite_stdout.f90)
-target_compile_options(overwrite_stdout PRIVATE ${FFLAGS} -fall-intrinsics)
+target_compile_options(overwrite_stdout PRIVATE ${FFLAGS})
 add_test(NAME FortranOverwriteStdout COMMAND overwrite_stdout)
 set_tests_properties(FortranOverwriteStdout PROPERTIES TIMEOUT 6)
 
