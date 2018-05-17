@@ -99,6 +99,10 @@ set_tests_properties(FortranMicrosleep PROPERTIES TIMEOUT 1)
 set(okcomp GNU Intel)
 if(CMAKE_Fortran_COMPILER_ID IN_LIST okcomp)
 
+  add_executable(statement statement_function.f90)
+  target_compile_options(statement PRIVATE ${FFLAGS})
+  add_test(NAME Statement COMMAND statement)
+
   add_executable(randinit random_init.f90)
   target_compile_options(randinit PRIVATE ${FFLAGS})
   add_test(NAME RandomInit COMMAND randinit)
