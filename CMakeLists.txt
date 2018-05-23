@@ -87,6 +87,10 @@ add_executable(precprob precision_problems.f90)
 target_compile_options(precprob PRIVATE ${FFLAGS})
 add_test(NAME FortranPrecision COMMAND precprob)
 
+add_executable(notermsize noenv.f90)
+target_compile_options(notermsize PRIVATE ${FFLAGS})
+add_test(NAME NoTermSize COMMAND notermsize)
+
 add_executable(polymorph polymorphic.f90)
 target_compile_options(polymorph PRIVATE ${FFLAGS})
 add_test(NAME FortranPolymorphic COMMAND polymorph)
