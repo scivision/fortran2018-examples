@@ -75,11 +75,11 @@ if (present(k)) r = k
 
 select case (modulo(r,4))
   case (0)
-    rot90 = array
+    rot90 = array  ! unmodified
   case (1) 
     rot90 = transpose(flip(array,1))
   case (2)
-    rot90 = flip(flip(array,1),2)
+    rot90 = flip(array,0)
   case (3)
     rot90 = flip(transpose(array), 1)
 end select
@@ -95,12 +95,15 @@ dimension :: flip(lbound(array,1):ubound(array,1), &
                   lbound(array,2):ubound(array,2))
 
 select case (d)
+  case (0)  ! flip both dimensions
+    flip = array(ubound(array,1):lbound(array,1):-1, &
+                 ubound(array,1):lbound(array,1):-1)
   case (1)
     flip = array(ubound(array,1):lbound(array,1):-1, :)
   case (2)
     flip = array(:, ubound(array,1):lbound(array,1):-1)
   case default
-    write(error_unit,*) 'bad flip dimension, 2-D only  (1 or 2)'
+    write(error_unit,*) 'bad flip dimension, 2-D only  (1 or 2), or 0 for both dimensions'
     stop 1
 end select
 
