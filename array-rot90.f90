@@ -103,8 +103,7 @@ select case (d)
   case (2)
     flip = array(:, ubound(array,1):lbound(array,1):-1)
   case default
-    write(error_unit,*) 'bad flip dimension, 2-D only  (1 or 2), or 0 for both dimensions'
-    stop 1
+    error stop 'bad flip dimension, 2-D only  (1 or 2), or 0 for both dimensions'
 end select
 
 end function flip
