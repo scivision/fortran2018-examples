@@ -69,6 +69,15 @@ add_executable(nan nans.f90)
 target_compile_options(nan PRIVATE ${FFLAGS})
 add_test(NAME FortranNaN COMMAND nan)
 
+# ------- rot90, flip --------
+add_library(rotflip rot90.f90)
+target_compile_options(rotflip PRIVATE ${FFLAGS})
+
+add_executable(rotflip_test tests/test_rot90.f90)
+target_link_libraries(rotflip_test rotflip)
+target_compile_options(rotflip_test PRIVATE ${FFLAGS})
+add_test(NAME RotFlip COMMAND rotflip_test)
+
 add_executable(split split_string.f90)
 target_compile_options(split PRIVATE ${FFLAGS})
 add_test(NAME Fortransplit COMMAND split)
@@ -99,6 +108,8 @@ add_executable(sleepstd sleep_std.f90)
 target_compile_options(sleepstd PRIVATE ${FFLAGS})
 add_test(NAME FortranMicrosleep COMMAND sleepstd)
 set_tests_properties(FortranMicrosleep PROPERTIES TIMEOUT 1)
+
+
 
 set(okcomp GNU Intel)
 if(CMAKE_Fortran_COMPILER_ID IN_LIST okcomp)
@@ -149,7 +160,7 @@ if(CMAKE_Fortran_COMPILER_ID IN_LIST okcomp)
   add_test(NAME FortranPragma COMMAND proc)
     
   add_library(assert assert.f90)
-  add_executable(testassert Test.f90 fib3.f90)
+  add_executable(testassert not-finite.f90 fib3.f90)
   target_link_libraries(testassert assert)
   target_compile_options(testassert PRIVATE ${FFLAGS})
   add_test(NAME FortranAssert COMMAND testassert)

@@ -1,62 +1,9 @@
-program rot90_array
-! demo rotating a 2-D array 90 degrees clockwise
-!
-! briefly, rot90() in Fortran for 2-D array is:
-!   rot90 = transpose(array(ubound(array,1):lbound(array,1):-1, :))
+module rotflip
+
+! This module provides rot90, flipud, fliplr for Fortran like Matlab and NumPy
+! 
 use, intrinsic:: iso_fortran_env, only: error_unit
 implicit none
-
-integer, parameter :: N=3
-integer :: i, array(N,N), rotArray(N,N)
-
-array = reshape( &
-  [0, 1, 2, &
-   3, 4, 5, &
-   6, 7, 8], &
-   shape(array), order=[2,1])
-   
-print *,'before rot90'
-do i = 1, size(array,1)
-  print '(3I1)', array(i,:)
-enddo
-
-rotArray = rot90(array,0)
-print *,'rot90(0)'
-do i = 1, size(array,1)
-  print '(3I1)', rotArray(i,:)
-enddo
-
-rotArray = rot90(array,1)
-print *,'rot90(1)'
-do i = 1, size(array,1)
-  print '(3I1)', rotArray(i,:)
-enddo
-
-rotArray = rot90(array,2)
-print *,'rot90(2)'
-do i = 1, size(array,1)
-  print '(3I1)', rotArray(i,:)
-enddo
-
-rotArray = rot90(array,3)
-print *,'rot90(3)'
-do i = 1, size(array,1)
-  print '(3I1)', rotArray(i,:)
-enddo
-
-
-rotArray = flipud(array)
-print *,'flipud()'
-do i = 1, size(array,1)
-  print '(3I1)', rotArray(i,:)
-enddo
-
-rotArray = fliplr(array)
-print *,'fliplr()'
-do i = 1, size(array,1)
-  print '(3I1)', rotArray(i,:)
-enddo
-
 
 contains
 
@@ -130,4 +77,4 @@ fliplr = flip(array,2)
 
 end function fliplr
 
-end program
+end module rotflip
