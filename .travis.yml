@@ -1,6 +1,5 @@
 # gfortran >= 6 is required
 language: c
-fast_finish: true
 
 os:
   - linux
@@ -12,6 +11,7 @@ group: travis_latest
 
 git:
   depth: 3
+  quiet: true
 
 addons:
   apt:
@@ -28,8 +28,7 @@ addons:
 before_install:
   - if [[ $TRAVIS_OS_NAME == osx ]]; then
       brew update > /dev/null;
-      brew install gcc || true > /dev/null;
-      brew link --overwrite gcc > /dev/null;
+      brew install gcc || brew link --overwrite gcc > /dev/null;
       export FC=gfortran;
       brew install hdf5 netcdf > /dev/null;
     fi
