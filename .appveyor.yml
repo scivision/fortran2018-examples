@@ -1,6 +1,6 @@
 image:
 - Visual Studio 2017
-# - Ubuntu   too old CMake 3.5
+- Ubuntu
 
 environment:
   MINGW_DIR: C:\mingw-w64\x86_64-7.2.0-posix-seh-rt_v5-rev1\mingw64\bin
@@ -11,11 +11,10 @@ build: off
 
 init:
 - cmd: set PATH=%MINGW_DIR%;%PATH%
-- cmd: set FC=%MINGW_DIR%\gfortran
 
 - sh: sudo -E apt-add-repository -y "ppa:ubuntu-toolchain-r/test" > /dev/null
 - sh: sudo apt-get -yq update > /dev/null
-- sh: sudo apt-get install -yq --no-install-suggests --no-install-recommends gfortran-6 cmake make > /dev/null
+- sh: sudo apt-get install -yq --no-install-suggests --no-install-recommends gfortran-6 > /dev/null
 - sh: export FC=/usr/bin/gfortran-6
 
 install:
@@ -24,7 +23,6 @@ install:
 - sh: cmake ..
 
 - cmake --build .
-  
-test_script:
-- ctest -V
+
+test_script: ctest -V
 

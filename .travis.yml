@@ -7,30 +7,30 @@ git:
   quiet: true
 
 os:
-  - linux
-  - osx
+- linux
+- osx
 
 env: FC=gfortran-6
 
 addons:
   apt:
     sources:
-      - ubuntu-toolchain-r-test
+    - ubuntu-toolchain-r-test
     packages:
-      - gfortran-6
-      - gcc-6
+    - gfortran-6
+    - gcc-6
 #'libopenmpi-dev' # wrong version mpi
  #       - libhdf5-dev # old version
  #       - libnetcdf-dev
 #        - libnetcdff-dev # not in image repos
 
 before_install:
-  - if [[ $TRAVIS_OS_NAME == osx ]]; then
-      brew update > /dev/null;
-      brew install gcc > /dev/null || brew link --overwrite gcc > /dev/null;
-      export FC=gfortran;
-      brew install hdf5 netcdf > /dev/null;
-    fi
+- if [[ $TRAVIS_OS_NAME == osx ]]; then
+  brew update > /dev/null;
+  brew install gcc > /dev/null || brew link --overwrite gcc > /dev/null;
+  export FC=gfortran;
+  brew install hdf5 netcdf > /dev/null;
+  fi
 # takes 15 minutes to setup on Travis for Linux.
 #  - if [[ $TRAVIS_OS_NAME == linux ]]; then
 #      export HOMEBREW_FORCE_VENDOR_RUBY=1;
@@ -41,11 +41,9 @@ before_install:
 
 
 install:
-  - cd bin
-  - cmake ..
-  - cmake --build .
+- cd bin
+- cmake ..
+- cmake --build .
 
-script:
-  - ctest -V
-
+script: ctest -V
 
