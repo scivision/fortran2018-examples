@@ -42,7 +42,7 @@ do i = im, Ni-1, num_images() ! Each image works on a subset of the problem
 !    print *,x,f,psum
 end do
 
-! --- co_sum is much simpler, but not working on ifort 2017 yet
+! --- co_sum is much simpler, but not included even in ifort 2019 
 call co_sum(psum)!, stat=stat,errmsg=emsg)  
 !if (stat /= 0) then
 !   write (stderr,*) emsg
