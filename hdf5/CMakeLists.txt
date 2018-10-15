@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.2.2) # 3.2.2 required for HDF5
+cmake_minimum_required (VERSION 3.10) # 3.10 required for HDF5 1.10
 project(fortran2018demo Fortran)
 enable_testing()
 # INTEL COMPILER: https://software.intel.com/en-us/articles/performance-tools-for-software-developers-building-hdf5-with-intel-compilers
