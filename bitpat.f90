@@ -11,6 +11,8 @@ integer, parameter :: I(*) = [O"4000000000",O"20000000",O"100000",O"400",O"2"]  
 integer, parameter :: J(*) = [  2**29      ,  2**22    , 2**15   , 2**8 , 2**1 ]
 
 
+integer(int64), parameter :: hexa(*) = [z'80000000']
+
 integer(int64),parameter :: K = int(O"201004020100",int64)
 !2**34+2**27+2**20+2**13+2**6
 
@@ -27,5 +29,8 @@ if (.not.i(1)==536870912) error stop 'bit pattern mismatch'
 if (.not.j(1)==536870912) error stop 'bit pattern mismatch'
 if (.not.k1==20583) error stop 'bit pattern mismatch'
 if (.not.k==17315143744_int64) error stop 'bit pattern mismatch'
+
+print *,'--------------'
+print *,hexa
 
 end program
