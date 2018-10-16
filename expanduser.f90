@@ -1,23 +1,34 @@
-module ioutils
+module fsutils
 implicit none
 contains
 
-subroutine expanduser(expandhome, indir)
+function expanduser(indir)
 
-character(*), intent(in), optional :: indir
-character(:), allocatable, intent(out) :: expandhome
+character(:), allocatable :: expanduser
+character(*), intent(in) :: indir
 
-character :: filesep
-character(256) :: buf
 ! -- resolve home directory as Fortran does not understand tilde
 ! works for Linux, Mac, Windows and more
 
-if (present(indir)) then
-  if (indir(1:1) /= '~') then
-    expandhome = indir
-    return
-  endif
+if (len(indir) < 1) then
+  stop 'must provide path to expand'
+elseif (indir(1:1) /= '~') then
+  expanduser = indir
+  return
+elseif (len(indir) < 3) then
+  expanduser = homedir()
+else
+  expanduser = homedir() // indir(3:)
 endif
+
+end function expanduser
+
+
+function homedir()
+
+character(:), allocatable :: homedir
+character :: filesep
+character(256) :: buf
 
 ! assume MacOS/Linux/BSD/Cygwin/WSL
 filesep = '/'
@@ -28,34 +39,29 @@ if (len_trim(buf) == 0) then  ! Windows
   filesep = char(92)
 endif
 
-expandhome = trim(buf) // filesep // indir(3:)
+homedir = trim(buf) // filesep
+
+end function homedir
 
 
-end subroutine expanduser
-
-end module ioutils
+end module fsutils
 
 !------ demo
 
 program home
 
-use ioutils
+use fsutils
 implicit none
 ! explores what '~' means for paths in Fortran
 ! Note: when testing, enclose argument in '~/test.txt' quotes or 
 !  shell will expand '~' before it gets to Fortran!
 
-integer :: fid, ios
 character(:), allocatable :: expanded
 character(256) :: buf
 
-call get_command_argument(1, buf, status=ios)
+call get_command_argument(1, buf)
 
-if (ios==0) then
-  call expanduser(expanded, trim(buf))
-else
-  call expanduser(expanded)
-endif
+expanded = expanduser(trim(buf))
 
 print '(A)', trim(buf)
 print '(A)', expanded

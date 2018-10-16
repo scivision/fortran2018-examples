@@ -90,6 +90,12 @@ if(NOT WIN32) # FIXME doable via windows command
   add_test(NAME FortranTerminalIO COMMAND bash -c "./termio <<< 0")
 endif()
 
+add_executable(special_char special_characters.f90)
+target_compile_options(special_char PRIVATE ${FFLAGS})
+
+add_executable(expanduser expanduser.f90)
+target_compile_options(expanduser PRIVATE ${FFLAGS})
+
 add_executable(precprob precision_problems.f90)
 target_compile_options(precprob PRIVATE ${FFLAGS})
 add_test(NAME FortranPrecision COMMAND precprob)
