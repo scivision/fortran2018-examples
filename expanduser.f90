@@ -10,15 +10,15 @@ character(*), intent(in) :: indir
 ! -- resolve home directory as Fortran does not understand tilde
 ! works for Linux, Mac, Windows and more
 
-if (len(indir) < 1) then
+if (len_trim(indir) < 1) then
   stop 'must provide path to expand'
 elseif (indir(1:1) /= '~') then
-  expanduser = indir
+  expanduser = trim(adjustl(indir))
   return
-elseif (len(indir) < 3) then
+elseif (len_trim(indir) < 3) then
   expanduser = homedir()
 else
-  expanduser = homedir() // indir(3:)
+  expanduser = homedir() // trim(adjustl(indir(3:)))
 endif
 
 end function expanduser
