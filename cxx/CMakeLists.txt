@@ -10,10 +10,12 @@ enable_testing()
 
 # https://stackoverflow.com/tags/fortran-iso-c-binding/info
 
-set(okcomp GNU Intel Flang)
-if(NOT CMAKE_Fortran_COMPILER_ID IN_LIST okcomp)
-  return()
+if(CMAKE_BUILD_TYPE STREQUAL Debug)
+  add_compile_options(-g -O0)
+else()
+  add_compile_options(-O3)
 endif()
+
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -24,7 +26,7 @@ if(${CMAKE_Fortran_COMPILER_ID} STREQUAL Intel)
 endif()
 
 add_library(mylibrary SHARED fun.f90)
-target_link_libraries(mylibrary INTERFACE ${FLIBS})
+target_link_libraries(mylibrary PRIVATE ${FLIBS})
 target_compile_options(mylibrary PRIVATE ${FFLAGS})
 
 add_executable(cxxfort cxxfort.cpp)

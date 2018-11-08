@@ -7,15 +7,10 @@ enable_testing()
 # Linux:  apt install libcoarrays-dev open-coarrays-bin
 # Mac: brew install opencoarrays
 
-set(okcomp GNU Intel)
-if(NOT CMAKE_Fortran_COMPILER_ID IN_LIST okcomp)
-  return()
-endif()
-
 if(${CMAKE_Fortran_COMPILER_ID} STREQUAL Intel)
     set(coflags -coarray=shared)
     set(OpenCoarrays_LIBRARIES -coarray=shared) 
-elseif(${CMAKE_Fortran_COMPILER_ID} STREQUAL GNU)
+elseif(${CMAKE_Fortran_COMPILER_ID} STREQUAL GNU AND ${CMAKE_Fortran_COMPILER_VERSION} VERSION_GREATER_EQUAL 7)
 
   find_package(OpenCoarrays)
   if(OpenCoarrays_FOUND)
@@ -24,6 +19,10 @@ elseif(${CMAKE_Fortran_COMPILER_ID} STREQUAL GNU)
   else()
     set(coflags -fcoarray=single)
   endif()
+elseif(${CMAKE_Fortran_COMPILER_ID} STREQUAL Cray)
+  # no flags needed, coarray enabled by default for Cray
+else()
+  return()
 endif()
 
 

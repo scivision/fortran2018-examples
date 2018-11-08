@@ -62,10 +62,7 @@ make
 
 ### Intel MKL
 
-To mitigate the case where MKL is installed, but not yet 
-[compiled forGfortran](https://www.scivision.co/intel-mkl-lapack95-gfortran/), 
-the examples requiring LAPACK95 or other MKL-specific modules are enabled
-with the `cmake -Dusemkl ..` option.
+see [array/](./array) directory
 
 ### Flang / Clang
 

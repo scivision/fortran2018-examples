@@ -5,6 +5,10 @@ enable_testing()
 #
 # apt install libnetcdff-dev     # note two "ff"
 
+if(${CMAKE_Fortran_COMPILER_ID} STREQUAL GNU AND ${CMAKE_Fortran_COMPILER_VERSION} VERSION_LESS 5)
+  return()
+endif()
+
 # unfortunately netCDF for Fortran isn't explicitly supported, even in Ubuntu 18.04 repos libnetcdff-dev since
 # findNetcdf comes from libnetcdf-dev
 find_package(netCDF)

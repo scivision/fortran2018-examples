@@ -1,5 +1,4 @@
 #include <iostream>
-#include <cstdlib>
 #include <vector>
 
 extern "C" void timestwo(double [],double [],int*);
@@ -7,11 +6,11 @@ extern "C" void timestwo(double [],double [],int*);
 
 int main()
 {
-    int N = 3;
-    std::vector<double> x((std::size_t(N)));
-    std::vector<double> x2((std::size_t(N)));
+    auto N = 3;
+    std::vector<double> x(N);
+    std::vector<double> x2(N);
 
-    for (std::vector<double>::size_type i = 0; i < x.size(); i++)
+    for (auto i = 0; i < x.size(); i++)
     {
         x[i] = i;
     }

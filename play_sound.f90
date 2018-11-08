@@ -15,7 +15,7 @@ character(1000) :: pcmd
 integer :: ios!, fsize, u=-1
 
 call get_command_argument(1,fn,status=ios)
-if (ios/=0) error stop 'please include audio filename in command'
+if (ios/=0) stop 'please include audio filename in command'
 
 !open(newunit=u,file=fn,status='old',iostat=ios,action='read')
 !if (ios==0) inquire(unit=u,opened=fexist,size=fsize) ! file and not directory
@@ -32,6 +32,6 @@ pcmd = playexe//' '//cmdopts//' '//trim(fn)
 print *,trim(pcmd) ! for debugging
 
 ! exitstat only works for wait=.true. by Fortran 2008 spec.
-call execute_command_line(pcmd, wait=.false.)
+call execute_command_line(pcmd)
 
 end program

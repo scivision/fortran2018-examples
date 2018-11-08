@@ -1,6 +1,6 @@
 image:
 - Visual Studio 2017
-- Ubuntu
+- Ubuntu18.04
 
 environment:
   MINGW_DIR: C:\mingw-w64\x86_64-7.2.0-posix-seh-rt_v5-rev1\mingw64\bin
@@ -12,11 +12,6 @@ build: off
 init:
 - cmd: set PATH=%MINGW_DIR%;%PATH%
 
-- sh: sudo -E apt-add-repository -y "ppa:ubuntu-toolchain-r/test" > /dev/null
-- sh: sudo apt-get -yq update > /dev/null
-- sh: sudo apt-get install -yq --no-install-suggests --no-install-recommends gfortran-6 > /dev/null
-- sh: export FC=/usr/bin/gfortran-6
-
 install:
 - cd bin
 - cmd: cmake -G "MinGW Makefiles" -DCMAKE_SH="CMAKE_SH-NOTFOUND" ..
@@ -24,5 +19,5 @@ install:
 
 - cmake --build .
 
-test_script: ctest -V
+test_script: ctest --output-on-failure
 

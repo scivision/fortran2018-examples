@@ -2,6 +2,8 @@ program huge_prec
 use,intrinsic:: iso_fortran_env, stderr=>error_unit
 implicit none
 
+! real128 is enabled but buggy in Gfortran 4.8. Better use Gfortran >= 5.
+
 ! shows pitfall of not being mindful with input Kind. Need to be decimal for real kinds!
 
 ! "HUGE(X) returns the largest number that is not an infinity in the type of X"

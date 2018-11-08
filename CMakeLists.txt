@@ -2,6 +2,8 @@ cmake_minimum_required (VERSION 3.7)
 project(fortran2018demo Fortran C)
 enable_testing()
 
+set(f2008 Cray GNU Intel NAG)
+
 if(realbits EQUAL 32)   # -Drealbits=32
   file(WRITE kind.txt "integer,parameter :: wp=real32")
   message(STATUS "real kind: real32")
@@ -17,42 +19,20 @@ else()
 endif()
 
 
-if(CMAKE_BUILD_TYPE STREQUAL Debug)
-  add_compile_options(-g -O0)
-else()
-  add_compile_options(-O3)
-endif()
-
-if(${CMAKE_Fortran_COMPILER_ID} STREQUAL Intel)
-  set(FFLAGS -check all -traceback -warn -debug extended)
-elseif(${CMAKE_Fortran_COMPILER_ID} STREQUAL GNU)
-  if(${CMAKE_Fortran_COMPILER_VERSION} VERSION_GREATER_EQUAL 8)
-    set(FFLAGS -std=f2018)
-  endif()
-  list(APPEND FFLAGS -march=native -Wall -Wextra -Wpedantic -Werror=array-bounds -fbacktrace -fcheck=all)
-# if you've compiled these libraries with ifort, you can move them up to use with ifort
-    add_subdirectory(hdf5)
-    add_subdirectory(netcdf)
-elseif(${CMAKE_Fortran_COMPILER_ID} STREQUAL PGI)
-  set(FFLAGS -Mallocatable=03)
-elseif(${CMAKE_Fortran_COMPILER_ID} STREQUAL Flang) 
-  add_compile_options(-Mallocatable=03)
-  link_libraries(-static-flang-libs)
-  set(CFLAGS -W)
-endif()
-
-#------------------------
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/Modules/)
-# https://software.intel.com/en-us/articles/intel-mkl-link-line-advisor
-find_package(MKL)
-if(MKL_FOUND)
-    set(MKLROOT $ENV{MKLROOT})
-    include_directories(${MKL_INCLUDE_DIRS} ${MKLROOT}/include/intel64/lp64)
-    
-    find_package(Threads REQUIRED)
 
-    set(FLIBS mkl_blas95_lp64 mkl_lapack95_lp64 mkl_gf_lp64 mkl_tbb_thread mkl_core tbb stdc++ ${CMAKE_THREAD_LIBS_INIT} ${CMAKE_DL_LIBS} m)
+include(cmake/compilers.cmake)
+
+if(${CMAKE_Fortran_COMPILER_ID} STREQUAL GNU)
+  add_subdirectory(hdf5)
+  add_subdirectory(netcdf)
 endif()
+
+add_subdirectory(character)
+
+add_subdirectory(real)
+
+add_subdirectory(array)
 
 add_subdirectory(cxx)
 
@@ -62,23 +42,6 @@ add_subdirectory(coarray)
 
 add_subdirectory(openmp)
 
-# ------- NaN sentinel Fortran example ----------------
-add_executable(nan nans.f90)
-target_compile_options(nan PRIVATE ${FFLAGS})
-add_test(NAME FortranNaN COMMAND nan)
-
-# ------- rot90, flip --------
-add_library(rotflip rot90.f90)
-target_compile_options(rotflip PRIVATE ${FFLAGS})
-
-add_executable(rotflip_test tests/test_rot90.f90)
-target_link_libraries(rotflip_test rotflip)
-target_compile_options(rotflip_test PRIVATE ${FFLAGS})
-add_test(NAME RotFlip COMMAND rotflip_test)
-
-add_executable(split split_string.f90)
-target_compile_options(split PRIVATE ${FFLAGS})
-add_test(NAME Fortransplit COMMAND split)
 
 add_executable(justwait replace_pause.f90)
 target_compile_options(justwait PRIVATE ${FFLAGS})
@@ -90,15 +53,9 @@ if(NOT WIN32) # FIXME doable via windows command
   add_test(NAME FortranTerminalIO COMMAND bash -c "./termio <<< 0")
 endif()
 
-add_executable(special_char special_characters.f90)
-target_compile_options(special_char PRIVATE ${FFLAGS})
 
 add_executable(expanduser expanduser.f90)
 target_compile_options(expanduser PRIVATE ${FFLAGS})
-
-add_executable(precprob precision_problems.f90)
-target_compile_options(precprob PRIVATE ${FFLAGS})
-add_test(NAME FortranPrecision COMMAND precprob)
 
 add_executable(notermsize noenv.f90)
 target_compile_options(notermsize PRIVATE ${FFLAGS})
@@ -114,14 +71,12 @@ add_test(NAME FortranMicrosleep COMMAND sleepstd)
 set_tests_properties(FortranMicrosleep PROPERTIES TIMEOUT 1)
 
 
-
-set(okcomp GNU Intel)
-if(CMAKE_Fortran_COMPILER_ID IN_LIST okcomp)
+if(CMAKE_Fortran_COMPILER_ID IN_LIST f2008)
 
   add_executable(statement statement_function.f90)
   target_compile_options(statement PRIVATE ${FFLAGS})
   add_test(NAME Statement COMMAND statement)
-
+  
   add_executable(randinit random_init.f90)
   target_compile_options(randinit PRIVATE ${FFLAGS})
   add_test(NAME RandomInit COMMAND randinit)
@@ -129,23 +84,6 @@ if(CMAKE_Fortran_COMPILER_ID IN_LIST okcomp)
   add_executable(bitpat bitpat.f90)
   target_compile_options(bitpat PRIVATE ${FFLAGS})
   add_test(NAME FortranBitPattern COMMAND bitpat)
-
-  add_executable(hugeprec huge_precision.f90)
-  target_compile_options(hugeprec PRIVATE ${FFLAGS})
-  add_test(NAME FortranHugePrecision COMMAND hugeprec)
-
-  add_executable(divprec div_precision.f90)
-  target_compile_options(divprec PRIVATE ${FFLAGS})
-  add_test(NAME FortranDivisionPrecision COMMAND divprec)
-  
-  add_executable(floatprec floating_precision.f90)
-  target_compile_options(floatprec PRIVATE ${FFLAGS})
-  add_test(NAME FortranFloatPrecision COMMAND floatprec)
-  
-  
-  add_executable(charlen charlen.f90)
-  target_compile_options(charlen PRIVATE ${FFLAGS})
-  add_test(NAME FortranCharacterLen COMMAND charlen)
 
   add_executable(readonly fileopen-readonly.f90)
   target_compile_options(readonly PRIVATE ${FFLAGS})
@@ -163,28 +101,7 @@ if(CMAKE_Fortran_COMPILER_ID IN_LIST okcomp)
   target_compile_options(proc PRIVATE ${FFLAGS})
   add_test(NAME FortranPragma COMMAND proc)
     
-  add_library(assert assert.f90)
-  add_executable(testassert not-finite.f90 fib3.f90)
-  target_link_libraries(testassert assert)
-  target_compile_options(testassert PRIVATE ${FFLAGS})
-  add_test(NAME FortranAssert COMMAND testassert)
-  
   add_executable(playsound play_sound.f90)
 
 endif()
-
-
-# ------- SVD
-if(MKL_FOUND AND usemkl)
-    add_executable(svd intel_gesvd.f90)
-    target_link_libraries(svd ${FLIBS})
-    target_compile_options(svd PRIVATE ${FFLAGS})
-    add_test(NAME FortranSVD COMMAND svd)
-endif()
-
-add_executable(overwrite_stdout overwrite_stdout.f90)
-target_compile_options(overwrite_stdout PRIVATE ${FFLAGS})
-add_test(NAME FortranOverwriteStdout COMMAND overwrite_stdout)
-set_tests_properties(FortranOverwriteStdout PROPERTIES TIMEOUT 6)
-
 

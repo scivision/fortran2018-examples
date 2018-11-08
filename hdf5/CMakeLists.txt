@@ -4,6 +4,9 @@ enable_testing()
 # INTEL COMPILER: https://software.intel.com/en-us/articles/performance-tools-for-software-developers-building-hdf5-with-intel-compilers
 
 
+if(${CMAKE_Fortran_COMPILER_ID} STREQUAL GNU AND ${CMAKE_Fortran_COMPILER_VERSION} VERSION_LESS 5)
+  return()
+endif()
 # https://support.hdfgroup.org/ftp/HDF5/current/src/unpacked/release_docs/USING_HDF5_CMake.txt
 # https://github.com/Kitware/CMake/blob/master/Modules/FindHDF5.cmake
 
@@ -37,7 +40,7 @@ if(HDF5_FOUND)
   #add_executable(hdf5array hdf5array.f90)
 
   add_executable(stest test.f90)
-  target_compile_options(stest PRIVATE ${FFLAGS})
+  target_compile_options(stest PRIVATE ${FFLAGS} -w)
   target_include_directories(stest PRIVATE ${HDF5_Fortran_INCLUDE_DIRS})
   target_link_libraries(stest PRIVATE ${HDF5_Fortran_LIBRARIES} ${HDF5_Fortran_HL_LIBRARIES})
   add_test(NAME HDF5 COMMAND stest)
