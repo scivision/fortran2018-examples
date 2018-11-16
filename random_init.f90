@@ -1,6 +1,6 @@
 program testinit
 
-use, intrinsic:: iso_fortran_env, only: error_unit
+use, intrinsic:: iso_fortran_env, only: stderr=>error_unit
 
 implicit none
 
@@ -23,7 +23,12 @@ subroutine init_random_seed()
   
   if (ios==0) then
     read(u,iostat=ios) seed
-    if (ios/=0) error stop 'failed to read random source generator'
+    
+    if (ios/=0) then
+      write(stderr,*) 'failed to read random source generator'
+      stop 1
+    endif
+    
     close(u)
     
     call random_seed(put=seed)
@@ -32,7 +37,7 @@ subroutine init_random_seed()
     call random_seed(get=check)
     call random_seed()
     call random_seed(get=seed)
-    if (all(check==seed)) write(error_unit,*) 'WARNING: your compiler is not picking a unique seed'
+    if (all(check==seed)) write(stderr,*) 'WARNING: your compiler is not picking a unique seed'
   endif
     
   print *,'seed: ',seed    ! for debug/test
