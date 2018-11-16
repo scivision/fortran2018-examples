@@ -22,8 +22,10 @@ real(dp):: A(3,3) = reshape( &
           0, 1,-1 ], &
            shape(A))
 
-real(dp) :: s64(size(a,1)), e64(size(a,1)), maxerr
-real(sp) :: s32(size(a,1)), a32(size(A,1), size(A,2)), e32(size(a,1))
+integer, parameter :: M = size(a,1), N = size(a,2)
+
+real(dp) :: s64(M), e64(M), maxerr
+real(sp) :: s32(M), a32(M, N), e32(M)
 
 A32 = A
 
@@ -38,7 +40,6 @@ call gesvd(A32, s32)
 e32 = s32 - [2.460504870018764_sp, 1.699628148275318_sp, 0.239123278256554_sp]
 
 print '(I3,A,3ES20.12)',storage_size(s32),' bits: error mag: ',e32
-
 
 maxerr=maxval(abs(e64))
 
