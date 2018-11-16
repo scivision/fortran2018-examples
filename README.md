@@ -1,5 +1,4 @@
 [![image](https://travis-ci.org/scivision/fortran2018-examples.svg?branch=master)](https://travis-ci.org/scivision/fortran2018-examples)
-
 [![image](https://ci.appveyor.com/api/projects/status/kk2gcmlw1l3pjxy5?svg=true)](https://ci.appveyor.com/project/scivision/fortran2018-examples)
 
 
@@ -67,27 +66,25 @@ see [array/](./array) directory
 ### Flang / Clang
 
 Not every program runs yet with
-[Flang](https://www.scivision.co/flang-compiler-build-tips/) since Flang
-lacks a lot of Fortran 2008 standard stuff--like `error stop`
+[Flang](https://www.scivision.co/flang-compiler-build-tips/).
 
 ```bash
 FC=flang CC=clang CXX=clang++ cmake ..
 make
 
-make test 
+ctest
 ```
 
 ### PGI
 
-Not every program runs yet with [PGI
-compilers](https://www.pgroup.com/products/community.htm) since PGI
-lacks a lot of Fortran 2008 standard stuff--like `error stop`
+Not every program runs yet with 
+[PGI](https://www.scivision.co/install-pgi-free-compiler/).
 
 ```bash
 FC=pgf90 CC=pgcc CXX=pgc++ cmake ..
 make
 
-make test
+ctest
 ```
 
 ## Programs
@@ -229,15 +226,13 @@ use, intrinsic :: ieee_arithmetic, only: ieee_value, ieee_quiet_nan
 nan_ieee = ieee_value(1.,ieee_quiet_nan)
 ```
 
-This is in program:
-
-    ./nan
+This is in program `real/nan`
 
 In Fortran 2003, `real(z'abcd0000')` is equivalent to
 `transfer(z'abcd0000',1.)` by Fortran 2003. However, where you are
 deliberately setting NaN you will get
 
-&gt; Error: Result of FLOAT is NaN
+> Error: Result of FLOAT is NaN
 
 so use `transfer()` for the case where you're deliberately setting
 `NaN`.

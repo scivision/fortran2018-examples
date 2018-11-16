@@ -20,7 +20,7 @@ addons:
 
 matrix:
   include:
-  - os: linux
+  #- os: linux
     # takes 15 minutes to setup on Travis for Linux.
     #before_install:
     #- export HOMEBREW_FORCE_VENDOR_RUBY=1;
