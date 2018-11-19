@@ -2,11 +2,16 @@ cmake_minimum_required (VERSION 3.3)
 project(fortran2018real Fortran)
 enable_testing()
 
+get_directory_property(hasParent PARENT_DIRECTORY)
+if(NOT hasParent)
+  include(../cmake/compilers.cmake)
+endif()
+
 add_executable(nan nans.f90)
 target_compile_options(nan PRIVATE ${FFLAGS})
 add_test(NAME FortranNaN COMMAND nan)
 
-if(CMAKE_Fortran_COMPILER_ID IN_LIST f2008)
+if(f2008)
 
   add_library(assert ../assert.f90)
   add_executable(testassert not-finite.f90 fib3.f90)

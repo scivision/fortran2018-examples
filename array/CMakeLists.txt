@@ -4,13 +4,12 @@ enable_testing()
 
 get_directory_property(hasParent PARENT_DIRECTORY)
 if(NOT hasParent)
-  set(f2008 Cray GNU Intel NAG)
   include(../cmake/compilers.cmake)
 endif()
 #=== Lapack95 MKL Example with Intel OR Gfortran compilers ===
 set(BLA_F95 ON)
 
-if(MKL)
+if(USE_MKL)
   # be sure you have from terminal:
   # . $MKLROOT/mklvars.sh"
   
@@ -22,7 +21,7 @@ if(MKL)
                     WORKING_DIRECTORY $ENV{MKLROOT}/interfaces/lapack95
                     )
     else()
-      message(FATAL_ERROR "specify compiler, e.g.: FC=gfortran cmake -DMKL=on ..")
+      message(FATAL_ERROR "specify compiler, e.g.: FC=gfortran cmake -DUSE_MKL=on ..")
     endif()
   endif()
   
@@ -63,7 +62,7 @@ if(LAPACK_FOUND)
   add_test(NAME FortranDsvd COMMAND dsvd)
 endif()
 
-if(CMAKE_Fortran_COMPILER_ID IN_LIST f2008)
+if(f2008)
 
   # ------- rot90, flip --------
   add_library(rotflip rot90.f90)

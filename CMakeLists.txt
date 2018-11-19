@@ -1,8 +1,8 @@
 cmake_minimum_required (VERSION 3.7)
-project(fortran2018demo Fortran C)
+project(fortran2018demo Fortran C CXX)
 enable_testing()
 
-set(f2008 Cray GNU Intel NAG)
+option(realbits "number of bits to use for real values" 64)
 
 if(realbits EQUAL 32)   # -Drealbits=32
   file(WRITE kind.txt "integer,parameter :: wp=real32")
@@ -13,11 +13,9 @@ elseif(realbits EQUAL 64)
 elseif(realbits EQUAL 128)
   file(WRITE kind.txt "integer,parameter :: wp=real128")
   message(STATUS "real kind: real128")
-else()
-  file(WRITE kind.txt "integer,parameter :: wp=real64")
-  message(STATUS "real kind: real64")
 endif()
 
+option(USE_MKL "Use Intel MKL" OFF)
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/Modules/)
 
@@ -59,7 +57,7 @@ add_test(NAME FortranMicrosleep COMMAND sleepstd)
 set_tests_properties(FortranMicrosleep PROPERTIES TIMEOUT 1)
 
 
-if(CMAKE_Fortran_COMPILER_ID IN_LIST f2008)
+if(f2008)
 
   add_executable(statement statement_function.f90)
   target_compile_options(statement PRIVATE ${FFLAGS})

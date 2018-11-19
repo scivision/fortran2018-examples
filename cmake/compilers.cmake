@@ -4,13 +4,22 @@ else()
   add_compile_options(-O3)
 endif()
 
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_REQUIRED_FLAGS -std=c++17)
+include(CheckCXXSymbolExists)
+CHECK_CXX_SYMBOL_EXISTS(std::filesystem::path::preferred_separator filesystem cxx17)
+
+include(CheckFortranSourceCompiles)
+check_fortran_source_compiles("program es; error stop; end" f2008
+                              SRC_EXT f90)
+
 if(${CMAKE_Fortran_COMPILER_ID} STREQUAL Intel)
   set(FFLAGS -check all -traceback -warn -debug extended)
 elseif(${CMAKE_Fortran_COMPILER_ID} STREQUAL GNU)
   if(${CMAKE_Fortran_COMPILER_VERSION} VERSION_GREATER_EQUAL 8)
     set(FFLAGS -std=f2018)
   endif()
-  list(APPEND FFLAGS -march=native -Wall -Wextra -Wpedantic -Werror=array-bounds -fbacktrace -fcheck=all -fimplicit-none)
+  list(APPEND FFLAGS -march=native -Wall -Wextra -Wpedantic -Werror=array-bounds -fcheck=all -fimplicit-none)
 elseif(${CMAKE_Fortran_COMPILER_ID} STREQUAL PGI)
   set(FFLAGS -C)
 elseif(${CMAKE_Fortran_COMPILER_ID} STREQUAL Flang)

@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.3)
+cmake_minimum_required(VERSION 3.3)
 project(C++linkexample CXX Fortran) 
 enable_testing()
 
@@ -10,15 +10,10 @@ enable_testing()
 
 # https://stackoverflow.com/tags/fortran-iso-c-binding/info
 
-if(CMAKE_BUILD_TYPE STREQUAL Debug)
-  add_compile_options(-g -O0)
-else()
-  add_compile_options(-O3)
+get_directory_property(hasParent PARENT_DIRECTORY)
+if(NOT hasParent)
+  include(../cmake/compilers.cmake)
 endif()
-
-
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if(${CMAKE_Fortran_COMPILER_ID} STREQUAL Intel)
   #  message(STATUS "be sure you have done '. compilervars.sh'")
@@ -32,6 +27,7 @@ target_compile_options(mylibrary PRIVATE ${FFLAGS})
 add_executable(cxxfort cxxfort.cpp)
 target_link_libraries(cxxfort PRIVATE mylibrary)
 target_compile_options(cxxfort PRIVATE ${CFLAGS})
+set_property(TARGET cxxfort PROPERTY CXX_STANDARD 11)
 add_test(NAME C++Fortran COMMAND cxxfort)
 
 # manually:
