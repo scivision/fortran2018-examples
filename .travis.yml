@@ -15,6 +15,7 @@ addons:
     packages: 
     - gfortran-6
     - libopenmpi-dev
+    - openmpi-bin
  #       - libhdf5-dev # old version
  #       - libnetcdf-dev
 #        - libnetcdff-dev # not in image repos
@@ -31,7 +32,7 @@ matrix:
     language: sh
     install: 
     - cd bin
-    - cmake -G "MinGW Makefiles" -DCMAKE_SH="CMAKE_SH-NOTFOUND" ../src
+    - cmake -G "MinGW Makefiles" -DCMAKE_SH="CMAKE_SH-NOTFOUND" ..
     - cmake --build .
 
 install:
