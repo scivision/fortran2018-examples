@@ -15,7 +15,7 @@ if(NOT hasParent)
   include(../cmake/compilers.cmake)
 endif()
 
-if(${CMAKE_Fortran_COMPILER_ID} STREQUAL Intel)
+if(CMAKE_Fortran_COMPILER_ID STREQUAL Intel)
   #  message(STATUS "be sure you have done '. compilervars.sh'")
     list(APPEND FLIBS svml imf intlc ifcoremt ifport)
 endif()

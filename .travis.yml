@@ -6,34 +6,33 @@ dist: xenial
 git:
   depth: 3
   quiet: true
-
+  
+env: FC=gfortran
 
 addons:
   apt:
-    packages:
-    - gfortran
-#   - libopenmpi-dev # wrong version mpi
+    sources: ubuntu-toolchain-r-test
+    packages: 
+    - gfortran-6
+    - libopenmpi-dev
  #       - libhdf5-dev # old version
  #       - libnetcdf-dev
 #        - libnetcdff-dev # not in image repos
 
-
 matrix:
   include:
-  #- os: linux
-    # takes 15 minutes to setup on Travis for Linux.
-    #before_install:
-    #- export HOMEBREW_FORCE_VENDOR_RUBY=1;
-    #- sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)";
-    #- export PATH="/home/travis/.linuxbrew/bin:$PATH";
-    #- brew install gcc opencoarrays;
+  - os: linux
+    env: FC=gfortran-6
   - os: osx
     before_install:
-    - brew update > /dev/null
     - brew install gcc > /dev/null
     #- brew install hdf5 netcdf > /dev/null;  # works but commented to save time
-
-
+  - os: windows
+    language: sh
+    install: 
+    - cd bin
+    - cmake -G "MinGW Makefiles" -DCMAKE_SH="CMAKE_SH-NOTFOUND" ../src
+    - cmake --build .
 
 install:
 - cd bin

@@ -7,6 +7,12 @@ if(NOT hasParent)
   include(../cmake/compilers.cmake)
 endif()
 
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_REQUIRED_FLAGS -std=c++17)
+include(CheckCXXSymbolExists)
+CHECK_CXX_SYMBOL_EXISTS(std::filesystem::path::preferred_separator filesystem cxx17)
+
+
 add_executable(termio terminal_io.f90)
 target_compile_options(termio PRIVATE ${FFLAGS})
 if(NOT WIN32) # FIXME doable via windows command

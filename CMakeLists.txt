@@ -2,7 +2,9 @@ cmake_minimum_required (VERSION 3.7)
 project(fortran2018demo Fortran C CXX)
 enable_testing()
 
-option(realbits "number of bits to use for real values" 64)
+if(NOT realbits)
+  set(realbits 64)
+endif()
 
 if(realbits EQUAL 32)   # -Drealbits=32
   file(WRITE kind.txt "integer,parameter :: wp=real32")
@@ -21,10 +23,11 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/Modules/)
 
 include(cmake/compilers.cmake)
 
-if(${CMAKE_Fortran_COMPILER_ID} STREQUAL GNU)
-  add_subdirectory(hdf5)
-  add_subdirectory(netcdf)
-endif()
+add_subdirectory(hdf5)
+
+add_subdirectory(netcdf)
+
+add_subdirectory(submodule)
 
 add_subdirectory(character)
 

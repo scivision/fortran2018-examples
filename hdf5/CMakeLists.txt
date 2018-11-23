@@ -3,10 +3,6 @@ project(fortranHDF5 Fortran)
 enable_testing()
 # INTEL COMPILER: https://software.intel.com/en-us/articles/performance-tools-for-software-developers-building-hdf5-with-intel-compilers
 
-
-if(${CMAKE_Fortran_COMPILER_ID} STREQUAL GNU AND ${CMAKE_Fortran_COMPILER_VERSION} VERSION_LESS 5)
-  return()
-endif()
 # https://support.hdfgroup.org/ftp/HDF5/current/src/unpacked/release_docs/USING_HDF5_CMake.txt
 # https://github.com/Kitware/CMake/blob/master/Modules/FindHDF5.cmake
 
@@ -20,11 +16,18 @@ if(HDF5_FOUND)
   # DOING BOTH CAUSES SUBTLE ERROR MESSAGES!! DON'T DO BOTH!!
   #set(CMAKE_Fortran_COMPILER ${HDF5_Fortran_COMPILER_EXECUTABLE})
 
-  message(STATUS "Compiling HDF5 program with " ${CMAKE_Fortran_COMPILER})
-
 # message(STATUS "HDF5_INCLUDE_DIR: " ${HDF5_Fortran_INCLUDE_DIRS})
 # message(STATUS "HDF5_Fortran_HL_LIBRARIES "  ${HDF5_Fortran_HL_LIBRARIES})
 #------------------------
+  set(CMAKE_REQUIRED_INCLUDES ${HDF5_Fortran_INCLUDE_DIRS})
+  set(CMAKE_REQUIRED_LIBRARIES ${HDF5_Fortran_LIBRARIES} ${HDF5_Fortran_HL_LIBRARIES})
+  include(CheckFortranSourceCompiles)
+  check_fortran_source_compiles("program nc; use h5lt; end" hasHDF5
+                                SRC_EXT f90)
+  if(NOT hasHDF5)
+    return()
+  endif()
+
   add_library(h5mod h5mod.f90)
   target_compile_options(h5mod PRIVATE ${FFLAGS})
   target_include_directories(h5mod PRIVATE ${HDF5_Fortran_INCLUDE_DIRS})

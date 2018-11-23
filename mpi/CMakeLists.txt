@@ -2,16 +2,6 @@ cmake_minimum_required (VERSION 3.3)
 project(mpidemo Fortran C)
 enable_testing()
 
-# FIXME for some reason Travis OSX MPI doesn't work for Fortran
-
-if(ENV{TRAVIS_OS_NAME} STREQUAL osx)
-  return()
-endif()
-
-if(${CMAKE_Fortran_COMPILER_ID} STREQUAL GNU AND ${CMAKE_Fortran_COMPILER_VERSION} VERSION_LESS 5)
-  return()
-endif()
-
 # for Gfortran + OpenMPI: 
 #    cmake -DMPI_Fortran_COMPILER=/usr/bin/mpif90.openmpi ..
 
@@ -23,7 +13,17 @@ if(MPI_Fortran_FOUND)
   # consider mpif90 --showme
   # https://www.open-mpi.org/faq/?category=mpi-apps
   
-  find_package(Threads REQUIRED QUIET)    
+  find_package(Threads REQUIRED QUIET) 
+  
+  set(CMAKE_REQUIRED_FLAGS ${MPI_Fortran_COMPILE_OPTIONS})
+  set(CMAKE_REQUIRED_INCLUDES ${MPI_Fortran_INCLUDE_DIRS})
+  set(CMAKE_REQUIRED_LIBRARIES ${MPI_Fortran_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
+  include(CheckFortranSourceCompiles)
+  check_fortran_source_compiles("program a; use mpi; end" hasMPI
+                                SRC_EXT f90)
+  if(NOT hasMPI)
+    return()
+  endif()   
 
   add_executable(mpi_hello helloworld.f90)
   target_compile_options(mpi_hello PRIVATE ${FFLAGS} ${MPI_Fortran_COMPILE_OPTIONS})

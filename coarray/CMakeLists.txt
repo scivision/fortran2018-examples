@@ -7,38 +7,47 @@ enable_testing()
 # Linux:  apt install libcoarrays-dev open-coarrays-bin
 # Mac: brew install opencoarrays
 
-if(${CMAKE_Fortran_COMPILER_ID} STREQUAL Intel)
-    set(coflags -coarray=shared)
-    set(OpenCoarrays_LIBRARIES -coarray=shared) 
-elseif(${CMAKE_Fortran_COMPILER_ID} STREQUAL GNU AND ${CMAKE_Fortran_COMPILER_VERSION} VERSION_GREATER_EQUAL 7)
-
+if(CMAKE_Fortran_COMPILER_ID STREQUAL Intel)
+    list(APPEND FFLAGS -coarray=shared)
+    list(APPEND FLIBS -coarray=shared) 
+elseif(CMAKE_Fortran_COMPILER_ID STREQUAL GNU)
   find_package(OpenCoarrays)
   if(OpenCoarrays_FOUND)
-    list(APPEND OpenCoarrays_LIBRARIES caf_mpi)
-    set(coflags -fcoarray=lib)
+    list(APPEND FLIBS OpenCoarrays::caf_mpi)
   else()
-    set(coflags -fcoarray=single)
+    list(APPEND FFLAGS -fcoarray=single)
   endif()
-elseif(${CMAKE_Fortran_COMPILER_ID} STREQUAL Cray)
+elseif(CMAKE_Fortran_COMPILER_ID STREQUAL Cray)
   # no flags needed, coarray enabled by default for Cray
-else()
+endif()
+
+set(CMAKE_REQUIRED_FLAGS ${FFLAGS})
+set(CMAKE_REQUIRED_LIBRARIES ${FLIBS})
+include(CheckFortranSourceCompiles)
+check_fortran_source_compiles("program cs; real :: x[*]; end" f2008coarray
+                              SRC_EXT f90)
+
+if(NOT f2008coarray)
   return()
 endif()
 
+check_fortran_source_compiles("program cs; real :: x[*]; call co_sum(x); end" f2018coarray
+                              SRC_EXT f90)
+                              
 
 add_executable(coarray_hello helloworld.f90)
-target_compile_options(coarray_hello PRIVATE ${FFLAGS} ${coflags})
-target_link_libraries(coarray_hello ${OpenCoarrays_LIBRARIES})
+target_compile_options(coarray_hello PRIVATE ${FFLAGS})
+target_link_libraries(coarray_hello ${FLIBS})
 add_test(NAME CoarrayHello COMMAND coarray_hello)
 
 
-if(${CMAKE_Fortran_COMPILER_ID} STREQUAL Intel)
-  add_executable(coarray_pi pi2008.f90)
-elseif(${CMAKE_Fortran_COMPILER_ID} STREQUAL GNU)
-# Intel 2018 does not yet support Fortran 2018 co_sum
+if(f2018coarray)
   add_executable(coarray_pi pi.f90)
+else()
+# Intel 2018 does not yet support Fortran 2018 co_sum
+  add_executable(coarray_pi pi2008.f90)
 endif()
-target_compile_options(coarray_pi PRIVATE ${FFLAGS} ${coflags})
-target_link_libraries(coarray_pi ${OpenCoarrays_LIBRARIES})
+target_compile_options(coarray_pi PRIVATE ${FFLAGS})
+target_link_libraries(coarray_pi ${FLIBS})
 add_test(NAME CoarrayPi COMMAND coarray_pi)
 

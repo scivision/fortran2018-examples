@@ -13,7 +13,7 @@ if(USE_MKL)
   # be sure you have from terminal:
   # . $MKLROOT/mklvars.sh"
   
-  if(NOT ${CMAKE_Fortran_COMPILER_ID} STREQUAL Intel)
+  if(NOT CMAKE_Fortran_COMPILER_ID STREQUAL Intel)
     # be sure Lapack95 is build for your compiler
     if(FC)
       # no "-j" make option ...=.
@@ -30,7 +30,7 @@ if(USE_MKL)
   find_package(LAPACK)
   
   # make sure include_dirs "lp64" or "ilp64" matches BLA_VENDOR
-  if(${CMAKE_Fortran_COMPILER_ID} STREQUAL Intel)
+  if(CMAKE_Fortran_COMPILER_ID STREQUAL Intel)
     set(LAPACK95_INCLUDE_DIRS $ENV{MKLROOT}/include/intel64/lp64)
     
     list(INSERT LAPACK95_LIBRARIES 0 $ENV{MKLROOT}/lib/intel64_lin/libmkl_lapack95_lp64.a)
@@ -63,7 +63,6 @@ if(LAPACK_FOUND)
 endif()
 
 if(f2008)
-
   # ------- rot90, flip --------
   add_library(rotflip rot90.f90)
   target_compile_options(rotflip PRIVATE ${FFLAGS})
