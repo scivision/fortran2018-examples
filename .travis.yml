@@ -14,8 +14,8 @@ addons:
     sources: ubuntu-toolchain-r-test
     packages: 
     - gfortran-6
-    - libopenmpi-dev
-    - openmpi-bin
+   # - libopenmpi-dev
+   # - openmpi-bin #goofed up travis network 
  #       - libhdf5-dev # old version
  #       - libnetcdf-dev
 #        - libnetcdff-dev # not in image repos
@@ -24,9 +24,9 @@ matrix:
   include:
   - os: linux
     env: FC=gfortran-6
-  - os: osx
-    before_install:
-    - brew install gcc > /dev/null
+#  - os: osx #old cmake
+ #   before_install:
+  #  - brew install gcc > /dev/null
     #- brew install hdf5 netcdf > /dev/null;  # works but commented to save time
   - os: windows
     language: sh
