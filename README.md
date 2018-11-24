@@ -4,9 +4,14 @@
 
 # Fortran 2018 Examples
 
-Easy examples of scientific computing with modern, powerful, easy
-Fortran 2018 standard. Fortran 2018 began as the TS18508 extension,
-formerly known as Fortran 2015.
+Easy examples of scientific computing with modern, powerful, easy Fortran 2018 standard. 
+Fortran 2018 began as the TS18508 extension, formerly known as Fortran 2015.
+
+Modern Fortran benefits from modern CMake, which supports Fortran features such as
+
+* submodule
+* preprocessing
+* detecting specific support of Fortran features (so users know their compiler is too old)
 
 ## Prereq
 
@@ -21,19 +26,9 @@ The CMake script automatically walks through the subdirectories:
 cd bin
 
 cmake ..
-make
+cmake --build .
 
-make test
-```
-
-If you have Anaconda Python or Intel Fortran installed, this can
-override system prereqs. Workaround:
-
-```bash
-PATH=/usr/bin:/usr/include cmake ..
-make
-
-make test
+ctest
 ```
 
 ### ifort Intel
@@ -44,269 +39,76 @@ that has `mpiifort`.
 
 ```bash
 FC=ifort CC=icc CXX=icpc cmake ..
-make
 ```
-
--   the NetCDF and HDF5 libraries will need to be manually compiled with the Intel compiler.
--   need to `source compilervars.sh` as usual with the Intel compiler or you will get `*.so missing` errors.
--   for Intel compiler, build with
-
-    ```bash
-    cd bin
-    FC=ifort CC=icc CXX=icpc cmake ..
-    make
-
-    make test
-    ```
-
-### Intel MKL
-
-see [array/](./array) directory
 
 ### Flang / Clang
 
-Not every program runs yet with
-[Flang](https://www.scivision.co/flang-compiler-build-tips/).
+[Flang](https://www.scivision.co/flang-compiler-build-tips/) is a Free compiler.
 
 ```bash
 FC=flang CC=clang CXX=clang++ cmake ..
-make
-
-ctest
 ```
 
 ### PGI
 
-Not every program runs yet with 
-[PGI](https://www.scivision.co/install-pgi-free-compiler/).
+[PGI](https://www.scivision.co/install-pgi-free-compiler/) is available at no cost.
 
 ```bash
 FC=pgf90 CC=pgcc CXX=pgc++ cmake ..
-make
-
-ctest
 ```
 
 ## Programs
 
-### Call Fortran from C++
-
-You can easily use Fortran subroutines and functions from C and C++:
-
-    ./cxx/cxxfort
-
-The key factors in calling a Fortran module from C or C++ include:
-
--   use the standard C binding to define variable and bind
-    functions/subroutines
-
-    ```fortran
-    use,intrinsic:: iso_c_binding, only: c_int, c_float, c_double
-
-    integer(c_int) :: N
-    real(c_double) :: X
-
-    subroutine cool(X,N) bind(c)
-    ```
-
-    the `bind(c)` makes the name `cool` available to C/C++.
-
-See `cxx/cxxfort.f90` and `fun.f90` for a simple exmaple.
-
-### NetCDF
-
-This example writes then reads a NetCDF file from Fortran:
-
-    ./netcdf/writencdf
-
-    ./netcdf/readncdf
-
-### HDF5
-
-A true modern Fortan polymorphic, simple HDF5 read/write interface, is
-[my package](https://github.com/scivision/oo_hdf5_fortran/).
-
-This example writes then reads an HDF5 file from Fortran:
-
-    ./hdf5/hdf5demo
-
--   HDF5 Fortran [Manual](https://support.hdfgroup.org/HDF5/doc/fortran/index.html)
-
-#### Note
-
-DO NOT USE BOTH H5FC wrapper compiler and specify the Fortran HDF5
-libraries (in the CMake file). This can cause version conflicts if you
-have multiple versions of HDF5 installed. It causes non-obvious errors
-that can waste your time.
-
-In my opinion NOT using the wrapper compiler may be "safer" so that's
-what the CMake file does.
-
-### Coarray
-
-Coarray support from Fortran 2008/2018 is native Fortran high-level
-abstractions that are supported by a range of libraries, including
-OpenMPI. Coarray examples are under`coarray/`. By using `htop` or other
-CPU monitor, you can see that multiple CPU cores are used.
-
-#### Hello World
-
-```bash
-cafrun coarray/coarray_hello
-```
-
-#### Pi
-
-Compute value of Pi iteratively:
-
-```bash
-cafrun coarray/coarray_pi
-```
-
-You can optionally specify the resolution of Pi, say 1e-:
-
-```bash
-cafrun coarray/coarray_pi 1e-8
-```
-
-Comparing `gfortran` and `ifort` coarray performance (computation time
-in seconds on i7-4650, 4 threads). `-O3` was used for both compilers.
-Notice that `ifort` is over 5x faster than `gfortran`.
-
-YES this was using pi2008.f90 for both, to ensure that Fortran 2018
-`co_sum()` didn't have a disadvantage over the explicit Fortran 2008
-loop. The performance of `co_sum` was essentially the same in `pi.f90`
-as in `pi2008.f90`.
-
-  dx    |gfortran 7.2.0  | ifort 18.1
---------|----------------|------------
-  1e-7  | 0.254          | 0.049
-  1e-8  | 2.72           | 0.489
-  1e-9  | 26.0           | 4.88
-
-### OpenMPI
-
-Under the `mpi/` directory:
-
-#### Hello World
-
-To run the simplest sort of multi-threaded Fortran program using MPI-2,
-assuming you have a CPU with 8 virtual cores like an Intel Core i7
-
-```bash
-mpirun -np 4 mpi/mpi_hello
-```
-
-#### Message Passing MPI
-
-Pass data between two MPI threads
-
-```bash
-mpirun -np 2 mpi/mpi_pass
-```
-
-### Quiet NaN
-
-We might choose to use NaN as a sentinal value, where instead of
-returning separate "OK" logical variable from a function or subroutine,
-if a failure happens, we return NaN in one of the important variables.
-There was a classical way to do this that was type specific, by setting
-the NaN bit pattern for your data type. For example, for
-single-precision real you'd type
-
-```fortran
-nan_bit = transfer(Z'7FF80000',1.)
-```
-
-For a standards-based way to handle all floating point types, you might
-consider
-
-```fortran
-use, intrinsic :: ieee_arithmetic, only: ieee_value, ieee_quiet_nan
-nan_ieee = ieee_value(1.,ieee_quiet_nan)
-```
-
-This is in program `real/nan`
-
-In Fortran 2003, `real(z'abcd0000')` is equivalent to
-`transfer(z'abcd0000',1.)` by Fortran 2003. However, where you are
-deliberately setting NaN you will get
-
-> Error: Result of FLOAT is NaN
-
-so use `transfer()` for the case where you're deliberately setting
-`NaN`.
-
-#### Notes
-
--   must NOT use `-Ofast` or `-ffast-math` because IEEE standards are
-    broken by them and NaN detection will intermittently fail!
--   `gfortran` &gt;= 6 needed for `ieee_arithmetic: ieee_is_nan`
-
-### File Handling in Fortran
-
-Despite its half-century year old roots, Fortran
-
-#### Writing to /dev/null
-
-Sometimes when modifying an old Fortran subroutine to load as a module
-in a new Fortran program, the old submodule writes a lot of unnecessary
-data to disk, that can be the primary compute time consumption of the
-submodule. You can simply repoint the "open" statements to `/dev/null`.
-Benchmarks of NUL vs. scratch vs. file in:
-
-    ./null
-
-#### Read-only files and deletion in Fortran
-
-The `readonly` program shows that even operation system read-only files
-can be deleted by Fortran, like `rm -f` with the
-`close(u,status='delete')` option:
-
-    ./readonly
-
-### String handling in Fortran
-
-### Split strings about delimiter
-
-This splits a string once around a delimiter:
-
-    ./split
-
-And notes that it is probably best to use fixed length CHARACTER longer
-than you'll need. If you're trying to load and parse a complicated text
-file, it is perhaps better to load that file first in Python, parse it,
-then pass it to Fortran via f2py (load Fortran code as a Python module).
-
-### f2py
-
-simple f2py demo
-
-```bash
-f2py -c fib3.f90 -m fib3
-```
-
-This creates a fib3*.so (Linux/Mac) or fib3*.pyd (Windows), which is
-used by
-
-```bash
-python -c "import fib3; print(fib3.fib(8))"
-```
-
-> [0. 1. 1. 2. 3. 5. 8. 13.]
-
-or
-
-```bash
-python -c "import fib3; print(fib3.fib3.fib(1478))"
-```
-
-> [ 0. 1. 1. ..., &gt; 8.07763763e+307 1.30698922e+308 inf]
-
-Note the file `.f2py_f2cmap`, which is vital to proper assigning of real
-and complex data types, particularly double precision.
-
-```python
-dict(real= dict(sp='float', dp='double'),
-complex = dict(sp='complex_float',dp="complex_double"))
-```
+Each directory has its own README and examples.
+
+* [array/](./array): Array math in modern CMake and Fortran, including MKL, BLAS, LAPACK and LAPACK95.
+* [coarray/](./coarray): modern Fortran is the only major compiled language standard with intrinsic massively parallel arrays.
+* [contiguous/](./contiguous): Fortran 2008 `contiguous` array examples, including Fortran preprocessor with modern CMake.
+* [mpi/](./mpi): OpenMPI parallel computing examples
+* [openmp/](./openmp): OpenMP threading exmaples
+
+* [io/](./io): modern Fortran File I/O examples
+* [netcdf/](./netcdf): Easy multidimensional file IO with NetCDF
+* [hdf5/](./hdf5): HDF5 is one of the most popular self-describing file formats for massively scalable files.
+
+
+* [cxx/](./cxx): standard Fortran C / C++ bindings
+* [real/](./real): Numerous examples dealing with practical features of real floating point numbers, including sentinel NaN.
+* [character/](./character): String handling is easy and performant in modern Fortran.
+* [submodule/](./submodule): Fortran 2008 and CMake &ge; 3.12 enable even better large program architecture with `submodule`
+
+## Bugs 
+
+### iso_fortran_env
+Flang 6 and PGI 18.10 seem to have a bug with `iso_fortran_env` that doesn't allow `compiler_version` and `compiler_options` to work unless `use iso_fortran_env` is ONLY used in `program` and NOT `module` *even if* using `only`.
+Thus, simple programs like `pragma.f90` work, but not the usual programs to print the compiler versions and options with Flang and PGI.
+
+## Resources
+
+### Fortran standards
+
+* Fortran [2003](https://wg5-fortran.org/f2003.html)
+* Fortran [2008](https://wg5-fortran.org/f2008.html)
+* Fortran [2018](https://wg5-fortran.org/f2018.html)
+
+### Books
+
+* [Modern Fortran Explained: Incorporating Fortran 2018](https://global.oup.com/academic/product/modern-fortran-explained-9780198811886).  
+  Metcalf, Reid, Cohen. 5th Ed, Nov 2018. ISBN:  978-0198811886.
+* [Modern Fortran: Building Efficient Parallel Applications](https://www.manning.com/books/modern-fortran). 
+  [Milan Curcic](https://twitter.com/realmilancurcic).
+  Feb. 2019. ISBN: 978-1617295287.
+  
+### Compiler User Guides
+
+* [Cray Fortran](http://pubs.cray.com/content/S-3901/8.7/cray-fortran-reference-manual/fortran-compiler-introduction)
+* [Flang Wiki](https://github.com/flang-compiler/flang/wiki)
+* [GNU Fortran docs](https://gcc.gnu.org/onlinedocs/)
+* [IBM XL](https://www-01.ibm.com/support/docview.wss?uid=swg27036672)
+* [Intel Fortran](https://software.intel.com/en-us/fortran-compiler-developer-guide-and-reference)
+* [NAG Fortran](https://www.nag.com/nagware/np/r62_doc/manual/compiler.html)
+* [PGI Fortran](https://www.pgroup.com/resources/docs/18.10/x86/pvf-user-guide/index.htm)
+  
+### Surveys
+
+* [2018 modern Fortran user survey](http://www.fortran.bcs.org/2018/FortranBenefitsSurvey_interimrep_Aug2018.pdf)

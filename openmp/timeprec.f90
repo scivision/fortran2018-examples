@@ -4,7 +4,7 @@ use, intrinsic:: iso_fortran_env, only: dp=>real64, int64
 
 integer(int64) :: tic,toc,rate
 
-call system_clock(count=tic,count_rate=rate)
+call system_clock(tic,count_rate=rate)
 call timempi()
 call system_clock(toc)
 
@@ -25,7 +25,7 @@ subroutine timempi()
   !$omp parallel private(tic,toc)
 
   tic = omp_get_wtime()
-  ! left these startements here to give a little entropy to per-thread timing.
+  ! left these statements here to give a little entropy to per-thread timing.
   Ncore = omp_get_num_procs()
   Nthread = omp_get_num_threads()
 
