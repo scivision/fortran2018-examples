@@ -9,21 +9,25 @@ use, intrinsic :: iso_c_binding, only: sp=>C_FLOAT, dp=>C_DOUBLE, qp=>C_LONG_DOU
 use, intrinsic :: ieee_arithmetic, only: ieee_value, ieee_quiet_nan, ieee_is_nan
 implicit none
 
-real(sp) nan_sp,nan_bit
-real(dp) nan_dp
-real(qp) nan_qp
-complex(zp) nan_zp
-complex(zqp) nan_zqp
+real(sp) :: nan_sp,nan_bit
+real(dp) :: nan_dp
+#if REAL128
+real(qp) :: nan_qp
+complex(zp) :: nan_zp
+complex(zqp) :: nan_zqp
+#endif
 
 ! this is the cross platform way to get NaN on modern compilers including gfortran and ifort.
 nan_sp = ieee_value(1.,ieee_quiet_nan)
 nan_dp = ieee_value(1.,ieee_quiet_nan)
+#if REAL128
 nan_qp = ieee_value(1.,ieee_quiet_nan)
 nan_zp = ieee_value(1.,ieee_quiet_nan)
 nan_zqp = ieee_value(1.,ieee_quiet_nan)
+#endif
 
 ! this is a bit-pattern way to get NaN by IEEE754 definition
-nan_bit = transfer(Z'7FC00000',1.) 
+nan_bit = transfer(Z'7FC00000', 1.)
 ! this is equivalent to transfer() by Fortran 2003
 !nan_bit = real(z'7fc00000')  ! however, you will get Error: Result of FLOAT is NaN so use transfer() for the case where you're deliberately setting NaN
 
@@ -33,10 +37,13 @@ nan_bit = transfer(Z'7FC00000',1.)
 print *,'IEEE  value  isnan  hex'
 print '(A4,2X,F5.1,6X,L1,2X,Z32)','sp',nan_sp, ieee_is_nan(nan_sp), nan_sp
 print '(A4,2X,F5.1,6X,L1,2X,Z32)','dp',nan_dp, ieee_is_nan(nan_dp), nan_dp
+
+#if REAL128
 print '(A4,2X,F5.1,6X,L1,2X,Z32)','qp',nan_qp, ieee_is_nan(nan_qp), nan_qp
 
 print '(A4,2X,F5.1,6X,L1,2X,Z32)','zp',real(nan_zp),ieee_is_nan(real(nan_zp)),nan_zp
 print '(A4,2X,F5.1,6X,L1,2X,Z32)','zp',real(nan_zqp),ieee_is_nan(real(nan_zqp)),nan_zqp
+#endif
 
 print '(A4,2X,F5.1,6X,L1,2X,Z32)','bit',nan_bit,ieee_is_nan(nan_bit),nan_bit
 !ieee_is_nan works on real part only, by the bit pattern definition.

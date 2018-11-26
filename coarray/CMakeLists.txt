@@ -7,8 +7,14 @@ enable_testing()
 # Linux:  apt install libcoarrays-dev open-coarrays-bin
 # Mac: brew install opencoarrays
 
+get_directory_property(hasParent PARENT_DIRECTORY)
+if(NOT hasParent)
+  include(../cmake/compilers.cmake)
+endif()
+
 if(CMAKE_Fortran_COMPILER_ID STREQUAL Intel)
-    list(APPEND FFLAGS -coarray=shared)
+    set(coFLAGS -coarray=shared)
+    list(APPEND FFLAGS ${coFLAGS})  # workaround for Intel 19, don't eliminate
     list(APPEND FLIBS -coarray=shared) 
 elseif(CMAKE_Fortran_COMPILER_ID STREQUAL GNU)
   find_package(OpenCoarrays)
@@ -21,18 +27,18 @@ elseif(CMAKE_Fortran_COMPILER_ID STREQUAL Cray)
   # no flags needed, coarray enabled by default for Cray
 endif()
 
-set(CMAKE_REQUIRED_FLAGS ${FFLAGS})
+set(CMAKE_REQUIRED_FLAGS ${coFLAGS} ${FFLAGS})
 set(CMAKE_REQUIRED_LIBRARIES ${FLIBS})
 include(CheckFortranSourceCompiles)
-check_fortran_source_compiles("program cs; real :: x[*]; end" f2008coarray
-                              SRC_EXT f90)
+check_fortran_source_compiles("program cs; real :: x[*]; end" 
+f08coarray SRC_EXT f90)
 
-if(NOT f2008coarray)
+if(NOT f08coarray)
   return()
 endif()
 
-check_fortran_source_compiles("program cs; real :: x[*]; call co_sum(x); end" f2018coarray
-                              SRC_EXT f90)
+check_fortran_source_compiles("program cs; real :: x[*]; call co_sum(x); end" 
+f18coarray SRC_EXT f90)
                               
 
 add_executable(coarray_hello helloworld.f90)
@@ -41,7 +47,7 @@ target_link_libraries(coarray_hello ${FLIBS})
 add_test(NAME CoarrayHello COMMAND coarray_hello)
 
 
-if(f2018coarray)
+if(f18coarray)
   add_executable(coarray_pi pi.f90)
 else()
 # Intel 2018 does not yet support Fortran 2018 co_sum

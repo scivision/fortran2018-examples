@@ -1,6 +1,5 @@
 program nulltest
-use, intrinsic:: iso_fortran_env, only: int64
-use perf, only: wp, sysclock2ms
+use, intrinsic:: iso_fortran_env, only: int64, wp=>real32
 implicit none
 ! Benchmarks platform independent null file writing behavior
 ! NUL or NUL: works on Windows 10
@@ -49,11 +48,12 @@ contains
 real(wp) function writetime(u,Nrun)
 
   integer, intent(in) :: u,Nrun
-  integer(int64) :: tic,toc,tmin
+  integer(int64) :: tic,toc,tmin, rate
   integer, volatile :: i
   integer j
 
   tmin  = huge(0_int64) ! need to avoid SAVE behavior by not assigning at initialization
+  call system_clock(count_rate=rate)
 
   do j=1,3
     call system_clock(tic)
@@ -65,8 +65,8 @@ real(wp) function writetime(u,Nrun)
     if (toc-tic < tmin) tmin = toc-tic
   enddo
 
-  writetime = sysclock2ms(tmin)
-   close(u)
+  writetime = tmin / rate
+  close(u)
 
 end function writetime
 

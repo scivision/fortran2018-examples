@@ -62,7 +62,7 @@ if(LAPACK_FOUND)
   add_test(NAME FortranDsvd COMMAND dsvd)
 endif()
 
-if(f2008)
+if(f08errorstop)
   # ------- rot90, flip --------
   add_library(rotflip rot90.f90)
   target_compile_options(rotflip PRIVATE ${FFLAGS})

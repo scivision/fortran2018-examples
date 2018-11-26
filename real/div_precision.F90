@@ -1,5 +1,5 @@
 program prec
-use,intrinsic:: iso_fortran_env, stderr=>error_unit
+use, intrinsic:: iso_fortran_env, stderr=>error_unit
 implicit none
 
 ! shows pitfall of not being mindful with input Kind
@@ -11,42 +11,49 @@ implicit none
 
 real(real32) :: huge32 = 9/5.0_real32
 real(real64) :: huge64 = 9/5.0_real64
+#if REAL128
 real(real128) :: huge128 = 9/5.0_real128
+#endif
 integer(int64) :: hugeint64 = 9/5_int64
 
 real(real64) :: imdouble = 9/5.
 
+print *, compiler_version()
+
 if (storage_size(imdouble) /= 64) then
   write(stderr,*) 'expected real64 but you have real bits: ', storage_size(imdouble)
-  error stop
+  stop 1
 endif
+print *,'64-bit variable with 32-bit constants',imdouble
 
 if (storage_size(huge64) /= 64) then
   write(stderr,*) 'expected real64 but you have real bits: ', storage_size(huge64)
-  error stop
+  stop 1
 endif
+print *,'64-bit',huge64
+print *,'64-bit variable, 32-bit constants equal to all 64-bit constants?',imdouble==huge64
+
 
 if (storage_size(huge32) /= 32) then
   write(stderr,*) 'expected real32 but you have real bits: ', storage_size(huge32)
-  error stop
+  stop 1
 endif
+print *,'32-bit',huge32
 
+#if REAL128
 if (storage_size(huge128) /= 128) then
   write(stderr,*) 'expected real128 but you have real bits: ', storage_size(huge128)
-  error stop
+  stop 1
 endif
+print *,'128-bit',huge128
+#endif
 
 if (storage_size(hugeint64) /= 64) then
   write(stderr,*) 'expected int64 but you have integer bits: ', storage_size(hugeint64)
-  error stop
+  stop 1
 endif
-
-print *,'64-bit variable with 32-bit constants',imdouble
-print *,'64-bit variable, 32-bit constants equal to all 64-bit constants?',imdouble==huge64
-print *,'32-bit',huge32
-print *,'64-bit',huge64
-print *,'128-bit',huge128
 print *,'64-bit Integer ',hugeint64
+
 
 
 !  64-bit variable with 32-bit constants   1.7999999523162842     
@@ -64,7 +71,7 @@ print *,'64-bit Integer ',hugeint64
 
 print *,'Bit Patterns:'
 
-print '(A,B0)','64-bit variable with 32-bit constants ',imdouble
-print '(A,B0)','64-bit variable with 64-bit constants ',huge64
+print '(A,B64)','64-bit variable with 32-bit constants ',imdouble
+print '(A,B64)','64-bit variable with 64-bit constants ',huge64
 
 end program

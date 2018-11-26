@@ -6,17 +6,14 @@ get_directory_property(hasParent PARENT_DIRECTORY)
 if(NOT hasParent)
   include(../cmake/compilers.cmake)
 endif()
-
-file(READ minimal.f90 mincode)
-include(CheckFortranSourceCompiles)
-check_fortran_source_compiles(${mincode} f2008submod
-                              SRC_EXT f90)
-                              
-if(NOT f2008submod)
+                             
+if(NOT f08submod OR NOT f08errorstop)
   return()
 endif()
 
 
 add_executable(new points.f90 geo.f90)
+add_test(NAME PointsNew COMMAND new)
 
 add_executable(old points.f90 geo_legacy.f90)
+add_test(NAME PointsOld COMMAND old)

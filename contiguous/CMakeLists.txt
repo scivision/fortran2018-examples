@@ -8,10 +8,9 @@ if(NOT hasParent)
   include(../cmake/compilers.cmake)
 endif()
 
-# ifort-19 yes, Flang yes, PGI yes, NAG yes, gfortran-8 no
-include(CheckFortranSourceCompiles)
-check_fortran_source_compiles("program c; print*,is_contiguous([0,0]); end" f08contig
-                              SRC_EXT f90)
+if(NOT f08errorstop)
+  return()
+endif()
 
 add_executable(contig contiguous.F90)
 target_compile_options(contig PRIVATE ${FFLAGS})

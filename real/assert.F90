@@ -1,14 +1,20 @@
 module assert
 ! Gfortran >= 6 needed for ieee_arithmetic: ieee_is_nan
 
-  use, intrinsic:: iso_fortran_env, stderr=>error_unit
-  use, intrinsic:: ieee_arithmetic
-  implicit none
-  private
+use, intrinsic:: iso_fortran_env, stderr=>error_unit
+use, intrinsic:: ieee_arithmetic
+implicit none
+private
   
-  include 'kind.txt' ! wp is set/output by CMake
+#if REALBITS==32
+integer,parameter :: wp=real32
+#elif REALBITS==64
+integer,parameter :: wp=real64
+#elif REALBITS==128
+integer,parameter :: wp=real128
+#endif
   
-  public :: wp,isclose, assert_isclose, err
+public :: wp,isclose, assert_isclose
   
 contains
 
@@ -43,7 +49,7 @@ elemental logical function isclose(actual, desired, rtol, atol, equal_nan)
   !print*,r,a,n,actual,desired
   
 !--- sanity check
-  if ((r < 0._wp).or.(a < 0._wp)) error stop 'tolerances must be non-negative'
+  if ((r < 0._wp).or.(a < 0._wp)) error stop
 !--- simplest case
   isclose = (actual == desired) 
   if (isclose) return
@@ -81,11 +87,5 @@ impure elemental subroutine assert_isclose(actual, desired, rtol, atol, equal_na
   endif
 
 end subroutine assert_isclose
-
-
-pure subroutine err(msg)
-  character, intent(in) :: msg
-  error stop msg
-end subroutine err
 
 end module assert

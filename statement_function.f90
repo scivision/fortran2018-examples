@@ -10,7 +10,7 @@ i=2
 j=3
 k=4
 
-if (.not. f(i-j) == g(i-j,i,j,k)) error stop 'statement function /= function'
+if (.not. f(i-j) == g(i-j,i,j,k)) stop 1
 
 contains
 

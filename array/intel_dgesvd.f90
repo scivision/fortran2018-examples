@@ -34,7 +34,7 @@ integer, parameter :: LWORK = LRATIO*M
 real(dp) :: U(M,M),VT(M,M), SWORK(LRATIO*M)
 
 real(dp) :: ss64(M, N), s64(M), e64(M), maxerr
-real(dp), parameter :: s64ref(M) = [2.460504870018764_dp, 1.699628148275318_dp, 0.239123278256554_dp]
+real(dp), parameter :: s64ref(3) = [2.460504870018764_dp, 1.699628148275318_dp, 0.239123278256554_dp]
 
 
 call dgesvd('A','N',M,M,A,M,SS64,U,M,VT,M, SWORK, LWORK,svdinfo)

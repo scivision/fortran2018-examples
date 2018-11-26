@@ -73,7 +73,7 @@ Each directory has its own README and examples.
 
 
 * [cxx/](./cxx): standard Fortran C / C++ bindings
-* [real/](./real): Numerous examples dealing with practical features of real floating point numbers, including sentinel NaN.
+* [real/](./real): Numerous examples dealing with practical features of real floating point numbers, including sentinel NaN and polymorphism.
 * [character/](./character): String handling is easy and performant in modern Fortran.
 * [submodule/](./submodule): Fortran 2008 and CMake &ge; 3.12 enable even better large program architecture with `submodule`
 

@@ -4,26 +4,33 @@ implicit none
 
 real(real32) :: pi32 = 4*atan(1.0_real32)
 real(real64) :: pi64 = 4*atan(1.0_real64)
+#if REAL128
 real(real128) :: pi128 = 4*atan(1.0_real128)
+#endif
+
+print *,compiler_version()
 
 if (storage_size(pi64) /= 64) then
     write(stderr,*) 'expected real64 but you have real bits: ', storage_size(pi64)
-    error stop
+    stop 1
 endif
+print *,'64-bit PI',pi64
 
 if (storage_size(pi32) /= 32) then
     write(stderr,*) 'expected real32 but you have real bits: ', storage_size(pi32)
-    error stop
+    stop 1
 endif
+print *,'32-bit PI',pi32
 
+#if REAL128
 if (storage_size(pi128) /= 128) then
     write(stderr,*) 'expected real128 but you have real bits: ', storage_size(pi128)
-    error stop
+    stop 1
 endif
-
-print *,'32-bit PI',pi32
-print *,'64-bit PI',pi64
 print *,'128-bit PI',pi128
+#endif
+
+
 
 ! output should be:
 ! 32-bit PI   3.14159274    
@@ -35,6 +42,6 @@ print *,'128-bit PI',pi128
 ! One should use "e" as the separator and a trailing _wp to avoid silent type conflicts
 
 ! this line is only true for default real32
-print *,3.14159265358979323846264338327950280 == 3.14159274
+print *,'default real32  ',3.14159265358979323846264338327950280 == 3.14159274
 
 end program

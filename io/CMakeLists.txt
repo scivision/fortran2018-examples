@@ -15,6 +15,7 @@ CHECK_CXX_SYMBOL_EXISTS(std::filesystem::path::preferred_separator filesystem cx
 
 add_executable(termio terminal_io.f90)
 target_compile_options(termio PRIVATE ${FFLAGS})
+target_link_libraries(termio ${FLIBS})
 if(NOT WIN32) # FIXME doable via windows command
   add_test(NAME FortranTerminalIO COMMAND bash -c "./termio <<< 0")
 endif()
@@ -22,21 +23,23 @@ endif()
 
 add_executable(expanduser expanduser.f90)
 target_compile_options(expanduser PRIVATE ${FFLAGS})
+target_link_libraries(expanduser ${FLIBS})
 
 add_executable(notermsize noenv.f90)
 target_compile_options(notermsize PRIVATE ${FFLAGS})
+target_link_libraries(notermsize ${FLIBS})
 add_test(NAME NoTermSize COMMAND notermsize)
 
-if(f2008)
-
+if(f08errorstop)
   add_executable(readonly fileopen-readonly.f90)
   target_compile_options(readonly PRIVATE ${FFLAGS})
+  target_link_libraries(readonly ${FLIBS})
   add_test(NAME FortranReadOnly COMMAND readonly)
 
-  add_executable(null devnull.f90 ../perf.f90)
+  add_executable(null devnull.f90)
   target_compile_options(null PRIVATE ${FFLAGS})
+  target_link_libraries(null ${FLIBS})
   add_test(NAME FortranNullfile COMMAND null)
-  
 endif()
 
 # --- C++17 filesystem ---
