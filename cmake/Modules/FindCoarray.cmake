@@ -10,8 +10,8 @@ Finds compiler flags or library necessary to support Fortran 2008/2018 coarrays.
 This packages primary purposes are:
 
 * for compilers natively supporting Fortran coarrays without needing compiler options, simply indicating Coarray_FOUND  (example: Cray)
-* for compilers with built-in Fortran coarray support, but needing compiler options to enable, creating an Imported Target (example: Intel Fortran)
-* for compilers needing a library such as OpenCoarrays, creating an Imported Target (example: GNU)
+* for compilers with built-in Fortran coarray support, present compiler options to enable (example: Intel Fortran)
+* for compilers needing a library such as OpenCoarrays, presenting library (example: GNU)
 
 
 Module Input Variables
@@ -72,7 +72,7 @@ elseif(CMAKE_Fortran_COMPILER_ID IN_LIST opencoarray_supported)
     ProcessorCount(Nproc)
     set(Coarray_MAX_NUMPROCS ${Nproc})
     set(Coarray_NUMPROC_FLAG -np)
-  else()
+  elseif(CMAKE_Fortran_COMPILER_ID STREQUAL GNU)
     set(Coarray_LIBRARY -fcoarray=single)
   endif()
 
