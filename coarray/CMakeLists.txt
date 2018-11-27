@@ -10,41 +10,27 @@ enable_testing()
 get_directory_property(hasParent PARENT_DIRECTORY)
 if(NOT hasParent)
   include(../cmake/compilers.cmake)
+  list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../cmake/Modules/)
 endif()
 
-if(CMAKE_Fortran_COMPILER_ID STREQUAL Intel)
-    set(coFLAGS -coarray=shared)
-    list(APPEND FFLAGS ${coFLAGS})  # workaround for Intel 19, don't eliminate
-    list(APPEND FLIBS -coarray=shared) 
-elseif(CMAKE_Fortran_COMPILER_ID STREQUAL GNU)
-  find_package(OpenCoarrays)
-  if(OpenCoarrays_FOUND)
-    list(APPEND FLIBS OpenCoarrays::caf_mpi)
-  else()
-    list(APPEND FFLAGS -fcoarray=single)
-  endif()
-elseif(CMAKE_Fortran_COMPILER_ID STREQUAL Cray)
-  # no flags needed, coarray enabled by default for Cray
-endif()
+find_package(Coarray)
 
-set(CMAKE_REQUIRED_FLAGS ${coFLAGS} ${FFLAGS})
-set(CMAKE_REQUIRED_LIBRARIES ${FLIBS})
-include(CheckFortranSourceCompiles)
-check_fortran_source_compiles("program cs; real :: x[*]; end" 
-f08coarray SRC_EXT f90)
-
-if(NOT f08coarray)
+if(NOT Coarray_FOUND)
   return()
 endif()
 
+include(CheckFortranSourceCompiles)
+set(CMAKE_REQUIRED_FLAGS ${Coarray_COMPILE_OPTIONS})
+set(CMAKE_REQUIRED_LIBRARIES ${Coarray_LIBRARY})
 check_fortran_source_compiles("program cs; real :: x[*]; call co_sum(x); end" 
 f18coarray SRC_EXT f90)
                               
 
 add_executable(coarray_hello helloworld.f90)
-target_compile_options(coarray_hello PRIVATE ${FFLAGS})
-target_link_libraries(coarray_hello ${FLIBS})
-add_test(NAME CoarrayHello COMMAND coarray_hello)
+target_compile_options(coarray_hello PRIVATE ${FFLAGS} ${Coarray_COMPILE_OPTIONS})
+target_link_libraries(coarray_hello ${FLIBS} ${Coarray_LIBRARIES})
+add_test(NAME CoarrayHello 
+         COMMAND ${Coarray_EXECUTABLE} ${Coarray_NUMPROC_FLAG} ${Coarray_MAX_NUMPROCS} ./coarray_hello)
 
 
 if(f18coarray)
@@ -53,7 +39,8 @@ else()
 # Intel 2018 does not yet support Fortran 2018 co_sum
   add_executable(coarray_pi pi2008.f90)
 endif()
-target_compile_options(coarray_pi PRIVATE ${FFLAGS})
-target_link_libraries(coarray_pi ${FLIBS})
-add_test(NAME CoarrayPi COMMAND coarray_pi)
+target_compile_options(coarray_pi PRIVATE ${FFLAGS} ${Coarray_COMPILE_OPTIONS})
+target_link_libraries(coarray_pi ${FLIBS} ${Coarray_LIBRARIES})
+add_test(NAME CoarrayPi 
+         COMMAND ${Coarray_EXECUTABLE} ${Coarray_NUMPROC_FLAG} ${Coarray_MAX_NUMPROCS} ./coarray_pi)
 
