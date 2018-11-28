@@ -39,7 +39,7 @@ Result variables
 ``Coarray_EXECUTABLE``
   coarray executable e.g. ``cafrun``
 ``Coarray_MAX_NUMPROCS``
-  maximum number of parallel processes 
+  maximum number of parallel processes
 ``Coarray_NUMPROC_FLAG``
   use as ${Coarray_EXECUTABLE} ${Coarray_NUMPROC_FLAG} ${Coarray_MAX_NUMPROCS}
 #]=======================================================================]
@@ -56,7 +56,7 @@ if(CMAKE_Fortran_COMPILER_ID IN_LIST options_coarray)
 
   if(CMAKE_Fortran_COMPILER_ID STREQUAL Intel)
     set(Coarray_COMPILE_OPTIONS -coarray=shared)
-    set(Coarray_LIBRARY -coarray=shared)
+    set(Coarray_LIBRARY -coarray=shared)  # yes ifort requires it twice
   endif()
 
 elseif(CMAKE_Fortran_COMPILER_ID IN_LIST opencoarray_supported)
@@ -73,7 +73,7 @@ elseif(CMAKE_Fortran_COMPILER_ID IN_LIST opencoarray_supported)
     set(Coarray_MAX_NUMPROCS ${Nproc})
     set(Coarray_NUMPROC_FLAG -np)
   elseif(CMAKE_Fortran_COMPILER_ID STREQUAL GNU)
-    set(Coarray_LIBRARY -fcoarray=single)
+    set(Coarray_COMPILE_OPTIONS -fcoarray=single)
   endif()
 
 endif()
@@ -86,13 +86,12 @@ check_fortran_source_compiles("program cs; real :: x[*]; end" f08coarray SRC_EXT
 unset(CMAKE_REQUIRED_FLAGS)
 unset(CMAKE_REQUIRED_LIBRARIES)
 
-if(f08coarray)
-  set(Coarray_LIBRARIES ${Coarray_LIBRARY})
-endif()
-
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(Coarray
-  REQUIRED_VARS Coarray_LIBRARIES)
+  REQUIRED_VARS Coarray_LIBRARY f08coarray)
+
+set(Coarray_LIBRARIES ${Coarray_LIBRARY})
+
 
 mark_as_advanced(
   Coarray_LIBRARY

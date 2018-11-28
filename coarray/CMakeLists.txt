@@ -28,7 +28,7 @@ f18coarray SRC_EXT f90)
 
 add_executable(coarray_hello helloworld.f90)
 target_compile_options(coarray_hello PRIVATE ${FFLAGS} ${Coarray_COMPILE_OPTIONS})
-target_link_libraries(coarray_hello ${FLIBS} ${Coarray_LIBRARIES})
+target_link_libraries(coarray_hello PRIVATE ${FLIBS} ${Coarray_LIBRARIES})
 add_test(NAME CoarrayHello 
          COMMAND ${Coarray_EXECUTABLE} ${Coarray_NUMPROC_FLAG} ${Coarray_MAX_NUMPROCS} ./coarray_hello)
 
@@ -40,7 +40,7 @@ else()
   add_executable(coarray_pi pi2008.f90)
 endif()
 target_compile_options(coarray_pi PRIVATE ${FFLAGS} ${Coarray_COMPILE_OPTIONS})
-target_link_libraries(coarray_pi ${FLIBS} ${Coarray_LIBRARIES})
+target_link_libraries(coarray_pi PRIVATE ${FLIBS} ${Coarray_LIBRARIES})
 add_test(NAME CoarrayPi 
          COMMAND ${Coarray_EXECUTABLE} ${Coarray_NUMPROC_FLAG} ${Coarray_MAX_NUMPROCS} ./coarray_pi)
 
