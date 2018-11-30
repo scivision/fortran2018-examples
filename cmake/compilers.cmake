@@ -68,6 +68,9 @@ end"
 # ifort-19 yes, Flang yes, PGI yes, NAG yes, gfortran-8 no
 check_fortran_source_compiles("program c; print*,is_contiguous([0,0]); end" 
   f08contig SRC_EXT f90)
+if(NOT f08contig)
+  set(f08contig 0)
+endif()  
                               
 if(CMAKE_Fortran_COMPILER_ID STREQUAL Intel)
   set(FFLAGS -traceback -warn)

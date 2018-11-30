@@ -10,7 +10,7 @@ subroutine timestwo_contig(x, contig)
 real(dp), contiguous, intent(inout) :: x(:,:)
 logical, intent(out) :: contig
 
-#ifdef ISCONTIG
+#if ISCONTIG
 contig = is_contiguous(x)
 #endif
 
@@ -21,7 +21,7 @@ subroutine timestwo(x, contig)
 real(dp), intent(inout) :: x(:,:)
 logical, intent(out) :: contig
 
-#ifdef ISCONTIG
+#if ISCONTIG
 contig = is_contiguous(x)
 #endif
 
@@ -56,7 +56,7 @@ call timestwo_contig(x(:,1:N:2), iscontig2)
 call system_clock(toc, rate)
 t2 = (toc-tic) / real(rate, dp)
 
-#ifdef ISCONTIG
+#if ISCONTIG
 print *, iscontig1,' contig: ',t1,' sec.'
 print *, iscontig2,' contig: ',t2,' sec.'
 #else
