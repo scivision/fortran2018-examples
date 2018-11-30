@@ -19,10 +19,12 @@ implicit none
  type(point) :: a, b
  real :: dist
 
-a = point(1,1)
-b = point(3,5)
+a = point(1.,1.)
+b = point(3.,5.)
 
 dist = point_dist(a,b)
+
+print *,'distance', dist
 
 if (abs(dist-4.47213602) >= 1e-5) then
   write(stderr,*) 'excessive error in computation'

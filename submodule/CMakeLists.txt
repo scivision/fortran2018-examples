@@ -12,11 +12,8 @@ if(NOT f08submod)
   return()
 endif()
 
-
-if(NOT f08errorstop)
-  message(WARNING ${CMAKE_Fortran_COMPILER_ID} ${CMAKE_Fortran_COMPILER_VERSION} " does not support Fortran 2008 ERROR STOP")
-  return()
-endif()
+add_executable(basic basic.f90 basic_sub.f90)
+add_test(NAME BasicSubmod COMMAND basic)
 
 add_executable(new points.f90 geo.f90)
 add_test(NAME PointsNew COMMAND new)
