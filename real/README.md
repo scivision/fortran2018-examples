@@ -28,35 +28,3 @@ This is in program [real/nans.f90](./real/nans.f90)
 * must NOT use `-Ofast` or `-ffast-math` because IEEE standards are broken by these options--NaN detection will intermittently fail!
 * `gfortran` &ge; 6 needed for `ieee_arithmetic: ieee_is_nan`
 
-## f2py
-
-simple f2py demo
-
-```bash
-f2py -c fib3.f90 -m fib3
-```
-
-This creates a fib3*.so (Linux/Mac) or fib3*.pyd (Windows), which is
-used by
-
-```bash
-python -c "import fib3; print(fib3.fib(8))"
-```
-
-> [0. 1. 1. 2. 3. 5. 8. 13.]
-
-or
-
-```bash
-python -c "import fib3; print(fib3.fib3.fib(1478))"
-```
-
-> [ 0. 1. 1. ..., &gt; 8.07763763e+307 1.30698922e+308 inf]
-
-Note the file `.f2py_f2cmap`, which is vital to proper assigning of real
-and complex data types, particularly double precision.
-
-```python
-dict(real= dict(sp='float', dp='double'),
-complex = dict(sp='complex_float',dp="complex_double"))
-```

@@ -18,6 +18,8 @@ integer(int64) :: hugeint64 = 9/5_int64
 
 real(real64) :: imdouble = 9/5.
 
+integer(int64) :: J, K
+
 print *, compiler_version()
 
 if (storage_size(imdouble) /= 64) then
@@ -68,10 +70,11 @@ print *,'64-bit Integer ',hugeint64
 ! 11011011111111111100110011001100110011000000000000000000000000000000
 ! 11011011111111111100110011001100110011001100110011001100110011001101
 
-
+J = transfer(imdouble, J)
+K = transfer(huge64, K)
 print *,'Bit Patterns:'
 
-print '(A,B64)','64-bit variable with 32-bit constants ',imdouble
-print '(A,B64)','64-bit variable with 64-bit constants ',huge64
+print '(A,B64)','64-bit variable with 32-bit constants ', J
+print '(A,B64)','64-bit variable with 64-bit constants ', K
 
 end program

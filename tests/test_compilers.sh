@@ -6,11 +6,11 @@ rdir=
 red=`tput setaf 1`
 reset=`tput sgr0`
 
-fcomp=(gfortran gfortran-5 gfortran-6 gfortran-7 gfortran-8 ifort pgf95 flang   nagfor)
-ccomp=(gcc      gcc-5      gcc-6      gcc-7      gcc-8      icc   pgcc  clang   gcc)
-pcomp=(g++      g++-5      g++-6      g++-7      g++-8      icpc  pgc++ clang++ g++)
+fcomp=(gfortran-4.8 gfortran-5 gfortran-6 gfortran-7 gfortran-8 ifort pgf95 flang   nagfor)
+ccomp=(gcc-4.8      gcc-5      gcc-6      gcc-7      gcc-8      icc   pgcc  clang   gcc)
+pcomp=(g++-4.8      g++-5      g++-6      g++-7      g++-8      icpc  pgc++ clang++ g++)
 # --- loops
-for i in $(seq 1 ${#fcomp[@]})
+for i in $(seq 0 ${#fcomp[@]})
 do
 
 (

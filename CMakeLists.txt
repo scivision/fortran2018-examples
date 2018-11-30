@@ -20,6 +20,7 @@ add_subdirectory(io)
 add_subdirectory(mpi)
 add_subdirectory(netcdf)
 add_subdirectory(openmp)
+add_subdirectory(overloading)
 add_subdirectory(random)
 add_subdirectory(real)
 add_subdirectory(submodule)
@@ -47,13 +48,4 @@ target_compile_options(bitpat PRIVATE ${FFLAGS})
 target_link_libraries(bitpat ${FLIBS})
 add_test(NAME FortranBitPattern COMMAND bitpat)
 
-
-if(NOT f08errorstop)
-  return()
-endif()
-
-add_executable(proc pragma.f90)
-target_compile_options(proc PRIVATE ${FFLAGS})
-target_link_libraries(proc ${FLIBS})
-add_test(NAME FortranPragma COMMAND proc)
 

@@ -3,7 +3,7 @@ program testall
 use, intrinsic:: ieee_arithmetic
 use, intrinsic:: iso_fortran_env, only: stderr=>error_unit, sp=>real32, dp=>real64, qp=>real128
 use fib3, only: fib
-use assert
+use assert, only: wp, isclose, assert_isclose
 
 implicit none
 
@@ -34,9 +34,12 @@ if (isclose(nan,inf)) error stop
 if (isclose(inf,nan)) error stop
 
 ! denormal
-if (wp==sp.and.isclose(1e-44_wp, 0._wp, atol=0._wp)) error stop 'single precision denormal' 
-if (wp==dp.and.isclose(1e-323_wp, 0._wp, atol=0._wp)) error stop 'double precision denormal' 
-if (wp==qp.and.isclose(1e-4965_wp, 0._wp, atol=0._wp)) error stop 'quad precision denormal' 
+! ifort needs special options to handle these denormal
+if (wp==sp.and.isclose(1e-38_wp, 0._wp, atol=0._wp)) error stop 'single precision denormal' 
+if (wp==dp.and.isclose(1e-308_wp, 0._wp, atol=0._wp)) error stop 'double precision denormal' 
+if (wp==qp.and.isclose(1e-4932_wp, 0._wp, atol=0._wp)) error stop 'quad precision denormal' 
+! tiny: 32, 64, 128 bits:
+! 1.17549435E-38   2.2250738585072014E-308   3.36210314311209350626267781732175260E-4932
 
 !print*,nan,inf
 !-------
@@ -46,5 +49,5 @@ if (wp==qp.and.isclose(1e-4965_wp, 0._wp, atol=0._wp)) error stop 'quad precisio
 call assert_isclose(fib(10),[0._wp,1._wp,1._wp,2._wp,3._wp,5._wp,8._wp,13._wp,21._wp,34._wp],err_msg='fibonacci fail')
 
 
-print *, 'Test OK'
+print *, 'Finite precision: test OK'
 end program
