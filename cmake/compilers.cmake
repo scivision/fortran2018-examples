@@ -29,7 +29,6 @@ check_fortran_source_compiles("program a; call execute_command_line(''); end"
 check_fortran_source_compiles("program a; call random_init(); end" 
   f18random SRC_EXT f90)
 
-include(CheckFortranSourceCompiles)
 check_fortran_source_compiles("
 module b
 interface
@@ -73,5 +72,7 @@ elseif(CMAKE_Fortran_COMPILER_ID STREQUAL PGI)
 elseif(CMAKE_Fortran_COMPILER_ID STREQUAL Flang)
   set(FLIBS -static-flang-libs)
   set(CFLAGS -W)
+elseif(CMAKE_Fortran_COMPILER_ID STREQUAL NAG)
+
 endif()
 
