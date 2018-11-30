@@ -15,6 +15,9 @@ endif()
 add_executable(basic basic.f90 basic_sub.f90)
 add_test(NAME BasicSubmod COMMAND basic)
 
+add_executable(points_basic points_basic.f90 geo_basic.f90)
+add_test(NAME BasicPoints COMMAND points_basic)
+
 add_executable(new points.f90 geo.f90)
 add_test(NAME PointsNew COMMAND new)
 
