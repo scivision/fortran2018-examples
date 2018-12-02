@@ -3,38 +3,36 @@ program helloworld
 !  Original Author:  John Burkardt
 !  Modified: Michael Hirsch, Ph.D.
 
-use mpi
+use mpi_f08
 use, intrinsic:: iso_fortran_env, only: dp=>real64
 implicit none
 
-integer error, i, p
-real(dp) wtime
-
+integer :: i, Nproc
+real(dp) :: wtime
 
 !  Initialize MPI.
-call MPI_Init(error)
+call MPI_Init()
 
 !  Get the number of processes.
-call MPI_Comm_size(MPI_COMM_WORLD, p, error)
+call MPI_Comm_size(MPI_COMM_WORLD, Nproc)
 
 !  Get the individual process ID.
-call MPI_Comm_rank(MPI_COMM_WORLD, i, error)
+call MPI_Comm_rank(MPI_COMM_WORLD, i)
 
 !  Print a message.
 if (i == 0) then
   wtime = MPI_Wtime()
-  print *, 'number of processes: ', p
+  print *, 'number of processes: ', Nproc
 end if
 
 print *, 'Process ', i
 
 if ( i == 0 ) then
-  print *,'HELLO_MPI: Normal end of execution'
   wtime = MPI_Wtime() - wtime
   print *, 'Elapsed wall clock time = ', wtime, ' seconds.'
 end if
 !  Shut down MPI.
-  call MPI_Finalize(error)
+call MPI_Finalize()
 
 end program
 

@@ -2,6 +2,10 @@ cmake_minimum_required (VERSION 3.3)
 project(mpidemo Fortran C)
 enable_testing()
 
+if(CMAKE_VERSION VERSION_GREATER_EQUAL 3.12)
+  cmake_policy(SET CMP0074 NEW)
+endif()
+
 get_directory_property(hasParent PARENT_DIRECTORY)
 if(NOT hasParent)
   include(../cmake/compilers.cmake)
@@ -13,6 +17,11 @@ if(NOT MPI_Fortran_FOUND)
 endif()
 
 include(mpi.cmake)
+
+add_executable(mpivers mpivers.f90)
+target_compile_options(mpivers PRIVATE ${FFLAGS})
+target_link_libraries(mpivers ${FLIBS} MPI::MPI_Fortran)
+add_test(NAME MPIversion COMMAND mpivers)
 
 add_executable(mpi_hello helloworld.f90)
 target_compile_options(mpi_hello PRIVATE ${FFLAGS})
