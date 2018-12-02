@@ -1,8 +1,8 @@
-# OpenMPI
+# OpenMPI Examples
 
-OpenMPI examples:
+This example uses FindMPI Imported Target `MPI::MPI_Fortran` as a modern CMake best practice.
 
-To run the simplest sort of multi-threaded Fortran program using MPI-2:
+To run the simplest sort of multi-threaded Fortran program using MPI:
 
 ```sh
 mpirun -np 4 mpi/mpi_hello
