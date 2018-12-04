@@ -90,7 +90,6 @@ elseif(CMAKE_Fortran_COMPILER_ID STREQUAL GNU)
 elseif(CMAKE_Fortran_COMPILER_ID STREQUAL PGI)
   set(FFLAGS -C)
 elseif(CMAKE_Fortran_COMPILER_ID STREQUAL Flang)
-  set(FLIBS -static-flang-libs)
   set(CFLAGS -W)
 elseif(CMAKE_Fortran_COMPILER_ID STREQUAL NAG)
   # https://www.nag.co.uk/nagware/np/r62_doc/manual/compiler_2_4.html#OPTIONS

@@ -4,7 +4,7 @@ program helloworld
 !  Modified: Michael Hirsch, Ph.D.
 
 use mpi_f08
-use, intrinsic:: iso_fortran_env, only: dp=>real64
+use, intrinsic:: iso_fortran_env, only: dp=>real64, compiler_version
 implicit none
 
 integer :: i, Nproc
@@ -21,6 +21,7 @@ call MPI_Comm_rank(MPI_COMM_WORLD, i)
 
 !  Print a message.
 if (i == 0) then
+  print *,compiler_version()
   wtime = MPI_Wtime()
   print *, 'number of processes: ', Nproc
 end if

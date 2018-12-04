@@ -2,13 +2,13 @@ program main
 ! passes data between two threads
 
 !  Author:  John Burkardt
-  use, intrinsic :: iso_fortran_env, only: stderr=>error_unit
+  use, intrinsic :: iso_fortran_env, only: sp=>real32, stderr=>error_unit, compiler_version
   use mpi_f08
   implicit none
 
   character(10) :: time
   integer :: mcount
-  real :: dat(0:99), val(200)
+  real(sp) :: dat(0:99), val(200)
   integer :: dest, i, num_procs, rank, tag
   type(MPI_STATUS) :: status
 
@@ -28,15 +28,15 @@ program main
 
 !  Have Process 0 say hello.
   if ( rank == 0 ) then
+    print *,compiler_version()
     print *, '  An MPI test program. number of processes available ', num_procs
   end if
 
 !  Process 0 expects to receive as much as 200 real values, from any source.
   if ( rank == 0 ) then
-    tag = 55
-    call MPI_Recv (val, size(val), MPI_REAL, MPI_ANY_SOURCE, tag, MPI_COMM_WORLD, status)
+    call MPI_Recv (val, size(val), MPI_REAL, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, status)
 
-    print *, rank, ' Got data from processor ', status%MPI_SOURCE
+    print *, rank, ' Got data from processor ', status%MPI_SOURCE, 'tag',status%MPI_TAG
 
     call MPI_Get_count ( status, MPI_REAL, mcount)
 
