@@ -1,5 +1,5 @@
 src_dir: ./
-output_dir: ./doc
+output_dir: ./docs
 project: Fortran 2018 examples
 project_github: https://github.com/scivision/fortran2018-examples
 project_website: https://scivision.github.io/fortran2018-examples
