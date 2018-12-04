@@ -27,29 +27,7 @@ add_subdirectory(openmp)
 add_subdirectory(overloading)
 add_subdirectory(random)
 add_subdirectory(real)
+add_subdirectory(standard)
 add_subdirectory(submodule)
 add_subdirectory(system)
-
-
-add_executable(justwait replace_pause.f90)
-target_compile_options(justwait PRIVATE ${FFLAGS})
-target_link_libraries(justwait ${FLIBS})
-#add_test(NAME FortranWait COMMAND justwait)
-
-add_executable(sleepstd sleep_std.f90)
-target_compile_options(sleepstd PRIVATE ${FFLAGS})
-target_link_libraries(sleepstd ${FLIBS})
-add_test(NAME FortranMicrosleep COMMAND sleepstd)
-set_tests_properties(FortranMicrosleep PROPERTIES TIMEOUT 1)
-
-add_executable(statement statement_function.f90)
-target_compile_options(statement PRIVATE ${FFLAGS})
-target_link_libraries(statement ${FLIBS})
-add_test(NAME Statement COMMAND statement)
-
-add_executable(bitpat bitpat.f90)
-target_compile_options(bitpat PRIVATE ${FFLAGS})
-target_link_libraries(bitpat ${FLIBS})
-add_test(NAME FortranBitPattern COMMAND bitpat)
-
 

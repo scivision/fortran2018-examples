@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   
+   <meta name="description" content="Fortran 2008 / 2018 examples">
+    
+    <meta name="author" content="Michael Hirsch Ph.D." >
+    <link rel="icon" href="../favicon.png">
+
+    <title>test_attributes &ndash; Fortran 2018 examples</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/local.css" rel="stylesheet">
+    
+    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+    
+    
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <script src="../js/jquery-2.1.3.min.js"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
+
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../index.html">Fortran 2018 examples </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+        
+            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
+              <a href="#" class="dropdown-toggle"
+              data-toggle="dropdown" role="button"
+              aria-haspopup="true"
+     aria-expanded="false">Contents <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          
+              
+            <li><a href="../lists/files.html">Source Files</a></li>
+        
+        
+        
+            <li><a href="../lists/modules.html">Modules</a></li>
+        
+            
+                                
+            <li><a href="../lists/procedures.html">Procedures</a></li>
+        
+               
+            <li><a href="../lists/types.html">Derived Types</a></li>
+        
+        
+            <li><a href="../lists/programs.html">Programs</a></li>
+        
+            </ul>
+            </li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
+
+                             
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/programs.html">Programs</a></li>
+
+          </ul>
+        
+        <form action="../search.html" class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+        </div>
+<!--
+        <button type="submit" class="btn btn-default">Submit</button>
+-->
+        </form>
+        
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+    
+  
+  <div class="row">
+    <h1>test_attributes
+      <small>Subroutine</small>
+    
+    </h1>
+    
+<div class="row">
+  <div class="col-lg-12">
+<div class="well well-sm">
+  <ul class="list-inline" style="margin-bottom:0px;display:inline">
+     
+     
+     
+     
+    
+    
+     <li><i class="fa fa-list-ol"></i>
+       <a data-toggle="tooltip"
+    data-placement="bottom" data-html="true"
+    title="11.7% of total for procedures.">101 statements</a>
+     </li> 
+     
+     
+     
+    <li><i class="fa fa-code"></i><a href="../src/test.f90"> Source File</a></li>
+     
+     
+  </ul>
+  <ol class="breadcrumb in-well text-right">
+  
+    
+     <li><a href='../sourcefile/test.f90.html'>test.f90</a></li>
+    
+  
+     <li class="active">test_attributes</li>
+  </ol>
+</div>
+</div>
+</div>
+<script>
+  $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+    
+<div id="sidebar">
+  
+<h3>Contents</h3>
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<em>None</em>
+
+
+</div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>
+subroutine test_attributes()
+    
+    
+   
+</h2>
+    
+  
+    <div class="panel panel-default">
+      <div class="panel-heading">
+  <h3 class="panel-title">Uses</h3>
+      </div>
+      <ul class="list-group">
+      
+      <li class="list-group-item">
+  <ul class="list-inline">
+    
+    <li>H5LT</li>
+    
+    <li>HDF5</li>
+    
+  </ul>
+      </li>
+      
+      
+      
+      <li class="list-group-item">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: proc~~test_attributes~~UsesGraph Pages: 1 -->
+<svg id="proctest_attributesUsesGraph" width="178pt" height="74pt"
+ viewBox="0.00 0.00 178.00 74.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~test_attributes~~UsesGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 70)">
+<title>proc~~test_attributes~~UsesGraph</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-70 174,-70 174,4 -4,4"/>
+<!-- proc~test_attributes -->
+<g id="proc~~test_attributes~~UsesGraph_node1" class="node">
+<title>proc~test_attributes</title>
+<polygon fill="none" stroke="#000000" points="170,-45 90,-45 90,-21 170,-21 170,-45"/>
+<text text-anchor="middle" x="130" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#000000">test_attributes</text>
+</g>
+<!-- H5LT -->
+<g id="proc~~test_attributes~~UsesGraph_node2" class="node">
+<title>H5LT</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="54,-66 0,-66 0,-42 54,-42 54,-66"/>
+<text text-anchor="middle" x="27" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">H5LT</text>
+</g>
+<!-- proc~test_attributes&#45;&gt;H5LT -->
+<g id="proc~~test_attributes~~UsesGraph_edge1" class="edge">
+<title>proc~test_attributes&#45;&gt;H5LT</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M89.8826,-41.1793C81.3691,-42.915 72.4188,-44.7399 64.0266,-46.4509"/>
+<polygon fill="#000000" stroke="#000000" points="63.2328,-43.0406 54.1336,-48.4679 64.6312,-49.8995 63.2328,-43.0406"/>
+</g>
+<!-- HDF5 -->
+<g id="proc~~test_attributes~~UsesGraph_node3" class="node">
+<title>HDF5</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="54,-24 0,-24 0,0 54,0 54,-24"/>
+<text text-anchor="middle" x="27" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">HDF5</text>
+</g>
+<!-- proc~test_attributes&#45;&gt;HDF5 -->
+<g id="proc~~test_attributes~~UsesGraph_edge2" class="edge">
+<title>proc~test_attributes&#45;&gt;HDF5</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M89.8826,-24.8207C81.3691,-23.085 72.4188,-21.2601 64.0266,-19.5491"/>
+<polygon fill="#000000" stroke="#000000" points="64.6312,-16.1005 54.1336,-17.5321 63.2328,-22.9594 64.6312,-16.1005"/>
+</g>
+</g>
+</svg>
+</div><div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div><div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog"><div class="modal-dialog modal-lg" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="-graph-help-label">Graph Key</h4></div><div class="modal-body">
+    <p>Nodes of different colours represent the following: </p>
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="490pt" height="32pt"
+ viewBox="0.00 0.00 489.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-28 485.5,-28 485.5,4 -4,4"/>
+<!-- Module -->
+<g id="node1" class="node">
+<title>Module</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="54,-24 0,-24 0,0 54,0 54,-24"/>
+<text text-anchor="middle" x="27" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">Module</text>
+</g>
+<!-- Submodule -->
+<g id="node2" class="node">
+<title>Submodule</title>
+<polygon fill="#5bc0de" stroke="#5bc0de" points="139.5,-24 72.5,-24 72.5,0 139.5,0 139.5,-24"/>
+<text text-anchor="middle" x="106" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">Submodule</text>
+</g>
+<!-- Subroutine -->
+<g id="node3" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="222,-24 158,-24 158,0 222,0 222,-24"/>
+<text text-anchor="middle" x="190" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node4" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="294,-24 240,-24 240,0 294,0 294,-24"/>
+<text text-anchor="middle" x="267" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">Function</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="366,-24 312,-24 312,0 366,0 366,-24"/>
+<text text-anchor="middle" x="339" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="#000000" points="481.5,-24 384.5,-24 384.5,0 481.5,0 481.5,-24"/>
+<text text-anchor="middle" x="433" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#000000">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+    
+    <p>Solid arrows point from a submodule to the (sub)module which it is
+    descended from. Dashed arrows point from a module or program unit to 
+    modules which it uses.
+    </p>
+    </div></div></div></div>
+      </li>
+      
+      </ul>
+    </div>
+    
+
+
+    
+
+    <h3>Arguments</h3>
+    
+    <em>None</em>
+    <br>
+    
+    
+    
+    <br>
+    
+    
+    <div class="panel panel-default">
+      <div class="panel-heading">
+  <h3 class="panel-title">Calls</h3>
+      </div>
+      <div class="panel-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: proc~~test_attributes~~CallsGraph Pages: 1 -->
+<svg id="proctest_attributesCallsGraph" width="261pt" height="704pt"
+ viewBox="0.00 0.00 261.00 704.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~test_attributes~~CallsGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 700)">
+<title>proc~~test_attributes~~CallsGraph</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-700 257,-700 257,4 -4,4"/>
+<!-- proc~test_attributes -->
+<g id="proc~~test_attributes~~CallsGraph_node1" class="node">
+<title>proc~test_attributes</title>
+<polygon fill="none" stroke="#000000" points="80,-360 0,-360 0,-336 80,-336 80,-360"/>
+<text text-anchor="middle" x="40" y="-345.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#000000">test_attributes</text>
+</g>
+<!-- h5ltmake_dataset_int_f -->
+<g id="proc~~test_attributes~~CallsGraph_node2" class="node">
+<title>h5ltmake_dataset_int_f</title>
+<polygon fill="#777777" stroke="#777777" points="246.5,-696 122.5,-696 122.5,-672 246.5,-672 246.5,-696"/>
+<text text-anchor="middle" x="184.5" y="-681.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">h5ltmake_dataset_int_f</text>
+</g>
+<!-- proc~test_attributes&#45;&gt;h5ltmake_dataset_int_f -->
+<g id="proc~~test_attributes~~CallsGraph_edge1" class="edge">
+<title>proc~test_attributes&#45;&gt;h5ltmake_dataset_int_f</title>
+<path fill="none" stroke="#000000" d="M41.3201,-360.0762C47.2482,-412.1997 73.0129,-617.3198 116,-663 117.0389,-664.104 118.1342,-665.1505 119.278,-666.1424"/>
+<polygon fill="#000000" stroke="#000000" points="117.2671,-669.0071 127.4512,-671.9288 121.3119,-663.294 117.2671,-669.0071"/>
+</g>
+<!-- h5ltget_attribute_double_f -->
+<g id="proc~~test_attributes~~CallsGraph_node3" class="node">
+<title>h5ltget_attribute_double_f</title>
+<polygon fill="#777777" stroke="#777777" points="253,-654 116,-654 116,-630 253,-630 253,-654"/>
+<text text-anchor="middle" x="184.5" y="-639.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">h5ltget_attribute_double_f</text>
+</g>
+<!-- proc~test_attributes&#45;&gt;h5ltget_attribute_double_f -->
+<g id="proc~~test_attributes~~CallsGraph_edge2" class="edge">
+<title>proc~test_attributes&#45;&gt;h5ltget_attribute_double_f</title>
+<path fill="none" stroke="#000000" d="M41.7954,-360.0521C49.1183,-407.6906 78.1469,-582.1513 116,-621 117.0851,-622.1136 118.2275,-623.1685 119.4191,-624.1679"/>
+<polygon fill="#000000" stroke="#000000" points="117.6832,-627.2213 127.9103,-629.9887 121.6412,-621.4477 117.6832,-627.2213"/>
+</g>
+<!-- h5ltset_attribute_float_f -->
+<g id="proc~~test_attributes~~CallsGraph_node4" class="node">
+<title>h5ltset_attribute_float_f</title>
+<polygon fill="#777777" stroke="#777777" points="246.5,-612 122.5,-612 122.5,-588 246.5,-588 246.5,-612"/>
+<text text-anchor="middle" x="184.5" y="-597.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">h5ltset_attribute_float_f</text>
+</g>
+<!-- proc~test_attributes&#45;&gt;h5ltset_attribute_float_f -->
+<g id="proc~~test_attributes~~CallsGraph_edge3" class="edge">
+<title>proc~test_attributes&#45;&gt;h5ltset_attribute_float_f</title>
+<path fill="none" stroke="#000000" d="M42.476,-360.2179C51.4233,-403.2536 83.2809,-546.9409 116,-579 117.2522,-580.2269 118.5741,-581.3824 119.9543,-582.4706"/>
+<polygon fill="#000000" stroke="#000000" points="118.1296,-585.4592 128.4163,-587.9959 121.9567,-579.598 118.1296,-585.4592"/>
+</g>
+<!-- h5ltset_attribute_double_f -->
+<g id="proc~~test_attributes~~CallsGraph_node5" class="node">
+<title>h5ltset_attribute_double_f</title>
+<polygon fill="#777777" stroke="#777777" points="252.5,-570 116.5,-570 116.5,-546 252.5,-546 252.5,-570"/>
+<text text-anchor="middle" x="184.5" y="-555.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">h5ltset_attribute_double_f</text>
+</g>
+<!-- proc~test_attributes&#45;&gt;h5ltset_attribute_double_f -->
+<g id="proc~~test_attributes~~CallsGraph_edge17" class="edge">
+<title>proc~test_attributes&#45;&gt;h5ltset_attribute_double_f</title>
+<path fill="none" stroke="#000000" d="M41.2999,-360.1935C45.5124,-393.5695 61.8249,-487.2374 116,-537 117.3226,-538.2148 118.7138,-539.3594 120.1618,-540.4379"/>
+<polygon fill="#000000" stroke="#000000" points="118.6499,-543.6188 128.9921,-545.919 122.3416,-537.6714 118.6499,-543.6188"/>
+</g>
+<!-- h5open_f -->
+<g id="proc~~test_attributes~~CallsGraph_node6" class="node">
+<title>h5open_f</title>
+<polygon fill="#777777" stroke="#777777" points="213.5,-528 155.5,-528 155.5,-504 213.5,-504 213.5,-528"/>
+<text text-anchor="middle" x="184.5" y="-513.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">h5open_f</text>
+</g>
+<!-- proc~test_attributes&#45;&gt;h5open_f -->
+<g id="proc~~test_attributes~~CallsGraph_edge5" class="edge">
+<title>proc~test_attributes&#45;&gt;h5open_f</title>
+<path fill="none" stroke="#000000" d="M42.8778,-360.3159C50.0992,-388.4783 71.6677,-457.995 116,-495 124.3943,-502.0069 135.1007,-506.6778 145.5415,-509.7909"/>
+<polygon fill="#000000" stroke="#000000" points="144.8295,-513.2216 155.3862,-512.3236 146.5736,-506.4423 144.8295,-513.2216"/>
+</g>
+<!-- h5ltget_attribute_info_f -->
+<g id="proc~~test_attributes~~CallsGraph_node7" class="node">
+<title>h5ltget_attribute_info_f</title>
+<polygon fill="#777777" stroke="#777777" points="245.5,-486 123.5,-486 123.5,-462 245.5,-462 245.5,-486"/>
+<text text-anchor="middle" x="184.5" y="-471.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">h5ltget_attribute_info_f</text>
+</g>
+<!-- proc~test_attributes&#45;&gt;h5ltget_attribute_info_f -->
+<g id="proc~~test_attributes~~CallsGraph_edge6" class="edge">
+<title>proc~test_attributes&#45;&gt;h5ltget_attribute_info_f</title>
+<path fill="none" stroke="#000000" d="M45.4493,-360.0342C55.9412,-381.8538 81.0403,-427.996 116,-453 118.2463,-454.6066 120.6183,-456.0926 123.0772,-457.4666"/>
+<polygon fill="#000000" stroke="#000000" points="121.7705,-460.7235 132.292,-461.9683 124.8432,-454.434 121.7705,-460.7235"/>
+</g>
+<!-- proc~test_begin -->
+<g id="proc~~test_attributes~~CallsGraph_node8" class="node">
+<title>proc~test_begin</title>
+<g id="a_proc~~test_attributes~~CallsGraph_node8"><a xlink:href=".././proc/test_begin.html" xlink:title="test_begin">
+<polygon fill="#d9534f" stroke="#d9534f" points="215.5,-444 153.5,-444 153.5,-420 215.5,-420 215.5,-444"/>
+<text text-anchor="middle" x="184.5" y="-429.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">test_begin</text>
+</a>
+</g>
+</g>
+<!-- proc~test_attributes&#45;&gt;proc~test_begin -->
+<g id="proc~~test_attributes~~CallsGraph_edge16" class="edge">
+<title>proc~test_attributes&#45;&gt;proc~test_begin</title>
+<path fill="none" stroke="#000000" d="M51.7848,-360.3683C65.849,-374.4684 90.661,-397.3276 116,-411 124.612,-415.6469 134.4001,-419.4209 143.828,-422.4198"/>
+<polygon fill="#000000" stroke="#000000" points="142.8761,-425.788 153.4582,-425.2683 144.8617,-419.0755 142.8761,-425.788"/>
+</g>
+<!-- h5ltget_attribute_float_f -->
+<g id="proc~~test_attributes~~CallsGraph_node9" class="node">
+<title>h5ltget_attribute_float_f</title>
+<polygon fill="#777777" stroke="#777777" points="247,-402 122,-402 122,-378 247,-378 247,-402"/>
+<text text-anchor="middle" x="184.5" y="-387.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">h5ltget_attribute_float_f</text>
+</g>
+<!-- proc~test_attributes&#45;&gt;h5ltget_attribute_float_f -->
+<g id="proc~~test_attributes~~CallsGraph_edge7" class="edge">
+<title>proc~test_attributes&#45;&gt;h5ltget_attribute_float_f</title>
+<path fill="none" stroke="#000000" d="M80.2513,-359.6993C96.6562,-364.4675 115.8192,-370.0374 133.2089,-375.0918"/>
+<polygon fill="#000000" stroke="#000000" points="132.629,-378.5681 143.2085,-377.9983 134.5828,-371.8463 132.629,-378.5681"/>
+</g>
+<!-- proc~passed -->
+<g id="proc~~test_attributes~~CallsGraph_node10" class="node">
+<title>proc~passed</title>
+<g id="a_proc~~test_attributes~~CallsGraph_node10"><a xlink:href=".././proc/passed.html" xlink:title="passed">
+<polygon fill="#d9534f" stroke="#d9534f" points="211.5,-360 157.5,-360 157.5,-336 211.5,-336 211.5,-360"/>
+<text text-anchor="middle" x="184.5" y="-345.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">passed</text>
+</a>
+</g>
+</g>
+<!-- proc~test_attributes&#45;&gt;proc~passed -->
+<g id="proc~~test_attributes~~CallsGraph_edge8" class="edge">
+<title>proc~test_attributes&#45;&gt;proc~passed</title>
+<path fill="none" stroke="#000000" d="M80.2513,-348C101.1585,-348 126.5455,-348 147.0322,-348"/>
+<polygon fill="#000000" stroke="#000000" points="147.2491,-351.5001 157.249,-348 147.249,-344.5001 147.2491,-351.5001"/>
+</g>
+<!-- h5ltset_attribute_int_f -->
+<g id="proc~~test_attributes~~CallsGraph_node11" class="node">
+<title>h5ltset_attribute_int_f</title>
+<polygon fill="#777777" stroke="#777777" points="242,-318 127,-318 127,-294 242,-294 242,-318"/>
+<text text-anchor="middle" x="184.5" y="-303.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">h5ltset_attribute_int_f</text>
+</g>
+<!-- proc~test_attributes&#45;&gt;h5ltset_attribute_int_f -->
+<g id="proc~~test_attributes~~CallsGraph_edge9" class="edge">
+<title>proc~test_attributes&#45;&gt;h5ltset_attribute_int_f</title>
+<path fill="none" stroke="#000000" d="M80.2513,-336.3007C96.6562,-331.5325 115.8192,-325.9626 133.2089,-320.9082"/>
+<polygon fill="#000000" stroke="#000000" points="134.5828,-324.1537 143.2085,-318.0017 132.629,-317.4319 134.5828,-324.1537"/>
+</g>
+<!-- h5ltset_attribute_string_f -->
+<g id="proc~~test_attributes~~CallsGraph_node12" class="node">
+<title>h5ltset_attribute_string_f</title>
+<polygon fill="#777777" stroke="#777777" points="249.5,-276 119.5,-276 119.5,-252 249.5,-252 249.5,-276"/>
+<text text-anchor="middle" x="184.5" y="-261.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">h5ltset_attribute_string_f</text>
+</g>
+<!-- proc~test_attributes&#45;&gt;h5ltset_attribute_string_f -->
+<g id="proc~~test_attributes~~CallsGraph_edge10" class="edge">
+<title>proc~test_attributes&#45;&gt;h5ltset_attribute_string_f</title>
+<path fill="none" stroke="#000000" d="M51.7848,-335.6317C65.849,-321.5316 90.661,-298.6724 116,-285 119.4722,-283.1265 123.1355,-281.3948 126.8894,-279.7987"/>
+<polygon fill="#000000" stroke="#000000" points="128.3063,-283.0028 136.3494,-276.1065 125.7612,-276.4819 128.3063,-283.0028"/>
+</g>
+<!-- h5fclose_f -->
+<g id="proc~~test_attributes~~CallsGraph_node13" class="node">
+<title>h5fclose_f</title>
+<polygon fill="#777777" stroke="#777777" points="215,-234 154,-234 154,-210 215,-210 215,-234"/>
+<text text-anchor="middle" x="184.5" y="-219.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">h5fclose_f</text>
+</g>
+<!-- proc~test_attributes&#45;&gt;h5fclose_f -->
+<g id="proc~~test_attributes~~CallsGraph_edge12" class="edge">
+<title>proc~test_attributes&#45;&gt;h5fclose_f</title>
+<path fill="none" stroke="#000000" d="M45.4493,-335.9658C55.9412,-314.1462 81.0403,-268.004 116,-243 124.3467,-237.0302 134.4278,-232.7272 144.2586,-229.6366"/>
+<polygon fill="#000000" stroke="#000000" points="145.2433,-232.9956 153.9323,-226.9334 143.3593,-226.2539 145.2433,-232.9956"/>
+</g>
+<!-- h5close_f -->
+<g id="proc~~test_attributes~~CallsGraph_node14" class="node">
+<title>h5close_f</title>
+<polygon fill="#777777" stroke="#777777" points="213.5,-192 155.5,-192 155.5,-168 213.5,-168 213.5,-192"/>
+<text text-anchor="middle" x="184.5" y="-177.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">h5close_f</text>
+</g>
+<!-- proc~test_attributes&#45;&gt;h5close_f -->
+<g id="proc~~test_attributes~~CallsGraph_edge4" class="edge">
+<title>proc~test_attributes&#45;&gt;h5close_f</title>
+<path fill="none" stroke="#000000" d="M42.8778,-335.6841C50.0992,-307.5217 71.6677,-238.005 116,-201 124.3943,-193.9931 135.1007,-189.3222 145.5415,-186.2091"/>
+<polygon fill="#000000" stroke="#000000" points="146.5736,-189.5577 155.3862,-183.6764 144.8295,-182.7784 146.5736,-189.5577"/>
+</g>
+<!-- h5ltget_attribute_int_f -->
+<g id="proc~~test_attributes~~CallsGraph_node15" class="node">
+<title>h5ltget_attribute_int_f</title>
+<polygon fill="#777777" stroke="#777777" points="242.5,-150 126.5,-150 126.5,-126 242.5,-126 242.5,-150"/>
+<text text-anchor="middle" x="184.5" y="-135.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">h5ltget_attribute_int_f</text>
+</g>
+<!-- proc~test_attributes&#45;&gt;h5ltget_attribute_int_f -->
+<g id="proc~~test_attributes~~CallsGraph_edge14" class="edge">
+<title>proc~test_attributes&#45;&gt;h5ltget_attribute_int_f</title>
+<path fill="none" stroke="#000000" d="M41.2999,-335.8065C45.5124,-302.4305 61.8249,-208.7626 116,-159 117.3226,-157.7852 118.7138,-156.6406 120.1618,-155.5621"/>
+<polygon fill="#000000" stroke="#000000" points="122.3416,-158.3286 128.9921,-150.081 118.6499,-152.3812 122.3416,-158.3286"/>
+</g>
+<!-- h5ltget_attribute_ndims_f -->
+<g id="proc~~test_attributes~~CallsGraph_node16" class="node">
+<title>h5ltget_attribute_ndims_f</title>
+<polygon fill="#777777" stroke="#777777" points="251,-108 118,-108 118,-84 251,-84 251,-108"/>
+<text text-anchor="middle" x="184.5" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">h5ltget_attribute_ndims_f</text>
+</g>
+<!-- proc~test_attributes&#45;&gt;h5ltget_attribute_ndims_f -->
+<g id="proc~~test_attributes~~CallsGraph_edge15" class="edge">
+<title>proc~test_attributes&#45;&gt;h5ltget_attribute_ndims_f</title>
+<path fill="none" stroke="#000000" d="M42.476,-335.7821C51.4233,-292.7464 83.2809,-149.0591 116,-117 117.2522,-115.7731 118.5741,-114.6176 119.9543,-113.5294"/>
+<polygon fill="#000000" stroke="#000000" points="121.9567,-116.402 128.4163,-108.0041 118.1296,-110.5408 121.9567,-116.402"/>
+</g>
+<!-- h5ltget_attribute_string_f -->
+<g id="proc~~test_attributes~~CallsGraph_node17" class="node">
+<title>h5ltget_attribute_string_f</title>
+<polygon fill="#777777" stroke="#777777" points="250,-66 119,-66 119,-42 250,-42 250,-66"/>
+<text text-anchor="middle" x="184.5" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">h5ltget_attribute_string_f</text>
+</g>
+<!-- proc~test_attributes&#45;&gt;h5ltget_attribute_string_f -->
+<g id="proc~~test_attributes~~CallsGraph_edge11" class="edge">
+<title>proc~test_attributes&#45;&gt;h5ltget_attribute_string_f</title>
+<path fill="none" stroke="#000000" d="M41.7954,-335.9479C49.1183,-288.3094 78.1469,-113.8487 116,-75 117.0851,-73.8864 118.2275,-72.8315 119.4191,-71.8321"/>
+<polygon fill="#000000" stroke="#000000" points="121.6412,-74.5523 127.9103,-66.0113 117.6832,-68.7787 121.6412,-74.5523"/>
+</g>
+<!-- h5fcreate_f -->
+<g id="proc~~test_attributes~~CallsGraph_node18" class="node">
+<title>h5fcreate_f</title>
+<polygon fill="#777777" stroke="#777777" points="218,-24 151,-24 151,0 218,0 218,-24"/>
+<text text-anchor="middle" x="184.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">h5fcreate_f</text>
+</g>
+<!-- proc~test_attributes&#45;&gt;h5fcreate_f -->
+<g id="proc~~test_attributes~~CallsGraph_edge13" class="edge">
+<title>proc~test_attributes&#45;&gt;h5fcreate_f</title>
+<path fill="none" stroke="#000000" d="M41.3201,-335.9238C47.2482,-283.8003 73.0129,-78.6802 116,-33 122.7063,-25.8736 131.7599,-21.144 141.0848,-18.011"/>
+<polygon fill="#000000" stroke="#000000" points="142.1255,-21.3544 150.8135,-15.2907 140.2404,-14.613 142.1255,-21.3544"/>
+</g>
+</g>
+</svg>
+</div><div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div><div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog"><div class="modal-dialog modal-lg" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="-graph-help-label">Graph Key</h4></div><div class="modal-body">
+    <p>Nodes of different colours represent the following: </p>
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="560pt" height="32pt"
+ viewBox="0.00 0.00 559.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-28 555.5,-28 555.5,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="64,-24 0,-24 0,0 64,0 64,-24"/>
+<text text-anchor="middle" x="32" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="136,-24 82,-24 82,0 136,0 136,-24"/>
+<text text-anchor="middle" x="109" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="209.5,-24 154.5,-24 154.5,0 209.5,0 209.5,-24"/>
+<text text-anchor="middle" x="182" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">Interface</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node4" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="364,-24 228,-24 228,0 364,0 364,-24"/>
+<text text-anchor="middle" x="296" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="436,-24 382,-24 382,0 436,0 436,-24"/>
+<text text-anchor="middle" x="409" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="#000000" points="551.5,-24 454.5,-24 454.5,0 551.5,0 551.5,-24"/>
+<text text-anchor="middle" x="503" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#000000">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+    
+    <p>Solid arrows point from a procedure to one which it calls. Dashed 
+    arrows point from an interface to procedures which implement that interface.
+    This could include the module procedures in a generic interface or the
+    implementation in a submodule of an interface in a parent module.
+    </p>
+    </div></div></div></div>
+      </div>
+    </div>
+     
+     
+    <div class="panel panel-default">
+      <div class="panel-heading">
+  <h3 class="panel-title">Called by</h3>
+      </div>
+      <div class="panel-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: proc~~test_attributes~~CalledByGraph Pages: 1 -->
+<svg id="proctest_attributesCalledByGraph" width="178pt" height="32pt"
+ viewBox="0.00 0.00 178.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~test_attributes~~CalledByGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>proc~~test_attributes~~CalledByGraph</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-28 174,-28 174,4 -4,4"/>
+<!-- proc~test_attributes -->
+<g id="proc~~test_attributes~~CalledByGraph_node1" class="node">
+<title>proc~test_attributes</title>
+<polygon fill="none" stroke="#000000" points="170,-24 90,-24 90,0 170,0 170,-24"/>
+<text text-anchor="middle" x="130" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#000000">test_attributes</text>
+</g>
+<!-- program~lite_test -->
+<g id="proc~~test_attributes~~CalledByGraph_node2" class="node">
+<title>program~lite_test</title>
+<g id="a_proc~~test_attributes~~CalledByGraph_node2"><a xlink:href=".././program/lite_test.html" xlink:title="lite_test">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="54,-24 0,-24 0,0 54,0 54,-24"/>
+<text text-anchor="middle" x="27" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">lite_test</text>
+</a>
+</g>
+</g>
+<!-- program~lite_test&#45;&gt;proc~test_attributes -->
+<g id="proc~~test_attributes~~CalledByGraph_edge1" class="edge">
+<title>program~lite_test&#45;&gt;proc~test_attributes</title>
+<path fill="none" stroke="#000000" d="M54.062,-12C61.9446,-12 70.8216,-12 79.6533,-12"/>
+<polygon fill="#000000" stroke="#000000" points="79.9379,-15.5001 89.9379,-12 79.9379,-8.5001 79.9379,-15.5001"/>
+</g>
+</g>
+</svg>
+</div><div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div><div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog"><div class="modal-dialog modal-lg" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="-graph-help-label">Graph Key</h4></div><div class="modal-body">
+    <p>Nodes of different colours represent the following: </p>
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="560pt" height="32pt"
+ viewBox="0.00 0.00 559.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-28 555.5,-28 555.5,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="64,-24 0,-24 0,0 64,0 64,-24"/>
+<text text-anchor="middle" x="32" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="136,-24 82,-24 82,0 136,0 136,-24"/>
+<text text-anchor="middle" x="109" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="209.5,-24 154.5,-24 154.5,0 209.5,0 209.5,-24"/>
+<text text-anchor="middle" x="182" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">Interface</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node4" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="364,-24 228,-24 228,0 364,0 364,-24"/>
+<text text-anchor="middle" x="296" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="436,-24 382,-24 382,0 436,0 436,-24"/>
+<text text-anchor="middle" x="409" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="#000000" points="551.5,-24 454.5,-24 454.5,0 551.5,0 551.5,-24"/>
+<text text-anchor="middle" x="503" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#000000">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+    
+    <p>Solid arrows point from a procedure to one which it calls. Dashed 
+    arrows point from an interface to procedures which implement that interface.
+    This could include the module procedures in a generic interface or the
+    implementation in a submodule of an interface in a parent module.
+    </p>
+    </div></div></div></div>
+      </div>
+    </div>
+     
+    <br>
+
+    <section class="visible-xs visible-sm hidden-md">
+      
+<h3>Contents</h3>
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<em>None</em>
+
+
+    </section>
+    <br class="visible-xs visible-sm hidden-md">
+
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+
+    
+    
+    
+    
+    </div>
+  </div>
+
+
+    <hr>    
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+      <div class="row">
+        <div class="col-xs-6 col-md-4"><p>&copy; 2018 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
+                                          </p></div>
+        <div class="col-xs-6 col-md-4 col-md-push-4">
+          <p class="text-right">
+            Documentation generated by 
+            <a href="https://github.com/cmacmackin/ford">FORD</a>
+            
+          </p>
+        </div>
+        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> Fortran 2018 examples was developed by Michael Hirsch Ph.D.</p></div>
+      </div>
+      <br>
+      </div> <!-- /container -->    
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+-->
+    <script src="../js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../js/ie10-viewport-bug-workaround.js"></script>
+
+    <!-- MathJax JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+        jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+      });
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+    <script src="../tipuesearch/tipuesearch_content.js"></script>
+    <script src="../tipuesearch/tipuesearch_set.js"></script>
+    <script src="../tipuesearch/tipuesearch.js"></script>
+    
+    
+  </body>
+</html>

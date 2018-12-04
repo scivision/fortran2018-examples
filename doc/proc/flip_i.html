@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   
+   <meta name="description" content="Fortran 2008 / 2018 examples">
+    
+    <meta name="author" content="Michael Hirsch Ph.D." >
+    <link rel="icon" href="../favicon.png">
+
+    <title>flip_i &ndash; Fortran 2018 examples</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/local.css" rel="stylesheet">
+    
+    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+    
+    
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <script src="../js/jquery-2.1.3.min.js"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
+
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../index.html">Fortran 2018 examples </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+        
+            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
+              <a href="#" class="dropdown-toggle"
+              data-toggle="dropdown" role="button"
+              aria-haspopup="true"
+     aria-expanded="false">Contents <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          
+              
+            <li><a href="../lists/files.html">Source Files</a></li>
+        
+        
+        
+            <li><a href="../lists/modules.html">Modules</a></li>
+        
+            
+                                
+            <li><a href="../lists/procedures.html">Procedures</a></li>
+        
+               
+            <li><a href="../lists/types.html">Derived Types</a></li>
+        
+        
+            <li><a href="../lists/programs.html">Programs</a></li>
+        
+            </ul>
+            </li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
+
+                             
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/programs.html">Programs</a></li>
+
+          </ul>
+        
+        <form action="../search.html" class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+        </div>
+<!--
+        <button type="submit" class="btn btn-default">Submit</button>
+-->
+        </form>
+        
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+    
+  
+  <div class="row">
+    <h1>flip_i
+      <small>Function</small>
+    
+    </h1>
+    
+<div class="row">
+  <div class="col-lg-12">
+<div class="well well-sm">
+  <ul class="list-inline" style="margin-bottom:0px;display:inline">
+     
+     
+     
+     
+    
+    
+     <li><i class="fa fa-list-ol"></i>
+       <a data-toggle="tooltip"
+    data-placement="bottom" data-html="true"
+    title=" 2.1% of total for procedures.">18 statements</a>
+     </li> 
+     
+     
+     
+    <li><i class="fa fa-code"></i><a href="../src/rot90.f90"> Source File</a></li>
+     
+     
+  </ul>
+  <ol class="breadcrumb in-well text-right">
+  
+    
+     <li><a href='../sourcefile/rot90.f90.html'>rot90.f90</a></li>
+    
+     <li><a href='../module/rotflip.html'>rotflip</a></li>
+    
+  
+     <li class="active">flip_i</li>
+  </ol>
+</div>
+</div>
+</div>
+<script>
+  $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+    
+<div id="sidebar">
+  
+<h3>Contents</h3>
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<em>None</em>
+
+
+</div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>
+public function flip_i(A, d) result(flip)
+    
+    
+   
+</h2>
+    
+  
+
+
+    
+
+    <h3>Arguments</h3>
+    
+      
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+<th>Intent</th><th>Optional</th>
+<th>Attributes</th><th></th><th>Name</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-a~4"></span>integer,</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>A</strong>(:,:)</td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-d"></span>integer,</td>
+  <td>intent(in)</td>
+  <td></td>
+  
+  <td></td><td>::</td>
+  <td><strong>d</strong></td><td></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+    
+    
+    
+    
+    
+    
+    
+   <h3>Return Value <small><span class="anchor" id="variable-flip"></span>integer
+  </small></h3>
+    
+    
+    
+    <br>
+    
+    
+     
+    <div class="panel panel-default">
+      <div class="panel-heading">
+  <h3 class="panel-title">Called by</h3>
+      </div>
+      <div class="panel-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: proc~~flip_i~~CalledByGraph Pages: 1 -->
+<svg id="procflip_iCalledByGraph" width="436pt" height="242pt"
+ viewBox="0.00 0.00 436.00 242.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~flip_i~~CalledByGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 238)">
+<title>proc~~flip_i~~CalledByGraph</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-238 432,-238 432,4 -4,4"/>
+<!-- proc~flip_i -->
+<g id="proc~~flip_i~~CalledByGraph_node1" class="node">
+<title>proc~flip_i</title>
+<polygon fill="none" stroke="#000000" points="428,-129 374,-129 374,-105 428,-105 428,-129"/>
+<text text-anchor="middle" x="401" y="-114.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#000000">flip_i</text>
+</g>
+<!-- interface~flip -->
+<g id="proc~~flip_i~~CalledByGraph_node2" class="node">
+<title>interface~flip</title>
+<g id="a_proc~~flip_i~~CalledByGraph_node2"><a xlink:href=".././interface/flip.html" xlink:title="flip">
+<polygon fill="#a7506f" stroke="#a7506f" points="338,-129 284,-129 284,-105 338,-105 338,-129"/>
+<text text-anchor="middle" x="311" y="-114.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">flip</text>
+</a>
+</g>
+</g>
+<!-- interface~flip&#45;&gt;proc~flip_i -->
+<g id="proc~~flip_i~~CalledByGraph_edge1" class="edge">
+<title>interface~flip&#45;&gt;proc~flip_i</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M338.003,-117C346.0277,-117 354.9665,-117 363.5309,-117"/>
+<polygon fill="#000000" stroke="#000000" points="363.7051,-120.5001 373.705,-117 363.705,-113.5001 363.7051,-120.5001"/>
+</g>
+<!-- proc~rot90_i -->
+<g id="proc~~flip_i~~CalledByGraph_node3" class="node">
+<title>proc~rot90_i</title>
+<g id="a_proc~~flip_i~~CalledByGraph_node3"><a xlink:href=".././proc/rot90_i.html" xlink:title="rot90_i">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="248,-150 194,-150 194,-126 248,-126 248,-150"/>
+<text text-anchor="middle" x="221" y="-135.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">rot90_i</text>
+</a>
+</g>
+</g>
+<!-- proc~rot90_i&#45;&gt;interface~flip -->
+<g id="proc~~flip_i~~CalledByGraph_edge2" class="edge">
+<title>proc~rot90_i&#45;&gt;interface~flip</title>
+<path fill="none" stroke="#000000" d="M248.003,-131.6993C256.1158,-129.8063 265.1631,-127.6953 273.8131,-125.677"/>
+<polygon fill="#000000" stroke="#000000" points="274.7619,-129.0496 283.705,-123.3688 273.1713,-122.2328 274.7619,-129.0496"/>
+</g>
+<!-- proc~rot90_r -->
+<g id="proc~~flip_i~~CalledByGraph_node4" class="node">
+<title>proc~rot90_r</title>
+<g id="a_proc~~flip_i~~CalledByGraph_node4"><a xlink:href=".././proc/rot90_r.html" xlink:title="rot90_r">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="248,-108 194,-108 194,-84 248,-84 248,-108"/>
+<text text-anchor="middle" x="221" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">rot90_r</text>
+</a>
+</g>
+</g>
+<!-- proc~rot90_r&#45;&gt;interface~flip -->
+<g id="proc~~flip_i~~CalledByGraph_edge3" class="edge">
+<title>proc~rot90_r&#45;&gt;interface~flip</title>
+<path fill="none" stroke="#000000" d="M248.003,-102.3007C256.1158,-104.1937 265.1631,-106.3047 273.8131,-108.323"/>
+<polygon fill="#000000" stroke="#000000" points="273.1713,-111.7672 283.705,-110.6312 274.7619,-104.9504 273.1713,-111.7672"/>
+</g>
+<!-- proc~flipud_i -->
+<g id="proc~~flip_i~~CalledByGraph_node5" class="node">
+<title>proc~flipud_i</title>
+<g id="a_proc~~flip_i~~CalledByGraph_node5"><a xlink:href=".././proc/flipud_i.html" xlink:title="flipud_i">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="248,-66 194,-66 194,-42 248,-42 248,-66"/>
+<text text-anchor="middle" x="221" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">flipud_i</text>
+</a>
+</g>
+</g>
+<!-- proc~flipud_i&#45;&gt;interface~flip -->
+<g id="proc~~flip_i~~CalledByGraph_edge4" class="edge">
+<title>proc~flipud_i&#45;&gt;interface~flip</title>
+<path fill="none" stroke="#000000" d="M238.3529,-66.147C251.6752,-75.4726 270.2758,-88.4931 285.3202,-99.0241"/>
+<polygon fill="#000000" stroke="#000000" points="283.5009,-102.0229 293.7004,-104.8903 287.5152,-96.2883 283.5009,-102.0229"/>
+</g>
+<!-- proc~fliplr_r -->
+<g id="proc~~flip_i~~CalledByGraph_node6" class="node">
+<title>proc~fliplr_r</title>
+<g id="a_proc~~flip_i~~CalledByGraph_node6"><a xlink:href=".././proc/fliplr_r.html" xlink:title="fliplr_r">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="248,-234 194,-234 194,-210 248,-210 248,-234"/>
+<text text-anchor="middle" x="221" y="-219.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">fliplr_r</text>
+</a>
+</g>
+</g>
+<!-- proc~fliplr_r&#45;&gt;interface~flip -->
+<g id="proc~~flip_i~~CalledByGraph_edge5" class="edge">
+<title>proc~fliplr_r&#45;&gt;interface~flip</title>
+<path fill="none" stroke="#000000" d="M238.1498,-209.7755C241.5565,-207.0451 245.0033,-204.0497 248,-201 267.3662,-181.291 285.8858,-155.4724 297.7717,-137.6888"/>
+<polygon fill="#000000" stroke="#000000" points="300.7855,-139.4758 303.352,-129.1965 294.9354,-135.6317 300.7855,-139.4758"/>
+</g>
+<!-- proc~flipud_r -->
+<g id="proc~~flip_i~~CalledByGraph_node7" class="node">
+<title>proc~flipud_r</title>
+<g id="a_proc~~flip_i~~CalledByGraph_node7"><a xlink:href=".././proc/flipud_r.html" xlink:title="flipud_r">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="248,-24 194,-24 194,0 248,0 248,-24"/>
+<text text-anchor="middle" x="221" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">flipud_r</text>
+</a>
+</g>
+</g>
+<!-- proc~flipud_r&#45;&gt;interface~flip -->
+<g id="proc~~flip_i~~CalledByGraph_edge6" class="edge">
+<title>proc~flipud_r&#45;&gt;interface~flip</title>
+<path fill="none" stroke="#000000" d="M238.1498,-24.2245C241.5565,-26.9549 245.0033,-29.9503 248,-33 267.3662,-52.709 285.8858,-78.5276 297.7717,-96.3112"/>
+<polygon fill="#000000" stroke="#000000" points="294.9354,-98.3683 303.352,-104.8035 300.7855,-94.5242 294.9354,-98.3683"/>
+</g>
+<!-- proc~fliplr_i -->
+<g id="proc~~flip_i~~CalledByGraph_node8" class="node">
+<title>proc~fliplr_i</title>
+<g id="a_proc~~flip_i~~CalledByGraph_node8"><a xlink:href=".././proc/fliplr_i.html" xlink:title="fliplr_i">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="248,-192 194,-192 194,-168 248,-168 248,-192"/>
+<text text-anchor="middle" x="221" y="-177.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">fliplr_i</text>
+</a>
+</g>
+</g>
+<!-- proc~fliplr_i&#45;&gt;interface~flip -->
+<g id="proc~~flip_i~~CalledByGraph_edge7" class="edge">
+<title>proc~fliplr_i&#45;&gt;interface~flip</title>
+<path fill="none" stroke="#000000" d="M238.3529,-167.853C251.6752,-158.5274 270.2758,-145.5069 285.3202,-134.9759"/>
+<polygon fill="#000000" stroke="#000000" points="287.5152,-137.7117 293.7004,-129.1097 283.5009,-131.9771 287.5152,-137.7117"/>
+</g>
+<!-- interface~fliplr -->
+<g id="proc~~flip_i~~CalledByGraph_node9" class="node">
+<title>interface~fliplr</title>
+<g id="a_proc~~flip_i~~CalledByGraph_node9"><a xlink:href=".././interface/fliplr.html" xlink:title="fliplr">
+<polygon fill="#a7506f" stroke="#a7506f" points="158,-192 104,-192 104,-168 158,-168 158,-192"/>
+<text text-anchor="middle" x="131" y="-177.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">fliplr</text>
+</a>
+</g>
+</g>
+<!-- interface~fliplr&#45;&gt;proc~fliplr_r -->
+<g id="proc~~flip_i~~CalledByGraph_edge11" class="edge">
+<title>interface~fliplr&#45;&gt;proc~fliplr_r</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M157.0317,-192.1481C165.987,-196.3273 176.1691,-201.0789 185.7348,-205.5429"/>
+<polygon fill="#000000" stroke="#000000" points="184.4848,-208.8219 195.0268,-209.8792 187.4451,-202.4786 184.4848,-208.8219"/>
+</g>
+<!-- interface~fliplr&#45;&gt;proc~fliplr_i -->
+<g id="proc~~flip_i~~CalledByGraph_edge13" class="edge">
+<title>interface~fliplr&#45;&gt;proc~fliplr_i</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M158.003,-180C166.0277,-180 174.9665,-180 183.5309,-180"/>
+<polygon fill="#000000" stroke="#000000" points="183.7051,-183.5001 193.705,-180 183.705,-176.5001 183.7051,-183.5001"/>
+</g>
+<!-- interface~rot90 -->
+<g id="proc~~flip_i~~CalledByGraph_node10" class="node">
+<title>interface~rot90</title>
+<g id="a_proc~~flip_i~~CalledByGraph_node10"><a xlink:href=".././interface/rot90.html" xlink:title="rot90">
+<polygon fill="#a7506f" stroke="#a7506f" points="158,-129 104,-129 104,-105 158,-105 158,-129"/>
+<text text-anchor="middle" x="131" y="-114.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">rot90</text>
+</a>
+</g>
+</g>
+<!-- interface~rot90&#45;&gt;proc~rot90_i -->
+<g id="proc~~flip_i~~CalledByGraph_edge8" class="edge">
+<title>interface~rot90&#45;&gt;proc~rot90_i</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M158.003,-123.3007C166.1158,-125.1937 175.1631,-127.3047 183.8131,-129.323"/>
+<polygon fill="#000000" stroke="#000000" points="183.1713,-132.7672 193.705,-131.6312 184.7619,-125.9504 183.1713,-132.7672"/>
+</g>
+<!-- interface~rot90&#45;&gt;proc~rot90_r -->
+<g id="proc~~flip_i~~CalledByGraph_edge9" class="edge">
+<title>interface~rot90&#45;&gt;proc~rot90_r</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M158.003,-110.6993C166.1158,-108.8063 175.1631,-106.6953 183.8131,-104.677"/>
+<polygon fill="#000000" stroke="#000000" points="184.7619,-108.0496 193.705,-102.3688 183.1713,-101.2328 184.7619,-108.0496"/>
+</g>
+<!-- interface~flipud -->
+<g id="proc~~flip_i~~CalledByGraph_node11" class="node">
+<title>interface~flipud</title>
+<g id="a_proc~~flip_i~~CalledByGraph_node11"><a xlink:href=".././interface/flipud.html" xlink:title="flipud">
+<polygon fill="#a7506f" stroke="#a7506f" points="158,-66 104,-66 104,-42 158,-42 158,-66"/>
+<text text-anchor="middle" x="131" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">flipud</text>
+</a>
+</g>
+</g>
+<!-- interface~flipud&#45;&gt;proc~flipud_i -->
+<g id="proc~~flip_i~~CalledByGraph_edge10" class="edge">
+<title>interface~flipud&#45;&gt;proc~flipud_i</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M158.003,-54C166.0277,-54 174.9665,-54 183.5309,-54"/>
+<polygon fill="#000000" stroke="#000000" points="183.7051,-57.5001 193.705,-54 183.705,-50.5001 183.7051,-57.5001"/>
+</g>
+<!-- interface~flipud&#45;&gt;proc~flipud_r -->
+<g id="proc~~flip_i~~CalledByGraph_edge12" class="edge">
+<title>interface~flipud&#45;&gt;proc~flipud_r</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M157.0317,-41.8519C165.987,-37.6727 176.1691,-32.9211 185.7348,-28.4571"/>
+<polygon fill="#000000" stroke="#000000" points="187.4451,-31.5214 195.0268,-24.1208 184.4848,-25.1781 187.4451,-31.5214"/>
+</g>
+<!-- program~rot90_array -->
+<g id="proc~~flip_i~~CalledByGraph_node12" class="node">
+<title>program~rot90_array</title>
+<g id="a_proc~~flip_i~~CalledByGraph_node12"><a xlink:href=".././program/rot90_array.html" xlink:title="rot90_array">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="68,-129 0,-129 0,-105 68,-105 68,-129"/>
+<text text-anchor="middle" x="34" y="-114.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">rot90_array</text>
+</a>
+</g>
+</g>
+<!-- program~rot90_array&#45;&gt;interface~fliplr -->
+<g id="proc~~flip_i~~CalledByGraph_edge14" class="edge">
+<title>program~rot90_array&#45;&gt;interface~fliplr</title>
+<path fill="none" stroke="#000000" d="M52.7026,-129.147C67.1952,-138.5598 87.4836,-151.7368 103.7765,-162.3187"/>
+<polygon fill="#000000" stroke="#000000" points="102.062,-165.3786 112.3548,-167.8903 105.8748,-159.5081 102.062,-165.3786"/>
+</g>
+<!-- program~rot90_array&#45;&gt;interface~rot90 -->
+<g id="proc~~flip_i~~CalledByGraph_edge15" class="edge">
+<title>program~rot90_array&#45;&gt;interface~rot90</title>
+<path fill="none" stroke="#000000" d="M68.1986,-117C76.4058,-117 85.2132,-117 93.559,-117"/>
+<polygon fill="#000000" stroke="#000000" points="93.8037,-120.5001 103.8037,-117 93.8037,-113.5001 93.8037,-120.5001"/>
+</g>
+<!-- program~rot90_array&#45;&gt;interface~flipud -->
+<g id="proc~~flip_i~~CalledByGraph_edge16" class="edge">
+<title>program~rot90_array&#45;&gt;interface~flipud</title>
+<path fill="none" stroke="#000000" d="M52.7026,-104.853C67.1952,-95.4402 87.4836,-82.2632 103.7765,-71.6813"/>
+<polygon fill="#000000" stroke="#000000" points="105.8748,-74.4919 112.3548,-66.1097 102.062,-68.6214 105.8748,-74.4919"/>
+</g>
+</g>
+</svg>
+</div><div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div><div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog"><div class="modal-dialog modal-lg" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="-graph-help-label">Graph Key</h4></div><div class="modal-body">
+    <p>Nodes of different colours represent the following: </p>
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="560pt" height="32pt"
+ viewBox="0.00 0.00 559.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-28 555.5,-28 555.5,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="64,-24 0,-24 0,0 64,0 64,-24"/>
+<text text-anchor="middle" x="32" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="136,-24 82,-24 82,0 136,0 136,-24"/>
+<text text-anchor="middle" x="109" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="209.5,-24 154.5,-24 154.5,0 209.5,0 209.5,-24"/>
+<text text-anchor="middle" x="182" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">Interface</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node4" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="364,-24 228,-24 228,0 364,0 364,-24"/>
+<text text-anchor="middle" x="296" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="436,-24 382,-24 382,0 436,0 436,-24"/>
+<text text-anchor="middle" x="409" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="#000000" points="551.5,-24 454.5,-24 454.5,0 551.5,0 551.5,-24"/>
+<text text-anchor="middle" x="503" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#000000">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+    
+    <p>Solid arrows point from a procedure to one which it calls. Dashed 
+    arrows point from an interface to procedures which implement that interface.
+    This could include the module procedures in a generic interface or the
+    implementation in a submodule of an interface in a parent module.
+    </p>
+    </div></div></div></div>
+      </div>
+    </div>
+     
+    <br>
+
+    <section class="visible-xs visible-sm hidden-md">
+      
+<h3>Contents</h3>
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<em>None</em>
+
+
+    </section>
+    <br class="visible-xs visible-sm hidden-md">
+
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+    
+    
+
+
+    
+    
+    
+    
+    </div>
+  </div>
+
+
+    <hr>    
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+      <div class="row">
+        <div class="col-xs-6 col-md-4"><p>&copy; 2018 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
+                                          </p></div>
+        <div class="col-xs-6 col-md-4 col-md-push-4">
+          <p class="text-right">
+            Documentation generated by 
+            <a href="https://github.com/cmacmackin/ford">FORD</a>
+            
+          </p>
+        </div>
+        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> Fortran 2018 examples was developed by Michael Hirsch Ph.D.</p></div>
+      </div>
+      <br>
+      </div> <!-- /container -->    
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+-->
+    <script src="../js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../js/ie10-viewport-bug-workaround.js"></script>
+
+    <!-- MathJax JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+        jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+      });
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+    <script src="../tipuesearch/tipuesearch_content.js"></script>
+    <script src="../tipuesearch/tipuesearch_set.js"></script>
+    <script src="../tipuesearch/tipuesearch.js"></script>
+    
+    
+  </body>
+</html>

@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+   
+   <meta name="description" content="Fortran 2008 / 2018 examples">
+    
+    <meta name="author" content="Michael Hirsch Ph.D." >
+    <link rel="icon" href="../favicon.png">
+
+    <title>RWDSET_FORTRAN2003 &ndash; Fortran 2018 examples</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/local.css" rel="stylesheet">
+    
+    <link  href="../tipuesearch/tipuesearch.css" rel="stylesheet">
+    
+    
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <script src="../js/jquery-2.1.3.min.js"></script>
+    <script src="../js/svg-pan-zoom.min.js"></script>
+
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../index.html">Fortran 2018 examples </a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+        
+            <li class="dropdown hidden-xs visible-sm visible-md hidden-lg">
+              <a href="#" class="dropdown-toggle"
+              data-toggle="dropdown" role="button"
+              aria-haspopup="true"
+     aria-expanded="false">Contents <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          
+              
+            <li><a href="../lists/files.html">Source Files</a></li>
+        
+        
+        
+            <li><a href="../lists/modules.html">Modules</a></li>
+        
+            
+                                
+            <li><a href="../lists/procedures.html">Procedures</a></li>
+        
+               
+            <li><a href="../lists/types.html">Derived Types</a></li>
+        
+        
+            <li><a href="../lists/programs.html">Programs</a></li>
+        
+            </ul>
+            </li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/files.html">Source Files</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/modules.html">Modules</a></li>
+
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/procedures.html">Procedures</a></li>
+
+                             
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/types.html">Derived Types</a></li>
+
+
+<li class="visible-xs hidden-sm visible-lg"><a href="../lists/programs.html">Programs</a></li>
+
+          </ul>
+        
+        <form action="../search.html" class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+        </div>
+<!--
+        <button type="submit" class="btn btn-default">Submit</button>
+-->
+        </form>
+        
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container">
+    
+  
+  <div class="row">
+    <h1>RWDSET_FORTRAN2003
+    <small>Program</small>
+    
+    </h1>
+    
+<div class="row">
+  <div class="col-lg-12">
+<div class="well well-sm">
+  <ul class="list-inline" style="margin-bottom:0px;display:inline">
+     
+     
+     
+     
+    
+    
+     <li><i class="fa fa-list-ol"></i>
+       <a data-toggle="tooltip"
+    data-placement="bottom" data-html="true"
+    title=" 8.5% of total for programs.">95 statements</a>
+     </li> 
+     
+     
+     
+    <li><i class="fa fa-code"></i><a href="../src/hdf5demo.f90"> Source File</a></li>
+     
+     
+  </ul>
+  <ol class="breadcrumb in-well text-right">
+  
+    
+     <li><a href='../sourcefile/hdf5demo.f90.html'>hdf5demo.f90</a></li>
+    
+  
+     <li class="active">RWDSET_FORTRAN2003</li>
+  </ol>
+</div>
+</div>
+</div>
+<script>
+  $(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+  })
+</script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+    
+<div id="sidebar">
+  
+<h3>Contents</h3>
+ 
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#vars-0">Variables</a></h3></div>
+  <div id="vars-0" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-i1">i1</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-i4">i4</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-i8">i8</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-i16">i16</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-sp~2">sp</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-dp~2">dp</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-filename~4">filename</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-dsetname1">dsetname1</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-dsetname2">dsetname2</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-dsetname4">dsetname4</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-dsetname8">dsetname8</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-dsetnamer4">dsetnamer4</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-dsetnamer8">dsetnamer8</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-file_id">file_id</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-dset_id1">dset_id1</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-dset_id4">dset_id4</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-dset_id8">dset_id8</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-dset_id16">dset_id16</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-dset_idr4">dset_idr4</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-dset_idr8">dset_idr8</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-error">error</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-i~9">i</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-dset_data_i1">dset_data_i1</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-dset_data_i4">dset_data_i4</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-data_out_i4">data_out_i4</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-dset_data_i8">dset_data_i8</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-data_out_i8">data_out_i8</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-dset_data_i16">dset_data_i16</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-data_out_i16">data_out_i16</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-data_out_i8a">data_out_i8a</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-dset_data_r7">dset_data_r7</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-data_out_r7">data_out_r7</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-dset_data_r15">dset_data_r15</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-data_out_r15">data_out_r15</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-data_dims~2">data_dims</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-dspace_id~2">dspace_id</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-f_ptr~2">f_ptr</a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    
+  
+    <div class="panel panel-default">
+      <div class="panel-heading">
+  <h3 class="panel-title">Uses</h3>
+      </div>
+      <ul class="list-group">
+      
+      <li class="list-group-item">
+  <ul class="list-inline">
+    
+    <li><a href="http://fortranwiki.org/fortran/show/ISO_C_BINDING">iso_c_binding</a></li>
+    
+    <li>HDF5</li>
+    
+  </ul>
+      </li>
+      
+      
+      
+      <li class="list-group-item">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: program~~rwdset_fortran2003~~UsesGraph Pages: 1 -->
+<svg id="programrwdset_fortran2003UsesGraph" width="261pt" height="74pt"
+ viewBox="0.00 0.00 261.00 74.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="program~~rwdset_fortran2003~~UsesGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 70)">
+<title>program~~rwdset_fortran2003~~UsesGraph</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-70 257,-70 257,4 -4,4"/>
+<!-- program~rwdset_fortran2003 -->
+<g id="program~~rwdset_fortran2003~~UsesGraph_node1" class="node">
+<title>program~rwdset_fortran2003</title>
+<polygon fill="none" stroke="#000000" points="253,-45 114,-45 114,-21 253,-21 253,-45"/>
+<text text-anchor="middle" x="183.5" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#000000">RWDSET_FORTRAN2003</text>
+</g>
+<!-- iso_c_binding -->
+<g id="program~~rwdset_fortran2003~~UsesGraph_node2" class="node">
+<title>iso_c_binding</title>
+<g id="a_program~~rwdset_fortran2003~~UsesGraph_node2"><a xlink:href="http://fortranwiki.org/fortran/show/ISO_C_BINDING" xlink:title="iso_c_binding">
+<polygon fill="#337ab7" stroke="#337ab7" points="78,-66 0,-66 0,-42 78,-42 78,-66"/>
+<text text-anchor="middle" x="39" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">iso_c_binding</text>
+</a>
+</g>
+</g>
+<!-- program~rwdset_fortran2003&#45;&gt;iso_c_binding -->
+<g id="program~~rwdset_fortran2003~~UsesGraph_edge1" class="edge">
+<title>program~rwdset_fortran2003&#45;&gt;iso_c_binding</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M113.7896,-43.1309C105.1629,-44.3846 96.4879,-45.6454 88.2574,-46.8415"/>
+<polygon fill="#000000" stroke="#000000" points="87.4994,-43.4148 78.1068,-48.3167 88.5062,-50.342 87.4994,-43.4148"/>
+</g>
+<!-- HDF5 -->
+<g id="program~~rwdset_fortran2003~~UsesGraph_node3" class="node">
+<title>HDF5</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="66,-24 12,-24 12,0 66,0 66,-24"/>
+<text text-anchor="middle" x="39" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">HDF5</text>
+</g>
+<!-- program~rwdset_fortran2003&#45;&gt;HDF5 -->
+<g id="program~~rwdset_fortran2003~~UsesGraph_edge2" class="edge">
+<title>program~rwdset_fortran2003&#45;&gt;HDF5</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M113.7896,-22.8691C100.8598,-20.99 87.8213,-19.0951 76.3335,-17.4256"/>
+<polygon fill="#000000" stroke="#000000" points="76.6663,-13.9373 66.2669,-15.9627 75.6595,-20.8645 76.6663,-13.9373"/>
+</g>
+</g>
+</svg>
+</div><div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div><div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog"><div class="modal-dialog modal-lg" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="-graph-help-label">Graph Key</h4></div><div class="modal-body">
+    <p>Nodes of different colours represent the following: </p>
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="490pt" height="32pt"
+ viewBox="0.00 0.00 489.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-28 485.5,-28 485.5,4 -4,4"/>
+<!-- Module -->
+<g id="node1" class="node">
+<title>Module</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="54,-24 0,-24 0,0 54,0 54,-24"/>
+<text text-anchor="middle" x="27" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">Module</text>
+</g>
+<!-- Submodule -->
+<g id="node2" class="node">
+<title>Submodule</title>
+<polygon fill="#5bc0de" stroke="#5bc0de" points="139.5,-24 72.5,-24 72.5,0 139.5,0 139.5,-24"/>
+<text text-anchor="middle" x="106" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">Submodule</text>
+</g>
+<!-- Subroutine -->
+<g id="node3" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="222,-24 158,-24 158,0 222,0 222,-24"/>
+<text text-anchor="middle" x="190" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node4" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="294,-24 240,-24 240,0 294,0 294,-24"/>
+<text text-anchor="middle" x="267" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">Function</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="366,-24 312,-24 312,0 366,0 366,-24"/>
+<text text-anchor="middle" x="339" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="#000000" points="481.5,-24 384.5,-24 384.5,0 481.5,0 481.5,-24"/>
+<text text-anchor="middle" x="433" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#000000">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+    
+    <p>Solid arrows point from a submodule to the (sub)module which it is
+    descended from. Dashed arrows point from a module or program unit to 
+    modules which it uses.
+    </p>
+    </div></div></div></div>
+      </li>
+      
+      </ul>
+    </div>
+    
+
+    
+    
+    <br>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+  <h3 class="panel-title">Calls</h3>
+      </div>
+      <div class="panel-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: program~~rwdset_fortran2003~~CallsGraph Pages: 1 -->
+<svg id="programrwdset_fortran2003CallsGraph" width="289pt" height="326pt"
+ viewBox="0.00 0.00 289.00 326.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="program~~rwdset_fortran2003~~CallsGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 322)">
+<title>program~~rwdset_fortran2003~~CallsGraph</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-322 285,-322 285,4 -4,4"/>
+<!-- program~rwdset_fortran2003 -->
+<g id="program~~rwdset_fortran2003~~CallsGraph_node1" class="node">
+<title>program~rwdset_fortran2003</title>
+<polygon fill="none" stroke="#000000" points="139,-171 0,-171 0,-147 139,-147 139,-171"/>
+<text text-anchor="middle" x="69.5" y="-156.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#000000">RWDSET_FORTRAN2003</text>
+</g>
+<!-- h5screate_simple_f -->
+<g id="program~~rwdset_fortran2003~~CallsGraph_node2" class="node">
+<title>h5screate_simple_f</title>
+<polygon fill="#777777" stroke="#777777" points="281,-318 175,-318 175,-294 281,-294 281,-318"/>
+<text text-anchor="middle" x="228" y="-303.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">h5screate_simple_f</text>
+</g>
+<!-- program~rwdset_fortran2003&#45;&gt;h5screate_simple_f -->
+<g id="program~~rwdset_fortran2003~~CallsGraph_edge1" class="edge">
+<title>program~rwdset_fortran2003&#45;&gt;h5screate_simple_f</title>
+<path fill="none" stroke="#000000" d="M76.6987,-171.1243C91.908,-195.794 129.667,-252.2595 175,-285 177.0711,-286.4958 179.2634,-287.9034 181.5313,-289.2255"/>
+<polygon fill="#000000" stroke="#000000" points="180.0691,-292.4098 190.5578,-293.906 183.2914,-286.1956 180.0691,-292.4098"/>
+</g>
+<!-- h5open_f -->
+<g id="program~~rwdset_fortran2003~~CallsGraph_node3" class="node">
+<title>h5open_f</title>
+<polygon fill="#777777" stroke="#777777" points="257,-276 199,-276 199,-252 257,-252 257,-276"/>
+<text text-anchor="middle" x="228" y="-261.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">h5open_f</text>
+</g>
+<!-- program~rwdset_fortran2003&#45;&gt;h5open_f -->
+<g id="program~~rwdset_fortran2003~~CallsGraph_edge2" class="edge">
+<title>program~rwdset_fortran2003&#45;&gt;h5open_f</title>
+<path fill="none" stroke="#000000" d="M82.2309,-171.231C101.1881,-188.9338 138.5295,-221.8835 175,-243 179.5409,-245.6292 184.4741,-248.0701 189.4423,-250.2878"/>
+<polygon fill="#000000" stroke="#000000" points="188.3698,-253.6332 198.9456,-254.2686 191.0743,-247.1767 188.3698,-253.6332"/>
+</g>
+<!-- h5kind_to_type -->
+<g id="program~~rwdset_fortran2003~~CallsGraph_node4" class="node">
+<title>h5kind_to_type</title>
+<polygon fill="#777777" stroke="#777777" points="270.5,-234 185.5,-234 185.5,-210 270.5,-210 270.5,-234"/>
+<text text-anchor="middle" x="228" y="-219.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">h5kind_to_type</text>
+</g>
+<!-- program~rwdset_fortran2003&#45;&gt;h5kind_to_type -->
+<g id="program~~rwdset_fortran2003~~CallsGraph_edge3" class="edge">
+<title>program~rwdset_fortran2003&#45;&gt;h5kind_to_type</title>
+<path fill="none" stroke="#000000" d="M99.965,-171.1434C121.0341,-179.5378 149.7158,-190.958 175,-201 179.2011,-202.6685 183.5901,-204.4101 187.9663,-206.1456"/>
+<polygon fill="#000000" stroke="#000000" points="186.8619,-209.4727 197.448,-209.9043 189.4416,-202.9654 186.8619,-209.4727"/>
+</g>
+<!-- h5fopen_f -->
+<g id="program~~rwdset_fortran2003~~CallsGraph_node5" class="node">
+<title>h5fopen_f</title>
+<polygon fill="#777777" stroke="#777777" points="258.5,-192 197.5,-192 197.5,-168 258.5,-168 258.5,-192"/>
+<text text-anchor="middle" x="228" y="-177.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">h5fopen_f</text>
+</g>
+<!-- program~rwdset_fortran2003&#45;&gt;h5fopen_f -->
+<g id="program~~rwdset_fortran2003~~CallsGraph_edge4" class="edge">
+<title>program~rwdset_fortran2003&#45;&gt;h5fopen_f</title>
+<path fill="none" stroke="#000000" d="M139.0204,-168.2109C155.4857,-170.3924 172.5198,-172.6493 187.2217,-174.5972"/>
+<polygon fill="#000000" stroke="#000000" points="187.1002,-178.1116 197.4733,-175.9555 188.0197,-171.1723 187.1002,-178.1116"/>
+</g>
+<!-- h5dclose_f -->
+<g id="program~~rwdset_fortran2003~~CallsGraph_node6" class="node">
+<title>h5dclose_f</title>
+<polygon fill="#777777" stroke="#777777" points="260,-150 196,-150 196,-126 260,-126 260,-150"/>
+<text text-anchor="middle" x="228" y="-135.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">h5dclose_f</text>
+</g>
+<!-- program~rwdset_fortran2003&#45;&gt;h5dclose_f -->
+<g id="program~~rwdset_fortran2003~~CallsGraph_edge5" class="edge">
+<title>program~rwdset_fortran2003&#45;&gt;h5dclose_f</title>
+<path fill="none" stroke="#000000" d="M139.0204,-149.7891C154.9502,-147.6785 171.4125,-145.4974 185.7801,-143.5938"/>
+<polygon fill="#000000" stroke="#000000" points="186.3805,-147.0449 195.8342,-142.2617 185.4611,-140.1056 186.3805,-147.0449"/>
+</g>
+<!-- h5fclose_f -->
+<g id="program~~rwdset_fortran2003~~CallsGraph_node7" class="node">
+<title>h5fclose_f</title>
+<polygon fill="#777777" stroke="#777777" points="258.5,-108 197.5,-108 197.5,-84 258.5,-84 258.5,-108"/>
+<text text-anchor="middle" x="228" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">h5fclose_f</text>
+</g>
+<!-- program~rwdset_fortran2003&#45;&gt;h5fclose_f -->
+<g id="program~~rwdset_fortran2003~~CallsGraph_edge6" class="edge">
+<title>program~rwdset_fortran2003&#45;&gt;h5fclose_f</title>
+<path fill="none" stroke="#000000" d="M99.965,-146.8566C121.0341,-138.4622 149.7158,-127.042 175,-117 179.2011,-115.3315 183.5901,-113.5899 187.9663,-111.8544"/>
+<polygon fill="#000000" stroke="#000000" points="189.4416,-115.0346 197.448,-108.0957 186.8619,-108.5273 189.4416,-115.0346"/>
+</g>
+<!-- h5fcreate_f -->
+<g id="program~~rwdset_fortran2003~~CallsGraph_node8" class="node">
+<title>h5fcreate_f</title>
+<polygon fill="#777777" stroke="#777777" points="261.5,-66 194.5,-66 194.5,-42 261.5,-42 261.5,-66"/>
+<text text-anchor="middle" x="228" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">h5fcreate_f</text>
+</g>
+<!-- program~rwdset_fortran2003&#45;&gt;h5fcreate_f -->
+<g id="program~~rwdset_fortran2003~~CallsGraph_edge7" class="edge">
+<title>program~rwdset_fortran2003&#45;&gt;h5fcreate_f</title>
+<path fill="none" stroke="#000000" d="M82.2309,-146.769C101.1881,-129.0662 138.5295,-96.1165 175,-75 178.2307,-73.1294 181.6599,-71.3542 185.1591,-69.6868"/>
+<polygon fill="#000000" stroke="#000000" points="186.782,-72.7956 194.4965,-65.5336 183.9371,-66.3998 186.782,-72.7956"/>
+</g>
+<!-- h5close_f -->
+<g id="program~~rwdset_fortran2003~~CallsGraph_node9" class="node">
+<title>h5close_f</title>
+<polygon fill="#777777" stroke="#777777" points="257,-24 199,-24 199,0 257,0 257,-24"/>
+<text text-anchor="middle" x="228" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">h5close_f</text>
+</g>
+<!-- program~rwdset_fortran2003&#45;&gt;h5close_f -->
+<g id="program~~rwdset_fortran2003~~CallsGraph_edge8" class="edge">
+<title>program~rwdset_fortran2003&#45;&gt;h5close_f</title>
+<path fill="none" stroke="#000000" d="M76.6987,-146.8757C91.908,-122.206 129.667,-65.7405 175,-33 179.4631,-29.7766 184.489,-26.9626 189.6223,-24.5321"/>
+<polygon fill="#000000" stroke="#000000" points="191.0663,-27.7213 198.88,-20.5661 188.3097,-21.2868 191.0663,-27.7213"/>
+</g>
+</g>
+</svg>
+</div><div><a type="button" class="graph-help" data-toggle="modal" href="#graph-help-text">Help</a></div><div class="modal fade" id="graph-help-text" tabindex="-1" role="dialog"><div class="modal-dialog modal-lg" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="-graph-help-label">Graph Key</h4></div><div class="modal-body">
+    <p>Nodes of different colours represent the following: </p>
+    <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="560pt" height="32pt"
+ viewBox="0.00 0.00 559.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-28 555.5,-28 555.5,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="64,-24 0,-24 0,0 64,0 64,-24"/>
+<text text-anchor="middle" x="32" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="136,-24 82,-24 82,0 136,0 136,-24"/>
+<text text-anchor="middle" x="109" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="209.5,-24 154.5,-24 154.5,0 209.5,0 209.5,-24"/>
+<text text-anchor="middle" x="182" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">Interface</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node4" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="364,-24 228,-24 228,0 364,0 364,-24"/>
+<text text-anchor="middle" x="296" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="436,-24 382,-24 382,0 436,0 436,-24"/>
+<text text-anchor="middle" x="409" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#ffffff">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="#000000" points="551.5,-24 454.5,-24 454.5,0 551.5,0 551.5,-24"/>
+<text text-anchor="middle" x="503" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="#000000">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+    
+    <p>Solid arrows point from a procedure to one which it calls. Dashed 
+    arrows point from an interface to procedures which implement that interface.
+    This could include the module procedures in a generic interface or the
+    implementation in a submodule of an interface in a parent module.
+    </p>
+    </div></div></div></div>
+      </div>
+    </div>
+     
+    <br>
+
+     <section class="visible-xs visible-sm hidden-md">
+       
+<h3>Contents</h3>
+ 
+
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading text-left"><h3 class="panel-title"><a data-toggle="collapse" href="#vars-1">Variables</a></h3></div>
+  <div id="vars-1" class="panel-collapse collapse">
+    <div class="list-group">
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-i1">i1</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-i4">i4</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-i8">i8</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-i16">i16</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-sp~2">sp</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-dp~2">dp</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-filename~4">filename</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-dsetname1">dsetname1</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-dsetname2">dsetname2</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-dsetname4">dsetname4</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-dsetname8">dsetname8</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-dsetnamer4">dsetnamer4</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-dsetnamer8">dsetnamer8</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-file_id">file_id</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-dset_id1">dset_id1</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-dset_id4">dset_id4</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-dset_id8">dset_id8</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-dset_id16">dset_id16</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-dset_idr4">dset_idr4</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-dset_idr8">dset_idr8</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-error">error</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-i~9">i</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-dset_data_i1">dset_data_i1</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-dset_data_i4">dset_data_i4</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-data_out_i4">data_out_i4</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-dset_data_i8">dset_data_i8</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-data_out_i8">data_out_i8</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-dset_data_i16">dset_data_i16</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-data_out_i16">data_out_i16</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-data_out_i8a">data_out_i8a</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-dset_data_r7">dset_data_r7</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-data_out_r7">data_out_r7</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-dset_data_r15">dset_data_r15</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-data_out_r15">data_out_r15</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-data_dims~2">data_dims</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-dspace_id~2">dspace_id</a>
+      
+      <a class="list-group-item" href="../program/rwdset_fortran2003.html#variable-f_ptr~2">f_ptr</a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     </section>
+     <br class="visible-xs visible-sm hidden-md">
+
+     
+
+    
+    <section>
+    <h2>Variables</h2>
+    
+<table class="table table-striped varlist">
+<thead><tr><th>Type</th>
+
+<th>Attributes</th><th></th><th>Name</th><th></th><th>Initial</th><th></th></thead>
+
+
+
+<tbody>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-i1"></span>integer,</td>
+  
+  
+  <td>parameter</td><td>::</td>
+  <td><strong>i1</strong></td><td> =</td><td>SELECTED_INT_KIND(2)</td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-i4"></span>integer,</td>
+  
+  
+  <td>parameter</td><td>::</td>
+  <td><strong>i4</strong></td><td> =</td><td>SELECTED_INT_KIND(4)</td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-i8"></span>integer,</td>
+  
+  
+  <td>parameter</td><td>::</td>
+  <td><strong>i8</strong></td><td> =</td><td>SELECTED_INT_KIND(9)</td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-i16"></span>integer,</td>
+  
+  
+  <td>parameter</td><td>::</td>
+  <td><strong>i16</strong></td><td> =</td><td>SELECTED_INT_KIND(18)</td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-sp~2"></span>integer,</td>
+  
+  
+  <td>parameter</td><td>::</td>
+  <td><strong>sp</strong></td><td> =</td><td>SELECTED_REAL_KIND(6, 37)</td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-dp~2"></span>integer,</td>
+  
+  
+  <td>parameter</td><td>::</td>
+  <td><strong>dp</strong></td><td> =</td><td>SELECTED_REAL_KIND(15, 307)</td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-filename~4"></span>character(len=*),</td>
+  
+  
+  <td>parameter</td><td>::</td>
+  <td><strong>filename</strong></td><td> =</td><td>"dsetf.h5"</td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-dsetname1"></span>character(len=*),</td>
+  
+  
+  <td>parameter</td><td>::</td>
+  <td><strong>dsetname1</strong></td><td> =</td><td>"dset1"</td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-dsetname2"></span>character(len=*),</td>
+  
+  
+  <td>parameter</td><td>::</td>
+  <td><strong>dsetname2</strong></td><td> =</td><td>"dset2"</td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-dsetname4"></span>character(len=*),</td>
+  
+  
+  <td>parameter</td><td>::</td>
+  <td><strong>dsetname4</strong></td><td> =</td><td>"dset4"</td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-dsetname8"></span>character(len=*),</td>
+  
+  
+  <td>parameter</td><td>::</td>
+  <td><strong>dsetname8</strong></td><td> =</td><td>"dset8"</td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-dsetnamer4"></span>character(len=*),</td>
+  
+  
+  <td>parameter</td><td>::</td>
+  <td><strong>dsetnamer4</strong></td><td> =</td><td>"dsetr4"</td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-dsetnamer8"></span>character(len=*),</td>
+  
+  
+  <td>parameter</td><td>::</td>
+  <td><strong>dsetnamer8</strong></td><td> =</td><td>"dsetr8"</td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-file_id"></span>integer(kind=HID_T)</td>
+  
+  
+  <td></td><td>::</td>
+  <td><strong>file_id</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-dset_id1"></span>integer(kind=HID_T)</td>
+  
+  
+  <td></td><td>::</td>
+  <td><strong>dset_id1</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-dset_id4"></span>integer(kind=HID_T)</td>
+  
+  
+  <td></td><td>::</td>
+  <td><strong>dset_id4</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-dset_id8"></span>integer(kind=HID_T)</td>
+  
+  
+  <td></td><td>::</td>
+  <td><strong>dset_id8</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-dset_id16"></span>integer(kind=HID_T)</td>
+  
+  
+  <td></td><td>::</td>
+  <td><strong>dset_id16</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-dset_idr4"></span>integer(kind=HID_T)</td>
+  
+  
+  <td></td><td>::</td>
+  <td><strong>dset_idr4</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-dset_idr8"></span>integer(kind=HID_T)</td>
+  
+  
+  <td></td><td>::</td>
+  <td><strong>dset_idr8</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-error"></span>integer</td>
+  
+  
+  <td></td><td>::</td>
+  <td><strong>error</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-i~9"></span>integer</td>
+  
+  
+  <td></td><td>::</td>
+  <td><strong>i</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-dset_data_i1"></span>integer(kind=i1),</td>
+  
+  
+  <td>DIMENSION(1:4), TARGET</td><td>::</td>
+  <td><strong>dset_data_i1</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-dset_data_i4"></span>integer(kind=i4),</td>
+  
+  
+  <td>DIMENSION(1:4), TARGET</td><td>::</td>
+  <td><strong>dset_data_i4</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-data_out_i4"></span>integer(kind=i4),</td>
+  
+  
+  <td>DIMENSION(1:4), TARGET</td><td>::</td>
+  <td><strong>data_out_i4</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-dset_data_i8"></span>integer(kind=i8),</td>
+  
+  
+  <td>DIMENSION(1:4), TARGET</td><td>::</td>
+  <td><strong>dset_data_i8</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-data_out_i8"></span>integer(kind=i8),</td>
+  
+  
+  <td>DIMENSION(1:4), TARGET</td><td>::</td>
+  <td><strong>data_out_i8</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-dset_data_i16"></span>integer(kind=i16),</td>
+  
+  
+  <td>DIMENSION(1:4), TARGET</td><td>::</td>
+  <td><strong>dset_data_i16</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-data_out_i16"></span>integer(kind=i16),</td>
+  
+  
+  <td>DIMENSION(1:4), TARGET</td><td>::</td>
+  <td><strong>data_out_i16</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-data_out_i8a"></span>integer(kind=i8),</td>
+  
+  
+  <td>DIMENSION(1:4), TARGET</td><td>::</td>
+  <td><strong>data_out_i8a</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-dset_data_r7"></span>real(kind=sp),</td>
+  
+  
+  <td>DIMENSION(1:4), TARGET</td><td>::</td>
+  <td><strong>dset_data_r7</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-data_out_r7"></span>real(kind=sp),</td>
+  
+  
+  <td>DIMENSION(1:4), TARGET</td><td>::</td>
+  <td><strong>data_out_r7</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-dset_data_r15"></span>real(kind=dp),</td>
+  
+  
+  <td>DIMENSION(1:4), TARGET</td><td>::</td>
+  <td><strong>dset_data_r15</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-data_out_r15"></span>real(kind=dp),</td>
+  
+  
+  <td>DIMENSION(1:4), TARGET</td><td>::</td>
+  <td><strong>data_out_r15</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-data_dims~2"></span>integer(kind=HSIZE_T),</td>
+  
+  
+  <td>DIMENSION(1:1)</td><td>::</td>
+  <td><strong>data_dims</strong></td><td> =</td><td>(/4/)</td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-dspace_id~2"></span>integer(kind=HID_T)</td>
+  
+  
+  <td></td><td>::</td>
+  <td><strong>dspace_id</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+  
+  
+  
+  
+<tr>
+  
+  <td><span class="anchor" id="variable-f_ptr~2"></span>type(C_PTR)</td>
+  
+  
+  <td></td><td>::</td>
+  <td><strong>f_ptr</strong></td><td></td><td></td><td></td>
+  
+</tr>
+
+</tbody>
+</table>
+
+    </section>
+    <br>
+    
+    
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+
+    
+    
+    
+    
+    </div>
+  </div>
+
+  
+    <hr>    
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+      <div class="row">
+        <div class="col-xs-6 col-md-4"><p>&copy; 2018 <a rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/80x15.png" /></a>
+                                          </p></div>
+        <div class="col-xs-6 col-md-4 col-md-push-4">
+          <p class="text-right">
+            Documentation generated by 
+            <a href="https://github.com/cmacmackin/ford">FORD</a>
+            
+          </p>
+        </div>
+        <div class="col-xs-12 col-md-4 col-md-pull-4"><p class="text-center"> Fortran 2018 examples was developed by Michael Hirsch Ph.D.</p></div>
+      </div>
+      <br>
+      </div> <!-- /container -->    
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+<!--
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+-->
+    <script src="../js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../js/ie10-viewport-bug-workaround.js"></script>
+
+    <!-- MathJax JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } },
+        jax: ['input/TeX','input/MathML','output/HTML-CSS'],
+        extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']
+      });
+    </script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    
+    <script src="../tipuesearch/tipuesearch_content.js"></script>
+    <script src="../tipuesearch/tipuesearch_set.js"></script>
+    <script src="../tipuesearch/tipuesearch.js"></script>
+    
+    
+  </body>
+</html>

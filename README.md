@@ -87,6 +87,7 @@ Thus, simple programs like `pragma.f90` work, but not the usual programs to prin
 
 ### Fortran standards
 
+* Fortran [77](http://www.fortran.com/F77_std/f77_std.html)
 * Fortran [2003](https://wg5-fortran.org/f2003.html)
 * Fortran [2008](https://wg5-fortran.org/f2008.html)
 * Fortran [2018](https://wg5-fortran.org/f2018.html)
