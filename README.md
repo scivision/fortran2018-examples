@@ -13,6 +13,8 @@ Modern Fortran benefits from modern CMake, which supports Fortran features such 
 * preprocessing
 * detecting specific support of Fortran features (so users know their compiler is too old)
 
+Based on widespread compiler support and beneficial features, most new and upgraded Fortran programs should use at least portions of the Fortran 2008 standard.
+
 ## Prereq
 
 * Linux / Windows: `apt install cmake gfortran libhdf5-dev libopenmpi-dev libnetcdff-dev libcoarrays-dev open-coarrays-bin`
@@ -66,16 +68,23 @@ Each directory has its own README and examples.
 * [contiguous/](./contiguous): Fortran 2008 `contiguous` array examples, including Fortran preprocessor with modern CMake.
 * [mpi/](./mpi): OpenMPI parallel computing examples
 * [openmp/](./openmp): OpenMP threading exmaples
+* [random/](./random): random numbers with modern Fortran
 
-* [io/](./io): modern Fortran File I/O examples
+---
+
+* [io/](./io): modern Fortran File I/O 
 * [netcdf/](./netcdf): Easy multidimensional file IO with NetCDF
 * [hdf5/](./hdf5): HDF5 is one of the most popular self-describing file formats for massively scalable files.
 
+---
 
+* [CMake/](./CMake): CMake work well with modern Fortran features
 * [cxx/](./cxx): standard Fortran C / C++ bindings
 * [real/](./real): Numerous examples dealing with practical features of real floating point numbers, including sentinel NaN and polymorphism.
 * [character/](./character): String handling is easy and performant in modern Fortran.
+* [standard/](./standard): advanced features that can be done with Fortran standard coding
 * [submodule/](./submodule): Fortran 2008 and CMake &ge; 3.12 enable even better large program architecture with `submodule`
+* [system/](./system): system (hardware) functionality accessible via Fortran
 
 ## Bugs 
 
@@ -87,7 +96,16 @@ Thus, simple programs like `pragma.f90` work, but not the usual programs to prin
 
 ### Fortran standards
 
+* Fortran I 1956 [manual](https://www.fortran.com/FortranForTheIBM704.pdf)
+* Fortran II 1958 [manual](http://archive.computerhistory.org/resources/text/Fortran/102653989.05.01.acc.pdf)
+
+* Fortran 66 [standard](http://web.eah-jena.de/~kleine/history/languages/ansi-x3dot9-1966-Fortran66.pdf)
+
+* Fortran 77 [langauge reference](http://physik.uibk.ac.at/hephy/praktikum/fortran_manual.pdf)
 * Fortran [77](http://www.fortran.com/F77_std/f77_std.html)
+
+* Fortran 90 / 95 [manual](http://www.chem.ucl.ac.uk/resources/history/people/vanmourik/images/Fortran%2095-manual.pdf)
+
 * Fortran [2003](https://wg5-fortran.org/f2003.html)
 * Fortran [2008](https://wg5-fortran.org/f2008.html)
 * Fortran [2018](https://wg5-fortran.org/f2018.html)
