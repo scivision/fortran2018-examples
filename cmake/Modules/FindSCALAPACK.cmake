@@ -1,10 +1,11 @@
 # https://github.com/certik/hermes/blob/master/hermes_common/cmake/FindSCALAPACK.cmake
 # ScaLAPACK and BLACS
 
+# USEMKL: Using MKL with GNU or other compiler
 
 unset(SCALAPACK_LIBRARY)
 
-if(CMAKE_Fortran_COMPILER_ID STREQUAL Intel)
+if(USEMKL OR CMAKE_Fortran_COMPILER_ID STREQUAL Intel)
 
   find_package(Threads QUIET REQUIRED)
 

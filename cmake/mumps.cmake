@@ -7,7 +7,7 @@
 # CentOS 6/7 EPEL: yum install mumps-devel
 # Ubuntu / Debian: apt install libmumps-dev
 
-if(LIB_DIR)
+if(LIB_DIR OR USEMKL OR CMAKE_Fortran_COMPILER_ID STREQUAL Intel)
   set(METIS_ROOT ${LIB_DIR}/metis)
   set(Scotch_ROOT ${LIB_DIR}/scotch)
 
