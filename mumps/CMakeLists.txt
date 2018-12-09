@@ -31,10 +31,30 @@ if(NOT hasParent)
   list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/../cmake/Modules/)
 endif()
 
+# --- Metis
+# Metis must work correctly for MUMPS to work...
+find_package(METIS REQUIRED)
+
+add_executable(metis1 metis.f90)
+target_compile_options(metis1 PRIVATE ${FFLAGS})
+target_link_libraries(metis1 PRIVATE ${METIS_LIBRARIES})
+target_include_directories(metis1 PRIVATE ${METIS_INCLUDE_DIRS})
+
+add_test(NAME Metis
+  COMMAND ${MPIEXEC_EXECUTABLE} ${MPIEXEC_NUMPROC_FLAG} ${MPIEXEC_MAX_NUMPROCS} ${CMAKE_CURRENT_BINARY_DIR}/metis1
+  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+  
+
 
 # --- Scalapack
 # Scalapack must work correctly for MUMPS to work...
 find_package(SCALAPACK REQUIRED)
+
+add_executable(blacs1 blacs.f)
+target_compile_options(blacs1 PRIVATE ${FFLAGS})
+target_link_libraries(blacs1 PRIVATE ${BLACS_LIBRARIES} MPI::MPI_Fortran)
+target_include_directories(blacs1 PRIVATE ${BLACS_INCLUDE_DIRS})
+
 
 add_executable(scalapack1 scalapack_example1.f)
 target_compile_options(scalapack1 PRIVATE ${FFLAGS})

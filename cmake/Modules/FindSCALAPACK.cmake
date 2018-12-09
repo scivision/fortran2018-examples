@@ -36,8 +36,7 @@ else()
   find_library(SCALAPACK_LIBRARY
                NAMES scalapack scalapack-pvm scalapack-mpi scalapack-mpich scalapack-mpich2 scalapack-openmpi scalapack-lam
                PATHS ${PC_SCALAPACK_LIBRARY_DIRS}
-               PATH_SUFFIXES lib
-               HINTS ${SCALAPACK_ROOT})
+               PATH_SUFFIXES lib)
 
   set(SCALAPACK_VERSION ${PC_SCALAPACK_VERSION})
 
@@ -48,21 +47,21 @@ else()
   find_library(BLACS_LIBRARY
               NAMES blacs blacs-pvm blacs-mpi blacs-openmpi blacsF77init-openmpi blacs-mpich blacs-mpich2 blacs-lam
               PATHS ${PC_BLACS_LIBRARY_DIRS}
-              PATH_SUFFIXES lib
-              HINTS ${BLACS_ROOT})
+              PATH_SUFFIXES lib)
 
   if(BLACS_LIBRARY)
     set(BLACS_FOUND TRUE)
+
     find_library(BLACS_OPENMPI 
                 NAMES blacs-openmpi 
                 PATHS ${PC_BLACS_LIBRARY_DIRS}
-                PATH_SUFFIXES lib
-                HINTS  ${BLACS_ROOT})
+                PATH_SUFFIXES lib)
+
     find_library(BLACS_CINIT 
                 NAMES blacsCinit-openmpi
                 PATHS ${PC_BLACS_LIBRARY_DIRS}
-                PATH_SUFFIXES lib
-                HINTS  ${BLACS_ROOT})
+                PATH_SUFFIXES lib)
+
     list(APPEND BLACS_LIBRARY ${BLACS_OPENMPI} ${BLACS_CINIT})
 
     set(BLACS_VERSION ${PC_BLACS_VERSION})
@@ -79,6 +78,7 @@ find_package_handle_standard_args(SCALAPACK
 if(SCALAPACK_FOUND)
   set(SCALAPACK_LIBRARIES ${SCALAPACK_LIBRARY})
   if(BLACS_FOUND)
+    set(BLACS_LIBRARIES ${BLACS_LIBRARY})
     list(APPEND SCALAPACK_LIBRARIES ${BLACS_LIBRARY})
   endif()
 endif()
