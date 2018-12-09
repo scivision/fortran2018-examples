@@ -2,10 +2,14 @@ cmake_minimum_required (VERSION 3.11)  # 3.9: MPI::MPI_Fortran, 3.11: Lapack
 project(test_gem Fortran C)  # need C for scalapack findThreads with MKL/Intel
 enable_testing()
 
-# GNU with MKL (first compile https://github.com/scivision/fortran-libs with MKL)
+# GNU with MKL
 # cmake -DLIB_DIR=~/flibs-gnu-mkl -DUSEMKL=yes ..
 
+# Intel compiler
+# FC=mpiifort CC=mpiicc cmake -DLIB_DIR=~/flibs-intel ..
+
 # LIB_DIR: top-level path for self-compiled libraries e.g. ~/flibs-gnu-MKL
+# (first compile https://github.com/scivision/fortran-libs with MKL)
 
 option(USEMKL "Use Intel MKL libraries")
 
