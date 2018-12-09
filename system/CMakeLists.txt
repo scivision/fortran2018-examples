@@ -16,6 +16,11 @@ target_compile_options(gitrev PRIVATE ${FFLAGS})
 target_link_libraries(gitrev ${FLIBS})
 add_test(NAME FortranGit COMMAND gitrev)
 
+add_executable(complog compiler_log.f90)
+target_compile_options(complog PRIVATE ${FFLAGS})
+target_link_libraries(complog ${FLIBS})
+add_test(NAME FortranCompiler COMMAND complog)
+
 add_executable(playsound play_sound.f90)
 target_compile_options(playsound PRIVATE ${FFLAGS})
 target_link_libraries(playsound ${FLIBS})
