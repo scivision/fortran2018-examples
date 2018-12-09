@@ -17,12 +17,18 @@ target_link_libraries(bitpat ${FLIBS})
 add_test(NAME FortranBitPattern COMMAND bitpat)
 
 
-add_executable(justwait replace_pause.f90)
+add_executable(justwait pause.f90)
 target_compile_options(justwait PRIVATE ${FFLAGS})
 target_link_libraries(justwait ${FLIBS})
 #add_test(NAME FortranWait COMMAND justwait)
 
-add_executable(sleepstd sleep_std.f90)
+add_executable(mkdirstd mkdir.f90)
+target_compile_options(mkdirstd PRIVATE ${FFLAGS})
+target_link_libraries(mkdirstd ${FLIBS})
+add_test(NAME mkdir COMMAND ./mkdirstd testdir/hello)
+set_tests_properties(mkdir PROPERTIES TIMEOUT 1)
+
+add_executable(sleepstd sleep.f90)
 target_compile_options(sleepstd PRIVATE ${FFLAGS})
 target_link_libraries(sleepstd ${FLIBS})
 add_test(NAME FortranMicrosleep COMMAND sleepstd)
