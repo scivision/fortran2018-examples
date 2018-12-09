@@ -16,23 +16,25 @@ end interface
 
 !> demo
 character(4096) :: buf
+integer(c_int) :: ret
 
 call get_command_argument(1,buf)
 
-call mkdir(trim(buf))
+ret = mkdir(trim(buf))
+
+print *, ret
 
 contains
 
-subroutine mkdir(path)
+function mkdir(path) result(ret)
 !! create a directory, with parents if needed
 !! N.B. inquire() does not work for directories by Fortran standard
 
 integer(c_int) :: ret
-integer :: i,i0
+integer :: i,i0, i1
 character(len=*), intent(in) :: path
-character(kind=c_char, len=:), allocatable :: buf  
+character(kind=c_char, len=:), allocatable :: buf
 !! must use allocatable buffer, not direct substring to C
-
 
 if (len(path) == 0) error stop 'must specify directory to create'
 
@@ -44,11 +46,17 @@ if (i==0) then
 endif
 
 !> parents
-i=-1; i0=1
+i=-1
+i0=1
 do while( i /= 0 )
+  i1 = i0
+
   i = index(path(i0:), '/')
-  if (i /= 0) then
+  
+  if(i /= 0) then
     i0 = i0+i
+  elseif(i0 == i1) then
+    return
   else
     i0 = len(path)+1
   endif
@@ -57,9 +65,9 @@ do while( i /= 0 )
   buf = path(1:i0-1)
 
   ret = mkdir_c(buf, int(o'755', c_int))
-
+  !print *,i,i0,ret,buf
   deallocate(buf)
 enddo
 
-end subroutine mkdir
+end function mkdir
 end program
