@@ -1,4 +1,7 @@
       PROGRAM EXAMPLE1
+      use iso_fortran_env, only: compiler_version, compiler_options,
+     &  dp=>real64
+      implicit none
 *
 *     Example Program solving Ax=b via ScaLAPACK routine PDGESV
 *
@@ -11,47 +14,39 @@
      $                   CSRC = 0, MXLLDA = 5, MXLLDB = 5, NRHS = 1,
      $                   NBRHS = 1, NOUT = 6, MXLOCR = 5, MXLOCC = 4,
      $                   MXRHSC = 1 )
-      DOUBLE PRECISION   ONE
-      PARAMETER          ( ONE = 1.0D+0 )
+      real(dp), parameter :: ONE = 1._dp
 *     ..
 *     .. Local Scalars ..
       INTEGER            ICTXT, INFO, MYCOL, MYROW, NPCOL, NPROW
-      DOUBLE PRECISION   ANORM, BNORM, EPS, RESID, XNORM
+      real(dp)   ANORM, BNORM, EPS, RESID, XNORM
 *     ..
 *     .. Local Arrays ..
       INTEGER            DESCA( DLEN_ ), DESCB( DLEN_ ),
      $                   IPIV( MXLOCR+NB )
-      DOUBLE PRECISION   A( MXLLDA, MXLOCC ), A0( MXLLDA, MXLOCC ),
+      real(dp)   A( MXLLDA, MXLOCC ), A0( MXLLDA, MXLOCC ),
      $                   B( MXLLDB, MXRHSC ), B0( MXLLDB, MXRHSC ),
      $                   WORK( MXLOCR )
-*     ..
+
 *     .. External Functions ..
-      DOUBLE PRECISION   PDLAMCH, PDLANGE
+      real(dp)   PDLAMCH, PDLANGE
       EXTERNAL           PDLAMCH, PDLANGE
-*     ..
+
 *     .. External Subroutines ..
       EXTERNAL           BLACS_EXIT, BLACS_GRIDEXIT, BLACS_GRIDINFO,
      $                   DESCINIT, MATINIT, PDGEMM, PDGESV, PDLACPY,
      $                   SL_INIT
-*     ..
-*     .. Intrinsic Functions ..
-      INTRINSIC          DBLE
-*     ..
-*     .. Data statements ..
+
       DATA               NPROW / 2 / , NPCOL / 3 /
-*     ..
-*     .. Executable Statements ..
-*
-*     INITIALIZE THE PROCESS GRID
-*
+
+!!    INITIALIZE THE PROCESS GRID
+
       CALL SL_INIT( ICTXT, NPROW, NPCOL )
       CALL BLACS_GRIDINFO( ICTXT, NPROW, NPCOL, MYROW, MYCOL )
-*
-*     If I'm not in the process grid, go to the end of the program
-*
-      IF( MYROW.EQ.-1 )
-     $   GO TO 10
-*
+
+!!    If I'm not in the process grid, go to the end of the program
+
+      IF( MYROW.EQ.-1 )  GO TO 10
+
 *     DISTRIBUTE THE MATRIX ON THE PROCESS GRID
 *     Initialize the array descriptors for the matrices A and B
 *
@@ -90,7 +85,7 @@
       CALL PDGEMM( 'N', 'N', N, NRHS, N, ONE, A0, 1, 1, DESCA, B, 1, 1,
      $             DESCB, -ONE, B0, 1, 1, DESCB )
       XNORM = PDLANGE( 'I', N, NRHS, B0, 1, 1, DESCB, WORK )
-      RESID = XNORM / ( ANORM*BNORM*EPS*DBLE( N ) )
+      RESID = XNORM / ( ANORM*BNORM*EPS*real( N, dp ) )
 *
       IF( MYROW.EQ.0 .AND. MYCOL.EQ.0 ) THEN
          IF( RESID.LT.10.0D+0 ) THEN
@@ -125,8 +120,10 @@
      $ 'According to the normalized residual the solution is incorrect.'
      $       )
  9993 FORMAT( / '||A*x - b|| / ( ||x||*||A||*eps*N ) = ', 1P, E16.8 )
-      STOP
-      END
+
+      END program
+
+
       SUBROUTINE MATINIT( AA, DESCA, B, DESCB )
 *
 *     MATINIT generates and distributes matrices A and B (depicted in
