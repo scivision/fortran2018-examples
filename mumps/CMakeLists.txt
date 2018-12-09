@@ -27,7 +27,20 @@ if(NOT hasParent)
   list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/../cmake/Modules/)
 endif()
 
-#------------
+
+# --- Scalapack
+# Scalapack must work correctly for MUMPS to work...
+find_package(SCALAPACK REQUIRED)
+
+add_executable(scalapack1 scalapack_example1.f)
+target_compile_options(scalapack1 PRIVATE ${FFLAGS})
+target_link_libraries(scalapack1 PRIVATE ${SCALAPACK_LIBRARIES} MPI::MPI_Fortran)
+# note: this test needs at least 6 MPI processes, even if you're on a very small computer it's OK.
+add_test(NAME Scalapack
+  COMMAND ${MPIEXEC_EXECUTABLE} ${MPIEXEC_NUMPROC_FLAG} 6 ${CMAKE_CURRENT_BINARY_DIR}/scalapack1
+  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+  
+# --- MUMPS
 
 include(${PROJECT_SOURCE_DIR}/../cmake/mumps.cmake)
 
@@ -37,6 +50,7 @@ endif()
 find_package(MPI REQUIRED COMPONENTS Fortran)
 
 add_executable(testmumps test_mumps.f90)
+target_compile_options(testmumps PRIVATE ${FFLAGS})
 target_include_directories(testmumps PRIVATE ${MUMPS_INCLUDE_DIRS})
 target_link_libraries(testmumps PRIVATE
                      ${MUMPS_LIBRARIES}
