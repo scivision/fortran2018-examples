@@ -9,3 +9,4 @@ add_test(NAME BoundsFail COMMAND badbounds)
 
 add_executable(nanmaxmin  maxmin_nan.f90)
 
+add_executable(typecast typecast.f90)
