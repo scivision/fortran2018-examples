@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.3)
-project(mpidemo Fortran C)
+project(mpidemo Fortran)
 enable_testing()
 
 if(CMAKE_VERSION VERSION_GREATER_EQUAL 3.12)
@@ -11,11 +11,15 @@ if(NOT hasParent)
   include(../cmake/compilers.cmake)
 endif()
 
-find_package(MPI COMPONENTS Fortran)
+if(NOT hasParent)
+  find_package(MPI REQUIRED COMPONENTS Fortran)
+else()
+  find_package(MPI COMPONENTS Fortran)
+endif()
+
 if(NOT MPI_Fortran_FOUND)
   return()
 endif()
-
 include(mpi.cmake)
 
 add_executable(mpivers mpivers.f90)
@@ -44,4 +48,5 @@ add_test(NAME MPIpass
 # make VERBOSE=1
 #
 #/usr/bin/f95  -I/usr/lib/openmpi/include -I/usr/lib/openmpi/lib  -Wl,-rpath,/usr/lib/openmpi/lib /usr/lib/openmpi/lib/libmpi_usempif08.so /usr/lib/openmpi/lib/libmpi_usempi_ignore_tkr.so /usr/lib/openmpi/lib/libmpi_mpifh.so /usr/lib/openmpi/lib/libmpi.so
+
 
