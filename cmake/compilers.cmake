@@ -73,7 +73,7 @@ if(NOT f08contig)
 endif()  
                               
 if(CMAKE_Fortran_COMPILER_ID STREQUAL Intel)
-  set(FFLAGS -stand f18 -traceback -warn)
+  set(FFLAGS -stand f18 -implicitnone -traceback -warn)
   
   if(CMAKE_BUILD_TYPE STREQUAL Debug)
     list(APPEND FFLAGS -debug extended -check all)

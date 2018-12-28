@@ -7,9 +7,14 @@ if(NOT hasParent)
   include(../cmake/compilers.cmake)
 endif()
 
-if(NOT f08command)
+if(hasParent AND NOT f08command)
   return()
+elseif(NOT f08command)
+  message(FATAL_ERROR "Fortran 2008 execute_command_line necessary for these programs.")
 endif()
+
+add_library(osdet os_detect.f90)
+target_compile_options(osdet PRIVATE ${FFLAGS})
 
 add_executable(gitrev gitrev.f90)
 target_compile_options(gitrev PRIVATE ${FFLAGS})
@@ -24,3 +29,7 @@ add_test(NAME FortranCompiler COMMAND complog)
 add_executable(playsound play_sound.f90)
 target_compile_options(playsound PRIVATE ${FFLAGS})
 target_link_libraries(playsound ${FLIBS})
+
+add_executable(callpython call_python_script.f90)
+target_compile_options(callpython PRIVATE ${FFLAGS})
+target_link_libraries(callpython osdet ${FLIBS})
