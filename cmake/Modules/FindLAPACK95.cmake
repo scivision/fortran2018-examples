@@ -51,7 +51,11 @@ if(CMAKE_Fortran_COMPILER_ID STREQUAL Intel)
 
 elseif(USEMKL)  # MKL with non-Intel compiler
   set(BLA_F95 OFF)
-  find_package(LAPACK REQUIRED)
+  find_package(LAPACK)
+  if(NOT LAPACK_FOUND)
+    message(WARNING "Lapack is required for Lapack95")
+    return()
+  endif()
   
   find_path(LAPACK95_INCLUDE_DIR
             NAMES lapack95.mod
@@ -67,7 +71,11 @@ elseif(USEMKL)  # MKL with non-Intel compiler
 
 else() # Netlib
   set(BLA_F95 OFF)
-  find_package(LAPACK REQUIRED)
+  find_package(LAPACK)
+  if(NOT LAPACK_FOUND)
+    message(WARNING "Lapack is required for Lapack95")
+    return()
+  endif()
   
   find_path(LAPACK95_INCLUDE_DIR
             NAMES f95_lapack.mod
