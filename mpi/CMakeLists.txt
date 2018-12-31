@@ -17,7 +17,7 @@ else()
   find_package(MPI COMPONENTS Fortran)
 endif()
 
-if(NOT MPI_Fortran_FOUND)
+if(NOT hasMPI OR NOT MPI_Fortran_FOUND)
   return()
 endif()
 include(mpi.cmake)
