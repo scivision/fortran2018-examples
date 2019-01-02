@@ -1,4 +1,4 @@
-module demod
+module demo
 real, parameter :: pi = 4.*atan(1.)
 real :: tau
 
@@ -11,12 +11,12 @@ end interface
 
 contains 
 
-end module demod
+end module demo
 
 
 program sm
 
-use demod
+use demo
 
 call hello(pi, tau)
 
