@@ -9,7 +9,7 @@ Fortran 2018 began as the TS18508 extension, formerly known as Fortran 2015.
 
 Modern Fortran benefits from modern CMake, which supports Fortran features such as
 
-* submodule
+* [submodule](https://github.com/scivision/fortran-submodule)
 * preprocessing
 * detecting specific support of Fortran features (so users know their compiler is too old)
 
@@ -83,7 +83,7 @@ Each directory has its own README and examples.
 * [real/](./real): Numerous examples dealing with practical features of real floating point numbers, including sentinel NaN and polymorphism.
 * [character/](./character): String handling is easy and performant in modern Fortran.
 * [standard/](./standard): advanced features that can be done with Fortran standard coding
-* [submodule/](./submodule): Fortran 2008 and CMake &ge; 3.12 enable even better large program architecture with `submodule`
+* [submodule](https://github.com/scivision/fortran-submodule): Fortran 2008 and CMake &ge; 3.12 enable even better large program architecture with `submodule`
 * [system/](./system): system (hardware) functionality accessible via Fortran
 
 ## Bugs 

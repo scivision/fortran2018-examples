@@ -29,6 +29,5 @@ add_subdirectory(overloading)
 add_subdirectory(random)
 add_subdirectory(real)
 add_subdirectory(standard)
-add_subdirectory(submodule)
 add_subdirectory(system)
 
