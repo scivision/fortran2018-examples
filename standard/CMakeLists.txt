@@ -7,6 +7,10 @@ if(NOT hasParent)
   include(../cmake/compilers.cmake)
 endif()
 
+add_executable(block block.f90)
+target_compile_options(block PRIVATE ${FFLAGS})
+target_link_libraries(block ${FLIBS})
+
 add_executable(shortcircuit short_circuit.f90)
 target_compile_options(shortcircuit PRIVATE ${FFLAGS})
 target_link_libraries(shortcircuit ${FLIBS})
