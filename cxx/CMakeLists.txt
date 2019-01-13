@@ -1,14 +1,17 @@
 cmake_minimum_required(VERSION 3.3)
-project(C++linkexample CXX Fortran) 
+project(C++linkexample C CXX Fortran) 
 enable_testing()
 
-# This example demonstrates very basic linking of a user Fortran library called from C++ code.
-# it's useful for checking if your Intel compiler is setup correctly as GCC has no problem with this.
+# This example demonstrates very basic linking of
+# * Fortran call from C++
+# * C call from Fortran
 #
 # FC=ifort CC=icc CXX=icpc cmake ..
 # make
 
 # https://stackoverflow.com/tags/fortran-iso-c-binding/info
+
+set(CMAKE_CXX_STANDARD_REQUIRED yes)
 
 get_directory_property(hasParent PARENT_DIRECTORY)
 if(NOT hasParent)
@@ -16,22 +19,29 @@ if(NOT hasParent)
 endif()
 
 if(CMAKE_Fortran_COMPILER_ID STREQUAL Intel)
-  #  message(STATUS "be sure you have done '. compilervars.sh'")
   list(APPEND FLIBS svml imf intlc ifcoremt ifport)
 endif()
 
-add_library(mylibrary SHARED fun.f90)
-target_link_libraries(mylibrary PRIVATE ${FLIBS})
-target_compile_options(mylibrary PRIVATE ${FFLAGS})
+add_library(call_f c_call_f.f90)
+target_link_libraries(call_f PRIVATE ${FLIBS})
+target_compile_options(call_f PRIVATE ${FFLAGS})
 
-add_executable(cxxfort cxxfort.cpp)
-target_link_libraries(cxxfort PRIVATE mylibrary)
-target_compile_options(cxxfort PRIVATE ${CFLAGS})
-set_property(TARGET cxxfort PROPERTY CXX_STANDARD 11)
-add_test(NAME C++Fortran COMMAND cxxfort)
+add_executable(cxx_call_f cxx_call_f.cxx)
+target_link_libraries(cxx_call_f PRIVATE call_f)
+target_compile_options(cxx_call_f PRIVATE ${CFLAGS})
+set_property(TARGET cxx_call_f PROPERTY CXX_STANDARD 11)
+add_test(NAME CXX2Fortran COMMAND cxx_call_f)
+
+add_library(call_c call_c.c)
+target_compile_options(call_c PRIVATE ${CFLAGS})
+
+add_executable(f_call_c f_call_c.f90)
+target_link_libraries(f_call_c PRIVATE call_c ${FLIBS})
+target_compile_options(f_call_c PRIVATE ${FFLAGS})
+add_test(NAME Fortran2C COMMAND f_call_c)
 
 # manually:
 #
 # source compilervars.sh
 # ifort -c -nofor-main fun.f90  -lsvml -limf -lintlc -lifcoremt -lifport 
-# icpc cxxfort.cpp fun.o -lsvml -limf -lintlc -lifcoremt -lifport -pthread
+# icpc cxx_call_f.cpp fun.o -lsvml -limf -lintlc -lifcoremt -lifport -pthread
