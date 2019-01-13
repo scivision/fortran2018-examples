@@ -35,16 +35,16 @@ if(NOT f08kind)
   set(f08kind 0)
 endif()
 
-check_fortran_source_compiles("program a; error stop; end" 
+check_fortran_source_compiles("error stop; end" 
   f08errorstop SRC_EXT f90)
   
-check_fortran_source_compiles("program a; character :: b; error stop b; end" 
+check_fortran_source_compiles("character :: b; error stop b; end" 
   f18errorstop SRC_EXT f90)
   
-check_fortran_source_compiles("program a; call execute_command_line(''); end" 
+check_fortran_source_compiles("call execute_command_line(''); end" 
   f08command SRC_EXT f90)
                               
-check_fortran_source_compiles("program a; call random_init(); end" 
+check_fortran_source_compiles("call random_init(); end" 
   f18random SRC_EXT f90)
 
 check_fortran_source_compiles("
@@ -66,7 +66,7 @@ end"
   f08submod SRC_EXT f90)
 
 # ifort-19 yes, Flang yes, PGI yes, NAG yes, gfortran-8 no
-check_fortran_source_compiles("program c; print*,is_contiguous([0,0]); end" 
+check_fortran_source_compiles("print*,is_contiguous([0,0]); end" 
   f08contig SRC_EXT f90)
 if(NOT f08contig)
   set(f08contig 0)
