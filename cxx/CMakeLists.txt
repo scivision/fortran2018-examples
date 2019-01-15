@@ -25,7 +25,9 @@ endif()
 add_library(call_f c_call_f.f90)
 target_link_libraries(call_f PRIVATE ${FLIBS})
 target_compile_options(call_f PRIVATE ${FFLAGS})
+set_property(TARGET call_f PROPERTY POSITION_INDEPENDENT_CODE ON)
 
+# LD_LIBRARY_PATH=~/.local/pgi/linux86-64/2018/lib:$LD_LIBRARY_PATH ./cxx_call_f 
 add_executable(cxx_call_f cxx_call_f.cxx)
 target_link_libraries(cxx_call_f PRIVATE call_f)
 target_compile_options(cxx_call_f PRIVATE ${CFLAGS})
