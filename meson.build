@@ -11,4 +11,5 @@ endif
 
 
 subdir('cxx')
+subdir('mpi')
 subdir('system')
