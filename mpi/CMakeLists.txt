@@ -1,3 +1,6 @@
+# If you have a custom location for mpif90 / mpifort and CMake doesn't find it, try
+#   FC=mpif90 cmake ..
+
 cmake_minimum_required(VERSION 3.3)
 project(mpidemo Fortran)
 enable_testing()
@@ -9,17 +12,15 @@ endif()
 get_directory_property(hasParent PARENT_DIRECTORY)
 if(NOT hasParent)
   include(../cmake/compilers.cmake)
-endif()
 
-if(NOT hasParent)
   find_package(MPI REQUIRED COMPONENTS Fortran)
 else()
   find_package(MPI COMPONENTS Fortran)
+  if(NOT hasMPI OR NOT MPI_Fortran_FOUND)
+    return()
+  endif()
 endif()
 
-if(NOT hasMPI OR NOT MPI_Fortran_FOUND)
-  return()
-endif()
 include(mpi.cmake)
 
 add_executable(mpivers mpivers.f90)
