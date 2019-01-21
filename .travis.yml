@@ -32,12 +32,12 @@ matrix:
   - os: windows
     language: sh
     install: 
-    - cd bin
+    - cd build
     - cmake -G "MinGW Makefiles" -DCMAKE_SH="CMAKE_SH-NOTFOUND" ..
     - cmake --build .
 
 install:
-- cd bin
+- cd build
 - cmake ..
 - cmake --build .
 

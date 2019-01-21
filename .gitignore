@@ -1,3 +1,4 @@
+build/
 *.s
 kind.txt
 cmake_install.cmake

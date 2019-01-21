@@ -1,14 +1,28 @@
-osdet = static_library('osdet', ['os_detect.f90'])
+osdet = library('osdet', ['os_detect.f90'])
 
-callpy = executable('call_python', ['call_python_script.f90'], link_with : osdet)
-test('Call Python', callpy)
+fc = meson.get_compiler('fortran')
+code = '''call execute_command_line(' '); error stop; end'''
+f2008 = fc.compiles(code)
 
-gitrev = executable('gitrev', 'gitrev.f90')
-test('Git Revision', gitrev)
+code = '''character :: b; error stop b; end'''
+f2018 = fc.compiles(code)
 
-complog = executable('complog', 'compiler_log.f90')
-test('Compiler version log', complog)
+if f2008
+  complog = executable('complog', 'compiler_log.f90')
+  test('Compiler version log', complog)
 
-sound = executable('sound', 'play_sound.f90')
-test('Play Sound', sound)
+  sound = executable('sound', 'play_sound.f90')
+  test('Play Sound', sound)
+  
+  gitrev = executable('gitrev', 'gitrev.f90')
+  test('Git Revision', gitrev)
+endif
+
+if f2018
+
+  callpy = executable('call_python', 'call_python_script.f90', link_with : osdet)
+  test('Call Python', callpy)
+
+endif
+
 

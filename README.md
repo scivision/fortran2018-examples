@@ -25,7 +25,7 @@ Based on widespread compiler support and beneficial features, most new and upgra
 The CMake script automatically walks through the subdirectories:
 
 ```bash
-cd bin
+cd build
 
 cmake ..
 cmake --build .

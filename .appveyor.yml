@@ -13,7 +13,7 @@ init:
 - cmd: set PATH=%MINGW_DIR%;%PATH%
 
 install:
-- cd bin
+- cd build
 - cmd: cmake -G "MinGW Makefiles" -DCMAKE_SH="CMAKE_SH-NOTFOUND" ..
 - sh: cmake ..
 
