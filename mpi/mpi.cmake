@@ -14,14 +14,17 @@
 #message(STATUS "MPI Library version: " ${MPI_Fortran_LIBRARY_VERSION})
 
 # --- verify MPI actually works
+find_package(MPI COMPONENTS Fortran)
+
 set(CMAKE_REQUIRED_FLAGS ${MPI_Fortran_COMPILE_OPTIONS})
 set(CMAKE_REQUIRED_INCLUDES ${MPI_Fortran_INCLUDE_DIRS})
 set(CMAKE_REQUIRED_LIBRARIES ${MPI_Fortran_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
 include(CheckFortranSourceCompiles)
-check_fortran_source_compiles("program a; use mpi; end" hasMPI
-                              SRC_EXT f90)
+
+check_fortran_source_compiles("use mpi; end" hasMPI SRC_EXT F90)
+
 if(NOT hasMPI)
-  message(FATAL_ERROR "MPI library not functioning with "
+  message(STATUS "MPI library not functioning with "
           ${CMAKE_Fortran_COMPILER_ID} " " ${CMAKE_Fortran_COMPILER_VERSION})
 endif()
 
