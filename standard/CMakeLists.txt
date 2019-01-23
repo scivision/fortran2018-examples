@@ -7,9 +7,14 @@ if(NOT hasParent)
   include(../cmake/compilers.cmake)
 endif()
 
+check_fortran_source_compiles("error stop; end" 
+  f08block SRC_EXT f90)
+
+if(f08block)
 add_executable(block block.f90)
 target_compile_options(block PRIVATE ${FFLAGS})
 target_link_libraries(block ${FLIBS})
+endif()
 
 add_executable(shortcircuit short_circuit.f90)
 target_compile_options(shortcircuit PRIVATE ${FFLAGS})

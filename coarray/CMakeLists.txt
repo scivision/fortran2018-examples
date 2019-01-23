@@ -22,7 +22,7 @@ endif()
 include(CheckFortranSourceCompiles)
 set(CMAKE_REQUIRED_FLAGS ${Coarray_COMPILE_OPTIONS})
 set(CMAKE_REQUIRED_LIBRARIES ${Coarray_LIBRARY})
-check_fortran_source_compiles("program cs; real :: x[*]; call co_sum(x); end" 
+check_fortran_source_compiles("real :: x[*]; call co_sum(x); end" 
 f18coarray SRC_EXT f90)
                               
 

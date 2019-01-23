@@ -36,7 +36,10 @@ character(len=*), intent(in) :: path
 character(kind=c_char, len=:), allocatable :: buf
 !! must use allocatable buffer, not direct substring to C
 
-if (len(path) == 0) error stop 'must specify directory to create'
+if (len(path) == 0) then
+  write(stderr,*) 'must specify directory to create'
+  stop 1
+endif
 
 !> single directory
 i = index(path, '/')
