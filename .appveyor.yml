@@ -11,6 +11,7 @@ build: off
 
 init:
 - cmd: set PATH=%MINGW_DIR%;%PATH%
+- sh: sudo apt install -yq --no-install-recommends libopenmpi-dev openmpi-bin
 
 install:
 - cd build

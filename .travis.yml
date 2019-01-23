@@ -15,8 +15,8 @@ addons:
     packages: 
     - gfortran-6
     - liblapack-dev
-   # - libopenmpi-dev
-   # - openmpi-bin #goofed up travis network 
+    - libopenmpi-dev
+    - openmpi-bin
  #       - libhdf5-dev # old version
  #       - libnetcdf-dev
 #        - libnetcdff-dev # not in image repos
@@ -26,7 +26,7 @@ matrix:
   - os: linux
     env: FC=gfortran-6
 #  - os: osx #old cmake
- #   before_install:
+#    before_install:
   #  - brew install gcc > /dev/null
     #- brew install hdf5 netcdf > /dev/null;  # works but commented to save time
   - os: windows

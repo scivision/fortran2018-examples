@@ -31,16 +31,19 @@ add_test(NAME MPIversion COMMAND mpivers)
 add_executable(mpi_hello helloworld.f90)
 target_compile_options(mpi_hello PRIVATE ${FFLAGS})
 target_link_libraries(mpi_hello ${FLIBS} MPI::MPI_Fortran)
-add_test(NAME MPIhello 
+add_test(NAME MPIhello
          COMMAND ${MPIEXEC_EXECUTABLE} ${MPIEXEC_NUMPROC_FLAG} ${MPIEXEC_MAX_NUMPROCS}
-  ${MPIEXEC_PREFLAGS} ./mpi_hello ${MPIEXEC_POSTFLAGS})    
+  ${MPIEXEC_PREFLAGS} ./mpi_hello ${MPIEXEC_POSTFLAGS})
 
+
+if(MPIEXEC_MAX_NUMPROCS GREATER_EQUAL 2)
 add_executable(mpi_pass thread_pass.f90)
 target_compile_options(mpi_pass PRIVATE ${FFLAGS})
 target_link_libraries(mpi_pass ${FLIBS} MPI::MPI_Fortran)
-add_test(NAME MPIpass 
+add_test(NAME MPIpass
          COMMAND ${MPIEXEC_EXECUTABLE} ${MPIEXEC_NUMPROC_FLAG} ${MPIEXEC_MAX_NUMPROCS}
   ${MPIEXEC_PREFLAGS} ./mpi_pass ${MPIEXEC_POSTFLAGS})
+endif()
 
 # mpifort --showme
 #
