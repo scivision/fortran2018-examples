@@ -9,7 +9,7 @@ if fc.get_id() == 'gcc'
   add_global_arguments('-Wall', '-Wextra', '-Wpedantic', language : 'fortran')
 endif
 
-
+subdir('coarray')
 subdir('cxx')
 subdir('mpi')
 subdir('standard')

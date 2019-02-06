@@ -1,4 +1,3 @@
-program helloworld
 !  Each process prints out a "Hello, world!" message with a process ID.
 ! at least int64 is used with system_clock to ensure adequate resolution < 1 ms.
 !  Michael Hirsch, Ph.D.
@@ -9,7 +8,7 @@ program helloworld
 ! or use Intel ifort:
 ! ifort -coarray helloworld.f90
 
-use, intrinsic:: iso_fortran_env, only: int64, dp=>real64
+use, intrinsic:: iso_fortran_env, only: int64, dp=>real64, compiler_version
 implicit none
 
 integer(int64) :: rate,tic=0,toc
@@ -17,6 +16,7 @@ real(dp) :: telaps
 
 ! Print a message.
 if (this_image() == 1) then
+  print *, compiler_version()
   call system_clock(tic)
   print *, 'number of Fortran coarray images:', num_images()
 end if
