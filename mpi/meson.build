@@ -1,17 +1,15 @@
-mpi = dependency('mpi', language : 'fortran')
+mpi = dependency('mpi', language : 'fortran', required : false)
 
-fc = meson.get_compiler('fortran')
-code = '''use mpi; end'''
-mpi_result = fc.run(code, dependencies : mpi)
+mpiOK = fc.run('use mpi; end', dependencies : mpi).returncode() == 0
 
-if mpi_result.returncode() == 0
+if mpiOK
   ver = executable('mpivers', 'mpivers.f90', dependencies : mpi)
-  test('MPI version check', ver, is_parallel : false)
+  test('MPI version check', ver)
 
   hello = executable('mpi_hello', 'helloworld.f90', dependencies : mpi)
-  test('MPI Hello World', hello, is_parallel : false)
+  test('MPI Hello World', hello)
 
-  # meson test --wrap "mpiexec -np 2"
+  mpirun = find_program('mpirun')
   pass = executable('mpi_pass', 'thread_pass.f90', dependencies : mpi)
-  test('MPI thread pass', pass, is_parallel : false)
+  test('MPI thread pass', mpirun, args: ['-np', '2', pass])
 endif

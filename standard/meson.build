@@ -1,6 +1,4 @@
-fc = meson.get_compiler('fortran')
-
-f08block = fc.links('error stop; end', name : 'F2008 block')
+f08block = fc.links('block; end block; end', name : 'F2008 block')
 
 if f08block
   block_exe = executable('block', 'block.f90')

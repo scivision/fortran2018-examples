@@ -1,23 +1,22 @@
-project('Fortran Coarray', 'fortran', default_options : ['default_library=static'])
-# ------- Fortran 2018 coarray examples -------
-# Coarrays are easier to use than MPI and more general as an intrinsic part of Fortran 2008.
-# Linux:  apt install libcoarrays-dev open-coarrays-bin
-# Mac: brew install opencoarrays
 
-coarray = dependency('Coarray')
+coarray = dependency('coarray', required : false)
 
-fc = meson.get_compiler('fortran')
+f08coarray = fc.links('real :: x[*]; end')
 f18coarray = fc.run('real :: x[*]; call co_sum(x); end').returncode() == 0
 
-hello = executable('coarray_hello', 'helloworld.f90', dependencies : coarray)
-  
-test('Coarray Hello', hello)
+if f08coarray
+  hello = executable('coarray_hello', 'helloworld.f90', dependencies : coarray)
+  test('Coarray Hello', hello)
+endif
+
 
 if f18coarray
   pi = executable('coarray_pi', 'pi.f90', dependencies : coarray)
-else
+elif f08coarray
   # Intel 2018 does not yet support Fortran 2018 co_sum
   pi = executable('coarray_pi', 'pi2008.f90', dependencies : coarray)
 endif
 
+if f08coarray
 test('Coarray Pi', pi)
+endif
