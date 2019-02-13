@@ -15,9 +15,6 @@ endif()
 # find_package(HDF5 COMPONENTS Fortran)  IS THE CRITICAL LINE TO ENABLE FORTRAN
 # not just find_package(HDF5) since that defaults to C ONLY.
 find_package(HDF5 COMPONENTS Fortran Fortran_HL)
-if(NOT HDF5_FOUND)
-  return()
-endif()
 # this line enables (optional) wrapper compiler h5fc).
 # USE **EITHER** this compiler OR link libraries.
 # DOING BOTH CAUSES SUBTLE ERROR MESSAGES!! DON'T DO BOTH!!
@@ -29,8 +26,7 @@ endif()
 set(CMAKE_REQUIRED_INCLUDES ${HDF5_Fortran_INCLUDE_DIRS})
 set(CMAKE_REQUIRED_LIBRARIES ${HDF5_Fortran_LIBRARIES} ${HDF5_Fortran_HL_LIBRARIES})
 include(CheckFortranSourceCompiles)
-check_fortran_source_compiles("program nc; use h5lt; end" hasHDF5
-                              SRC_EXT f90)
+check_fortran_source_compiles("use h5lt; end" hasHDF5 SRC_EXT f90)
 if(NOT hasHDF5)
   return()
 endif()

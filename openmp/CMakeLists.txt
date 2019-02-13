@@ -9,21 +9,16 @@ endif()
 
 find_package(OpenMP COMPONENTS Fortran)
 
-if(NOT OpenMP_Fortran_FOUND)
-  return()
-endif()
-
 set(CMAKE_REQUIRED_FLAGS ${OpenMP_Fortran_FLAGS})
 set(CMAKE_REQUIRED_LIBRARIES ${OpenMP_Fortran_LIBRARIES})
 include(CheckFortranSourceCompiles)
-check_fortran_source_compiles("program a; use omp_lib; end" hasOMP
-                              SRC_EXT f90)
+check_fortran_source_compiles("use omp_lib; rate = omp_get_wtick(); end" hasOMP SRC_EXT f90)
 if(NOT hasOMP)
   return()
 endif()
 
 add_executable(timeprec timeprec.f90)
-target_compile_options(timeprec PRIVATE ${FFLAGS} ${OpenMP_Fortran_FLAGS})
-target_link_libraries(timeprec PRIVATE ${FLIBS} ${OpenMP_Fortran_LIBRARIES})
+target_compile_options(timeprec PRIVATE ${FFLAGS})
+target_link_libraries(timeprec PRIVATE OpenMP::OpenMP_Fortran)
 add_test(NAME TimeMeasure COMMAND timeprec)
 

@@ -6,13 +6,13 @@ dist: xenial
 git:
   depth: 3
   quiet: true
-  
+
 env: FC=gfortran
 
 addons:
   apt:
     sources: ubuntu-toolchain-r-test
-    packages: 
+    packages:
     - gfortran-6
     - liblapack-dev
     - libopenmpi-dev
@@ -31,15 +31,15 @@ matrix:
     #- brew install hdf5 netcdf > /dev/null;  # works but commented to save time
   - os: windows
     language: sh
-    install: 
-    - cd build
-    - cmake -G "MinGW Makefiles" -DCMAKE_SH="CMAKE_SH-NOTFOUND" ..
-    - cmake --build .
+    install:
+    - cmake -G "MinGW Makefiles" -DCMAKE_SH="CMAKE_SH-NOTFOUND" -B build -S .
+    - cmake --build build
 
 install:
-- cd build
-- cmake ..
-- cmake --build .
+- cmake -B build -S .
+- cmake --build build -j
 
-script: ctest --output-on-failure
+script:
+- cd $TRAVIS_BUILD_DIR/build
+- ctest --output-on-failure
 
