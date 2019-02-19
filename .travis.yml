@@ -17,7 +17,7 @@ addons:
     - liblapack-dev
     - libopenmpi-dev
     - openmpi-bin
- #       - libhdf5-dev # old version
+    - libhdf5-dev
  #       - libnetcdf-dev
 #        - libnetcdff-dev # not in image repos
 
@@ -25,19 +25,21 @@ matrix:
   include:
   - os: linux
     env: FC=gfortran-6
-#  - os: osx #old cmake
+#  - os: osx
 #    before_install:
   #  - brew install gcc > /dev/null
     #- brew install hdf5 netcdf > /dev/null;  # works but commented to save time
   - os: windows
-    language: sh
+    language: minimal
     install:
-    - cmake -G "MinGW Makefiles" -DCMAKE_SH="CMAKE_SH-NOTFOUND" -B build -S .
-    - cmake --build build
+    - cd build
+    - cmake -G "MinGW Makefiles" -DCMAKE_SH="CMAKE_SH-NOTFOUND" ..
+    - cmake --build .
 
 install:
-- cmake -B build -S .
-- cmake --build build -j
+- cd build
+- cmake ..
+- cmake --build .
 
 script:
 - cd $TRAVIS_BUILD_DIR/build
