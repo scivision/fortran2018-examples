@@ -1,17 +1,18 @@
 !! Demonstrate Fortran calling C.
-!! 
+!!
 !! Normally BIND(C) should be used after the function name in the interface block.
 !!
-!! There are various de facto compiler implementations, using no, one, or double underscores pre- or post-pended 
+!! There are various de facto compiler implementations, using no, one, or double underscores pre- or post-pended
 !! to the C function name.
 !! New code should use `BIND (C)` after the procedure name instead!
+program FortranCallC
 
 use, intrinsic :: iso_c_binding, only: dp=>c_double, c_int
 implicit none
 
 interface
 
-  subroutine timestwo(x, x2, N)  bind (c) 
+  subroutine timestwo(x, x2, N)  bind (c)
   !! bind (c) is omitted for legacy code; requires manually adding underscore to C function name
 
   import

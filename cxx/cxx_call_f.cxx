@@ -14,7 +14,7 @@ int main()
     x[i] = i;
 
   timestwo(&x.front(), &x2.front(), &N);
-  
+
   for (auto i: x2)
     std::cout << i << ' ';
 
