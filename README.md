@@ -36,7 +36,7 @@ ctest
 ### ifort Intel
 
 Be sure you have the 
-[Intel Parallel Studio Cluster Edition](https://www.scivision.co/install-intel-compiler-icc-icpc-ifort/)
+[Intel Parallel Studio Cluster Edition](https://www.scivision.dev/install-intel-compiler-icc-icpc-ifort/)
 that has `mpiifort`.
 
 ```bash
