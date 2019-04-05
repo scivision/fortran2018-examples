@@ -1,6 +1,6 @@
 project('Fortran2018examples', 'fortran', 'cpp', 'c',
   version : '1.0.0',
-  default_options : ['default_library=static', 'buildtype=release'])
+  default_options : ['default_library=static', 'buildtype=release', 'cpp_std=c++17'])
 
 add_global_arguments('-g', language : 'fortran')
 
@@ -19,6 +19,7 @@ subdir('contiguous')
 subdir('cxx')
 subdir('debug')
 subdir('hdf5')
+subdir('io')
 subdir('mpi')
 subdir('netcdf')
 subdir('openmp')
