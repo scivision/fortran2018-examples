@@ -1,4 +1,3 @@
-program nulltest
 use, intrinsic:: iso_fortran_env, only: int64, wp=>real32
 implicit none
 ! Benchmarks platform independent null file writing behavior
@@ -6,17 +5,17 @@ implicit none
 ! /dev/null is used for Mac, Linux, BSD, Unix, WSL, Cygwin...
 !
 ! Flush() is used to avoid merely buffering the data, giving artificial results.
-! in a real program, the amount of data written to disk is substantial 
+! in a real program, the amount of data written to disk is substantial
 ! on each iteration, and the buffer would naturally get flushed.
-! Yes, the benchmark is more aggressive than normal use--that's why 
+! Yes, the benchmark is more aggressive than normal use--that's why
 ! filesystem buffering is used by Fortran and programs in general.
 !
-! The point of this program is to show that by inserting '/dev/null' 
-! as the filename for file outputs you never use, big speedups can result 
+! The point of this program is to show that by inserting '/dev/null'
+! as the filename for file outputs you never use, big speedups can result
 ! from modifying a single parameter (the file name).
 ! This saves you from commenting out lines, using IF statements and possibly
 ! making mistakes in doing so.
-! 
+!
 !
 character(*),parameter :: nulunix='/dev/null', nulwin='NUL',fout='out.txt'
 integer,parameter :: Nrun=1000
@@ -24,7 +23,7 @@ integer :: ios,u
 real(wp) :: tnul, tscratch, tfile
 
 !---  BENCHMARK NUL -----------
-! status='old' is used as a failsafe, to avoid creating an actual file 
+! status='old' is used as a failsafe, to avoid creating an actual file
 ! in case of mistake. It is not necessary to specify status='old'.
 open(newunit=u,file=nulunix,status='old',iostat=ios, action='write')
 if (ios /= 0) open(newunit=u,file=nulwin,status='old',iostat=ios, action='write')

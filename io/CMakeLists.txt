@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 3.3)
-project(fortran2018io Fortran CXX)
+project(fortran2018io C CXX Fortran)
 enable_testing()
 
 get_directory_property(hasParent PARENT_DIRECTORY)
@@ -16,10 +16,16 @@ CHECK_CXX_SYMBOL_EXISTS(std::filesystem::path::preferred_separator filesystem cx
 add_executable(termio terminal_io.f90)
 target_compile_options(termio PRIVATE ${FFLAGS})
 target_link_libraries(termio ${FLIBS})
-if(NOT WIN32) # FIXME doable via windows command
+if(NOT WIN32) # FIXME doable via windows command or WSL from command prompt
   add_test(NAME FortranTerminalIO COMMAND bash -c "./termio <<< 0")
 endif()
 
+add_executable(leading_zeros leading_zeros.f90)
+target_compile_options(leading_zeros PRIVATE ${FFLAGS})
+target_link_libraries(leading_zeros ${FLIBS})
+add_test(NAME LeadingZeros COMMAND leading_zeros)
+set_tests_properties(LeadingZeros PROPERTIES
+  PASS_REGULAR_EXPRESSION "hello1234.5600000")
 
 add_executable(expanduser expanduser.f90)
 target_compile_options(expanduser PRIVATE ${FFLAGS})

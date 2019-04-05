@@ -1,4 +1,3 @@
-program terminal_io
 use, intrinsic:: iso_fortran_env
 implicit none
 
