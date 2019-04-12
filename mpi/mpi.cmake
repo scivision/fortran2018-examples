@@ -24,8 +24,11 @@ include(CheckFortranSourceCompiles)
 check_fortran_source_compiles("use mpi_f08; end" hasMPI SRC_EXT F90)
 
 if(NOT hasMPI)
-  message(STATUS "MPI library not functioning with "
-          ${CMAKE_Fortran_COMPILER_ID} " " ${CMAKE_Fortran_COMPILER_VERSION})
+  message(STATUS "MPI library not functioning with
+          ${CMAKE_Fortran_COMPILER_ID} ${CMAKE_Fortran_COMPILER_VERSION}
+          Libs: ${MPI_Fortran_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT}
+          Include: ${MPI_Fortran_INCLUDE_DIRS}
+          Opts: ${MPI_Fortran_COMPILE_OPTIONS} ${MPI_Fortran_LINK_FLAGS}")
 endif()
 
 # --- end verify MPI
