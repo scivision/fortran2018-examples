@@ -29,12 +29,12 @@ matrix:
 #    before_install:
   #  - brew install gcc > /dev/null
     #- brew install hdf5 netcdf > /dev/null;  # works but commented to save time
-  - os: windows
-    language: minimal
-    install:
-    - cd build
-    - cmake -G "MinGW Makefiles" -DCMAKE_SH="CMAKE_SH-NOTFOUND" ..
-    - cmake --build .
+  #- os: windows # travis often doesnt stsrt windows
+   # language: minimal
+   # install:
+    #- cd build
+   # - cmake -G "MinGW Makefiles" -DCMAKE_SH="CMAKE_SH-NOTFOUND" ..
+  #  - cmake --build .
 
 install:
 - cd build
