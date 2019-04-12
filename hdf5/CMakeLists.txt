@@ -23,6 +23,10 @@ find_package(HDF5 COMPONENTS Fortran Fortran_HL)
 # message(STATUS "HDF5_INCLUDE_DIR: " ${HDF5_Fortran_INCLUDE_DIRS})
 # message(STATUS "HDF5_Fortran_HL_LIBRARIES "  ${HDF5_Fortran_HL_LIBRARIES})
 #------------------------
+if(NOT HDF5_FOUND)
+  return()
+endif()
+
 set(CMAKE_REQUIRED_INCLUDES ${HDF5_Fortran_INCLUDE_DIRS})
 set(CMAKE_REQUIRED_LIBRARIES ${HDF5_Fortran_LIBRARIES} ${HDF5_Fortran_HL_LIBRARIES})
 include(CheckFortranSourceCompiles)

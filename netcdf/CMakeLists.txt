@@ -11,6 +11,10 @@ if(NOT hasParent)
 endif()
 
 find_package(NetCDF)
+if(NOT NetCDF_Fortran_FOUND)
+  return()
+endif()
+
 set(CMAKE_REQUIRED_INCLUDES ${NetCDF_INCLUDE_DIRS})
 set(CMAKE_REQUIRED_LIBRARIES ${NetCDF_LIBRARIES})
 include(CheckFortranSourceCompiles)

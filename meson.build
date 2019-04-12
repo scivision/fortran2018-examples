@@ -1,6 +1,6 @@
 project('Fortran2018examples', 'fortran', 'cpp', 'c',
   version : '1.0.0',
-  default_options : ['default_library=static', 'buildtype=release', 'cpp_std=c++17'])
+  default_options : ['default_library=static', 'buildtype=release', 'cpp_std=c++14'])
 
 add_global_arguments('-g', language : 'fortran')
 

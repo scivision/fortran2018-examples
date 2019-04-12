@@ -2,7 +2,7 @@
 #   FC=mpif90 cmake ..
 
 cmake_minimum_required(VERSION 3.3)
-project(mpidemo Fortran)
+project(mpidemo C Fortran)
 enable_testing()
 
 include(mpi.cmake)
@@ -17,9 +17,9 @@ if(NOT hasParent)
 endif()
 
 if(NOT hasMPI OR NOT MPI_Fortran_FOUND)
-  message(STATUS "Skipping MPI tests")
   return()
 endif()
+
 
 add_executable(mpivers mpivers.f90)
 target_compile_options(mpivers PRIVATE ${FFLAGS})
@@ -31,7 +31,7 @@ target_compile_options(mpi_hello PRIVATE ${FFLAGS})
 target_link_libraries(mpi_hello ${FLIBS} MPI::MPI_Fortran)
 add_test(NAME MPIhello
          COMMAND ${MPIEXEC_EXECUTABLE} ${MPIEXEC_NUMPROC_FLAG} ${MPIEXEC_MAX_NUMPROCS}
-  ${MPIEXEC_PREFLAGS} ./mpi_hello ${MPIEXEC_POSTFLAGS})
+  ${MPIEXEC_PREFLAGS} $<TARGET_FILE:mpi_hello> ${MPIEXEC_POSTFLAGS})
 
 
 if(MPIEXEC_MAX_NUMPROCS GREATER_EQUAL 2)
@@ -40,7 +40,7 @@ target_compile_options(mpi_pass PRIVATE ${FFLAGS})
 target_link_libraries(mpi_pass ${FLIBS} MPI::MPI_Fortran)
 add_test(NAME MPIpass
          COMMAND ${MPIEXEC_EXECUTABLE} ${MPIEXEC_NUMPROC_FLAG} ${MPIEXEC_MAX_NUMPROCS}
-  ${MPIEXEC_PREFLAGS} ./mpi_pass ${MPIEXEC_POSTFLAGS})
+  ${MPIEXEC_PREFLAGS} $<TARGET_FILE:mpi_pass> ${MPIEXEC_POSTFLAGS})
 endif()
 
 # mpifort --showme

@@ -30,7 +30,7 @@ Result Variables
   maximum number of parallel processes
 ``Coarray_NUMPROC_FLAG``
   use for executing in parallel: ${Coarray_EXECUTABLE} ${Coarray_NUMPROC_FLAG} ${Coarray_MAX_NUMPROCS} ${CMAKE_CURRENT_BINARY_DIR}/myprogram
-  
+
 Cache Variables
 ^^^^^^^^^^^^^^^^
 
@@ -52,11 +52,15 @@ unset(Coarray_REQUIRED_VARS)
 if(CMAKE_Fortran_COMPILER_ID IN_LIST options_coarray)
 
   if(CMAKE_Fortran_COMPILER_ID STREQUAL Intel)
-    set(Coarray_COMPILE_OPTIONS -coarray=shared)
-    set(Coarray_LIBRARY -coarray=shared)  # ifort requires it at build AND link
+    if(WIN32)
+      set(Coarray_COMPILE_OPTIONS /Qcoarray:shared)
+      list(APPEND Coarray_REQUIRED_VARS ${Coarray_COMPILE_OPTIONS})
+    elseif(UNIX AND NOT APPLE)
+      set(Coarray_COMPILE_OPTIONS -coarray=shared)
+      set(Coarray_LIBRARY -coarray=shared)  # ifort requires it at build AND link
+      list(APPEND Coarray_REQUIRED_VARS ${Coarray_LIBRARY})
+    endif()
   endif()
-  
-  list(APPEND Coarray_REQUIRED_VARS ${Coarray_LIBRARY})
 
 elseif(CMAKE_Fortran_COMPILER_ID IN_LIST opencoarray_supported)
 
@@ -71,7 +75,7 @@ elseif(CMAKE_Fortran_COMPILER_ID IN_LIST opencoarray_supported)
     ProcessorCount(Nproc)
     set(Coarray_MAX_NUMPROCS ${Nproc})
     set(Coarray_NUMPROC_FLAG -np)
-    
+
     list(APPEND Coarray_REQUIRED_VARS ${Coarray_LIBRARY})
   elseif(CMAKE_Fortran_COMPILER_ID STREQUAL GNU)
     set(Coarray_COMPILE_OPTIONS -fcoarray=single)
@@ -84,7 +88,7 @@ endif()
 set(CMAKE_REQUIRED_FLAGS ${Coarray_COMPILE_OPTIONS})
 set(CMAKE_REQUIRED_LIBRARIES ${Coarray_LIBRARY})
 include(CheckFortranSourceCompiles)
-check_fortran_source_compiles("program cs; real :: x[*]; end" f08coarray SRC_EXT f90)
+check_fortran_source_compiles("real :: x[*]; end" f08coarray SRC_EXT f90)
 unset(CMAKE_REQUIRED_FLAGS)
 unset(CMAKE_REQUIRED_LIBRARIES)
 

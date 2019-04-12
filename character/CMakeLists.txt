@@ -33,10 +33,11 @@ target_compile_options(charlen PRIVATE ${FFLAGS})
 target_link_libraries(charlen ${FLIBS})
 add_test(NAME FortranCharacterLen COMMAND charlen)
 
+if(USLEEP)
 add_executable(overwrite_stdout overwrite_stdout.f90)
 target_compile_options(overwrite_stdout PRIVATE ${FFLAGS})
 target_link_libraries(overwrite_stdout ${FLIBS})
 add_test(NAME FortranOverwriteStdout COMMAND overwrite_stdout)
 set_tests_properties(FortranOverwriteStdout PROPERTIES TIMEOUT 6)
-
+endif()
 

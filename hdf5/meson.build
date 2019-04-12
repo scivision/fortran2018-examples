@@ -1,6 +1,10 @@
 
 hdf5 = dependency('HDF5', language : 'fortran', required : false)
 
+if not hdf5.found()
+  subdir_done()
+endif
+
 if fc.links('use h5lt; end', dependencies : hdf5)
 
 h5mod= library('h5mod', 'h5mod.f90', dependencies : hdf5)

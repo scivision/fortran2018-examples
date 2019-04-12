@@ -1,50 +1,45 @@
-if(CMAKE_BUILD_TYPE STREQUAL Debug)
-  add_compile_options(-g -O0)
-else()
-  add_compile_options(-O3)
-endif()
+
 
 include(CheckFortranSourceCompiles)
 
 check_fortran_source_compiles("
 program a
 use, intrinsic:: ieee_arithmetic, only: ieee_is_nan
-end" 
+end"
   f03ieee SRC_EXT f90)
 
 check_fortran_source_compiles("
 program a
 print *,transfer(Z'7FC00000', 1.)
-end" 
+end"
   fieeenan SRC_EXT f90)
 if(NOT fieeenan)
   set(fieeenan 0)
 endif()
 
 check_fortran_source_compiles("
-program a
 use, intrinsic:: iso_fortran_env, only: real128
 use, intrinsic:: ieee_arithmetic, only: ieee_is_nan
 print *,ieee_is_nan(0._real128)
 
 if (huge(0._real128) /= 1.18973149535723176508575932662800702E+4932_real128) stop 1
 
-end" 
+end program"
   f08kind SRC_EXT f90)
 if(NOT f08kind)
   set(f08kind 0)
 endif()
 
-check_fortran_source_compiles("error stop; end" 
+check_fortran_source_compiles("error stop; end"
   f08errorstop SRC_EXT f90)
-  
-check_fortran_source_compiles("character :: b; error stop b; end" 
+
+check_fortran_source_compiles("character :: b; error stop b; end"
   f18errorstop SRC_EXT f90)
-  
-check_fortran_source_compiles("call execute_command_line(''); end" 
+
+check_fortran_source_compiles("call execute_command_line(''); end"
   f08command SRC_EXT f90)
-                              
-check_fortran_source_compiles("call random_init(); end" 
+
+check_fortran_source_compiles("call random_init(); end"
   f18random SRC_EXT f90)
 
 check_fortran_source_compiles("
@@ -66,24 +61,37 @@ end"
   f08submod SRC_EXT f90)
 
 # ifort-19 yes, Flang yes, PGI yes, NAG yes, gfortran-8 no
-check_fortran_source_compiles("print*,is_contiguous([0,0]); end" 
+check_fortran_source_compiles("print*,is_contiguous([0,0]); end"
   f08contig SRC_EXT f90)
 if(NOT f08contig)
   set(f08contig 0)
-endif()  
-                              
+endif()
+
+set(USLEEP true)
 if(CMAKE_Fortran_COMPILER_ID STREQUAL Intel)
-  set(FFLAGS -stand f18 -implicitnone -traceback -warn)
-  
+  if(WIN32)
+    set(USLEEP false)
+  endif()
+
+  if(NOT WIN32)
+    set(FFLAGS -stand f18 -implicitnone -traceback -warn)
+  else()
+    set(FFLAGS /stand:f18 /4Yd /traceback /warn)
+  endif()
+
   if(CMAKE_BUILD_TYPE STREQUAL Debug)
-    list(APPEND FFLAGS -debug extended -check all)
+    if(WIN32)
+      list(APPEND FFLAGS /check:all)
+    else()
+      list(APPEND FFLAGS -debug extended -check all)
+    endif()
   endif()
 elseif(CMAKE_Fortran_COMPILER_ID STREQUAL GNU)
   if(CMAKE_Fortran_COMPILER_VERSION VERSION_GREATER_EQUAL 8)
     set(FFLAGS -std=f2018)
   endif()
   list(APPEND FFLAGS -march=native -Wall -Wextra -Wpedantic -Werror=array-bounds -fimplicit-none)
-  
+
   if(CMAKE_BUILD_TYPE STREQUAL Debug)
     list(APPEND FFLAGS -fcheck=all)
   endif()

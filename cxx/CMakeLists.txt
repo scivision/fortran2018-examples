@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.3)
-project(C++linkexample C CXX Fortran) 
+project(C++linkexample C CXX Fortran)
 enable_testing()
 
 # This example demonstrates very basic linking of
@@ -19,7 +19,9 @@ if(NOT hasParent)
 endif()
 
 if(CMAKE_Fortran_COMPILER_ID STREQUAL Intel)
-  list(APPEND FLIBS svml imf intlc ifcoremt ifport)
+  if(NOT WIN32)
+    list(APPEND FLIBS svml imf intlc ifcoremt ifport)  # FIXME: all all these needed on Linux?
+  endif()
 endif()
 
 add_library(call_f c_call_f.f90)
@@ -27,7 +29,7 @@ target_link_libraries(call_f PRIVATE ${FLIBS})
 target_compile_options(call_f PRIVATE ${FFLAGS})
 set_property(TARGET call_f PROPERTY POSITION_INDEPENDENT_CODE ON)
 
-# LD_LIBRARY_PATH=~/.local/pgi/linux86-64/2018/lib:$LD_LIBRARY_PATH ./cxx_call_f 
+# LD_LIBRARY_PATH=~/.local/pgi/linux86-64/2018/lib:$LD_LIBRARY_PATH ./cxx_call_f
 add_executable(cxx_call_f cxx_call_f.cxx)
 target_link_libraries(cxx_call_f PRIVATE call_f)
 target_compile_options(cxx_call_f PRIVATE ${CFLAGS})
@@ -45,5 +47,5 @@ add_test(NAME Fortran2C COMMAND f_call_c)
 # manually:
 #
 # source compilervars.sh
-# ifort -c -nofor-main fun.f90  -lsvml -limf -lintlc -lifcoremt -lifport 
+# ifort -c -nofor-main fun.f90  -lsvml -limf -lintlc -lifcoremt -lifport
 # icpc cxx_call_f.cpp fun.o -lsvml -limf -lintlc -lifcoremt -lifport -pthread

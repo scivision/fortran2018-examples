@@ -7,7 +7,7 @@ if(NOT hasParent)
   include(../cmake/compilers.cmake)
 endif()
 
-check_fortran_source_compiles("error stop; end" 
+check_fortran_source_compiles("error stop; end"
   f08block SRC_EXT f90)
 
 if(f08block)
@@ -37,11 +37,13 @@ target_link_libraries(mkdirstd ${FLIBS})
 add_test(NAME mkdir COMMAND ./mkdirstd testdir/hello)
 set_tests_properties(mkdir PROPERTIES TIMEOUT 1)
 
+if(USLEEP)
 add_executable(sleepstd sleep.f90)
 target_compile_options(sleepstd PRIVATE ${FFLAGS})
 target_link_libraries(sleepstd ${FLIBS})
 add_test(NAME FortranMicrosleep COMMAND sleepstd)
 set_tests_properties(FortranMicrosleep PROPERTIES TIMEOUT 1)
+endif()
 
 add_executable(statement statement_function.f90)
 target_compile_options(statement PRIVATE ${FFLAGS})
