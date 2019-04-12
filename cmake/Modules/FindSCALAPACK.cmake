@@ -28,6 +28,7 @@ foreach(s ${_mkl_libs})
            PATH_SUFFIXES
              lib lib/intel64 lib/intel64_win
              ../compiler/lib ../compiler/lib/intel64 ../compiler/lib/intel64_win
+             ../mpi/intel64/lib ../mpi/intel64/lib/release ../mpi/intel64/lib/release_mt
            HINTS ${MKL_LIBRARY_DIRS}
            NO_DEFAULT_PATH)
   if(NOT SCALAPACK_${s}_LIBRARY)

@@ -13,8 +13,9 @@ enable_testing()
 
 option(USEMKL "Use Intel MKL libraries")
 
-if($ENV{MKLROOT})
+if(DEFINED ENV{MKLROOT})
   set(USEMKL ON)
+  message(STATUS "Used MKL based on MKLROOT being defined")
 endif()
 
 if(NOT realbits)
@@ -27,7 +28,7 @@ endif()
 
 get_directory_property(hasParent PARENT_DIRECTORY)
 if(NOT hasParent)
-  include(../cmake/compilers.cmake)
+  #include(../cmake/compilers.cmake)
   list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/../cmake/Modules/)
 endif()
 
@@ -50,7 +51,11 @@ endif()
 
 # --- Scalapack
 # Scalapack must work correctly for MUMPS to work...
-find_package(SCALAPACK REQUIRED)
+if(USEMKL)
+  find_package(SCALAPACK COMPONENTS IntelPar REQUIRED)
+else() # OpenMPI
+  find_package(SCALAPACK REQUIRED)
+endif()
 
 add_executable(blacs1 blacs.f)
 target_compile_options(blacs1 PRIVATE ${FFLAGS})

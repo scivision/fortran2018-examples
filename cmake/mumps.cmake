@@ -8,12 +8,12 @@
 # Ubuntu / Debian: apt install libmumps-dev
 
 if(LIB_DIR OR USEMKL OR CMAKE_Fortran_COMPILER_ID STREQUAL Intel)
-  set(METIS_ROOT ${LIB_DIR}/metis)
-  set(Scotch_ROOT ${LIB_DIR}/scotch)
+  #set(METIS_ROOT ${LIB_DIR}/metis)
+  #set(Scotch_ROOT ${LIB_DIR}/scotch)
 
-  find_package(METIS REQUIRED)
-  find_package(Scotch COMPONENTS ESMUMPS REQUIRED)
-  find_package(SCALAPACK REQUIRED)
+  #find_package(METIS)
+  #find_package(Scotch COMPONENTS ESMUMPS)
+  find_package(SCALAPACK REQUIRED COMPONENTS IntelPar)
 
   set(MUMPS_ROOT ${LIB_DIR}/MUMPS)
 endif()
@@ -27,12 +27,12 @@ else()
   message(FATAL_ERROR "MUMPS has only real32, real64")
 endif()
 
-if(NOT SCALAPACK_Found)
+if(NOT SCALAPACK_FOUND)
   find_package(SCALAPACK REQUIRED)
   find_package(LAPACK REQUIRED)
 endif()
 
 find_package(MUMPS REQUIRED COMPONENTS ${mumpscomp})
 if(LIB_DIR)
-  list(APPEND MUMPS_LIBRARIES ${SCALAPACK_LIBRARIES} ${Scotch_LIBRARIES} ${METIS_LIBRARIES} ${LAPACK_LIBRARIES})
+  list(APPEND MUMPS_LIBRARIES ${SCALAPACK_LIBRARIES} ${LAPACK_LIBRARIES})
 endif()
