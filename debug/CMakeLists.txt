@@ -12,7 +12,10 @@ elseif(CMAKE_Fortran_COMPILER_ID STREQUAL Intel)
 else()
   set(xfail false)
 endif()
-add_test(NAME BoundsFail COMMAND badbounds WILL_FAIL ${xfail})
+
+if(NOT $ENV{CI})  # falsely trips some CIs with segfault
+  add_test(NAME BoundsFail COMMAND badbounds WILL_FAIL ${xfail})
+endif()
 
 add_executable(nanmaxmin maxmin_nan.f90)
 
