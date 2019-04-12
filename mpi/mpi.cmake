@@ -21,7 +21,8 @@ set(CMAKE_REQUIRED_INCLUDES ${MPI_Fortran_INCLUDE_DIRS})
 set(CMAKE_REQUIRED_LIBRARIES ${MPI_Fortran_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
 include(CheckFortranSourceCompiles)
 
-check_fortran_source_compiles("use mpi_f08; end" hasMPI SRC_EXT F90)
+# Intel 2019 MPI doesn't yet have mpi_f08
+check_fortran_source_compiles("use mpi; end" hasMPI SRC_EXT F90)
 
 if(NOT hasMPI)
   message(STATUS "MPI library not functioning with

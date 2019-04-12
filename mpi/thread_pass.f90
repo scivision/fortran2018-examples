@@ -1,23 +1,27 @@
 !! passes data between two threads
 !!  Author:  John Burkardt
 use, intrinsic :: iso_fortran_env, only: sp=>real32, stderr=>error_unit, compiler_version
-use mpi_f08
+use mpi  ! Windows Intel 2019 MPI doesn't have mpi_f08 yet (grrr)
 implicit none
 
 character(10) :: time
 integer :: mcount
 real(sp) :: dat(0:99), val(200)
-integer :: dest, i, num_procs, rank, tag
-type(MPI_STATUS) :: status
+integer :: dest, i, num_procs, rank, tag, ierr, status(MPI_STATUS_SIZE)
+! type(MPI_STATUS) :: status  !< MPI_F08
+
 
 !  Initialize MPI.
-call MPI_Init()
+call MPI_Init(ierr)
+if (ierr /= 0) error stop 'mpi init error'
 
 !  Determine this process's rank.
-call MPI_Comm_rank ( MPI_COMM_WORLD, rank)
+call MPI_Comm_rank ( MPI_COMM_WORLD, rank, ierr)
+if (ierr /= 0) error stop 'mpi rank error'
 
 !  Find out the number of processes available.
-call MPI_Comm_size ( MPI_COMM_WORLD, num_procs)
+call MPI_Comm_size ( MPI_COMM_WORLD, num_procs, ierr)
+if (ierr /= 0) error stop 'mpi size error'
 if (num_procs < 2) then
   write(stderr,*) 'ERROR: two threads are required, use:'
   write(stderr,*) 'mpiexec -np 2 ./mpi_pass'
@@ -32,11 +36,12 @@ end if
 
 !  Process 0 expects to receive as much as 200 real values, from any source.
 if ( rank == 0 ) then
-  call MPI_Recv (val, size(val), MPI_REAL, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, status)
+  call MPI_Recv (val, size(val), MPI_REAL, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, status, ierr)
+  if (ierr /= 0) error stop 'mpi receive error'
 
-  print *, rank, ' Got data from processor ', status%MPI_SOURCE, 'tag',status%MPI_TAG
+  print *, rank, ' Got data from processor ', status(MPI_SOURCE), 'tag',status(MPI_TAG)
 
-  call MPI_Get_count ( status, MPI_REAL, mcount)
+  call MPI_Get_count ( status, MPI_REAL, mcount, ierr)
 
   print *, rank, ' Got ', mcount, ' elements.'
 
@@ -52,12 +57,14 @@ else if ( rank == 1 ) then
 
   dest = 0
   tag = 55
-  call MPI_Send ( dat, size(dat), MPI_REAL, dest, tag, MPI_COMM_WORLD)
+  call MPI_Send ( dat, size(dat), MPI_REAL, dest, tag, MPI_COMM_WORLD, ierr)
+  if (ierr /= 0) error stop 'mpi send error'
 else
   print *, rank, ' - MPI has no work for me!'
 end if
 
-call MPI_Finalize()
+call MPI_Finalize(ierr)
+if (ierr /= 0) error stop 'mpi finalize error'
 
 if ( rank == 0 ) then
   call date_and_time (time = time )

@@ -1,7 +1,7 @@
 ! https://github.com/open-mpi/ompi/blob/master/examples/hello_usempif08.f90
 
 use, intrinsic :: iso_fortran_env
-use mpi_f08
+use mpi  ! Windows Intel 2019 MPI doesn't have mpi_f08 yet (grrr)
 implicit none
 integer :: ierr, mrank, msize, vlen
 character(MPI_MAX_LIBRARY_VERSION_STRING) :: version  ! allocatable not ok
