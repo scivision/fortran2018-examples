@@ -17,7 +17,7 @@ add_executable(termio terminal_io.f90)
 target_compile_options(termio PRIVATE ${FFLAGS})
 target_link_libraries(termio ${FLIBS})
 if(NOT WIN32) # FIXME doable via windows command or WSL from command prompt
-  add_test(NAME FortranTerminalIO COMMAND bash -c "./termio <<< 0")
+  add_test(NAME FortranTerminalIO COMMAND bash -c "$<TARGET_FILE:termio> <<< 0")
 endif()
 
 add_executable(leading_zeros leading_zeros.f90)

@@ -6,7 +6,7 @@ if(CMAKE_VERSION VERSION_GREATER_EQUAL 3.12)
   cmake_policy(SET CMP0074 NEW)
 endif()
 
-option(USE_MKL "Use Intel MKL" OFF)
+option(USEMKL "Use Intel MKL" OFF)
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/Modules/)
 

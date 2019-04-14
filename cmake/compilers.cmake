@@ -1,15 +1,15 @@
-
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release CACHE STRING "Debug or Release")
+endif()
 
 include(CheckFortranSourceCompiles)
 
 check_fortran_source_compiles("
-program a
 use, intrinsic:: ieee_arithmetic, only: ieee_is_nan
 end"
   f03ieee SRC_EXT f90)
 
 check_fortran_source_compiles("
-program a
 print *,transfer(Z'7FC00000', 1.)
 end"
   fieeenan SRC_EXT f90)

@@ -116,9 +116,23 @@ endfunction()
 
 #===============================================================================
 
+if(NOT DEFINED USEMKL AND DEFINED ENV{MKLROOT})
+  set(USEMKL ON)
+  message(STATUS "Used Intel MKL based on MKLROOT being defined")
+endif()
+
+if(NOT LAPACK_FIND_COMPONENTS)
+  if(USEMKL)
+    set(LAPACK_FIND_COMPONENTS IntelPar)
+  else()
+    set(LAPACK_FIND_COMPONENTS Netlib)
+  endif()
+endif()
+
 get_property(project_languages GLOBAL PROPERTY ENABLED_LANGUAGES)
 
-find_package(PkgConfig QUIET)
+find_package(PkgConfig)
+
 if(NOT WIN32)
   find_package(Threads)  # not required--for example Flang
 endif()
@@ -212,7 +226,7 @@ elseif(Atlas IN_LIST LAPACK_FIND_COMPONENTS)
     list(APPEND LAPACK_LIBRARY ${CMAKE_THREAD_LIBS_INIT})
   endif()
 
-else()  # find base LAPACK and BLAS, typically Netlib
+elseif(Netlib IN_LIST LAPACK_FIND_COMPONENTS)
 
   if(LAPACK95 IN_LIST LAPACK_FIND_COMPONENTS)
     find_path(LAPACK95_INCLUDE_DIR
@@ -269,6 +283,12 @@ else()  # find base LAPACK and BLAS, typically Netlib
   if(NOT WIN32)
     list(APPEND LAPACK_LIBRARY ${CMAKE_THREAD_LIBS_INIT})
   endif()
+
+  if(LAPACK_LIBRARY)
+    set(LAPACK_Netlib_FOUND true)
+  else()
+    set(LAPACK_Netlib_FOUND false)
+  endif()
 endif()
 
 include(FindPackageHandleStandardArgs)
@@ -280,25 +300,6 @@ find_package_handle_standard_args(
 if(LAPACK_FOUND)
   set(LAPACK_LIBRARIES ${LAPACK_LIBRARY})
   set(LAPACK_INCLUDE_DIRS ${LAPACK_INCLUDE_DIR})
-
-#  if(LAPACK_LAPACKE_FOUND AND NOT TARGET LAPACK::LAPACKE)
-#    add_library(LAPACK::LAPACKE UNKNOWN IMPORTED)
-#    set_target_properties(LAPACK::LAPACKE PROPERTIES
-#      IMPORTED_LOCATION ${LAPACKE_LIBRARY}
-#      INTERFACE_INCLUDE_DIRECTORIES ${LAPACK_INCLUDE_DIR})
-#  endif()
-
-#  if(NOT TARGET LAPACK::LAPACK)
-#    add_library(LAPACK::LAPACK UNKNOWN IMPORTED)
-#    set_target_properties(LAPACK::LAPACK PROPERTIES
-#      IMPORTED_LOCATION ${LAPACK_LIB})
-#  endif()
-
-#  if(NOT TARGET LAPACK::BLAS)
-#    add_library(LAPACK::BLAS UNKNOWN IMPORTED)
-#    set_target_properties(LAPACK::BLAS PROPERTIES
-#      IMPORTED_LOCATION ${BLAS_LIBRARY})
-#  endif()
 endif()
 
 mark_as_advanced(LAPACK_LIBRARY LAPACK_INCLUDE_DIR)

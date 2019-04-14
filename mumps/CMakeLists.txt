@@ -1,5 +1,5 @@
 cmake_minimum_required (VERSION 3.11)  # 3.9: MPI::MPI_Fortran, 3.11: Lapack
-project(test_gem Fortran C)  # need C for scalapack findThreads with MKL/Intel
+project(test_gem C Fortran)  # need C for scalapack findThreads with MKL/Intel
 enable_testing()
 
 # GNU with MKL
@@ -11,20 +11,16 @@ enable_testing()
 # LIB_DIR: top-level path for self-compiled libraries e.g. ~/flibs-gnu-MKL
 # (first compile https://github.com/scivision/fortran-libs with MKL)
 
-option(USEMKL "Use Intel MKL libraries")
+option(USEMKL "Use Intel MKL libraries" OFF)
 
-if(DEFINED ENV{MKLROOT})
-  set(USEMKL ON)
-  message(STATUS "Used MKL based on MKLROOT being defined")
+if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.12.0")  # quotes are needed!
+  cmake_policy(SET CMP0074 NEW)
 endif()
 
 if(NOT realbits)
   set(realbits 64)
 endif()
 
-if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.12.0")  # quotes are needed!
-  cmake_policy(SET CMP0074 NEW)
-endif()
 
 get_directory_property(hasParent PARENT_DIRECTORY)
 if(NOT hasParent)
@@ -32,36 +28,42 @@ if(NOT hasParent)
   list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/../cmake/Modules/)
 endif()
 
-find_package(MPI REQUIRED COMPONENTS Fortran)
+find_package(MPI COMPONENTS Fortran)
+
+if(NOT MPI_Fortran_FOUND)
+  message(STATUS "MUMPS skipped due to missing MPI")
+  return()
+endif()
 
 # --- Metis
 # Default is PORD instead of METIS.
-find_package(METIS)
-if(METIS_FOUND)
-add_executable(metis1 metis.f90)
-target_compile_options(metis1 PRIVATE ${FFLAGS})
-target_link_libraries(metis1 PRIVATE ${METIS_LIBRARIES})
-target_include_directories(metis1 PRIVATE ${METIS_INCLUDE_DIRS})
+# find_package(METIS)
+# if(METIS_FOUND)
+# add_executable(metis1 metis.f90)
+# target_compile_options(metis1 PRIVATE ${FFLAGS})
+# target_link_libraries(metis1 PRIVATE ${METIS_LIBRARIES})
+# target_include_directories(metis1 PRIVATE ${METIS_INCLUDE_DIRS})
 
-add_test(NAME Metis
-  COMMAND ${MPIEXEC_EXECUTABLE} ${MPIEXEC_NUMPROC_FLAG} ${MPIEXEC_MAX_NUMPROCS} $<TARGET_FILE:metis1>
-  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
-endif()
+# add_test(NAME Metis
+  # COMMAND ${MPIEXEC_EXECUTABLE} ${MPIEXEC_NUMPROC_FLAG} ${MPIEXEC_MAX_NUMPROCS} $<TARGET_FILE:metis1>
+  # WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+# endif()
 
 
 # --- Scalapack
 # Scalapack must work correctly for MUMPS to work...
-if(USEMKL)
-  find_package(SCALAPACK COMPONENTS IntelPar REQUIRED)
-else() # OpenMPI
-  find_package(SCALAPACK REQUIRED)
+find_package(SCALAPACK)
+if(NOT SCALAPACK_FOUND)
+  message(STATUS "MUMPS skipped due to missing Scalapack")
+  return()
 endif()
+
 
 add_executable(blacs1 blacs.f)
 target_compile_options(blacs1 PRIVATE ${FFLAGS})
 target_link_libraries(blacs1 PRIVATE ${SCALAPACK_LIBRARIES} MPI::MPI_Fortran)
 target_include_directories(blacs1 PRIVATE ${SCALAPACK_INCLUDE_DIRS})
-
+add_test(NAME BLACS COMMAND blacs1)
 
 add_executable(scalapack1 scalapack_example1.f)
 target_compile_options(scalapack1 PRIVATE ${FFLAGS})
@@ -74,6 +76,11 @@ add_test(NAME Scalapack
 # --- MUMPS
 
 include(${PROJECT_SOURCE_DIR}/../cmake/mumps.cmake)
+
+if(NOT MUMPS_FOUND)
+  message(STATUS "MUMPS skipped")
+  return()
+endif()
 
 add_executable(testmumps test_mumps.f90)
 target_compile_options(testmumps PRIVATE ${FFLAGS})

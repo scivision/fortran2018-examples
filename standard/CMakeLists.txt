@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.7)
-project(std Fortran)
+project(std C Fortran)
 enable_testing()
 
 get_directory_property(hasParent PARENT_DIRECTORY)
@@ -7,7 +7,7 @@ if(NOT hasParent)
   include(../cmake/compilers.cmake)
 endif()
 
-check_fortran_source_compiles("error stop; end"
+check_fortran_source_compiles("block; end block; end"
   f08block SRC_EXT f90)
 
 if(f08block)
@@ -34,8 +34,11 @@ target_link_libraries(justwait ${FLIBS})
 add_executable(mkdirstd mkdir.f90)
 target_compile_options(mkdirstd PRIVATE ${FFLAGS})
 target_link_libraries(mkdirstd ${FLIBS})
-add_test(NAME mkdir COMMAND ./mkdirstd testdir/hello)
-set_tests_properties(mkdir PROPERTIES TIMEOUT 1)
+set(_dirlist testdir/hello a/b a/b/c/)
+foreach(_dir ${_dirlist})
+  file(REMOVE_RECURSE ${_dir})
+  add_test(NAME mkdir_${_dir} COMMAND $<TARGET_FILE:mkdirstd> ${_dir})
+endforeach()
 
 if(USLEEP)
 add_executable(sleepstd sleep.f90)

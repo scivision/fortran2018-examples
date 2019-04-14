@@ -1,5 +1,3 @@
-program noenv
-
 use, intrinsic:: iso_fortran_env, only: error_unit
 
 implicit none
@@ -15,6 +13,5 @@ if (ios/=0) then
 endif
 
 read(buf,*) h
-
 
 end program
