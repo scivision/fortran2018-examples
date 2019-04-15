@@ -16,7 +16,7 @@ end interface
 
 contains
 
-function mkdir(path) result(ret)
+integer(c_int) function mkdir(path) result(ret)
 !! Fortran standard compliant mkdir().
 !! mkdir() is a GNU extension, not standard Fortran.
 !! create a directory, with parents if needed
@@ -26,12 +26,10 @@ function mkdir(path) result(ret)
 !! Tested on Linux and Windows
 !! Michael Hirsch, Ph.D.
 
-integer(c_int) :: ret
 integer :: i,i0, ilast
 character(len=*), intent(in) :: path
 character(kind=c_char, len=:), allocatable :: buf
 !! must use allocatable buffer, not direct substring to C
-logical :: dir_exists
 
 ret=0 !< in case directory already exists
 
@@ -42,8 +40,7 @@ if (len(buf) == 0) then
   stop 1
 endif
 
-inquire(file=buf, exist=dir_exists)
-if(dir_exists) then
+if(is_directory(buf)) then
   print *, buf//' already exists'
   return
 endif
@@ -73,8 +70,7 @@ do while( i /= 0 )
   !> allocated string buffer necessary for C interface
   buf = path(1:ilast)  !< don't include separator for Windows compatibility
 
-  inquire(file=buf, exist=dir_exists)
-  if(dir_exists) cycle
+  if(is_directory(buf)) cycle
 
   ! print *,'i:',i,'i0:',i0,'ilast:',ilast,buf, len(buf)
 
@@ -88,31 +84,45 @@ enddo
 
 end function mkdir
 
+
+logical function is_directory(path)
+
+character(*), intent(in) :: path
+
+#ifdef __INTEL_COMPILER
+inquire(directory=path, exist=is_directory)
+#else
+inquire(file=path, exist=is_directory)
+#endif
+
+end function is_directory
+
 end module std_mkdir
 
 
 program test_mkdir
 !! just for testing
-use std_mkdir, only: c_int, mkdir, stderr
+use std_mkdir
 
 implicit none
 
 !> demo
 character(4096) :: buf
 integer(c_int) :: ret
-logical :: dir_exists
 
 call get_command_argument(1,buf)
 
 ret = mkdir(trim(buf))
 
-if(ret /= 0) stop ret
-
-inquire(file=trim(buf), exist=dir_exists)
-
-if(.not.dir_exists) then
-  write(stderr,*) 'failed to create '//trim(buf)
+if(ret /= 0) then
+  write(stderr,*) 'error code',ret, 'on creating ',trim(buf)
   stop 1
+endif
+
+
+if(.not.is_directory(buf)) then
+  write(stderr,*) 'failed to create '//trim(buf)
+  stop 2
 endif
 
 print *,trim(buf)//' exists.'

@@ -67,11 +67,7 @@ if(NOT f08contig)
   set(f08contig 0)
 endif()
 
-set(USLEEP true)
 if(CMAKE_Fortran_COMPILER_ID STREQUAL Intel)
-  if(WIN32)
-    set(USLEEP false)
-  endif()
 
   if(NOT WIN32)
     set(FFLAGS -stand f18 -implicitnone -traceback -warn)

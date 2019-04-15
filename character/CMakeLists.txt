@@ -33,7 +33,7 @@ target_compile_options(charlen PRIVATE ${FFLAGS})
 target_link_libraries(charlen ${FLIBS})
 add_test(NAME FortranCharacterLen COMMAND charlen)
 
-if(USLEEP)
+if(NOT WIN32)
 add_executable(overwrite_stdout overwrite_stdout.f90)
 target_compile_options(overwrite_stdout PRIVATE ${FFLAGS})
 target_link_libraries(overwrite_stdout ${FLIBS})
