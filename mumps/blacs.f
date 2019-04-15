@@ -2,13 +2,14 @@
 !!     -- BLACS example code --
 !!     Written by Clint Whaley 7/26/94
 !!     Performs a simple check-in type hello world
-      use mpi_f08, only: mpi_init
+      use mpi, only: mpi_init
       INTEGER, external :: BLACS_PNUM
 
       INTEGER CONTXT, IAM, NPROCS, NPROW, NPCOL, MYPROW, MYPCOL
       INTEGER ICALLER, I, J, HISROW, HISCOL
-      
-      call mpi_init()
+
+      call mpi_init(i)
+      if (i /= 0) error stop 'mpi init error'
 
 !! Determine my process number and the number of processes in machine
 
@@ -42,7 +43,7 @@
 !!     Get my process ID from my grid coordinates
 
       ICALLER = BLACS_PNUM(CONTXT, MYPROW, MYPCOL)
-      
+
 !!    If I am process {0,0}, receive check-in messages from all nodes
 
       IF ( (MYPROW.EQ.0) .AND. (MYPCOL.EQ.0) ) THEN
@@ -52,7 +53,7 @@
 	        DO J = 0, NPCOL-1
 
 	       IF ( (I.NE.0) .OR. (J.NE.0) ) THEN
-		  CALL IGERV2D(CONTXT, 1, 1, ICALLER, 1, I, J) 
+		  CALL IGERV2D(CONTXT, 1, 1, ICALLER, 1, I, J)
                ENDIF
 
 !!              Make sure ICALLER is where we think in process grid
@@ -77,7 +78,7 @@
       END IF
 
 30    CONTINUE
-   
+
       CALL BLACS_EXIT(0)
 
       END program

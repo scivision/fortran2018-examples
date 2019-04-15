@@ -1,6 +1,5 @@
-PROGRAM MUMPS_TEST
 !! Based on MUMPS manual Sec 11.1
-use mpi_f08, only: mpi_init, mpi_finalize, mpi_comm_world
+use mpi, only: mpi_init, mpi_finalize, mpi_comm_world
 use, intrinsic :: iso_fortran_env, only: stderr=>error_unit, stdout=>output_unit, i64=>int64
 
 IMPLICIT NONE
@@ -8,9 +7,12 @@ IMPLICIT NONE
 INCLUDE 'dmumps_struc.h'
 TYPE (DMUMPS_STRUC) :: mumps_par
 
-CALL MPI_INIT
+integer :: ierr
+
+CALL MPI_INIT(ierr)
+if (ierr /= 0) error stop 'mpi init error'
 !> Define a communicator for the package.
-mumps_par%COMM = MPI_COMM_WORLD%mpi_val
+mumps_par%COMM = MPI_COMM_WORLD  !mpi_val
 
 !>  Initialize an instance of the package for L U factorization (sym = 0, with working host)
 mumps_par%SYM = 0
@@ -19,7 +21,7 @@ mumps_par%SYM = 0
 mumps_par%PAR = 1
 !! use host to compute too  Sec 5.1.3 page 23
 
-mumps_par%JOB = -1 
+mumps_par%JOB = -1
 !! Initializes all variables, set job parameters first.  Sec 5.1, page 22
 
 !> set verbosities AFTER %JOB call or they get reset!
@@ -34,7 +36,7 @@ mumps_par%ICNTL(4) = 1
 
 call simple_test(mumps_par)
 
-CALL MPI_FINALIZE
+CALL MPI_FINALIZE(ierr)
 
 contains
 
@@ -109,11 +111,11 @@ CALL DMUMPS(mumps_par)
 
 IF(mumps_par%INFOG(1) < 0) THEN
   WRITE(stderr,*) "ERROR: "
-  write(stderr,'(A,I6,A,I9)')"  mumps_par%INFOG(1)= ", mumps_par%INFOG(1),  "  mumps_par%INFOG(2)= ", mumps_par%INFOG(2) 
+  write(stderr,'(A,I6,A,I9)')"  mumps_par%INFOG(1)= ", mumps_par%INFOG(1),  "  mumps_par%INFOG(2)= ", mumps_par%INFOG(2)
   error stop
 elseiF(mumps_par%INFOG(1) > 0) THEN
   WRITE(stderr,*) "WARNINGG: "
-  write(stderr,'(A,I6,A,I9)')"  mumps_par%INFOG(1)= ", mumps_par%INFOG(1),  "  mumps_par%INFOG(2)= ", mumps_par%INFOG(2) 
+  write(stderr,'(A,I6,A,I9)')"  mumps_par%INFOG(1)= ", mumps_par%INFOG(1),  "  mumps_par%INFOG(2)= ", mumps_par%INFOG(2)
 END IF
 
 end subroutine mumps_run
