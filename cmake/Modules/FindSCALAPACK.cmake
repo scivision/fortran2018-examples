@@ -201,12 +201,14 @@ endif()
 
 # Finalize
 
-find_package(MPI REQUIRED COMPONENTS Fortran)
-include(CheckFortranFunctionExists)
-set(CMAKE_REQUIRED_INCLUDES ${SCALAPACK_INCLUDE_DIR})
-set(CMAKE_REQUIRED_LIBRARIES ${SCALAPACK_LIBRARY} MPI::MPI_Fortran)
-check_fortran_function_exists(blacs_gridmap BLACS_OK)
-check_fortran_function_exists(numroc SCALAPACK_OK)
+if(SCALAPACK_LIBRARY)
+  find_package(MPI REQUIRED COMPONENTS Fortran)
+  include(CheckFortranFunctionExists)
+  set(CMAKE_REQUIRED_INCLUDES ${SCALAPACK_INCLUDE_DIR})
+  set(CMAKE_REQUIRED_LIBRARIES ${SCALAPACK_LIBRARY} MPI::MPI_Fortran)
+  check_fortran_function_exists(blacs_gridmap BLACS_OK)
+  check_fortran_function_exists(numroc SCALAPACK_OK)
+endif()
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(
