@@ -4,7 +4,7 @@
 #[=======================================================================[.rst:
 
 FindSCALAPACK
-----------
+-------------
 
 * Michael Hirsch, Ph.D. www.scivision.dev
 
@@ -93,10 +93,12 @@ endfunction(mkl_scala)
 
 #==== main program
 
-cmake_policy(VERSION 3.3)
+cmake_policy(VERSION 3.7)
 
-unset(SCALAPACK_LIBRARY)
-
+if(CMAKE_VERSION VERSION_GREATER_EQUAL 3.12)
+  cmake_policy(SET CMP0074 NEW)
+  cmake_policy(SET CMP0075 NEW)
+endif()
 
 if(NOT (OpenMPI IN_LIST SCALAPACK_FIND_COMPONENTS
         OR MPICH IN_LIST SCALAPACK_FIND_COMPONENTS
@@ -114,10 +116,11 @@ endif()
 
 message(STATUS "Finding SCALAPACK components: ${SCALAPACK_FIND_COMPONENTS}")
 
-get_property(project_languages GLOBAL PROPERTY ENABLED_LANGUAGES)
-
 find_package(PkgConfig)
 
+if(NOT DEFINED CMAKE_C_COMPILER)
+  enable_language(C)
+endif()
 if(NOT WIN32)
   find_package(Threads)  # not required--for example Flang
 endif()
@@ -206,14 +209,13 @@ if(SCALAPACK_LIBRARY)
   include(CheckFortranFunctionExists)
   set(CMAKE_REQUIRED_INCLUDES ${SCALAPACK_INCLUDE_DIR})
   set(CMAKE_REQUIRED_LIBRARIES ${SCALAPACK_LIBRARY} MPI::MPI_Fortran)
-  check_fortran_function_exists(blacs_gridmap BLACS_OK)
   check_fortran_function_exists(numroc SCALAPACK_OK)
 endif()
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(
   SCALAPACK
-  REQUIRED_VARS SCALAPACK_LIBRARY BLACS_OK SCALAPACK_OK
+  REQUIRED_VARS SCALAPACK_LIBRARY SCALAPACK_OK
   HANDLE_COMPONENTS)
 
 if(SCALAPACK_FOUND)

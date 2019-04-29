@@ -49,7 +49,7 @@ COMPONENTS default to Netlib LAPACK / LapackE, otherwise:
   OpenBLAS Lapack for Fortran
 
 ``LAPACK95``
-  get Lapack95 interfaces for MKL or Netlib (must also specify one of IntelPar, IntelSeq, Netlib)
+  get Lapack95 interfaces for MKL or Netlib (must also specify one of MKL, Netlib)
 
 
 Result Variables
@@ -421,7 +421,7 @@ if(CMAKE_Fortran_COMPILER AND LAPACK_LIBRARY)
 endif()
 
 if(_lapack_ok)
-  if(MSVC OR CMAKE_C_COMPILER OR LAPACKE IN_LIST LAPACK_FIND_COMPONENTS)
+  if(MSVC OR CMAKE_C_COMPILER)
     include(CheckSymbolExists)
     if(MKL IN_LIST LAPACK_FIND_COMPONENTS)
       check_symbol_exists(LAPACKE_cheev mkl_lapacke.h _lapack_ok)
