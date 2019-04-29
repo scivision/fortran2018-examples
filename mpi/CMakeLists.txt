@@ -5,6 +5,11 @@ cmake_minimum_required(VERSION 3.3)
 project(mpidemo C Fortran)
 enable_testing()
 
+if(WIN32 AND CMAKE_Fortran_COMPILER_ID STREQUAL GNU)
+  message(WARNING "FindMPI in CMake seems to have a bug on Windows, skipping MPI tests")
+  return()
+endif()
+
 include(mpi.cmake)
 
 if(CMAKE_VERSION VERSION_GREATER_EQUAL 3.12)

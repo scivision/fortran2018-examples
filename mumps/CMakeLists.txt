@@ -13,6 +13,11 @@ enable_testing()
 
 option(USEMKL "Use Intel MKL libraries" OFF)
 
+if(WIN32 AND CMAKE_Fortran_COMPILER_ID STREQUAL GNU)
+  message(WARNING "FindMPI in CMake seems to have a bug on Windows, skipping MUMPS tests")
+  return()
+endif()
+
 if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.12.0")  # quotes are needed!
   cmake_policy(SET CMP0074 NEW)
 endif()
