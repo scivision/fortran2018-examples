@@ -1,5 +1,5 @@
-cmake_minimum_required (VERSION 3.11)  # 3.9: MPI::MPI_Fortran, 3.11: Lapack
-project(test_gem C Fortran)  # need C for scalapack findThreads with MKL/Intel
+cmake_minimum_required (VERSION 3.12)
+project(MumpsDemo C Fortran)  # need C for scalapack findThreads with MKL/Intel
 enable_testing()
 
 if(WIN32 AND CMAKE_Fortran_COMPILER_ID STREQUAL GNU)
@@ -7,9 +7,7 @@ if(WIN32 AND CMAKE_Fortran_COMPILER_ID STREQUAL GNU)
   return()
 endif()
 
-if(${CMAKE_VERSION} VERSION_GREATER_EQUAL "3.12.0")  # quotes are needed!
-  cmake_policy(SET CMP0074 NEW)
-endif()
+cmake_policy(SET CMP0074 NEW)
 
 if(NOT realbits)
   set(realbits 64)

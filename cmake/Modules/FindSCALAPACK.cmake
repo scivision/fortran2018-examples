@@ -115,8 +115,6 @@ if(NOT (OpenMPI IN_LIST SCALAPACK_FIND_COMPONENTS
   endif()
 endif()
 
-message(STATUS "Finding SCALAPACK components: ${SCALAPACK_FIND_COMPONENTS}")
-
 find_package(PkgConfig)
 
 if(NOT DEFINED CMAKE_C_COMPILER)

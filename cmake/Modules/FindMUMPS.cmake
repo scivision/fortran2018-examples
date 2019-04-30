@@ -22,6 +22,24 @@ MUMPS_INCLUDE_DIRS
 
 #]=======================================================================]
 
+function(mumps_libs)
+
+FOREACH(comp ${MUMPS_FIND_COMPONENTS})
+  find_library(MUMPS_${comp}_lib
+              NAMES ${comp}mumps)
+
+  if(NOT MUMPS_${comp}_lib)
+    message(WARNING "MUMPS ${comp} not found")
+    return()
+  endif()
+
+  list(APPEND MUMPS_LIBRARY ${MUMPS_${comp}_lib})
+  mark_as_advanced(MUMPS_${comp}_lib)
+ENDFOREACH()
+
+set(MUMPS_LIBRARY ${MUMPS_LIBRARY} PARENT_SCOPE)
+
+endfunction()
 
 if(NOT MUMPS_FIND_COMPONENTS)
   set(MUMPS_FIND_COMPONENTS d)
@@ -37,18 +55,19 @@ find_library(PORD
              NAMES pord)
 
 
-FOREACH(comp ${MUMPS_FIND_COMPONENTS})
-  find_library(MUMPS_${comp}_lib
-              NAMES ${comp}mumps)
+mumps_libs()
 
-  list(APPEND MUMPS_LIBRARY ${MUMPS_${comp}_lib})
-  mark_as_advanced(MUMPS_${comp}_lib)
-ENDFOREACH()
 
+if(MUMPS_LIBRARY)
+  include(CheckFortranFunctionExists)
+  set(CMAKE_REQUIRED_INCLUDES ${MUMPS_INCLUDE_DIR})
+  set(CMAKE_REQUIRED_LIBRARIES ${MUMPS_LIBRARY})
+  check_fortran_function_exists(dmumps MUMPS_OK)
+endif()
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(MUMPS
-  REQUIRED_VARS MUMPS_LIBRARY MUMPS_COMMON PORD MUMPS_INCLUDE_DIR)
+  REQUIRED_VARS MUMPS_LIBRARY MUMPS_COMMON PORD MUMPS_INCLUDE_DIR MUMPS_OK)
 
 # in this order!
 if(MUMPS_FOUND)
@@ -56,7 +75,5 @@ if(MUMPS_FOUND)
   set(MUMPS_INCLUDE_DIRS ${MUMPS_INCLUDE_DIR})
 endif()
 
-mark_as_advanced(
-MUMPS_INCLUDE_DIR
-MUMPS_LIBRARY)
+mark_as_advanced(MUMPS_INCLUDE_DIR MUMPS_LIBRARY)
 

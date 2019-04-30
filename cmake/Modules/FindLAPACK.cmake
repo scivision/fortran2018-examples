@@ -144,9 +144,7 @@ if(LAPACK95 IN_LIST LAPACK_FIND_COMPONENTS)
 endif()
 
 pkg_check_modules(LAPACK lapack-netlib)
-if(NOT LAPACK_FOUND)
-  pkg_check_modules(LAPACK lapack)  # Netlib on Cygwin and others
-endif()
+# don't use generic pkgconfig names as update-alternatives may be in use
 find_library(LAPACK_LIB
   NAMES lapack
   HINTS ${LAPACK_LIBRARY_DIRS} ${LAPACK_LIBDIR}
@@ -182,9 +180,7 @@ if(LAPACKE IN_LIST LAPACK_FIND_COMPONENTS)
 endif()
 
 pkg_check_modules(BLAS blas-netlib)
-if(NOT BLAS_FOUND)
-  pkg_check_modules(BLAS blas)  # Netlib on Cygwin and others
-endif()
+# don't use generic pkg-config names since update-alternatives may be in use.
 find_library(BLAS_LIBRARY
   NAMES refblas blas
   HINTS ${BLAS_LIBRARY_DIRS} ${BLAS_LIBDIR}
