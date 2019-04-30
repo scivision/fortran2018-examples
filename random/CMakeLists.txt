@@ -4,20 +4,17 @@ enable_testing()
 
 get_directory_property(hasParent PARENT_DIRECTORY)
 if(NOT hasParent)
-  include(../cmake/compilers.cmake)
+  include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/compilers.cmake)
 endif()
 
-if(NOT f08submod OR NOT f08errorstop)
-  return()
-endif()
+include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/f18random.cmake)
 
 add_executable(random random.f90 random_demo.f90)
 target_compile_options(random PRIVATE ${FFLAGS})
 target_link_libraries(random PRIVATE ${FLIBS})
 add_test(NAME RandomInit COMMAND random)
-if(f2018random)
+if(f18random)
   target_sources(random PRIVATE random_init_f2018.f90)
 else()
   target_sources(random PRIVATE random_init.f90)
 endif()
-

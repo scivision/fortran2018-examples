@@ -1,21 +1,17 @@
-cmake_minimum_required(VERSION 3.7)
+cmake_minimum_required(VERSION 3.12)
 project(fortran2018demo Fortran C CXX)
 enable_testing()
 
-if(CMAKE_VERSION VERSION_GREATER_EQUAL 3.12)
-  cmake_policy(SET CMP0074 NEW)
-endif()
+cmake_policy(SET CMP0074 NEW)
 
-option(USEMKL "Use Intel MKL" OFF)
-
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake/Modules/)
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/)
 
 include(cmake/compilers.cmake)
-
 
 add_subdirectory(array)
 add_subdirectory(benchmarks)
 add_subdirectory(character)
+add_subdirectory(CMake)
 add_subdirectory(coarray)
 add_subdirectory(contiguous)
 add_subdirectory(cxx)

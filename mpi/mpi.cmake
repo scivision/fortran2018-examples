@@ -16,6 +16,10 @@
 # --- verify MPI actually works
 find_package(MPI COMPONENTS Fortran)
 
+if(NOT MPI_Fortran_FOUND)
+  return()
+endif()
+
 set(CMAKE_REQUIRED_FLAGS ${MPI_Fortran_COMPILE_OPTIONS})
 set(CMAKE_REQUIRED_INCLUDES ${MPI_Fortran_INCLUDE_DIRS})
 set(CMAKE_REQUIRED_LIBRARIES ${MPI_Fortran_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})

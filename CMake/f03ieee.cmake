@@ -1,0 +1,1 @@
+check_fortran_source_compiles("use, intrinsic:: ieee_arithmetic, only: ieee_is_nan; transfer(Z'7FC00000', 1.); end" f03ieee SRC_EXT f90)

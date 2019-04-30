@@ -88,23 +88,23 @@ pkg_check_modules(LAPACK_ATLAS lapack-atlas)
 find_library(LAPACK_ATLAS
   NAMES ptlapack lapack_atlas lapack
   PATH_SUFFIXES atlas
-  HINTS ${LAPACK_ATLAS_LIBRARY_DIRS})
+  HINTS ${LAPACK_ATLAS_LIBRARY_DIRS} ${LAPACK_ATLAS_LIBDIR})
 
 pkg_check_modules(LAPACK_BLAS blas-atlas)
 
 find_library(BLAS_LIBRARY
   NAMES ptf77blas f77blas blas
   PATH_SUFFIXES atlas
-  HINTS ${LAPACK_BLAS_LIBRARY_DIRS})
+  HINTS ${LAPACK_BLAS_LIBRARY_DIRS} ${LAPACK_ATLAS_LIBDIR})
 # === C ===
 find_library(BLAS_C_ATLAS
   NAMES ptcblas cblas
   PATH_SUFFIXES atlas
-  HINTS ${LAPACK_BLAS_LIBRARY_DIRS})
+  HINTS ${LAPACK_BLAS_LIBRARY_DIRS} ${LAPACK_ATLAS_LIBDIR})
 
 find_path(LAPACK_INCLUDE_DIR
   NAMES cblas-atlas.h cblas.h clapack.h
-  HINTS ${LAPACK_BLAS_INCLUDE_DIRS})
+  HINTS ${LAPACK_BLAS_INCLUDE_DIRS} ${LAPACK_ATLAS_LIBDIR})
 
 #===========
 if(LAPACK_ATLAS AND BLAS_C_ATLAS AND BLAS_LIBRARY AND ATLAS_LIB)
@@ -149,7 +149,7 @@ if(NOT LAPACK_FOUND)
 endif()
 find_library(LAPACK_LIB
   NAMES lapack
-  HINTS ${LAPACK_LIBRARY_DIRS}
+  HINTS ${LAPACK_LIBRARY_DIRS} ${LAPACK_LIBDIR}
   PATH_SUFFIXES lapack)
 if(LAPACK_LIB)
   list(APPEND LAPACK_LIBRARY ${LAPACK_LIB})
@@ -161,11 +161,11 @@ if(LAPACKE IN_LIST LAPACK_FIND_COMPONENTS)
   pkg_check_modules(LAPACKE lapacke)
   find_library(LAPACKE_LIBRARY
     NAMES lapacke
-    HINTS ${LAPACKE_LIBRARY_DIRS})
+    HINTS ${LAPACKE_LIBRARY_DIRS} ${LAPACKE_LIBDIR})
 
   find_path(LAPACKE_INCLUDE_DIR
     NAMES lapacke.h
-    HINTS ${LAPACKE_INCLUDE_DIRS})
+    HINTS ${LAPACKE_INCLUDE_DIRS} ${LAPACKE_LIBDIR})
 
   if(LAPACKE_LIBRARY AND LAPACKE_INCLUDE_DIR)
     set(LAPACK_LAPACKE_FOUND true PARENT_SCOPE)
@@ -187,7 +187,7 @@ if(NOT BLAS_FOUND)
 endif()
 find_library(BLAS_LIBRARY
   NAMES refblas blas
-  HINTS ${BLAS_LIBRARY_DIRS}
+  HINTS ${BLAS_LIBRARY_DIRS} ${BLAS_LIBDIR}
   PATH_SUFFIXES blas)
 
 if(BLAS_LIBRARY)
@@ -212,14 +212,14 @@ function(openblas_libs)
 pkg_check_modules(LAPACK lapack-openblas)
 find_library(LAPACK_LIBRARY
   NAMES lapack
-  HINTS ${LAPACK_LIBRARY_DIRS}
+  HINTS ${LAPACK_LIBRARY_DIRS} ${LAPACK_LIBDIR}
   PATH_SUFFIXES openblas)
 
 
 pkg_check_modules(BLAS blas-openblas)
 find_library(BLAS_LIBRARY
   NAMES openblas blas
-  HINTS ${BLAS_LIBRARY_DIRS}
+  HINTS ${BLAS_LIBRARY_DIRS} ${BLAS_LIBDIR}
   PATH_SUFFIXES openblas)
 
 find_path(LAPACK_INCLUDE_DIR
@@ -263,11 +263,11 @@ foreach(s ${_mkl_libs})
            NAMES ${s}
            PATHS ENV MKLROOT ENV TBBROOT
            PATH_SUFFIXES
-             lib/intel64
+             lib/intel64 lib/intel64_win
              lib/intel64/gcc4.7 ../tbb/lib/intel64/gcc4.7
              lib/intel64/vc_mt ../tbb/lib/intel64/vc_mt
              ../compiler/lib/intel64
-           HINTS ${MKL_LIBRARY_DIRS}
+           HINTS ${MKL_LIBRARY_DIRS} ${MKL_LIBDIR}
            NO_DEFAULT_PATH)
 
   if(NOT LAPACK_${s}_LIBRARY)
@@ -294,8 +294,6 @@ endfunction(find_mkl_libs)
 # ========== main program
 
 cmake_policy(VERSION 3.3)
-
-unset(LAPACK_LIBRARY)
 
 if(NOT (OpenBLAS IN_LIST LAPACK_FIND_COMPONENTS
   OR Netlib IN_LIST LAPACK_FIND_COMPONENTS

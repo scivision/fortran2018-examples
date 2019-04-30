@@ -11,11 +11,11 @@ enable_testing()
 
 # https://stackoverflow.com/tags/fortran-iso-c-binding/info
 
-set(CMAKE_CXX_STANDARD_REQUIRED yes)
+set(CMAKE_CXX_STANDARD_REQUIRED true)
 
 get_directory_property(hasParent PARENT_DIRECTORY)
 if(NOT hasParent)
-  include(../cmake/compilers.cmake)
+  include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/compilers.cmake)
 endif()
 
 if(CMAKE_Fortran_COMPILER_ID STREQUAL Intel)

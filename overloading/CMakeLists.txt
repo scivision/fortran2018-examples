@@ -7,8 +7,8 @@ if(NOT hasParent)
   include(../cmake/compilers.cmake)
 endif()
 
-check_fortran_source_compiles("use iso_fortran_env; print *, compiler_options(); end" 
-  f08version SRC_EXT f90)
+include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/f08version.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/f18errorstop.cmake)
 
 if(f08version)
 add_executable(proc pragma.f90)

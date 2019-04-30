@@ -4,8 +4,10 @@ enable_testing()
 
 get_directory_property(hasParent PARENT_DIRECTORY)
 if(NOT hasParent)
-  include(../cmake/compilers.cmake)
+  include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/compilers.cmake)
 endif()
+
+include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/f08errorstop.cmake)
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_REQUIRED_FLAGS -std=c++17)
@@ -52,5 +54,5 @@ endif()
 
 if(cxx17)
   add_executable(filesep_cpp filesep.cpp)
-  set_property(TARGET filesep_cpp PROPERTY CXX_STANDARD 17)
+  set_target_properties(filesep_cpp PROPERTIES CXX_STANDARD 17)
 endif()

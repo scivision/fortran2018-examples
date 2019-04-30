@@ -4,12 +4,15 @@ enable_testing()
 
 get_directory_property(hasParent PARENT_DIRECTORY)
 if(NOT hasParent)
-  include(../cmake/compilers.cmake)
+  include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/compilers.cmake)
 endif()
 
 if(NOT realbits)
   set(realbits 64)
 endif()
+
+include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/f03ieee.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/f08kind.cmake)
 
 add_executable(polymorph polymorphic.F90)
 target_compile_options(polymorph PRIVATE ${FFLAGS})
@@ -43,16 +46,12 @@ target_compile_definitions(precprob PRIVATE REAL128=${f08kind})
 add_test(NAME FortranPrecision COMMAND precprob)
 
 if(f03ieee)
-  add_executable(nan nans.F90)
-  target_compile_options(nan PRIVATE ${FFLAGS})
-  target_link_libraries(nan PRIVATE ${FLIBS})
-  target_compile_definitions(nan PRIVATE REAL128=${f08kind} IEEENAN=${fieeenan})
-  add_test(NAME FortranNaN COMMAND nan)
-endif()
 
-if(NOT f08errorstop OR NOT f03ieee)
-  return()
-endif()
+add_executable(nan nans.F90)
+target_compile_options(nan PRIVATE ${FFLAGS})
+target_link_libraries(nan PRIVATE ${FLIBS})
+target_compile_definitions(nan PRIVATE REAL128=${f08kind} IEEENAN=${f03ieee})
+add_test(NAME FortranNaN COMMAND nan)
 
 add_library(assert assert.F90)
 target_compile_options(assert PRIVATE ${FFLAGS})
@@ -64,3 +63,4 @@ target_link_libraries(testassert assert ${FLIBS})
 target_compile_options(testassert PRIVATE ${FFLAGS})
 add_test(NAME FortranAssert COMMAND testassert)
 
+endif()

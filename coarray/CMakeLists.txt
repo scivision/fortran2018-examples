@@ -9,7 +9,7 @@ enable_testing()
 
 get_directory_property(hasParent PARENT_DIRECTORY)
 if(NOT hasParent)
-  include(../cmake/compilers.cmake)
+  include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/compilers.cmake)
   list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../cmake/Modules/)
 endif()
 
@@ -22,15 +22,15 @@ endif()
 include(CheckFortranSourceCompiles)
 set(CMAKE_REQUIRED_FLAGS ${Coarray_COMPILE_OPTIONS})
 set(CMAKE_REQUIRED_LIBRARIES ${Coarray_LIBRARY})
-check_fortran_source_compiles("real :: x[*]; call co_sum(x); end" 
+check_fortran_source_compiles("real :: x[*]; call co_sum(x); end"
 f18coarray SRC_EXT f90)
-                              
+
 
 add_executable(coarray_hello helloworld.f90)
 target_compile_options(coarray_hello PRIVATE ${FFLAGS} ${Coarray_COMPILE_OPTIONS})
 target_link_libraries(coarray_hello PRIVATE ${FLIBS} ${Coarray_LIBRARIES})
-add_test(NAME CoarrayHello 
-         COMMAND ${Coarray_EXECUTABLE} ${Coarray_NUMPROC_FLAG} ${Coarray_MAX_NUMPROCS} ./coarray_hello)
+add_test(NAME CoarrayHello
+         COMMAND ${Coarray_EXECUTABLE} ${Coarray_NUMPROC_FLAG} ${Coarray_MAX_NUMPROCS} $<TARGET_FILE:coarray_hello>)
 
 
 if(f18coarray)
@@ -41,6 +41,6 @@ else()
 endif()
 target_compile_options(coarray_pi PRIVATE ${FFLAGS} ${Coarray_COMPILE_OPTIONS})
 target_link_libraries(coarray_pi PRIVATE ${FLIBS} ${Coarray_LIBRARIES})
-add_test(NAME CoarrayPi 
-         COMMAND ${Coarray_EXECUTABLE} ${Coarray_NUMPROC_FLAG} ${Coarray_MAX_NUMPROCS} ./coarray_pi)
+add_test(NAME CoarrayPi
+         COMMAND ${Coarray_EXECUTABLE} ${Coarray_NUMPROC_FLAG} ${Coarray_MAX_NUMPROCS} $<TARGET_FILE:coarray_pi>)
 

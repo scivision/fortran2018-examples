@@ -26,7 +26,11 @@ elseif(realbits EQUAL 32)
   set(mumpscomp s)
 endif()
 
-find_package(MUMPS REQUIRED COMPONENTS ${mumpscomp})
+find_package(MUMPS COMPONENTS ${mumpscomp})
+if(NOT MUMPS_FOUND)
+  return()
+endif()
+
 list(APPEND MUMPS_LIBRARIES ${SCALAPACK_LIBRARIES} ${LAPACK_LIBRARIES})
 
 #-- optional--normally we use PORD instead.

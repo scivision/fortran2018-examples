@@ -4,75 +4,11 @@ endif()
 
 include(CheckFortranSourceCompiles)
 
-check_fortran_source_compiles("
-use, intrinsic:: ieee_arithmetic, only: ieee_is_nan
-end"
-  f03ieee SRC_EXT f90)
-
-check_fortran_source_compiles("
-print *,transfer(Z'7FC00000', 1.)
-end"
-  fieeenan SRC_EXT f90)
-if(NOT fieeenan)
-  set(fieeenan 0)
-endif()
-
-check_fortran_source_compiles("
-use, intrinsic:: iso_fortran_env, only: real128
-use, intrinsic:: ieee_arithmetic, only: ieee_is_nan
-print *,ieee_is_nan(0._real128)
-
-if (huge(0._real128) /= 1.18973149535723176508575932662800702E+4932_real128) stop 1
-
-end program"
-  f08kind SRC_EXT f90)
-if(NOT f08kind)
-  set(f08kind 0)
-endif()
-
-check_fortran_source_compiles("error stop; end"
-  f08errorstop SRC_EXT f90)
-
-check_fortran_source_compiles("character :: b; error stop b; end"
-  f18errorstop SRC_EXT f90)
-
-check_fortran_source_compiles("call execute_command_line(''); end"
-  f08command SRC_EXT f90)
-
-check_fortran_source_compiles("call random_init(); end"
-  f18random SRC_EXT f90)
-
-check_fortran_source_compiles("
-module b
-interface
-module subroutine d
-end subroutine d
-end interface
-end
-
-submodule (b) c
-contains
-module procedure d
-end
-end
-
-program a
-end"
-  f08submod SRC_EXT f90)
-
-# ifort-19 yes, Flang yes, PGI yes, NAG yes, gfortran-8 no
-check_fortran_source_compiles("print*,is_contiguous([0,0]); end"
-  f08contig SRC_EXT f90)
-if(NOT f08contig)
-  set(f08contig 0)
-endif()
-
 if(CMAKE_Fortran_COMPILER_ID STREQUAL Intel)
-
   if(NOT WIN32)
-    set(FFLAGS -stand f18 -implicitnone -traceback -warn)
+    set(FFLAGS -stand f18 -implicitnone -traceback -warn -heap-arrays)
   else()
-    set(FFLAGS /stand:f18 /4Yd /traceback /warn)
+    set(FFLAGS /stand:f18 /4Yd /traceback /warn /heap-arrays-)
   endif()
 
   if(CMAKE_BUILD_TYPE STREQUAL Debug)

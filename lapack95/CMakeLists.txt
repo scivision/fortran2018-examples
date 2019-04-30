@@ -6,21 +6,21 @@ cmake_policy(SET CMP0074 NEW)
 
 get_directory_property(hasParent PARENT_DIRECTORY)
 if(NOT hasParent)
-  include(../cmake/compilers.cmake)
+  include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/compilers.cmake)
   list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../cmake/Modules/)
 endif()
 
 
 if(DEFINED ENV{MKLROOT})
   set(USEMKL 1)
-  find_package(LAPACK COMPONENTS IntelPar95)
+  find_package(LAPACK COMPONENTS MKL LAPACK95)
 else()
   set(USEMKL 0)
   find_package(LAPACK COMPONENTS LAPACK95)
 endif()
 
 
-if(LAPACK_IntelPar95_FOUND OR LAPACK_LAPACK95_FOUND)
+if(LAPACK_LAPACK95_FOUND)
   add_executable(svd demo_gesvd.F90)
   target_link_libraries(svd PRIVATE ${LAPACK_LIBRARIES} ${FLIBS})
   target_include_directories(svd PRIVATE ${LAPACK_INCLUDE_DIRS})

@@ -4,8 +4,11 @@ enable_testing()
 
 get_directory_property(hasParent PARENT_DIRECTORY)
 if(NOT hasParent)
-  include(../cmake/compilers.cmake)
+  include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/compilers.cmake)
 endif()
+
+include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/f08command.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/f18errorstop.cmake)
 
 add_executable(color color_text.f90)
 target_compile_options(color PRIVATE ${FFLAGS})

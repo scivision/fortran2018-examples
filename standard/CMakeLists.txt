@@ -1,14 +1,13 @@
-cmake_minimum_required(VERSION 3.7)
+cmake_minimum_required(VERSION 3.3)
 project(std C Fortran)
 enable_testing()
 
 get_directory_property(hasParent PARENT_DIRECTORY)
 if(NOT hasParent)
-  include(../cmake/compilers.cmake)
+  include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/compilers.cmake)
 endif()
 
-check_fortran_source_compiles("block; end block; end"
-  f08block SRC_EXT f90)
+include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/f08block.cmake)
 
 if(f08block)
 add_executable(block block.f90)

@@ -66,13 +66,14 @@ set(_mkl_libs ${ARGV})
 foreach(s ${_mkl_libs})
   find_library(SCALAPACK_${s}_LIBRARY
            NAMES ${s}
-           PATHS ENV MKLROOT ENV TBBROOT
+           PATHS ENV MKLROOT ENV I_MPI_ROOT ENV TBBROOT
            PATH_SUFFIXES
-             lib/intel64
+             lib/intel64 lib/intel64_win
+             intel64/lib/release
              lib/intel64/gcc4.7 ../tbb/lib/intel64/gcc4.7
              lib/intel64/vc_mt ../tbb/lib/intel64/vc_mt
              ../compiler/lib/intel64
-           HINTS ${MKL_LIBRARY_DIRS}
+           HINTS ${MKL_LIBRARY_DIRS} ${MKL_LIBDIR}
            NO_DEFAULT_PATH)
   if(NOT SCALAPACK_${s}_LIBRARY)
     message(WARNING "MKL component not found: " ${s})
