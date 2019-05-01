@@ -1,6 +1,6 @@
 module funcs
 use, intrinsic:: iso_fortran_env, only: sp=>real32, dp=>real64
-implicit none  ! takes affect for all procedures within module
+implicit none
 
 interface addtwo
   procedure addtwo_s, addtwo_d, addtwo_i
@@ -39,7 +39,7 @@ implicit none
 real(sp) :: twos = 2._sp
 real(dp) :: twod = 2._dp
 integer :: twoi = 2
- 
+
 
 print *, addtwo(twos), addtwo(twod), addtwo(twoi)
 

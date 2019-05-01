@@ -1,4 +1,3 @@
-program precision_problems
 use, intrinsic:: iso_fortran_env, only: wp=>real32
 implicit none
 
@@ -8,8 +7,5 @@ implicit none
 real(wp), parameter :: me = 9.10938356e-31_wp, mebad = 9.10938356_wp*10**(-31)
 
 print *,'electron rest mass is',me,'kg., not',mebad
-
-
-
 
 end program

@@ -1,11 +1,10 @@
-program short_circuit_logic
-!! Fortran does [NOT have short-circuit logic](https://www.scivision.co/fortran-short-circuit-logic/), 
+!! Fortran does [NOT have short-circuit logic](https://www.scivision.co/fortran-short-circuit-logic/),
 !! but some compilers enact short-circuit logic anyway.
 !! This can lead to confusion between different users.
 !!
-!! Compilers will definitely let you compile this, but some will segfault on run.
+!! Compilers will et you compile this, but some will segfault on run.
 !! NAG will raise Runtime error noting reference to not present variable.
-!! 
+!!
 
 implicit none
 

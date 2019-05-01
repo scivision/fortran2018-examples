@@ -1,5 +1,7 @@
-# This example also shows CMake Fortran preprocessor directives
 cmake_minimum_required(VERSION 3.1)
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release CACHE STRING "Debug or Release")
+endif()
 project(f2008contig Fortran)
 enable_testing()
 
@@ -19,4 +21,9 @@ endif()
 if(CMAKE_Fortran_COMPILER_ID STREQUAL GNU)
   target_compile_options(contig PRIVATE -Warray-temporaries)
 endif()
-add_test(NAME Contiguous COMMAND contig)
+
+if(WIN32 AND CMAKE_Fortran_COMPILER_ID STREQUAL Intel)
+  message(STATUS "Intel Fortran on Windows only seems to have a bug with the contiguous program")
+else()
+  add_test(NAME Contiguous COMMAND contig)
+endif()

@@ -1,5 +1,8 @@
 cmake_minimum_required (VERSION 3.12)
-project(fortran2018array C Fortran)  # C is NECESSARY for MKL detection!
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release CACHE STRING "Debug or Release")
+endif()
+project(fortran2018array C Fortran)  # C is necessary for MKL detection!
 enable_testing()
 
 cmake_policy(SET CMP0074 NEW)

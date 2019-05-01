@@ -1,4 +1,7 @@
 cmake_minimum_required(VERSION 3.1)
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release CACHE STRING "Debug or Release")
+endif()
 project(debugopts Fortran)
 enable_testing()
 
@@ -21,6 +24,12 @@ if(NOT ENV{CI})  # falsely trips some CIs with segfault
   add_test(NAME BoundsFail COMMAND badbounds WILL_FAIL ${xfail})
 endif()
 
-add_executable(nanmaxmin maxmin_nan.f90)
+if(WIN32 AND CMAKE_Fortran_COMPILER_ID STREQUAL PGI)
+  message(STATUS "CMake bug with PGI on Windows -- pgfortran.exe itself works")
+else()
+  add_executable(nanmaxmin maxmin_nan.f90)
+  add_test(NAME NaNminmax COMMAND nanmaxmin)
+endif()
 
 add_executable(typecast typecast.f90)
+add_test(NAME Typecasting COMMAND typecast)

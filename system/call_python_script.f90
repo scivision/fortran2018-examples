@@ -1,4 +1,3 @@
-program call_python_script
 !! demos calling a Python script, without crashing Fortran program if Python interpreter is not found.
 !! this technique works in general, as Fortran will crash if calling a non-existant program.
 use os_detect, only: getos

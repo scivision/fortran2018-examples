@@ -1,6 +1,4 @@
-! checks if compiler can handle F2018 Error Stop with variable
-
-program f2018errorstop
+!! checks if compiler can handle F2018 Error Stop with variable
 
 use, intrinsic :: iso_fortran_env
 implicit none

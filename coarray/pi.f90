@@ -1,6 +1,5 @@
-program coarray_pi
-! implements calculation:
-! $$ \pi = \int^1_{-1} \frac{dx}{\sqrt{1-x^2}} 
+!! implements calculation:
+!! $$ \pi = \int^1_{-1} \frac{dx}{\sqrt{1-x^2}}
 
 use, intrinsic:: iso_fortran_env, only: dp=>real64, int64, stderr=>error_unit
 implicit none
@@ -23,7 +22,7 @@ if (command_argument_count() > 0) then
 else
   dx = 1e-6
 endif
-  
+
 Ni = int((x1-x0) / dx)    ! (1 - (-1)) / interval
 im = this_image()
 
@@ -42,8 +41,8 @@ do i = im, Ni-1, num_images() ! Each image works on a subset of the problem
 !    print *,x,f,psum
 end do
 
-! --- co_sum is much simpler, but not included even in ifort 2019 
-call co_sum(psum)!, stat=stat,errmsg=emsg)  
+! --- co_sum is much simpler, but not included even in ifort 2019
+call co_sum(psum)!, stat=stat,errmsg=emsg)
 !if (stat /= 0) then
 !   write (stderr,*) emsg
 !   error stop

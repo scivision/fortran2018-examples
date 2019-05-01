@@ -1,12 +1,15 @@
 cmake_minimum_required(VERSION 3.12)
-project(mpidemo C Fortran)
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release CACHE STRING "Debug or Release")
+endif()
+project(mpidemo C Fortran)  # C is required by CMake to find MPI, even just for Fortran
 enable_testing()
 
 # If you have a custom location for mpif90 / mpifort and CMake doesn't find it, try
 #   FC=mpif90 cmake ..
 
 if(WIN32 AND CMAKE_Fortran_COMPILER_ID STREQUAL GNU)
-  message(WARNING "FindMPI in CMake seems to have a bug on Windows, skipping MPI tests")
+  message(STATUS "FindMPI in CMake seems to have a bug on Windows, skipping MPI tests")
   return()
 endif()
 
@@ -41,11 +44,13 @@ add_test(NAME MPIversion COMMAND mpivers)
 add_test(NAME MPIhello
          COMMAND ${MPIEXEC_EXECUTABLE} ${MPIEXEC_NUMPROC_FLAG} ${MPIEXEC_MAX_NUMPROCS}
   ${MPIEXEC_PREFLAGS} $<TARGET_FILE:mpi_hello> ${MPIEXEC_POSTFLAGS})
+set_tests_properties(MPIhello PROPERTIES RUN_SERIAL true)
 
 if(MPIEXEC_MAX_NUMPROCS GREATER_EQUAL 2)
 add_test(NAME MPIpass
          COMMAND ${MPIEXEC_EXECUTABLE} ${MPIEXEC_NUMPROC_FLAG} ${MPIEXEC_MAX_NUMPROCS}
   ${MPIEXEC_PREFLAGS} $<TARGET_FILE:mpi_pass> ${MPIEXEC_POSTFLAGS})
+set_tests_properties(MPIpass PROPERTIES RUN_SERIAL true)
 endif()
 endif(NOT WIN32)
 

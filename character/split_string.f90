@@ -5,34 +5,36 @@
 ! CHARACTER assumed size seems to work, but is not reliable in diverse enviroments.
 ! Your time is more valueable than a few bytes of RAM.
 
-program splitstring
+module strutils
 
-    use, intrinsic :: iso_fortran_env,  stdin=>input_unit
-
-    character(*),parameter :: mystr="hello.txt"
-    character(:),allocatable :: stem
-
-    stem = split(mystr,'.')
-    print *, stem
+implicit none
 
 contains
 
-  pure function split(instr,  delm)
+pure function split(instr,  delimiter)
 
-  character(*), intent(in) :: instr
-  character(1), intent(in) :: delm
-  character(:),allocatable :: split
+character(*), intent(in) :: instr
+character(1), intent(in) :: delimiter
+character(:), allocatable :: split
 
-  integer :: idx
+integer :: idx
 
-  idx = scan(instr,delm)
-  split = instr(1:idx-1)
+idx = scan(instr, delimiter)
+split = instr(1:idx-1)
 
 end function split
 
+end module strutils
+
+
+use strutils, only: split
+
+character(*),parameter :: mystr="hello.txt"
+character(:),allocatable :: stem
+
+stem = split(mystr,'.')
+print '(A)', stem
+
+if(len(stem) /= 5) error stop 'allocatable character of unexpected length'
+
 end program
-!---------------------------------------
-
-
-
-

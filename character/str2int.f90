@@ -1,12 +1,17 @@
-program str2int
-use, intrinsic:: iso_fortran_env, only: stdin=>input_unit
+!! very simple demo of string to integer
 implicit none
 
-integer :: M
+character(:), allocatable :: x
+integer :: m, n
 
-read(stdin,*) M
+x = '42'
 
-print *, M
+read(x,*) m
+read(x,'(i2)') n
+
+if(m/=n) error stop
+
+print '(A,I3)', x//' =>',m
 
 end program
 

@@ -1,4 +1,7 @@
-cmake_minimum_required (VERSION 3.3)
+cmake_minimum_required(VERSION 3.3)
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release CACHE STRING "Debug or Release")
+endif()
 project(coarraydemo Fortran)
 enable_testing()
 # ------- Fortran 2018 coarray examples -------

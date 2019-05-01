@@ -1,4 +1,7 @@
 cmake_minimum_required (VERSION 3.10) # 3.10 required for HDF5 1.10
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release CACHE STRING "Debug or Release")
+endif()
 project(fortranHDF5 Fortran)
 enable_testing()
 

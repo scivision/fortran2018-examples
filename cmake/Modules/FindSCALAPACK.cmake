@@ -204,10 +204,9 @@ endif()
 # Finalize
 
 if(SCALAPACK_LIBRARY)
-  find_package(MPI REQUIRED COMPONENTS Fortran)
   include(CheckFortranFunctionExists)
   set(CMAKE_REQUIRED_INCLUDES ${SCALAPACK_INCLUDE_DIR})
-  set(CMAKE_REQUIRED_LIBRARIES ${SCALAPACK_LIBRARY} MPI::MPI_Fortran)
+  set(CMAKE_REQUIRED_LIBRARIES ${SCALAPACK_LIBRARY})
   check_fortran_function_exists(numroc SCALAPACK_OK)
 endif()
 

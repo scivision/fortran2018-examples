@@ -1,6 +1,5 @@
-program special_char
-! This program shows a few special ASCII characters in Fortran.
-! https://en.wikipedia.org/wiki/ASCII#Character_groups
+!! This program shows a few special ASCII characters in Fortran.
+!! https://en.wikipedia.org/wiki/ASCII#Character_groups
 
 character, parameter :: &
 nul = char(0), &

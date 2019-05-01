@@ -5,7 +5,7 @@ use, intrinsic:: iso_fortran_env, stderr=>error_unit
 use, intrinsic:: ieee_arithmetic
 implicit none
 private
-  
+
 #if REALBITS==32
 integer,parameter :: wp=real32
 #elif REALBITS==64
@@ -13,9 +13,9 @@ integer,parameter :: wp=real64
 #elif REALBITS==128
 integer,parameter :: wp=real128
 #endif
-  
+
 public :: wp,isclose, assert_isclose
-  
+
 contains
 
 elemental logical function isclose(actual, desired, rtol, atol, equal_nan)
@@ -35,7 +35,7 @@ elemental logical function isclose(actual, desired, rtol, atol, equal_nan)
   real(wp), intent(in) :: actual, desired
   real(wp), intent(in), optional :: rtol, atol
   logical, intent(in), optional :: equal_nan
-  
+
   real(wp) :: r,a
   logical :: n
   ! this is appropriate INSTEAD OF merge(), since non present values aren't defined.
@@ -45,18 +45,15 @@ elemental logical function isclose(actual, desired, rtol, atol, equal_nan)
   if (present(rtol)) r = rtol
   if (present(atol)) a = atol
   if (present(equal_nan)) n = equal_nan
-  
+
   !print*,r,a,n,actual,desired
-  
+
 !--- sanity check
-  if ((r < 0._wp).or.(a < 0._wp)) error stop
-!--- simplest case
-  isclose = (actual == desired) 
-  if (isclose) return
+  if ((r < 0._wp).or.(a < 0._wp)) error stop 'invalid tolerance parameter(s)'
 !--- equal nan
   isclose = n.and.(ieee_is_nan(actual).and.ieee_is_nan(desired))
   if (isclose) return
-!--- Inf /= -Inf, unequal NaN
+!--- Inf /= Inf, unequal NaN
   if (.not.ieee_is_finite(actual) .or. .not.ieee_is_finite(desired)) return
 !--- floating point closeness check
   isclose = abs(actual-desired) <= max(r * max(abs(actual), abs(desired)), a)

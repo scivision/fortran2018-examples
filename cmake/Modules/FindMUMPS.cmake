@@ -46,13 +46,16 @@ if(NOT MUMPS_FIND_COMPONENTS)
 endif()
 
 find_path(MUMPS_INCLUDE_DIR
-          NAMES mumps_compat.h)
+          NAMES mumps_compat.h
+          DOC "MUMPS common header")
 
 find_library(MUMPS_COMMON
-             NAMES mumps_common)
+             NAMES mumps_common
+             DOC "MUMPS common libraries")
 
 find_library(PORD
-             NAMES pord)
+             NAMES pord
+             DOC "simplest MUMPS ordering library")
 
 
 mumps_libs()
@@ -62,7 +65,7 @@ if(MUMPS_LIBRARY)
   include(CheckFortranFunctionExists)
   set(CMAKE_REQUIRED_INCLUDES ${MUMPS_INCLUDE_DIR})
   set(CMAKE_REQUIRED_LIBRARIES ${MUMPS_LIBRARY})
-  check_fortran_function_exists(dmumps MUMPS_OK)
+  check_fortran_function_exists(mumps_run MUMPS_OK)
 endif()
 
 include(FindPackageHandleStandardArgs)

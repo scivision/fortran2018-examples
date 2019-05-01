@@ -1,16 +1,26 @@
-ascii_exe = executable('ascii', 'ascii.f90')
+project('character-examples', 'fortran')
+
+os = host_machine.system()
+
+ascii = executable('ascii', 'ascii.f90')
+test('Ascii Special', ascii)
 
 split = executable('split', 'split_string.f90')
 test('Split Character', split)
 
-printorwrite_exe = executable('printorwrite', 'print_vs_write.f90')
+printorwrite = executable('printorwrite', 'print_vs_write.f90')
+test('UTF8', printorwrite)
 
-str2int_exe = executable('str2int', 'str2int.f90')
+str2int = executable('str2int', 'str2int.f90')
+test('Str2Int', str2int)
 
-special_char_exe = executable('special_char', 'special_characters.f90')
+special_char = executable('special_char', 'special_characters.f90')
+test('Special Characters', special_char)
 
 charlen = executable('charlen', 'charlen.f90')
 test('Character Len', charlen)
 
-overwrite_stdout = executable('overwrite_stdout', 'overwrite_stdout.f90')
-test('Overwrite Stdout', overwrite_stdout)
+if os != 'windows'
+  overwrite_stdout = executable('overwrite_stdout', 'overwrite_stdout.f90')
+  test('Overwrite Stdout', overwrite_stdout)
+endif

@@ -135,6 +135,13 @@ if(LAPACK95 IN_LIST LAPACK_FIND_COMPONENTS)
                  PATHS ${LAPACK95_ROOT})
 
   if(LAPACK95_LIBRARY AND LAPACK95_INCLUDE_DIR)
+    set(CMAKE_REQUIRED_INCLUDES ${LAPACK95_INCLUDE_DIR})
+    set(CMAKE_REQUIRED_LIBRARIES ${LAPACK95_LIBRARY})
+    check_fortran_function_exists(gemm _lapack_ok)
+    if(NOT _lapack_ok)
+      return()
+    endif()
+
     set(LAPACK_INCLUDE_DIR ${LAPACK95_INCLUDE_DIR})
     set(LAPACK_LAPACK95_FOUND true PARENT_SCOPE)
     set(LAPACK_LIBRARY ${LAPACK95_LIBRARY})
@@ -308,6 +315,8 @@ get_property(project_languages GLOBAL PROPERTY ENABLED_LANGUAGES)
 
 find_package(PkgConfig)
 
+include(CheckFortranFunctionExists)
+
 # ==== generic MKL variables ====
 
 if(MKL IN_LIST LAPACK_FIND_COMPONENTS)
@@ -367,7 +376,9 @@ if(MKL IN_LIST LAPACK_FIND_COMPONENTS)
     endif()
 
     if(LAPACK95 IN_LIST LAPACK_FIND_COMPONENTS)
-      set(LAPACK_LAPACK95_FOUND true)
+      set(CMAKE_REQUIRED_INCLUDES ${LAPACK_INCLUDE_DIR})
+      set(CMAKE_REQUIRED_LIBRARIES ${LAPACK_LIBRARY})
+      check_fortran_function_exists(gemm LAPACK_LAPACK95_FOUND)
     endif()
 
     if(OpenMP IN_LIST LAPACK_FIND_COMPONENTS)
@@ -399,14 +410,9 @@ set(CMAKE_REQUIRED_LIBRARIES ${LAPACK_LIBRARY})
 
 set(_lapack_ok true)
 if(CMAKE_Fortran_COMPILER AND LAPACK_LIBRARY)
-  include(CheckFortranFunctionExists)
-  if(OpenBLAS IN_LIST LAPACK_FIND_COMPONENTS)
-    set(_blas_func sgemm)
-    set(_lapack_func sgemv)
-  else()
-    set(_blas_func sgemm)
-    set(_lapack_func sgesv)
-  endif()
+  set(_blas_func sgemm)
+  set(_lapack_func sgemv)
+
   check_fortran_function_exists(${_blas_func} BLAS_OK)
   check_fortran_function_exists(${_lapack_func} LAPACK_OK)
   if(NOT (BLAS_OK AND LAPACK_OK))

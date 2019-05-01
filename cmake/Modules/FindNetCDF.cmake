@@ -1,57 +1,88 @@
 # based on: https://github.com/Kitware/VTK/blob/master/CMake/FindNetCDF.cmake
+
+
+function(netcdf_c)
+pkg_check_modules(NCDF netcdf)  # C / CXX
+
 find_path(NetCDF_INCLUDE_DIR
   NAMES netcdf.h
+  HINTS ${NCDF_INCLUDE_DIRS}
   DOC "NetCDF include directories")
-mark_as_advanced(NetCDF_INCLUDE_DIR)
+
+if(NOT NetCDF_INCLUDE_DIR)
+  return()
+endif()
 
 find_library(NetCDF_C_LIBRARY
   NAMES netcdf
+  HINTS ${NCDF_LIBRARY_DIRS} ${NCDF_LIBDIR}
   DOC "NetCDF C library")
-mark_as_advanced(NetCDF_C_LIBRARY)
+
+if(NOT NetCDF_C_LIBRARY)
+  return()
+endif()
+
+include(CheckSymbolExists)
+set(CMAKE_REQUIRED_INCLUDES ${NetCDF_INCLUDE_DIR})
+set(CMAKE_REQUIRED_LIBRARIES ${NetCDF_C_LIBRARY})
+check_symbol_exists(nc_open netcdf.h NetCDF_OK)
+
+if(NetCDF_OK)
+  set(NetCDF_C_FOUND true PARENT_SCOPE)
+  set(NetCDF_INCLUDE_DIR ${NetCDF_INCLUDE_DIR} PARENT_SCOPE)
+  set(NetCDF_LIBRARY ${NetCDF_C_LIBRARY} PARENT_SCOPE)
+endif()
+endfunction()
+
+
+function(netcdf_fortran)
+pkg_check_modules(NCDFF netcdf-fortran)  # Fortran
 
 find_library(NetCDF_Fortran_LIBRARY
   NAMES netcdff
+  HINTS ${NCDFF_LIBRARY_DIRS} ${NCDFF_LIBDIR}
   DOC "NetCDF Fortran library")
-mark_as_advanced(NetCDF_Fortran_LIBRARY)
 
-set(NetCDF_LIBRARY ${NetCDF_Fortran_LIBRARY} ${NetCDF_C_LIBRARY})
-mark_as_advanced(NetCDF_LIBRARY)
+if(NOT NetCDF_Fortran_LIBRARY)
+  return()
+endif()
 
-if (NetCDF_INCLUDE_DIR)
-  file(STRINGS "${NetCDF_INCLUDE_DIR}/netcdf_meta.h" _netcdf_version_lines
-    REGEX "#define[ \t]+NC_VERSION_(MAJOR|MINOR|PATCH|NOTE)")
-  string(REGEX REPLACE ".*NC_VERSION_MAJOR *\([0-9]*\).*" "\\1" _netcdf_version_major "${_netcdf_version_lines}")
-  string(REGEX REPLACE ".*NC_VERSION_MINOR *\([0-9]*\).*" "\\1" _netcdf_version_minor "${_netcdf_version_lines}")
-  string(REGEX REPLACE ".*NC_VERSION_PATCH *\([0-9]*\).*" "\\1" _netcdf_version_patch "${_netcdf_version_lines}")
-  string(REGEX REPLACE ".*NC_VERSION_NOTE *\"\([^\"]*\)\".*" "\\1" _netcdf_version_note "${_netcdf_version_lines}")
-  set(NetCDF_VERSION "${_netcdf_version_major}.${_netcdf_version_minor}.${_netcdf_version_patch}${_netcdf_version_note}")
-  unset(_netcdf_version_major)
-  unset(_netcdf_version_minor)
-  unset(_netcdf_version_patch)
-  unset(_netcdf_version_note)
-  unset(_netcdf_version_lines)
-endif ()
+set(NetCDF_LIBRARY ${NetCDF_Fortran_LIBRARY} ${NetCDF_LIBRARY})
+set(CMAKE_REQUIRED_INCLUDES ${NetCDF_INCLUDE_DIR})
+set(CMAKE_REQUIRED_LIBRARIES ${NetCDF_LIBRARY})
+include(CheckFortranFunctionExists)
+check_fortran_function_exists(nf90_open NetCDF_OK)
+
+if(NetCDF_OK)
+include(CheckFortranSourceCompiles)
+check_fortran_source_compiles("use netcdf; end" NetCDF_OK SRC_EXT f90)
+endif()
+
+if(NetCDF_OK)
+  set(NetCDF_Fortran_FOUND true PARENT_SCOPE)
+  set(NetCDF_LIBRARY ${NetCDF_LIBRARY} PARENT_SCOPE)
+endif()
+endfunction()
+
+#============================================================
+cmake_policy(VERSION 3.3)
+
+find_package(PkgConfig)
+
+netcdf_c()
+
+if(NetCDF_LIBRARY AND Fortran IN_LIST NetCDF_FIND_COMPONENTS)
+  netcdf_fortran()
+endif()
+mark_as_advanced(NetCDF_LIBRARY NetCDF_INCLUDE_DIR)
+
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(NetCDF
   REQUIRED_VARS NetCDF_LIBRARY NetCDF_INCLUDE_DIR
-  VERSION_VAR NetCDF_VERSION)
+  HANDLE_COMPONENTS)
 
 if(NetCDF_FOUND)
   set(NetCDF_INCLUDE_DIRS ${NetCDF_INCLUDE_DIR})
   set(NetCDF_LIBRARIES ${NetCDF_LIBRARY})
-
-  if(NOT TARGET NetCDF::NetCDF_C)
-    add_library(NetCDF::NetCDF_C UNKNOWN IMPORTED)
-    set_target_properties(NetCDF::NetCDF_C PROPERTIES
-      IMPORTED_LOCATION ${NetCDF_C_LIBRARY}
-      INTERFACE_INCLUDE_DIRECTORIES ${NetCDF_INCLUDE_DIR})
-  endif()
-
-  if(NOT TARGET NetCDF::NetCDF_Fortran)
-    add_library(NetCDF::NetCDF_Fortran UNKNOWN IMPORTED)
-    set_target_properties(NetCDF::NetCDF_Fortran PROPERTIES
-      IMPORTED_LOCATION ${NetCDF_Fortran_LIBRARY}
-      INTERFACE_INCLUDE_DIRECTORIES ${NetCDF_INCLUDE_DIR})
-  endif()
-endif ()
+endif()

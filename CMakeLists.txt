@@ -1,12 +1,13 @@
 cmake_minimum_required(VERSION 3.12)
-project(fortran2018demo Fortran C CXX)
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release CACHE STRING "Debug or Release")
+endif()
+project(Fortran2018Examples LANGUAGES Fortran)
 enable_testing()
-
-cmake_policy(SET CMP0074 NEW)
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/)
 
-include(cmake/compilers.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/compilers.cmake)
 
 add_subdirectory(array)
 add_subdirectory(benchmarks)

@@ -1,4 +1,7 @@
 cmake_minimum_required (VERSION 3.3)
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release CACHE STRING "Debug or Release")
+endif()
 project(fortran2018benchmark Fortran)
 enable_testing()
 
@@ -10,3 +13,5 @@ endif()
 add_executable(ackermann ackermann.f90)
 target_compile_options(ackermann PRIVATE ${FFLAGS})
 target_link_libraries(ackermann ${FLIBS})
+add_test(NAME Ackermann COMMAND ackermann)
+set_tests_properties(Ackermann PROPERTIES TIMEOUT 10)

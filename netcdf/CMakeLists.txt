@@ -1,5 +1,8 @@
 cmake_minimum_required(VERSION 3.3)
-project(test_netcdf Fortran)
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release CACHE STRING "Debug or Release")
+endif()
+project(test_netcdf C Fortran)  # Need C for NetCDF
 enable_testing()
 #
 # apt install libnetcdf-dev libnetcdff-dev     # need BOTH installed
@@ -10,21 +13,13 @@ if(NOT hasParent)
   list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../cmake/Modules)
 endif()
 
-find_package(NetCDF)
-if(NOT NetCDF_Fortran_FOUND)
+find_package(NetCDF COMPONENTS Fortran)
+if(NOT NetCDF_FOUND)
   return()
 endif()
 
-set(CMAKE_REQUIRED_INCLUDES ${NetCDF_INCLUDE_DIRS})
-set(CMAKE_REQUIRED_LIBRARIES ${NetCDF_LIBRARIES})
-include(CheckFortranSourceCompiles)
-check_fortran_source_compiles("use netcdf; end" hasNetCDF SRC_EXT f90)
-
-if(hasNetCDF)
-
 add_executable(netcdf_rw simple_xy_wr.f90)
 target_compile_options(netcdf_rw PRIVATE ${FFLAGS})
-target_link_libraries(netcdf_rw PRIVATE NetCDF::NetCDF_Fortran)
+target_include_directories(netcdf_rw PRIVATE ${NetCDF_INCLUDE_DIRS})
+target_link_libraries(netcdf_rw PRIVATE ${NetCDF_LIBRARIES})
 add_test(NAME NetCDF COMMAND netcdf_rw)
-
-endif()

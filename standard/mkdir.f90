@@ -7,6 +7,11 @@ implicit none
 
 !> This interface connects to C stdlib functions present on any system.
 interface
+
+module logical function is_directory(path)
+character(*), intent(in) :: path
+end function is_directory
+
 integer(c_int) function mkdir_c(path, mask) bind (C, name='mkdir')
   import c_int, c_char
   character(kind=c_char), intent(in) :: path(*)
@@ -83,19 +88,6 @@ do while( i /= 0 )
 enddo
 
 end function mkdir
-
-
-logical function is_directory(path)
-
-character(*), intent(in) :: path
-
-#ifdef __INTEL_COMPILER
-inquire(directory=path, exist=is_directory)
-#else
-inquire(file=path, exist=is_directory)
-#endif
-
-end function is_directory
 
 end module std_mkdir
 

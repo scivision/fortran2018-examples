@@ -1,5 +1,3 @@
-program randominit
-
 use random, only: random_init
 
 real :: r

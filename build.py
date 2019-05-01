@@ -62,6 +62,16 @@ def _needs_wipe(fn: Path, wipe: bool) -> bool:
                 if not compilers['CC'] in cc:
                     wipe = True
                     break
+            elif 'FC' in compilers and line.startswith('CMAKE_Fortran_COMPILER:FILEPATH'):
+                fc = line.split('/')[-1]
+                if not compilers['FC'] in fc:
+                    wipe = True
+                    break
+            elif 'CXX' in compilers and line.startswith('CMAKE_CXX_COMPILER:FILEPATH'):
+                cxx = line.split('/')[-1]
+                if not compilers['CXX'] in cxx:
+                    wipe = True
+                    break
             elif line.startswith('CMAKE_GENERATOR:INTERNAL'):
                 gen = line.split('=')[-1]
                 if gen.startswith('Unix') and os.name == 'nt':
@@ -91,7 +101,7 @@ def cmake_setup(build: Path, src: Path, compilers: Dict[str, str],
     if compilers['CC'] == 'cl':
         wopts = ['-G', MSVC, '-A', 'x64']
     elif os.name == 'nt':
-        wopts = ['-G', 'MinGW Makefiles', '-DCMAKE_SH="CMAKE_SH-NOTFOUND']
+        wopts = ['-G', 'MinGW Makefiles']  # , '-DCMAKE_SH=CMAKE_SH-NOTFOUND']
     else:
         wopts = []
 
@@ -107,13 +117,16 @@ def cmake_setup(build: Path, src: Path, compilers: Dict[str, str],
     if wipe and cachefile.is_file():
         cachefile.unlink()
 
-    ret = subprocess.run([cmake_exe] + wopts + [str(src)],
+    cmd = [cmake_exe] + wopts + [str(src)]
+    print(' '.join(cmd))
+    ret = subprocess.run(cmd,
                          cwd=build, env=os.environ.update(compilers))
     if ret.returncode:
         raise SystemExit(ret.returncode)
 
-    ret = subprocess.run([cmake_exe, '--build', str(build), '-j'],
-                         stderr=subprocess.PIPE,
+    cmd = [cmake_exe, '--build', str(build), '--parallel']
+    print(' '.join(cmd))
+    ret = subprocess.run(cmd,
                          universal_newlines=True)
 
     test_result(ret)
@@ -128,13 +141,13 @@ def cmake_setup(build: Path, src: Path, compilers: Dict[str, str],
         if compilers['CC'] == 'cl':
             ret = subprocess.run([cmake_exe, '--build', str(build), '--target', 'RUN_TESTS'])
         else:
-            ret = subprocess.run([ctest_exe, '--output-on-failure'], cwd=build)
+            ret = subprocess.run([ctest_exe, '--parallel', '--test-load', '4', '--output-on-failure'], cwd=build)
 
         if ret.returncode:
             raise SystemExit(ret.returncode)
 # %% install
     if install is not None:  # blank '' or ' ' etc. will use dfault install path
-        ret = subprocess.run([cmake_exe, '--build', str(build), '-j', '--target', 'install'])
+        ret = subprocess.run([cmake_exe, '--build', str(build), '--parallel', '--target', 'install'])
         if ret.returncode:
             raise SystemExit(ret.returncode)
 
@@ -170,8 +183,7 @@ def meson_setup(build: Path, src: Path, compilers: Dict[str, str],
         if ret.returncode:
             raise SystemExit(ret.returncode)
 
-    ret = subprocess.run([ninja_exe, '-C', str(build)], stderr=subprocess.PIPE,
-                         universal_newlines=True)
+    ret = subprocess.run([ninja_exe, '-C', str(build)], universal_newlines=True)
 
     test_result(ret)
 
@@ -197,7 +209,16 @@ def test_result(ret: subprocess.CompletedProcess):
 
 # %% compilers
 def clang_params(impl: str) -> Tuple[Dict[str, str], List[str]]:
-    compilers = {'CC': 'clang', 'CXX': 'clang++', 'FC': 'flang'}
+
+    compilers = {}
+    if shutil.which('clang'):
+        compilers['CC'] = 'clang'
+
+    if shutil.which('clang++'):
+        compilers['CXX'] = 'clang++'
+
+    if shutil.which('flang'):
+        compilers['FC'] = 'flang'
 
     if impl == 'atlas':
         args = ['-Datlas=1']
@@ -212,7 +233,16 @@ def clang_params(impl: str) -> Tuple[Dict[str, str], List[str]]:
 
 
 def gnu_params(impl: str) -> Tuple[Dict[str, str], List[str]]:
-    compilers = {'FC': 'gfortran', 'CC': 'gcc', 'CXX': 'g++'}
+    compilers = {}
+
+    if shutil.which('gcc'):
+        compilers['CC'] = 'gcc'
+
+    if shutil.which('g++'):
+        compilers['CXX'] = 'g++'
+
+    if shutil.which('gfortran'):
+        compilers['FC'] = 'gfortran'
 
     if impl == 'atlas':
         args = ['-Datlas=1']
@@ -245,7 +275,7 @@ def intel_params() -> Tuple[Dict[str, str], List[str]]:
 
 def msvc_params() -> Tuple[Dict[str, str], List[str]]:
     if not shutil.which('cl'):
-        raise EnvironmentError('Must have PATH set to include MSVC cl.exe compiler bin directory')
+        raise EnvironmentError('Must have PATH set to include MSVC cl.exe compiler bin directory e.g. by vcvarsall.bat')
 
     compilers = {'CC': 'cl', 'CXX': 'cl'}
 
@@ -291,9 +321,9 @@ if __name__ == '__main__':
 
     dotest = a.no_test
 
-    if a.vendor == 'clang':
+    if a.vendor in ('clang', 'flang'):
         compilers, args = clang_params(a.implementation)
-    elif a.vendor in ('gnu', 'gcc'):
+    elif a.vendor in ('gnu', 'gcc', 'gfortran'):
         compilers, args = gnu_params(a.implementation)
     elif a.vendor == 'intel':
         compilers, args = intel_params()
