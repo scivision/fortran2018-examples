@@ -34,7 +34,6 @@ FOREACH(comp ${MUMPS_FIND_COMPONENTS})
   endif()
 
   list(APPEND MUMPS_LIBRARY ${MUMPS_${comp}_lib})
-  mark_as_advanced(MUMPS_${comp}_lib)
 ENDFOREACH()
 
 set(MUMPS_LIBRARY ${MUMPS_LIBRARY} PARENT_SCOPE)
@@ -62,10 +61,17 @@ mumps_libs()
 
 
 if(MUMPS_LIBRARY)
+  set(MUMPS_OK true)
   include(CheckFortranFunctionExists)
   set(CMAKE_REQUIRED_INCLUDES ${MUMPS_INCLUDE_DIR})
   set(CMAKE_REQUIRED_LIBRARIES ${MUMPS_LIBRARY})
-  check_fortran_function_exists(mumps_run MUMPS_OK)
+  foreach(c ${MUMPS_FIND_COMPONENTS})
+    check_fortran_function_exists(${c}mumps _${c}_ok)
+    if(NOT _${c}_ok)
+      set(MUMPS_OK false)
+      break()
+    endif()
+  endforeach()
 endif()
 
 include(FindPackageHandleStandardArgs)

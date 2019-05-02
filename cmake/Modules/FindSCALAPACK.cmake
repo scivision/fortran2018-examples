@@ -117,9 +117,6 @@ endif()
 
 find_package(PkgConfig)
 
-if(NOT DEFINED CMAKE_C_COMPILER)
-  enable_language(C)
-endif()
 if(NOT WIN32)
   find_package(Threads)  # not required--for example Flang
 endif()
@@ -172,10 +169,6 @@ if(MKL IN_LIST SCALAPACK_FIND_COMPONENTS)
   endif()
 
   if(SCALAPACK_LIBRARY)
-    if(NOT LAPACK_FOUND)
-      find_package(LAPACK COMPONENTS MKL REQUIRED)
-    endif()
-    list(APPEND SCALAPACK_LIBRARY ${LAPACK_LIBRARIES})
     set(SCALAPACK_MKL_FOUND true)
   endif()
 
@@ -185,7 +178,7 @@ elseif(OpenMPI IN_LIST SCALAPACK_FIND_COMPONENTS)
 
   find_library(SCALAPACK_LIBRARY
                NAMES scalapack scalapack-openmpi
-               HINTS ${SCALAPACK_LIBRARY_DIRS})
+               HINTS ${SCALAPACK_LIBRARY_DIRS} ${SCALAPACK_LIBDIR})
 
   if(SCALAPACK_LIBRARY)
     set(SCALAPACK_OpenMPI_FOUND true)
