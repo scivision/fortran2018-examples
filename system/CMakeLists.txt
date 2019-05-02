@@ -46,7 +46,7 @@ if(WIN32 AND CMAKE_Fortran_COMPILER_ID STREQUAL PGI)
 else()
   add_executable(callpython call_python_script.f90)
   target_compile_options(callpython PRIVATE ${FFLAGS})
-  target_link_libraries(callpython osdet ${FLIBS})
+  target_link_libraries(callpython PRIVATE osdet ${FLIBS})
 endif()
 endif(f18errorstop)
 
