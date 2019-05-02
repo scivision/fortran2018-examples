@@ -40,8 +40,6 @@ if(FFMPEG_FOUND)
   set_tests_properties(PlaySound PROPERTIES TIMEOUT 15)
 endif()
 
-endif(f08command)
-
 if(f18errorstop)
 if(WIN32 AND CMAKE_Fortran_COMPILER_ID STREQUAL PGI)
   message(STATUS "PGI Windows bug")
@@ -50,4 +48,6 @@ else()
   target_compile_options(callpython PRIVATE ${FFLAGS})
   target_link_libraries(callpython osdet ${FLIBS})
 endif()
-endif()
+endif(f18errorstop)
+
+endif(f08command)
