@@ -83,18 +83,29 @@ foreach(s ${_mkl_libs})
   list(APPEND SCALAPACK_LIB ${SCALAPACK_${s}_LIBRARY})
 endforeach()
 
-set(SCALAPACK_LIBRARY ${SCALAPACK_LIB} PARENT_SCOPE)
-set(SCALAPACK_INCLUDE_DIR
+
+find_path(SCALAPACK_INCLUDE_DIR
+  NAMES mkl_scalapack.h
+  HINTS ${MKL_INCLUDE_DIRS})
+
+if(NOT SCALAPACK_INCLUDE_DIR)
+  message(WARNING "MKL Include Dir not found")
+  return()
+endif()
+
+list(APPEND SCALAPACK_INCLUDE_DIR
   $ENV{MKLROOT}/include
   $ENV{MKLROOT}/include/intel64/${_mkl_bitflag}lp64
-  ${MKL_INCLUDE_DIRS}
-  PARENT_SCOPE)
+  ${MKL_INCLUDE_DIRS})
+
+set(SCALAPACK_LIBRARY ${SCALAPACK_LIB} PARENT_SCOPE)
+set(SCALAPACK_INCLUDE_DIR ${SCALAPACK_INCLUDE_DIR} PARENT_SCOPE)
 
 endfunction(mkl_scala)
 
 #==== main program
 
-cmake_policy(VERSION 3.7)
+cmake_policy(VERSION 3.11)
 
 if(CMAKE_VERSION VERSION_GREATER_EQUAL 3.12)
   cmake_policy(SET CMP0074 NEW)
@@ -200,8 +211,23 @@ if(SCALAPACK_LIBRARY)
   include(CheckFortranFunctionExists)
   set(CMAKE_REQUIRED_INCLUDES ${SCALAPACK_INCLUDE_DIR})
   set(CMAKE_REQUIRED_LIBRARIES ${SCALAPACK_LIBRARY})
-  check_fortran_function_exists(numroc SCALAPACK_OK)
+  check_fortran_function_exists(dlamch LAPACK_OK)
+
+  if(NOT LAPACK_OK)
+    find_package(LAPACK REQUIRED)
+    list(APPEND SCALAPACK_LIBRARY ${LAPACK_LIBRARIES})
+  endif()
+
+  find_package(MPI REQUIRED COMPONENTS Fortran)
+  set(CMAKE_REQUIRED_LIBRARIES ${SCALAPACK_LIBRARY} MPI::MPI_Fortran)
+
+# This did not work with MKL on Linux only
+#  check_fortran_function_exists(numroc SCALAPACK_OK)
+
+  include(CheckFortranSourceCompiles)
+  check_fortran_source_compiles("Locq = numroc(1,1,1,1,1); end" SCALAPACK_OK SRC_EXT f90)
 endif()
+
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(

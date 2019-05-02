@@ -1,5 +1,3 @@
-program intel_svd
-
 use,intrinsic:: iso_fortran_env, only: sp=>real32, dp=>real64, compiler_version, stderr=>error_unit
 
 implicit none

@@ -1,5 +1,3 @@
-program intel_svd
-
 #if USEMKL
 use lapack95, only: gesvd
 #else
@@ -50,9 +48,6 @@ print '(I3,A,3ES20.12)',storage_size(s32),' bits: error mag: ',e32
 
 maxerr=maxval(abs(e64))
 
-if (maxerr > 1e-7_dp) then
-  write(stderr,*) 'excessive singular value error'
-  stop 1
-endif
+if (maxerr > 1e-7_dp) error stop 'excessive singular value error'
 
 end program

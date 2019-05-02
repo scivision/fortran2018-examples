@@ -46,7 +46,6 @@ enable_language(CXX)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_library(call_f c_call_f.f90)
-target_link_libraries(call_f PRIVATE ${FLIBS})
 target_compile_options(call_f PRIVATE ${FFLAGS})
 set_target_properties(call_f PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
