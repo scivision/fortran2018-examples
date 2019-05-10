@@ -6,8 +6,7 @@ implicit none
 
 contains
 
-module procedure random_init
-! NOTE: this subroutine is replaced by "call random_init()" intrinsic of Fortran 2018
+module procedure rand_init
 integer :: n, u,ios, i
 integer, allocatable :: seed(:),check(:)
 
@@ -32,6 +31,6 @@ endif
 call random_seed(put=seed)
 !print *,'seed: ',seed    ! for debug/test
 
-end procedure random_init
+end procedure rand_init
 
 end submodule randinit

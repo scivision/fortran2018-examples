@@ -1,9 +1,9 @@
-use random, only: random_init
+use random, only: rand_init
 
 real :: r
 integer :: i
 
-call random_init()
+call rand_init(.false., .false.)
 
 print *, 'these two random number should not match if random_init is working'
 
