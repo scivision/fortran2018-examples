@@ -1,4 +1,4 @@
-program nulltest
+
 use, intrinsic:: iso_fortran_env, only: int64
 implicit none
 
@@ -19,7 +19,7 @@ do i = 1,N
     write(u,*) 'blah blah blah'
     flush(u)
 enddo
-close(u) 
+close(u)
 call system_clock(toc)
 
 tnul = (toc-tic)/real(rate)
