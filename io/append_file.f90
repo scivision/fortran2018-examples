@@ -1,7 +1,9 @@
 !! demonstrates appending to a text file in Fortran
 !! using polymorphic input type. Logging float, int, character.
 !! each "logger()" call starts a new line in the text file.
+
 use, intrinsic :: iso_fortran_env, only: int32, int64, real32, real64
+use logging, only : logger
 implicit none
 
 integer :: u, i
@@ -82,33 +84,5 @@ open(newunit=u, file=filename, iostat=i)
 close(u, status='delete', iostat=i)
 
 end subroutine unlink
-
-
-subroutine logger(val, filename)
-
-class(*), intent(in) :: val
-character(*), intent(in):: filename
-
-open(newunit=u, file=filename, status='unknown', form='formatted', access='stream', &
-  position='append')
-
-select type (val)
-type is (character(*))
-  write(u,'(A)') val
-type is (real(real32))
-  write(u,'(F0.0)') val
-type is (real(real64))
-  write(u,'(F0.0)') val
-type is (integer(int32))
-  write(u,'(I0)') val
-type is (integer(int64))
-  write(u,'(I0)') val
-type is (logical)
-  write(u,'(L1)') val
-end select
-
-close(u)
-
-end subroutine logger
 
 end program

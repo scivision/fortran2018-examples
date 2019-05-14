@@ -10,8 +10,12 @@ if(NOT hasParent)
   include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/compilers.cmake)
 endif()
 
+add_library(logging logging.f90)
+target_compile_options(logging PRIVATE ${FFLAGS})
+
 add_executable(append_file append_file.f90)
 target_compile_options(append_file PRIVATE ${FFLAGS})
+target_link_libraries(append_file PRIVATE logging)
 add_test(NAME AppendFile COMMAND append_file)
 
 add_executable(termio terminal_io.f90)

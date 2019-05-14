@@ -1,3 +1,7 @@
+logging_lib = library('logging', 'logging.f90')
+append_exe = executable('test_logging', 'append_file.f90',
+  link_with : logging_lib)
+
 termio = executable('termio', 'terminal_io.f90')
 
 leading_zeros = executable('leading_zeros', 'leading_zeros.f90')
