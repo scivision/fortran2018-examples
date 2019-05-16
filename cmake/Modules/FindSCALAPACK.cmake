@@ -208,18 +208,11 @@ endif()
 # Finalize
 
 if(SCALAPACK_LIBRARY)
-  include(CheckFortranFunctionExists)
   set(CMAKE_REQUIRED_INCLUDES ${SCALAPACK_INCLUDE_DIR})
-  set(CMAKE_REQUIRED_LIBRARIES ${SCALAPACK_LIBRARY})
-  check_fortran_function_exists(dlamch LAPACK_OK)
 
-  if(NOT LAPACK_OK)
-    find_package(LAPACK REQUIRED)
-    list(APPEND SCALAPACK_LIBRARY ${LAPACK_LIBRARIES})
-  endif()
-
+  find_package(LAPACK REQUIRED)
   find_package(MPI REQUIRED COMPONENTS Fortran)
-  set(CMAKE_REQUIRED_LIBRARIES ${SCALAPACK_LIBRARY} MPI::MPI_Fortran)
+  set(CMAKE_REQUIRED_LIBRARIES ${SCALAPACK_LIBRARY} ${LAPACK_LIBRARIES} MPI::MPI_Fortran)
 
 # This did not work with MKL on Linux only
 #  check_fortran_function_exists(numroc SCALAPACK_OK)
