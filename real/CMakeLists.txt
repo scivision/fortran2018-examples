@@ -16,6 +16,7 @@ endif()
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/f03ieee.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/f08kind.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/f18prop.cmake)
 
 add_executable(polymorph polymorphic.F90)
 target_compile_options(polymorph PRIVATE ${FFLAGS})
@@ -54,6 +55,14 @@ target_link_libraries(precprob PRIVATE ${FLIBS})
 target_compile_options(precprob PRIVATE ${FFLAGS})
 add_test(NAME PrecisionProblems COMMAND precprob)
 endif()
+
+
+if(f18prop)
+add_executable(properties properties.f90)
+target_compile_options(properties PRIVATE ${FFLAGS})
+add_test(NAME Fortran2018Properties COMMAND properties)
+endif()
+
 
 if(f03ieee)
 
