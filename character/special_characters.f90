@@ -1,8 +1,9 @@
 !! This program shows a few special ASCII characters in Fortran.
 !! https://en.wikipedia.org/wiki/ASCII#Character_groups
 
+use iso_c_binding, only: c_null_char
 character, parameter :: &
-nul = char(0), &
+nul = c_null_char, &
 etx = char(3), &
 tab = char(9), &
 backslash = char(92)   ! necessary for strict compilers like PGI and Flang in strings
