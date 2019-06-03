@@ -78,9 +78,10 @@ if(MUMPS_LIBRARY)
   include(CheckFortranSourceCompiles)
   set(CMAKE_REQUIRED_INCLUDES ${MUMPS_INCLUDE_DIR})
 
+  find_package(SCALAPACK REQUIRED)
   find_package(LAPACK REQUIRED)
   find_package(MPI REQUIRED COMPONENTS Fortran)
-  set(CMAKE_REQUIRED_LIBRARIES ${MUMPS_LIBRARY} ${LAPACK_LIBRARIES} MPI::MPI_Fortran)
+  set(CMAKE_REQUIRED_LIBRARIES ${MUMPS_LIBRARY} ${SCALAPACK_LIBRARIES} ${LAPACK_LIBRARIES} MPI::MPI_Fortran)
 
   # NOTE: These must be in quotes here: "d" "s" or behavior is intermittent not found
   if("d" IN_LIST MUMPS_FIND_COMPONENTS)

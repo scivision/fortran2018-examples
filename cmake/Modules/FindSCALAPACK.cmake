@@ -86,6 +86,10 @@ endforeach()
 
 find_path(SCALAPACK_INCLUDE_DIR
   NAMES mkl_scalapack.h
+  PATHS ENV MKLROOT ENV I_MPI_ROOT ENV TBBROOT
+  PATH_SUFFIXES
+    include
+    include/intel64/${_mkl_bitflag}lp64
   HINTS ${MKL_INCLUDE_DIRS})
 
 if(NOT SCALAPACK_INCLUDE_DIR)
@@ -94,8 +98,6 @@ if(NOT SCALAPACK_INCLUDE_DIR)
 endif()
 
 list(APPEND SCALAPACK_INCLUDE_DIR
-  $ENV{MKLROOT}/include
-  $ENV{MKLROOT}/include/intel64/${_mkl_bitflag}lp64
   ${MKL_INCLUDE_DIRS})
 
 set(SCALAPACK_LIBRARY ${SCALAPACK_LIB} PARENT_SCOPE)

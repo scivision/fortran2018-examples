@@ -41,9 +41,16 @@ endif()
   # WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 # endif()
 
+# --- Lapack
+# Lapack must work correctly for Scalapack to work
+find_package(LAPACK)
+if(NOT LAPACK_FOUND)
+  message(STATUS "MUMPS skipped due to missing Lapack")
+  return()
+endif()
 
 # --- Scalapack
-# Scalapack must work correctly for MUMPS to work...
+# Scalapack must work correctly for MUMPS to work
 find_package(SCALAPACK)
 if(NOT SCALAPACK_FOUND)
   message(STATUS "MUMPS skipped due to missing Scalapack")
@@ -53,15 +60,16 @@ endif()
 
 add_executable(blacs1 blacs.f)
 target_compile_options(blacs1 PRIVATE ${FFLAGS})
-target_link_libraries(blacs1 PRIVATE ${SCALAPACK_LIBRARIES} MPI::MPI_Fortran)
+target_link_libraries(blacs1 PRIVATE ${SCALAPACK_LIBRARIES} ${LAPACK_LIBRARIES} MPI::MPI_Fortran)
 target_include_directories(blacs1 PRIVATE ${SCALAPACK_INCLUDE_DIRS})
 if(NOT WIN32)
-add_test(NAME BLACS COMMAND ${MPIEXEC_EXECUTABLE} ${MPIEXEC_NUMPROC_FLAG} ${MPIEXEC_MAX_NUMPROCS} $<TARGET_FILE:blacs1>)
+  add_test(NAME BLACS COMMAND ${MPIEXEC_EXECUTABLE} ${MPIEXEC_NUMPROC_FLAG} ${MPIEXEC_MAX_NUMPROCS} $<TARGET_FILE:blacs1>)
 endif()
+
 
 add_executable(scalapack1 scalapack_example1.f)
 target_compile_options(scalapack1 PRIVATE ${FFLAGS})
-target_link_libraries(scalapack1 PRIVATE ${SCALAPACK_LIBRARIES} MPI::MPI_Fortran)
+target_link_libraries(scalapack1 PRIVATE ${SCALAPACK_LIBRARIES} ${LAPACK_LIBRARIES} MPI::MPI_Fortran)
 # note: this test needs at least 6 MPI processes, even if you're on a very small computer it's OK.
 if(NOT WIN32)
 add_test(NAME Scalapack
