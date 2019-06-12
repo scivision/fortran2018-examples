@@ -4,7 +4,7 @@ if f08block
   block_exe = executable('block', 'block.f90')
 endif
 
-shortcircuit = executable('shortcircuit', 'short_circuit.f90')
+short_circuit = executable('shortcircuit', 'short_circuit.f90')
 test('Short Circuit', short_circuit)
 
 bitpat= executable('bitpat', 'bitpat.f90')
@@ -12,7 +12,7 @@ test('Bit Pattern', bitpat)
 
 justwait_exe = executable('justwait', 'pause.f90')
 
-if fc=='intel'
+if fc.get_id()=='intel'
   mkdir_src = files('isdir_intel.f90')
 else
   mkdir_src = files('isdir.f90')

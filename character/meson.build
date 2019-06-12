@@ -1,5 +1,3 @@
-project('character-examples', 'fortran')
-
 os = host_machine.system()
 
 ascii = executable('ascii', 'ascii.f90')
