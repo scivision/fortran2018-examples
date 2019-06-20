@@ -53,25 +53,3 @@ else()
   target_compile_options(null PRIVATE ${FFLAGS})
   add_test(NAME FortranNullfile COMMAND null)
 endif()
-# --- C++17 filesystem ---
-# Workaround for PGI not having CXX on Windows and wrong CXX compiler being found
-if(WIN32 AND CMAKE_C_COMPILER_ID STREQUAL PGI)
-  message(STATUS "PGI on Windows does not currently have a CXX compiler")
-  return()
-endif()
-
-include(CheckLanguage)
-check_language(CXX)
-if(CMAKE_CXX_COMPILER)
-enable_language(CXX)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-include(CheckCXXSymbolExists)
-CHECK_CXX_SYMBOL_EXISTS(std::filesystem::path::preferred_separator filesystem cxx17)
-
-if(cxx17)
-  add_executable(filesep_cpp filesep.cpp)
-  set_target_properties(filesep_cpp PROPERTIES CXX_STANDARD 17)
-endif()
-
-endif(CMAKE_CXX_COMPILER)
