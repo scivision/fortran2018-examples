@@ -1,7 +1,12 @@
 # based on: https://github.com/Kitware/VTK/blob/master/CMake/FindNetCDF.cmake
-
+# in general, NetCDF requires C compiler even if only using Fortran
 
 function(netcdf_c)
+
+if(NOT CMAKE_C_COMPILER)
+  return()
+endif()
+
 pkg_check_modules(NCDF netcdf)  # C / CXX
 
 find_path(NetCDF_INCLUDE_DIR
@@ -36,6 +41,11 @@ endfunction()
 
 
 function(netcdf_fortran)
+
+if(NOT CMAKE_Fortran_COMPILER)
+  return()
+endif()
+
 pkg_check_modules(NCDFF netcdf-fortran)  # Fortran
 
 find_library(NetCDF_Fortran_LIBRARY
