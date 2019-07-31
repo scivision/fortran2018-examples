@@ -47,7 +47,7 @@ target_link_libraries(cxx_call_f PRIVATE call_f)
 target_compile_options(cxx_call_f PRIVATE ${CFLAGS})
 set_target_properties(cxx_call_f PROPERTIES CXX_STANDARD 11)
 add_test(NAME CXX2Fortran COMMAND cxx_call_f)
-cd
+
 # manually:
 #
 # source compilervars.sh

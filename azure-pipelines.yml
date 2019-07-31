@@ -1,0 +1,66 @@
+jobs:
+
+- job: Ubuntu
+  pool:
+    vmImage: ubuntu-latest
+
+  steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.6'
+      addToPath: true
+  - script: |
+      sudo apt install -yq --no-install-recommends gfortran
+      curl -Ls https://github.com/ninja-build/ninja/releases/download/v1.9.0/ninja-linux.zip -o ninja-linux.zip
+      sudo unzip ninja-linux.zip -d /usr/local/bin/
+      python -m pip install meson
+    displayName: 'Install Prereqs'
+  - script: meson setup build
+    env:
+      FC: gfortran-6
+    displayName: 'Configure build'
+  - script: meson test -C build
+    displayName: 'build and test'
+  - publish: build/meson-logs/testlog.txt
+    condition: succeededOrFailed()
+    artifact: LinuxMesonTestLog
+
+- job: MacOS
+  pool:
+    vmImage: macOS-latest
+
+  steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.6'
+      addToPath: true
+  - script: brew install gcc meson
+    displayName: 'Install Prereqs'
+  - script: meson setup build
+    displayName: 'Configure build'
+  - script: meson test -C build
+    displayName: 'build and test'
+  - publish: build/meson-logs/testlog.txt
+    condition: succeededOrFailed()
+    artifact: MacMesonTestLog
+
+- job: WindowsMinGW
+  pool:
+    vmImage: windows-latest
+
+  steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.6'
+      addToPath: true
+  - script: |
+      cinst -y mingw ninja
+      python -m pip install meson
+    displayName: 'Install Prereqs'
+  - script: meson setup build
+    displayName: 'Configure build'
+  - script: meson test -C build
+    displayName: 'build and test'
+  - publish: build/meson-logs/testlog.txt
+    condition: succeededOrFailed()
+    artifact: WindowsMesonTestLog

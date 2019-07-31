@@ -1,0 +1,1 @@
+option('realbits', type : 'string', value : '64', description : 'real bits')

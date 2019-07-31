@@ -1,5 +1,5 @@
 image:
-- Visual Studio 2017
+# - Visual Studio 2017  CMake < 3.13
 - ubuntu1804
 
 environment:

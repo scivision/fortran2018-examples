@@ -2,8 +2,6 @@ if(NOT CMAKE_Fortran_COMPILER)
   message(FATAL_ERROR "Must have invoked Fortran before including compilers.cmake")
 endif()
 
-include(CheckFortranSourceCompiles)
-
 if(CMAKE_Fortran_COMPILER_ID STREQUAL Intel)
   if(NOT WIN32)
     set(FFLAGS -stand f18 -implicitnone -traceback -warn -heap-arrays)
@@ -39,6 +37,7 @@ elseif(CMAKE_Fortran_COMPILER_ID STREQUAL NAG)
 endif()
 
 
+include(CheckFortranSourceCompiles)
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/f08contig.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/f18errorstop.cmake)
 include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/f18random.cmake)

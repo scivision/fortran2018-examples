@@ -4,7 +4,7 @@ if not mpi.found()
   subdir_done()
 endif
 
-if not fc.run('use mpi; end', name: 'MPI', dependencies : mpi).returncode() == 0
+if not (fc.run('use mpi; end', name: 'MPI', dependencies : mpi).returncode() == 0)
   subdir_done()
 endif
 
