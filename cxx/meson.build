@@ -4,6 +4,10 @@ if fc.get_id() == 'pgi'
   subdir_done()
 endif
 
+if os == 'darwin'
+  message('cxx: Meson build on Mac')
+  subdir_done()
+endif
 
 call_f = library('call_f', 'c_call_f.f90')
 c_call_f = executable('c_call_f', 'cxx_call_f.cxx', link_with: call_f)
