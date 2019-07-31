@@ -1,13 +1,13 @@
 # gfortran >= 6 is required
-language: c
+language: python
 group: travis_latest
 dist: xenial
 
 git:
-  depth: 3
+  depth: 25
   quiet: true
 
-env: FC=gfortran
+env: FC=gfortran-6
 
 addons:
   apt:
@@ -21,27 +21,11 @@ addons:
  #       - libnetcdf-dev
 #        - libnetcdff-dev # not in image repos
 
-matrix:
-  include:
-  - os: linux
-    env: FC=gfortran-6
-#  - os: osx
-#    before_install:
-  #  - brew install gcc > /dev/null
-    #- brew install hdf5 netcdf > /dev/null;  # works but commented to save time
-  #- os: windows # travis often doesnt stsrt windows
-   # language: minimal
-   # install:
-    #- cd build
-   # - cmake -G "MinGW Makefiles" -DCMAKE_SH="CMAKE_SH-NOTFOUND" ..
-  #  - cmake --build .
+before_install:
+- python -m pip install meson
+- curl -Ls https://github.com/ninja-build/ninja/releases/download/v1.9.0/ninja-linux.zip -o ninja-linux.zip
+- sudo unzip ninja-linux.zip -d /usr/local/bin/
 
-install:
-- cd build
-- cmake ..
-- cmake --build .
+install: meson build
 
-script:
-- cd $TRAVIS_BUILD_DIR/build
-- ctest --output-on-failure
-
+script: meson test -C build

@@ -14,11 +14,11 @@ init:
 - sh: sudo apt install -yq --no-install-recommends libscalapack-openmpi-dev libopenmpi-dev openmpi-bin
 
 install:
+- cmd: cmake -B build -G "MinGW Makefiles" -DCMAKE_SH="CMAKE_SH-NOTFOUND" ..
+- sh: cmake -B build
+
+- cmake --build build --parallel
+
+test_script:
 - cd build
-- cmd: cmake -G "MinGW Makefiles" -DCMAKE_SH="CMAKE_SH-NOTFOUND" ..
-- sh: cmake ..
-
-- cmake --build .
-
-test_script: ctest --output-on-failure
-
+- ctest --parallel --output-on-failure
