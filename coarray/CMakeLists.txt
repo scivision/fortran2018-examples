@@ -1,20 +1,8 @@
-cmake_minimum_required(VERSION 3.3)
-if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE Release CACHE STRING "Debug or Release")
-endif()
-project(coarraydemo Fortran)
-enable_testing()
 # ------- Fortran 2018 coarray examples -------
 # Coarrays are easier to use than MPI and more general as an intrinsic part of Fortran 2008.
 
-# Linux:  apt install libcoarrays-dev open-coarrays-bin
+# Linux: apt install libcoarrays-dev open-coarrays-bin
 # Mac: brew install opencoarrays
-
-get_directory_property(hasParent PARENT_DIRECTORY)
-if(NOT hasParent)
-  include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/compilers.cmake)
-  list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../cmake/Modules/)
-endif()
 
 find_package(Coarray)
 
@@ -26,7 +14,7 @@ include(CheckFortranSourceCompiles)
 set(CMAKE_REQUIRED_FLAGS ${Coarray_COMPILE_OPTIONS})
 set(CMAKE_REQUIRED_LIBRARIES ${Coarray_LIBRARY})
 check_fortran_source_compiles("real :: x[*]; call co_sum(x); end"
-f18coarray SRC_EXT f90)
+  f18coarray SRC_EXT f90)
 
 
 add_executable(coarray_hello helloworld.f90)
@@ -39,7 +27,7 @@ add_test(NAME CoarrayHello
 if(f18coarray)
   add_executable(coarray_pi pi.f90)
 else()
-# Intel 2018 does not yet support Fortran 2018 co_sum
+# Intel >= 20 supports Fortran 2018 co_sum
   add_executable(coarray_pi pi2008.f90)
 endif()
 target_compile_options(coarray_pi PRIVATE ${FFLAGS} ${Coarray_COMPILE_OPTIONS})

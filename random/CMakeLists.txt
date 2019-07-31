@@ -1,16 +1,3 @@
-cmake_minimum_required(VERSION 3.3)
-if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE Release CACHE STRING "Debug or Release")
-endif()
-project(f2018random Fortran)
-enable_testing()
-
-get_directory_property(hasParent PARENT_DIRECTORY)
-if(NOT hasParent)
-  include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/compilers.cmake)
-endif()
-
-include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/f18random.cmake)
 
 add_executable(random random.f90 random_demo.f90)
 target_compile_options(random PRIVATE ${FFLAGS})

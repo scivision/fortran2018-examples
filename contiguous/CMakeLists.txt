@@ -1,16 +1,3 @@
-cmake_minimum_required(VERSION 3.1)
-if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE Release CACHE STRING "Debug or Release")
-endif()
-project(f2008contig Fortran)
-enable_testing()
-
-get_directory_property(hasParent PARENT_DIRECTORY)
-if(NOT hasParent)
-  include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/compilers.cmake)
-endif()
-
-include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/f08contig.cmake)
 
 add_executable(contig contiguous.F90)
 target_compile_options(contig PRIVATE ${FFLAGS})

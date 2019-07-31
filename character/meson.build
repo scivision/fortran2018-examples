@@ -20,5 +20,5 @@ test('Character Len', charlen)
 
 if os != 'windows'
   overwrite_stdout = executable('overwrite_stdout', 'overwrite_stdout.f90')
-  test('Overwrite Stdout', overwrite_stdout)
+  test('Overwrite Stdout', overwrite_stdout, timeout: 6)
 endif

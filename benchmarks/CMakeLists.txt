@@ -1,15 +1,3 @@
-cmake_minimum_required (VERSION 3.3)
-if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE Release CACHE STRING "Debug or Release")
-endif()
-project(fortran2018benchmark Fortran)
-enable_testing()
-
-get_directory_property(hasParent PARENT_DIRECTORY)
-if(NOT hasParent)
-  include(../cmake/compilers.cmake)
-endif()
-
 add_executable(ackermann ackermann.f90)
 target_compile_options(ackermann PRIVATE ${FFLAGS})
 target_link_libraries(ackermann ${FLIBS})

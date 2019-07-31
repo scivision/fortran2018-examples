@@ -4,7 +4,7 @@
 
 # Fortran 2018 Examples
 
-Easy examples of scientific computing with modern, powerful, easy Fortran 2018 standard. 
+Easy examples of scientific computing with modern, powerful, easy Fortran 2018 standard.
 Fortran 2018 began as the TS18508 extension, formerly known as Fortran 2015.
 
 Modern Fortran benefits from modern CMake, which supports Fortran features such as
@@ -22,20 +22,29 @@ Based on widespread compiler support and beneficial features, most new and upgra
 
 ## Build
 
-The CMake script automatically walks through the subdirectories:
+The CMake or Meson build system automatically walks through the subdirectories:
 
-```bash
+**CMake**
+
+```sh
+cmake -B build
+cmake --build build --parallel
+
 cd build
+ctest --parallel --output-on-failure
+```
 
-cmake ..
-cmake --build .
+**Meson**
 
-ctest
+```sh
+meson build
+
+meson test -C build
 ```
 
 ### ifort Intel
 
-Be sure you have the 
+Be sure you have the
 [Intel Parallel Studio Cluster Edition](https://www.scivision.dev/install-intel-compiler-icc-icpc-ifort/)
 that has `mpiifort`.
 
@@ -45,7 +54,7 @@ FC=ifort CC=icc CXX=icpc cmake ..
 
 ### Flang / Clang
 
-[Flang](https://www.scivision.co/flang-compiler-build-tips/) is a Free compiler.
+[Flang](https://www.scivision.dev/flang-compiler-build-tips/) is a Free compiler.
 
 ```bash
 FC=flang CC=clang CXX=clang++ cmake ..
@@ -53,7 +62,7 @@ FC=flang CC=clang CXX=clang++ cmake ..
 
 ### PGI
 
-[PGI](https://www.scivision.co/install-pgi-free-compiler/) is available at no cost.
+[PGI](https://www.scivision.dev/install-pgi-free-compiler/) is available at no cost.
 
 ```bash
 FC=pgf90 CC=pgcc CXX=pgc++ cmake ..
@@ -72,7 +81,7 @@ Each directory has its own README and examples.
 
 ---
 
-* [io/](./io): modern Fortran File I/O 
+* [io/](./io): modern Fortran File I/O
 * [netcdf/](./netcdf): Easy multidimensional file IO with NetCDF
 * [hdf5/](./hdf5): HDF5 is one of the most popular self-describing file formats for massively scalable files.
 
@@ -86,7 +95,7 @@ Each directory has its own README and examples.
 * [submodule](https://github.com/scivision/fortran-submodule): Fortran 2008 and CMake &ge; 3.12 enable even better large program architecture with `submodule`
 * [system/](./system): system (hardware) functionality accessible via Fortran
 
-## Bugs 
+## Bugs
 
 ### iso_fortran_env
 Flang 6 and PGI 18.10 seem to have a bug with `iso_fortran_env` that doesn't allow `compiler_version` and `compiler_options` to work unless `use iso_fortran_env` is ONLY used in `program` and NOT `module` *even if* using `only`.
@@ -112,12 +121,12 @@ Thus, simple programs like `pragma.f90` work, but not the usual programs to prin
 
 ### Books
 
-* [Modern Fortran Explained: Incorporating Fortran 2018](https://global.oup.com/academic/product/modern-fortran-explained-9780198811886).  
+* [Modern Fortran Explained: Incorporating Fortran 2018](https://global.oup.com/academic/product/modern-fortran-explained-9780198811886).
   Metcalf, Reid, Cohen. 5th Ed, Nov 2018. ISBN:  978-0198811886.
-* [Modern Fortran: Building Efficient Parallel Applications](https://www.manning.com/books/modern-fortran). 
+* [Modern Fortran: Building Efficient Parallel Applications](https://www.manning.com/books/modern-fortran).
   [Milan Curcic](https://twitter.com/realmilancurcic).
   Feb. 2019. ISBN: 978-1617295287.
-  
+
 ### Compiler User Guides
 
 * [Cray Fortran](http://pubs.cray.com/content/S-3901/8.7/cray-fortran-reference-manual/fortran-compiler-introduction)
@@ -127,7 +136,7 @@ Thus, simple programs like `pragma.f90` work, but not the usual programs to prin
 * [Intel Fortran](https://software.intel.com/en-us/fortran-compiler-developer-guide-and-reference)
 * [NAG Fortran](https://www.nag.com/nagware/np/r62_doc/manual/compiler.html)
 * [PGI Fortran](https://www.pgroup.com/resources/docs/18.10/x86/pvf-user-guide/index.htm)
-  
+
 ### Surveys
 
 * [2018 modern Fortran user survey](http://www.fortran.bcs.org/2018/FortranBenefitsSurvey_interimrep_Aug2018.pdf)

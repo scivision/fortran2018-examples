@@ -1,1 +1,1 @@
-check_fortran_source_compiles("call execute_command_line(''); end" f08command SRC_EXT f90)
+check_fortran_source_compiles("integer i; call execute_command_line('', exitstat=i); end" f08command SRC_EXT f90)

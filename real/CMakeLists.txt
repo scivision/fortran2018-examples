@@ -1,22 +1,7 @@
-cmake_minimum_required (VERSION 3.3)
-if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE Release CACHE STRING "Debug or Release")
-endif()
-project(fortran2018real Fortran)
-enable_testing()
-
-get_directory_property(hasParent PARENT_DIRECTORY)
-if(NOT hasParent)
-  include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/compilers.cmake)
-endif()
 
 if(NOT realbits)
   set(realbits 64)
 endif()
-
-include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/f03ieee.cmake)
-include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/f08kind.cmake)
-include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/f18prop.cmake)
 
 add_executable(polymorph polymorphic.F90)
 target_compile_options(polymorph PRIVATE ${FFLAGS})

@@ -1,51 +1,60 @@
+f08kind = fc.links('''
+use, intrinsic:: iso_fortran_env, only: real128
+use, intrinsic:: ieee_arithmetic, only: ieee_is_nan
 
-#polymorph = executable('polymorph', 'polymorphic.F90')
-# target_compile_definitions(['polymorph', 'PRIVATE', 'REALBITS=${realbits}'])
-#test('Polymorphic', polymorph)
+if (huge(0._real128) /= 1.18973149535723176508575932662800702E+4932_real128) stop 1
 
-divprec = executable('divprec', 'div_precision.F90')
-#if f08kind
-  # target_compile_definitions(['divprec', 'PRIVATE', 'REAL128'])
-#endif
-test('DivisionPrecision', divprec)
+end program''', name: 'F2008 ieee kinds')
 
-floatprec = executable('floatprec', 'floating_precision.F90')
-#if 'f08kind'
-  # target_compile_definitions(['floatprec', 'PRIVATE', 'REAL128'])
-#endif
-test('FloatPrecision', floatprec)
+f18prop = fc.links('complex :: z; print *,z%re,z%im,z%kind; end',
+  name: 'F2018 properties')
 
-hugeprec = executable('hugeprec', 'huge_precision.F90')
-#if f08kind
-  # target_compile_definitions(['hugeprec', 'PRIVATE', 'REAL128'])
-#endif
-test('HugePrecision', hugeprec)
+if f08kind
+  r128 = '-DREAL128'
+else
+  r128 = ''
+endif
 
-#if f08kind
-#  precprob = executable('precprob', 'precision_problems.f90')
-#  test('PrecisionProblems', precprob)
-#endif
+polymorph = executable('polymorph', 'polymorphic.F90',
+  fortran_args: '-DREALBITS='+realbits)
+test('real:Polymorphic', polymorph)
 
-#if 'f18prop'
-#  properties = executable('properties', 'properties.f90')
-  # target_compile_options(['properties', 'PRIVATE', fflags])
-#  test('Fortran2018Properties', properties)
-#endif
+divprec = executable('divprec', 'div_precision.F90',
+  fortran_args: r128)
+test('real:DivisionPrecision', divprec)
 
-nan = executable('nan', 'nans.F90')
-#  if 'f08kind'
-    # target_compile_definitions(['nan', 'PRIVATE', 'REAL128', 'IEEENAN'])
-#  endif
+floatprec = executable('floatprec', 'floating_precision.F90',
+  fortran_args: r128)
+test('real:FloatPrecision', floatprec)
+
+hugeprec = executable('hugeprec', 'huge_precision.F90',
+  fortran_args: r128)
+test('real:HugePrecision', hugeprec)
+
+if f08kind
+  precprob = executable('precprob', 'precision_problems.f90')
+  test('real:PrecisionProblems', precprob)
+endif
+
+if f18prop
+  properties = executable('properties', 'properties.f90')
+  test('real:Fortran2018 Properties', properties)
+endif
+
+if f08kind
+  nanargs = [r128, '-DIEEENAN']
+else
+  nanargs = []
+endif
+nan = executable('nan', 'nans.F90',
+  fortran_args: nanargs)
 test('NaN', nan)
 
-assert_lib = library('assert', 'assert.F90')
-  # target_compile_options(['assert', 'PRIVATE', fflags])
-  # target_link_libraries(['assert', 'PRIVATE', flibs])
-  # target_compile_definitions(['assert', 'PRIVATE', 'REALBITS=${realbits}'])
-  #if 'f08kind'
-  #  testassert_exe = executable('testassert', 'not-finite.f90', 'fib3.f90')
-    # target_link_libraries(['testassert', 'assert', flibs])
-    # target_compile_options(['testassert', 'PRIVATE', fflags])
-   # test('NAME', 'Assert', 'COMMAND', 'testassert')
-  #endif
-#endif
+assert_lib = library('assert', 'assert.F90',
+  fortran_args: '-DREALBITS='+realbits)
+
+if f08kind
+  testassert_exe = executable('testassert', 'not-finite.f90', 'fib3.f90',
+    link_with: assert_lib)
+  test('real:Assert', testassert_exe)
+endif

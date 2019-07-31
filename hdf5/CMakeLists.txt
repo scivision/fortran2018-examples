@@ -1,14 +1,3 @@
-cmake_minimum_required (VERSION 3.10) # 3.10 required for HDF5 1.10
-if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE Release CACHE STRING "Debug or Release")
-endif()
-project(fortranHDF5 Fortran)
-enable_testing()
-
-get_directory_property(hasParent PARENT_DIRECTORY)
-if(NOT hasParent)
-  include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/compilers.cmake)
-endif()
 # INTEL COMPILER: https://software.intel.com/en-us/articles/performance-tools-for-software-developers-building-hdf5-with-intel-compilers
 
 # https://support.hdfgroup.org/ftp/HDF5/current/src/unpacked/release_docs/USING_HDF5_CMake.txt
@@ -32,7 +21,6 @@ endif()
 
 set(CMAKE_REQUIRED_INCLUDES ${HDF5_Fortran_INCLUDE_DIRS})
 set(CMAKE_REQUIRED_LIBRARIES ${HDF5_Fortran_LIBRARIES} ${HDF5_Fortran_HL_LIBRARIES})
-include(CheckFortranSourceCompiles)
 check_fortran_source_compiles("use h5lt; end" hasHDF5 SRC_EXT f90)
 if(NOT hasHDF5)
   return()

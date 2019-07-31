@@ -1,6 +1,6 @@
 
 if fc.get_id() == 'pgi'
-  message('Meson bug with PGI')
+  message('cxx: Meson bug with PGI')
   subdir_done()
 endif
 

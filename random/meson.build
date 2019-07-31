@@ -1,5 +1,5 @@
 
-f18random = fc.links('call random_init(.false., .false.); end')
+f18random = fc.links('call random_init(.false., .false.); end', name:'F2018 random_init')
 
 if f18random
   src = files('random_init_f2018.f90')

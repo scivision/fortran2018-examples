@@ -1,10 +1,3 @@
-cmake_minimum_required(VERSION 3.3)
-if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE Release CACHE STRING "Debug or Release")
-endif()
-project(C++linkexample C Fortran)
-enable_testing()
-
 # This example demonstrates very basic linking of
 # * Fortran call from C++
 # * C call from Fortran
@@ -14,14 +7,9 @@ enable_testing()
 
 # https://stackoverflow.com/tags/fortran-iso-c-binding/info
 
-get_directory_property(hasParent PARENT_DIRECTORY)
-if(NOT hasParent)
-  include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/compilers.cmake)
-endif()
-
 if(CMAKE_Fortran_COMPILER_ID STREQUAL Intel)
   if(NOT WIN32)
-    list(APPEND FLIBS svml imf intlc ifcoremt ifport)  # FIXME: all all these needed on Linux?
+    list(APPEND FLIBS svml imf intlc ifcoremt ifport)  # FIXME: all these needed on Linux?
   endif()
 endif()
 
@@ -42,7 +30,11 @@ endif()
 include(CheckLanguage)
 check_language(CXX)
 if(CMAKE_CXX_COMPILER)
-enable_language(CXX)
+  enable_language(CXX)
+else()
+  return()
+endif()
+
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_library(call_f c_call_f.f90)
@@ -55,9 +47,7 @@ target_link_libraries(cxx_call_f PRIVATE call_f)
 target_compile_options(cxx_call_f PRIVATE ${CFLAGS})
 set_target_properties(cxx_call_f PROPERTIES CXX_STANDARD 11)
 add_test(NAME CXX2Fortran COMMAND cxx_call_f)
-
-endif()
-
+cd
 # manually:
 #
 # source compilervars.sh

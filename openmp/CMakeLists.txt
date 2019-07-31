@@ -1,15 +1,3 @@
-cmake_minimum_required (VERSION 3.9)  # >= 3.9 for OpenMP components
-if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE Release CACHE STRING "Debug or Release")
-endif()
-project(Fortran2018OpenMP Fortran)
-enable_testing()
-
-get_directory_property(hasParent PARENT_DIRECTORY)
-if(NOT hasParent)
-  include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/compilers.cmake)
-endif()
-
 find_package(OpenMP COMPONENTS Fortran)
 if(NOT OpenMP_FOUND)
   message(STATUS "OpenMP tests skipped")
@@ -18,13 +6,12 @@ endif()
 
 set(CMAKE_REQUIRED_FLAGS ${OpenMP_Fortran_FLAGS})
 set(CMAKE_REQUIRED_LIBRARIES ${OpenMP_Fortran_LIBRARIES})
-include(CheckFortranSourceCompiles)
 check_fortran_source_compiles("use omp_lib; rate = omp_get_wtick(); end" hasOMP SRC_EXT f90)
 
 if(hasOMP)
 add_executable(timeprec timeprec.f90)
 target_compile_options(timeprec PRIVATE ${FFLAGS})
 target_link_libraries(timeprec PRIVATE ${FLIBS} OpenMP::OpenMP_Fortran)
-add_test(NAME TimeMeasure COMMAND timeprec)
-set_tests_properties(TimeMeasure PROPERTIES RUN_SERIAL true)
+add_test(NAME "OpenMP:TimeMeasure" COMMAND timeprec)
+set_tests_properties(OpenMP:TimeMeasure PROPERTIES RUN_SERIAL true)
 endif()

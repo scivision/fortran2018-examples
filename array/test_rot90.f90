@@ -1,4 +1,3 @@
-program rot90_array
 ! demo rotating a 2-D array 90 degrees clockwise
 use rotflip, only: rot90, flipud, fliplr
 
@@ -13,10 +12,10 @@ iarr = reshape( &
    3, 4, 5, &
    6, 7, 8], &
    shape(iarr), order=[2,1])
-   
+
 rarr = iarr
 
-   
+
 call printarr(iarr,'before rot90')
 
 call printarr(rot90(iarr,0),'rot90(0)')

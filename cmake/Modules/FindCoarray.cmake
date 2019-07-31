@@ -98,8 +98,9 @@ include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(Coarray
   REQUIRED_VARS Coarray_REQUIRED_VARS)
 
-set(Coarray_LIBRARIES ${Coarray_LIBRARY})
-
+if(Coarray_FOUND)
+  set(Coarray_LIBRARIES ${Coarray_LIBRARY})
+endif()
 
 mark_as_advanced(
   Coarray_LIBRARY

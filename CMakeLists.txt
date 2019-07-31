@@ -2,12 +2,12 @@ cmake_minimum_required(VERSION 3.12)
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release CACHE STRING "Debug or Release")
 endif()
-project(Fortran2018Examples LANGUAGES Fortran)
+project(Fortran2018Examples LANGUAGES C Fortran)
 enable_testing()
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/)
 
-include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/compilers.cmake)
+include(cmake/compilers.cmake)
 
 add_subdirectory(array)
 add_subdirectory(benchmarks)

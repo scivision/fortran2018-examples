@@ -334,7 +334,9 @@ if(NOT (OpenBLAS IN_LIST LAPACK_FIND_COMPONENTS
 endif()
 
 if(NOT LAPACK_OK)
-message(STATUS "Finding LAPACK components: ${LAPACK_FIND_COMPONENTS}")
+  message(STATUS "Finding LAPACK components: ${LAPACK_FIND_COMPONENTS}")
+else()
+  return()
 endif()
 
 get_property(project_languages GLOBAL PROPERTY ENABLED_LANGUAGES)

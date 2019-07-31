@@ -2,8 +2,6 @@ if(NOT CMAKE_Fortran_COMPILER)
   message(FATAL_ERROR "Must have invoked Fortran before including compilers.cmake")
 endif()
 
-message(STATUS "CMake Build Type: ${CMAKE_BUILD_TYPE}")
-
 include(CheckFortranSourceCompiles)
 
 if(CMAKE_Fortran_COMPILER_ID STREQUAL Intel)
@@ -40,3 +38,12 @@ elseif(CMAKE_Fortran_COMPILER_ID STREQUAL NAG)
   list(APPEND FFLAGS -f2008 -C -colour -gline -nan -info -u)
 endif()
 
+
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/f08contig.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/f18errorstop.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/f18random.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/f03ieee.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/f08kind.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/f18prop.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/f08block.cmake)
+include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/f08command.cmake)

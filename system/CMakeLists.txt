@@ -1,24 +1,16 @@
-cmake_minimum_required (VERSION 3.1)
-project(f08exe Fortran)
-enable_testing()
-
-get_directory_property(hasParent PARENT_DIRECTORY)
-if(NOT hasParent)
-  include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/compilers.cmake)
-endif()
-
-include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/f08command.cmake)
-include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/f18errorstop.cmake)
 
 add_executable(color color_text.f90)
 target_compile_options(color PRIVATE ${FFLAGS})
 target_link_libraries(color ${FLIBS})
 add_test(NAME Color COMMAND color)
 
-if(f08command)
 add_library(osdet os_detect.f90)
 target_compile_options(osdet PRIVATE ${FFLAGS})
 target_link_libraries(osdet ${FLIBS})
+
+if(NOT f08command)
+  return()
+endif()
 
 add_executable(gitrev gitrev.f90)
 target_compile_options(gitrev PRIVATE ${FFLAGS})
@@ -49,5 +41,3 @@ else()
   target_link_libraries(callpython PRIVATE osdet ${FLIBS})
 endif()
 endif(f18errorstop)
-
-endif(f08command)

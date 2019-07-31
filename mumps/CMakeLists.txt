@@ -1,6 +1,3 @@
-cmake_minimum_required (VERSION 3.12)
-project(MumpsDemo C Fortran)  # need C for scalapack findThreads with MKL/Intel
-enable_testing()
 
 if(WIN32 AND CMAKE_Fortran_COMPILER_ID STREQUAL GNU)
   message(WARNING "FindMPI in CMake seems to have a bug on Windows, skipping MUMPS tests")
@@ -13,12 +10,6 @@ if(NOT realbits)
   set(realbits 64)
 endif()
 
-
-get_directory_property(hasParent PARENT_DIRECTORY)
-if(NOT hasParent)
-  include(${PROJECT_SOURCE_DIR}/../cmake/compilers.cmake)
-  list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/../cmake/Modules/)
-endif()
 
 find_package(MPI COMPONENTS Fortran)
 

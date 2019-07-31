@@ -1,23 +1,12 @@
-cmake_minimum_required(VERSION 3.3)
-if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE Release CACHE STRING "Debug or Release")
-endif()
-project(f2018errorstop Fortran)
-enable_testing()
-
-get_directory_property(hasParent PARENT_DIRECTORY)
-if(NOT hasParent)
-  include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/compilers.cmake)
-endif()
-
-include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/f18errorstop.cmake)
-
 add_executable(proc pragma.f90)
 target_compile_options(proc PRIVATE ${FFLAGS})
 target_link_libraries(proc ${FLIBS})
 add_test(NAME FortranPragma COMMAND proc)
 
-if(f18errorstop)
+if(NOT f18errorstop)
+  return()
+endif()
+
 if(WIN32 AND CMAKE_Fortran_COMPILER_ID STREQUAL PGI)
   message(STATUS "PGI bug on Windows")
 else()
@@ -26,5 +15,4 @@ else()
   target_link_libraries(f18es PRIVATE ${FLIBS})
   add_test(NAME F18errorstop COMMAND f18es)
   set_tests_properties(F18errorstop PROPERTIES WILL_FAIL true)
-endif()
 endif()

@@ -1,15 +1,3 @@
-cmake_minimum_required (VERSION 3.7)
-if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE Release CACHE STRING "Debug or Release")
-endif()
-project(fortran2018character Fortran)
-enable_testing()
-
-get_directory_property(hasParent PARENT_DIRECTORY)
-if(NOT hasParent)
-  include(../cmake/compilers.cmake)
-endif()
-
 add_executable(ascii ascii.f90)
 target_compile_options(ascii PRIVATE ${FFLAGS})
 target_link_libraries(ascii ${FLIBS})
@@ -36,15 +24,10 @@ target_compile_options(printorwrite PRIVATE ${FFLAGS})
 target_link_libraries(printorwrite ${FLIBS})
 add_test(NAME UTF8 COMMAND printorwrite)
 
-
-
-
-
 add_executable(special_char special_characters.f90)
 target_compile_options(special_char PRIVATE ${FFLAGS})
 target_link_libraries(special_char ${FLIBS})
 add_test(NAME SpecialCharacters COMMAND special_char)
-
 
 add_executable(charlen charlen.f90)
 target_compile_options(charlen PRIVATE ${FFLAGS})

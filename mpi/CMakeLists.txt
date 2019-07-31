@@ -1,10 +1,3 @@
-cmake_minimum_required(VERSION 3.12)
-if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE Release CACHE STRING "Debug or Release")
-endif()
-project(mpidemo C Fortran)  # C is required by CMake to find MPI, even just for Fortran
-enable_testing()
-
 # If you have a custom location for mpif90 / mpifort and CMake doesn't find it, try
 #   FC=mpif90 cmake ..
 
@@ -14,11 +7,6 @@ if(WIN32 AND CMAKE_Fortran_COMPILER_ID STREQUAL GNU)
 endif()
 
 cmake_policy(SET CMP0074 NEW)
-
-get_directory_property(hasParent PARENT_DIRECTORY)
-if(NOT hasParent)
-  include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/compilers.cmake)
-endif()
 
 include(mpi.cmake)
 if(NOT hasMPI)
@@ -61,5 +49,3 @@ endif(NOT WIN32)
 # make VERBOSE=1
 #
 #/usr/bin/f95  -I/usr/lib/openmpi/include -I/usr/lib/openmpi/lib  -Wl,-rpath,/usr/lib/openmpi/lib /usr/lib/openmpi/lib/libmpi_usempif08.so /usr/lib/openmpi/lib/libmpi_usempi_ignore_tkr.so /usr/lib/openmpi/lib/libmpi_mpifh.so /usr/lib/openmpi/lib/libmpi.so
-
-

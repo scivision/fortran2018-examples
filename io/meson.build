@@ -15,10 +15,8 @@ if f18errorstop
   readonly = executable('readonly', 'fileopen-readonly.f90')
   test('ReadOnly', readonly)
 
-  null = executable('null', 'devnull.f90')
-  test('Nullfile', null)
+  if not(os == 'windows' and fc.get_id() == 'pgi')
+    null = executable('null', 'devnull.f90')
+    test('Nullfile', null)
+  endif
 endif
-
-# --- C++17 filesystem ---
-
-# filesep_cpp = executable('filesep_cpp', 'filesep.cpp')

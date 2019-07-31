@@ -5,10 +5,10 @@ if f08block
 endif
 
 short_circuit = executable('shortcircuit', 'short_circuit.f90')
-test('Short Circuit', short_circuit)
+# test is too unreliable--sometimes pass sometimes fail, that's the point.
 
 bitpat= executable('bitpat', 'bitpat.f90')
-test('Bit Pattern', bitpat)
+test('standard:Bit Pattern', bitpat)
 
 justwait_exe = executable('justwait', 'pause.f90')
 
@@ -18,12 +18,12 @@ else
   mkdir_src = files('isdir.f90')
 endif
 mkdirstd = executable('mkdirstd', 'mkdir.f90', mkdir_src)
-test('mkdir', mkdirstd, args: 'testdir/hello')
+test('standard:mkdir', mkdirstd, args: 'testdir/hello')
 
 if os != 'windows'
-sleepstd = executable('sleepstd', 'sleep.f90')
-test('Micro sleep', sleepstd, timeout : 1)
+  sleepstd = executable('sleepstd', 'sleep.f90')
+  test('standard:Micro sleep', sleepstd, timeout : 1)
 endif
 
 statement = executable('statement', 'statement_function.f90')
-test('Statement', statement)
+test('standard:Statement', statement)
