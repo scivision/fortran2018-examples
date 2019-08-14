@@ -12,6 +12,4 @@ endif
 if fc.links('use netcdf; end', name: 'NetCDF', dependencies : netcdf)
   netcdf_rw = executable('netcdf_rw', 'simple_xy_wr.f90', dependencies : netcdf)
   test('NetCDF', netcdf_rw)
-else
-  message('NetCDF failed to link')
 endif

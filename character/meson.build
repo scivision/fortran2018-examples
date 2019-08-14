@@ -1,5 +1,3 @@
-os = host_machine.system()
-
 ascii = executable('ascii', 'ascii.f90')
 test('Ascii Special', ascii)
 

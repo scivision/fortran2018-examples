@@ -12,10 +12,11 @@ if fc.get_id() == 'gcc'
   endif
   oldargs = ['-std=legacy', '-w']
 elif fc.get_id() == 'intel'
-  add_global_arguments('-stand', 'f18', '-implicitnone', language: 'fortran')
+  add_global_arguments('-stand', 'f18', '-warn declarations', language: 'fortran')
   oldargs = '-nowarn'
 elif fc.get_id() == 'intel-cl'
-   add_global_arguments('/stand:f18', '/4Yd', language: 'fortran')
+  # /fpp allows #include etc preprocessor lines
+   add_global_arguments('/stand:f18', '/warn:declarations', '/fpp', language: 'fortran')
    oldargs = '/nowarn'
 elif fc.get_id() == 'pgi'
    add_global_arguments('-C', '-Mdclchk', language: 'fortran')

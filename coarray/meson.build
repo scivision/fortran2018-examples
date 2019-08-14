@@ -3,7 +3,7 @@ if not coarray.found()
   subdir_done()
 endif
 
-f18coarray = fc.run('real :: x[*]; call co_sum(x); end').returncode() == 0
+f18coarray = fc.run('real :: x[*]; call co_sum(x); end', name: 'F2018 coarray').returncode() == 0
 
 hello = executable('coarray_hello', 'helloworld.f90', dependencies : coarray)
 test('Coarray Hello', hello)
