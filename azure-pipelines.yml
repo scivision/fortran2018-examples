@@ -70,10 +70,8 @@ jobs:
   pool:
     vmImage: windows-latest
   steps:
-  - script: cmake -B build
+  - script: cmake -G "MinGW Makefiles" -DCMAKE_SH="CMAKE_SH-NOTFOUND" -B build
     displayName: 'Configure build'
-    env:
-      CMAKE_GENERATOR: "MinGW Makefiles"
   - script: cmake --build build --parallel
     displayName: build
   - script: ctest --parallel -V
