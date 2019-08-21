@@ -4,7 +4,6 @@ image:
 
 environment:
   MINGW_DIR: C:\mingw-w64\x86_64-7.2.0-posix-seh-rt_v5-rev1\mingw64\bin
-  CMAKE_GENERATOR: "MinGW Makefiles"
 
 clone_depth: 3
 
@@ -12,6 +11,7 @@ build: off
 
 init:
 - cmd: set PATH=%MINGW_DIR%;%PATH%
+- cmd: set CMAKE_GENERATOR="MinGW Makefiles"
 - sh: sudo apt install -yq --no-install-recommends libscalapack-openmpi-dev libopenmpi-dev openmpi-bin
 
 install:

@@ -12,13 +12,17 @@ test('standard:Bit Pattern', bitpat)
 
 justwait_exe = executable('justwait', 'pause.f90')
 
-if fc.get_id()=='intel'
-  mkdir_src = files('isdir_intel.f90')
+if os == 'windows' and fc.get_id() == 'pgi' or fc.get_id() == 'intel-cl'
+  message('mkdir: PGI and Intel Windows bug')
 else
-  mkdir_src = files('isdir.f90')
+  if fc.get_id()=='intel'
+    mkdir_src = files('isdir_intel.f90')
+  else
+    mkdir_src = files('isdir.f90')
+  endif
+  mkdirstd = executable('mkdirstd', 'mkdir.f90', mkdir_src)
+  test('standard:mkdir', mkdirstd, args: 'testdir/hello')
 endif
-mkdirstd = executable('mkdirstd', 'mkdir.f90', mkdir_src)
-test('standard:mkdir', mkdirstd, args: 'testdir/hello')
 
 if os != 'windows'
   sleepstd = executable('sleepstd', 'sleep.f90')

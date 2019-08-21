@@ -28,7 +28,8 @@ integer(c_int) function mkdir(path) result(ret)
 !! file separator is forward slash "/" only!
 !!
 !!
-!! Tested on Linux and Windows
+!! Tested on Linux and Windows with GCC
+!! Intel Linux OK, Intel Windows seems to have is_directory bug--doesn't detect directory.
 !! Michael Hirsch, Ph.D.
 
 integer :: i,i0, ilast
@@ -41,8 +42,7 @@ ret=0 !< in case directory already exists
 buf = trim(path)
 
 if (len(buf) == 0) then
-  write(stderr,*) 'must specify directory to create'
-  stop 1
+  error stop 'must specify directory to create'
 endif
 
 if(is_directory(buf)) then

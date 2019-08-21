@@ -1,10 +1,14 @@
 add_library(logging logging.f90)
 target_compile_options(logging PRIVATE ${FFLAGS})
 
-add_executable(append_file append_file.f90)
-target_compile_options(append_file PRIVATE ${FFLAGS})
-target_link_libraries(append_file PRIVATE logging)
-add_test(NAME AppendFile COMMAND append_file)
+if(CMAKE_Fortran_COMPILER_ID STREQUAL PGI)
+  message(STATUS "PGI doesn't work correctly for this append_file example, even alone")
+else()
+  add_executable(append_file append_file.f90)
+  target_compile_options(append_file PRIVATE ${FFLAGS})
+  target_link_libraries(append_file PRIVATE logging)
+  add_test(NAME AppendFile COMMAND append_file)
+endif()
 
 add_executable(termio terminal_io.f90)
 target_compile_options(termio PRIVATE ${FFLAGS})

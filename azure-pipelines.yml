@@ -3,7 +3,6 @@ jobs:
 - job: Ubuntu
   pool:
     vmImage: ubuntu-latest
-
   steps:
   - task: UsePythonVersion@0
     inputs:
@@ -12,7 +11,7 @@ jobs:
   - script: |
       sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
       sudo apt update -q
-      sudo apt install -yq --no-install-recommends gfortran-6
+      sudo apt install -yq --no-install-recommends gcc-6 gfortran-6 g++-6
       curl -Ls https://github.com/ninja-build/ninja/releases/download/v1.9.0/ninja-linux.zip -o ninja-linux.zip
       sudo unzip ninja-linux.zip -d /usr/local/bin/
       python -m pip install meson
@@ -20,6 +19,8 @@ jobs:
   - script: meson setup build
     env:
       FC: gfortran-6
+      CC: gcc-6
+      CXX: g++-6
     displayName: 'Configure build'
   - script: meson test -C build
     displayName: 'build and test'
@@ -27,10 +28,9 @@ jobs:
     condition: succeededOrFailed()
     artifact: LinuxMesonTestLog
 
-- job: MacOS
+- job: MacMeson
   pool:
     vmImage: macOS-latest
-
   steps:
   - task: UsePythonVersion@0
     inputs:
@@ -46,10 +46,9 @@ jobs:
     condition: succeededOrFailed()
     artifact: MacMesonTestLog
 
-- job: WindowsMinGW
+- job: WindowsMeson
   pool:
     vmImage: windows-latest
-
   steps:
   - task: UsePythonVersion@0
     inputs:
@@ -66,3 +65,19 @@ jobs:
   - publish: build/meson-logs/testlog.txt
     condition: succeededOrFailed()
     artifact: WindowsMesonTestLog
+
+- job: WindowsCMake
+  pool:
+    vmImage: windows-latest
+  steps:
+  - script: cinst -y mingw cmake
+    displayName: 'Install Prereqs'
+  - script: cmake -B build
+    displayName: 'Configure build'
+    env:
+      CMAKE_GENERATOR: "MinGW Makefiles"
+  - script: cmake --build build --parallel
+    displayName: build
+  - script: ctest --parallel -V
+    displayName: run tests
+    workingDirectory: build

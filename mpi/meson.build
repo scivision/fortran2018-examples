@@ -4,7 +4,7 @@ if not mpi.found()
   subdir_done()
 endif
 
-if fc.links('''
+if not fc.links('''
     use mpi
     integer :: i
     call mpi_init(i)
@@ -23,10 +23,10 @@ test('MPI version check', ver)
 
 hello = executable('mpi_hello', 'helloworld.f90',
   dependencies : mpi)
-test('MPI Hello World', mpiexec,
+test('MPI Hello World', mpiexec, timeout: 20, is_parallel : false,
   args: ['-np', '2', hello])
 
 
 pass = executable('mpi_pass', 'thread_pass.f90', dependencies : mpi)
-test('MPI thread pass', mpiexec,
+test('MPI thread pass', mpiexec, timeout: 20, is_parallel : false,
   args: ['-np', '2', pass])

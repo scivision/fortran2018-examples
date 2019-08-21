@@ -1,6 +1,4 @@
 [![Build Status](https://dev.azure.com/mhirsch0512/fortran2018-examples/_apis/build/status/scivision.fortran2018-examples?branchName=master)](https://dev.azure.com/mhirsch0512/fortran2018-examples/_build/latest?definitionId=8&branchName=master)
-[![image](https://travis-ci.org/scivision/fortran2018-examples.svg?branch=master)](https://travis-ci.org/scivision/fortran2018-examples)
-[![image](https://ci.appveyor.com/api/projects/status/kk2gcmlw1l3pjxy5?svg=true)](https://ci.appveyor.com/project/scivision/fortran2018-examples)
 
 
 # Fortran 2018 Examples

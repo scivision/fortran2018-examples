@@ -1,18 +1,7 @@
-cmake_minimum_required (VERSION 3.12)
-if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE Release CACHE STRING "Debug or Release")
+if(WIN32 AND CMAKE_Fortran_COMPILER_ID STREQUAL PGI)
+  message(STATUS "skipping: PGI Lapack is buggy on Windows")
+  return()
 endif()
-project(fortran2018array C Fortran)  # C is necessary for MKL detection!
-enable_testing()
-
-cmake_policy(SET CMP0074 NEW)
-
-get_directory_property(hasParent PARENT_DIRECTORY)
-if(NOT hasParent)
-  include(${CMAKE_CURRENT_SOURCE_DIR}/../cmake/compilers.cmake)
-  list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../cmake/Modules/)
-endif()
-
 
 if(DEFINED ENV{MKLROOT})
   set(USEMKL 1)
@@ -21,7 +10,6 @@ else()
   set(USEMKL 0)
   find_package(LAPACK COMPONENTS LAPACK95)
 endif()
-
 
 if(LAPACK_LAPACK95_FOUND)
   add_executable(svd demo_gesvd.F90)

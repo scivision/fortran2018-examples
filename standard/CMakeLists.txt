@@ -27,7 +27,7 @@ target_link_libraries(justwait ${FLIBS})
 # NO test
 
 if(WIN32 AND CMAKE_Fortran_COMPILER_ID STREQUAL PGI)
-  message(STATUS "PGI Windows bug")
+  message(STATUS "mkdir: PGI Windows bug")
 else()
   add_executable(mkdirstd mkdir.f90)
   if(CMAKE_Fortran_COMPILER_ID STREQUAL Intel)
