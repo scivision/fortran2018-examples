@@ -1,4 +1,4 @@
-if fc.links('contig = is_contiguous(x); end', name: 'F2008 contiguous')
+if fc.links('contig = is_contiguous([1,2,3]); end', name: 'F2008 contiguous')
   f08contig='-DISCONTIG'
 else
   f08contig=''

@@ -1,9 +1,10 @@
 image:
-# - Visual Studio 2017  CMake < 3.13
+- Visual Studio 2017
 - ubuntu1804
 
 environment:
   MINGW_DIR: C:\mingw-w64\x86_64-7.2.0-posix-seh-rt_v5-rev1\mingw64\bin
+  CMAKE_GENERATOR: "MinGW Makefiles"
 
 clone_depth: 3
 
@@ -14,8 +15,7 @@ init:
 - sh: sudo apt install -yq --no-install-recommends libscalapack-openmpi-dev libopenmpi-dev openmpi-bin
 
 install:
-- cmd: cmake -B build -G "MinGW Makefiles" -DCMAKE_SH="CMAKE_SH-NOTFOUND" ..
-- sh: cmake -B build
+- cmake -B build
 
 - cmake --build build --parallel
 

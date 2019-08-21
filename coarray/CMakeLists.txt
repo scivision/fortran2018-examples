@@ -10,10 +10,15 @@ if(NOT Coarray_FOUND)
   return()
 endif()
 
-include(CheckFortranSourceCompiles)
+include(CheckFortranSourceRuns)
 set(CMAKE_REQUIRED_FLAGS ${Coarray_COMPILE_OPTIONS})
 set(CMAKE_REQUIRED_LIBRARIES ${Coarray_LIBRARY})
-check_fortran_source_compiles("real :: x[*]; call co_sum(x); end"
+check_fortran_source_runs("real :: x[*]; end"
+  f08coarray SRC_EXT f90)
+if(NOT f08coarray)
+  return()
+endif()
+check_fortran_source_runs("real :: x[*]; call co_sum(x); end"
   f18coarray SRC_EXT f90)
 
 

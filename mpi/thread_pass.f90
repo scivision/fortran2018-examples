@@ -22,11 +22,7 @@ if (ierr /= 0) error stop 'mpi rank error'
 !  Find out the number of processes available.
 call MPI_Comm_size ( MPI_COMM_WORLD, num_procs, ierr)
 if (ierr /= 0) error stop 'mpi size error'
-if (num_procs < 2) then
-  write(stderr,*) 'ERROR: two threads are required, use:'
-  write(stderr,*) 'mpiexec -np 2 ./mpi_pass'
-  stop 1
-endif
+if (num_procs < 2) error stop 'two threads are required, use: mpiexec -np 2 ./mpi_pass'
 
 !  Have Process 0 say hello.
 if ( rank == 0 ) then
