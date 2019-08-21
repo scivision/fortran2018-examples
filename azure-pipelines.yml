@@ -70,8 +70,6 @@ jobs:
   pool:
     vmImage: windows-latest
   steps:
-  - script: cinst -y mingw cmake
-    displayName: 'Install Prereqs'
   - script: cmake -B build
     displayName: 'Configure build'
     env:
