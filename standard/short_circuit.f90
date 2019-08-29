@@ -1,4 +1,4 @@
-!! Fortran does [NOT have short-circuit logic](https://www.scivision.co/fortran-short-circuit-logic/),
+!! Fortran does NOT have [short-circuit logic](https://www.scivision.dev/fortran-short-circuit-logic/),
 !! but some compilers enact short-circuit logic anyway.
 !! This can lead to confusion between different users.
 !!
