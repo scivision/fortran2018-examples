@@ -1,0 +1,88 @@
+name: ci
+
+on: [push, pull_request]
+
+jobs:
+
+  linuxMeson:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-python@v1
+      with:
+        python-version: 3.7
+    - name: Install Meson
+      run: python -m pip install meson
+    - name: Install packages
+      run: sudo apt install -yq --no-install-recommends ninja-build gfortran g++
+    - name: Meson configure
+      run: meson setup build
+      env:
+        FC: gfortran
+    - name: Meson test
+      run: meson test -C build -v
+    - uses: actions/upload-artifact@v1
+      if: failure()
+      with:
+        name: Linux_Meson_Testlog
+        path: build/meson-logs/testlog.txt
+
+  macosMeson:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-python@v1
+      with:
+        python-version: 3.7
+    - name: Install dependencies
+      run: |
+        brew install gcc ninja
+        python -m pip install meson
+    - name: Meson configure
+      run: meson setup build
+      env:
+        FC: gfortran
+    - name: Meson test
+      run: meson test -C build -v
+    - uses: actions/upload-artifact@v1
+      if: failure()
+      with:
+        name: MacOS_Meson_Testlog
+        path: build/meson-logs/testlog.txt
+
+  windowsMeson:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-python@v1
+      with:
+        python-version: 3.7
+    - name: Install dependencies
+      run: |
+        cinst -y mingw ninja
+        python -m pip install meson
+    - name: Meson configure
+      run: meson setup build
+      env:
+        FC: gfortran
+    - name: Meson test
+      run: meson test -C build -v
+    - uses: actions/upload-artifact@v1
+      if: failure()
+      with:
+        name: Windows_Meson_Testlog
+        path: build/meson-logs/testlog.txt
+
+  windowsCmake:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Cmake configure
+      run: cmake -B build -G "MinGW Makefiles" -DCMAKE_SH="CMAKE_SH-NOTFOUND"
+      env:
+        FC: gfortran
+    - name: Cmake build
+      run: cmake --build build --parallel
+    - name: Cmake test
+      run: ctest -V
+      working-directory: build

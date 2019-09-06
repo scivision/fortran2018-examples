@@ -1,4 +1,4 @@
-[![Build Status](https://dev.azure.com/mhirsch0512/fortran2018-examples/_apis/build/status/scivision.fortran2018-examples?branchName=master)](https://dev.azure.com/mhirsch0512/fortran2018-examples/_build/latest?definitionId=8&branchName=master)
+[![Actions Status](https://github.com/scivision/fortran2018-examples/workflows/ci/badge.svg)](https://github.com/scivision/fortran2018-examples/actions)
 
 
 # Fortran 2018 Examples
