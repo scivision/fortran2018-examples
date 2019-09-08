@@ -1,6 +1,5 @@
 
-if fc.get_id() == 'pgi'
-  message('cxx: Meson bug with PGI')
+if not add_languages('cpp', required: false)
   subdir_done()
 endif
 

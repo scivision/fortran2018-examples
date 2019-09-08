@@ -1,4 +1,4 @@
-project('Fortran2018examples', 'fortran', 'cpp', 'c',
+project('Fortran2018examples', 'fortran', 'c',
   version : '1.0.0',
   default_options : ['default_library=static', 'buildtype=release', 'cpp_std=c++14'])
 
