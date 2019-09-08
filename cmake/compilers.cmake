@@ -4,15 +4,14 @@ endif()
 
 if(CMAKE_Fortran_COMPILER_ID STREQUAL Intel)
   if(NOT WIN32)
-    set(FFLAGS -stand f18 -implicitnone -traceback -warn -heap-arrays)
+    set(FFLAGS -stand f18 -traceback -warn -heap-arrays)
   else()
-    set(FFLAGS /stand:f18 /4Yd /traceback /warn /heap-arrays)
-    # Note: -g is /debug:full for ifort Windows
+    set(FFLAGS /stand:f18 /traceback /warn /heap-arrays)
   endif()
 
   if(CMAKE_BUILD_TYPE STREQUAL Debug)
     if(WIN32)
-      list(APPEND FFLAGS /check:all)
+      list(APPEND FFLAGS /debug /check:all)
     else()
       list(APPEND FFLAGS -debug extended -check all)
     endif()
