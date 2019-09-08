@@ -1,0 +1,9 @@
+&foo
+x = 1,2,3  ! inline comments are OK
+y = 8
+z = 10
+/
+
+! unspecified namelist groups must still be specified empty as below
+&bar
+/
