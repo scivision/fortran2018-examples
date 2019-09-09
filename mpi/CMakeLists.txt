@@ -1,11 +1,5 @@
 # If you have a custom location for mpif90 / mpifort and CMake doesn't find it, try
 #   FC=mpif90 cmake ..
-
-if(WIN32 AND CMAKE_Fortran_COMPILER_ID STREQUAL GNU)
-  message(STATUS "FindMPI in CMake seems to have a bug on Windows, skipping MPI tests")
-  return()
-endif()
-
 cmake_policy(SET CMP0074 NEW)
 
 include(mpi.cmake)
@@ -26,7 +20,6 @@ add_executable(mpi_pass thread_pass.f90)
 target_compile_options(mpi_pass PRIVATE ${FFLAGS})
 target_link_libraries(mpi_pass ${FLIBS} MPI::MPI_Fortran)
 
-if(NOT WIN32)
 add_test(NAME MPIversion COMMAND mpivers)
 
 add_test(NAME MPIhello
@@ -40,7 +33,6 @@ add_test(NAME MPIpass
   ${MPIEXEC_PREFLAGS} $<TARGET_FILE:mpi_pass> ${MPIEXEC_POSTFLAGS})
 set_tests_properties(MPIpass PROPERTIES RUN_SERIAL true TIMEOUT 20)
 endif()
-endif(NOT WIN32)
 
 # mpifort --showme
 #

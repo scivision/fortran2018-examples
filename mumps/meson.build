@@ -32,15 +32,16 @@ if not scalapack.found()
 endif
 
 blacs1_exe = executable('blacs1', 'blacs.f', dependencies: [mpi, lapack, scalapack])
-if not os == 'windows'
-  #test('BLACS', mpiexec_executable, mpiexec_numproc_flag, mpiexec_max_numprocs, '$<TARGET_FILE:blacs1>')
-endif
+test('BLACS', mpiexec_executable,
+  args: ['-np', '1', blacs1_exe],
+  timeout: 10)
 
 scalapack1_exe = executable('scalapack1', 'scalapack_example1.f', dependencies: [mpi, lapack, scalapack])
 # note: this test needs at least 6 MPI processes, even if you're on a very small computer it's OK.
-if not os == 'windows'
-  #test('NAME', 'Scalapack', 'COMMAND', mpiexec_executable, mpiexec_numproc_flag, '6', '$<TARGET_FILE:scalapack1>', 'WORKING_DIRECTORY', cmake_current_source_dir)
-endif
+test('Scalapack', mpiexec_executable,
+  args: ['-np', '6', '--oversubscribe', scalapack1_exe],
+  workdir: meson.current_source_dir(),
+  timeout: 15)
 
 # --- MUMPS
 mumps = dependency('mumps', required: false)
@@ -48,8 +49,9 @@ if not mumps.found()
   message('MUMPS skipped')
   subdir_done()
 endif
+
 testmumps_exe = executable('testmumps', 'test_mumps.f90', dependencies: [mpi, mumps])
-if not os == 'windows'
-  #test('NAME', 'MUMPS', 'COMMAND', mpiexec_executable, mpiexec_numproc_flag, mpiexec_max_numprocs, '$<TARGET_FILE:testmumps>', 'WORKING_DIRECTORY', cmake_current_source_dir)
-  # set_tests_properties(['MUMPS', 'PROPERTIES', 'RUN_SERIAL', 'true'])
-endif
+test('MUMPS', mpiexec_executable,
+  args: ['-np', '1', testmumps_exe],
+  workdir: meson.current_source_dir(),
+  timeout: 15)
