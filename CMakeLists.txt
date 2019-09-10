@@ -11,6 +11,7 @@ include(cmake/compilers.cmake)
 
 add_subdirectory(array)
 add_subdirectory(benchmarks)
+add_subdirectory(block)
 add_subdirectory(character)
 add_subdirectory(cmake_examples)
 add_subdirectory(coarray)

@@ -1,3 +1,4 @@
+include(${CMAKE_SOURCE_DIR}/cmake/f03ieee.cmake)
 
 if(NOT realbits)
   set(realbits 64)
@@ -71,4 +72,4 @@ target_compile_options(testassert PRIVATE ${FFLAGS})
 add_test(NAME Assert COMMAND testassert)
 endif()
 
-endif()
+endif(f03ieee)

@@ -1,9 +1,3 @@
-f08block = fc.links('block; end block; end', name : 'F2008 block')
-
-if f08block
-  block_exe = executable('block', 'block.f90')
-endif
-
 short_circuit = executable('shortcircuit', 'short_circuit.f90')
 # test is too unreliable--sometimes pass sometimes fail, that's the point.
 
@@ -12,7 +6,7 @@ test('standard:Bit Pattern', bitpat)
 
 justwait_exe = executable('justwait', 'pause.f90')
 
-if os == 'windows' and fc.get_id() == 'pgi' or fc.get_id() == 'intel-cl'
+if os == 'windows' and ['pgi', 'intel-cl'].contains(fc.get_id())
   message('mkdir: PGI and Intel Windows bug')
 else
   if fc.get_id()=='intel'

@@ -72,6 +72,7 @@ FC=pgf90 CC=pgcc CXX=pgc++ cmake ..
 Each directory has its own README and examples.
 
 * [array/](./array): Array math in modern CMake and Fortran, including MKL, BLAS, LAPACK and LAPACK95.
+* [block/](./block): Highly useful `block` element is demonstrated
 * [coarray/](./coarray): modern Fortran is the only major compiled language standard with intrinsic massively parallel arrays.
 * [contiguous/](./contiguous): Fortran 2008 `contiguous` array examples, including Fortran preprocessor with modern CMake.
 * [mpi/](./mpi): OpenMPI parallel computing examples

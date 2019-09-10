@@ -5,25 +5,21 @@ project('Fortran2018examples', 'fortran', 'c',
 realbits = get_option('realbits')
 
 fc = meson.get_compiler('fortran')
+f18flag = fc.first_supported_argument(['-std=f2018', '-stand f18', '/stand:f18'])
+impnone = fc.first_supported_argument(['-fimplicit-none', '-warn declarations', '/warn:declarations', '-Mdclchk'])
+oldargs = fc.first_supported_argument(['-w', '-nowarn', '/nowarn'])
 if fc.get_id() == 'gcc'
-  add_global_arguments('-fimplicit-none', '-Wextra', '-Wpedantic', language : 'fortran')
-  if fc.version().version_compare('>=8.0')
-    add_global_arguments('-std=f2018', language: 'fortran')
-  endif
-  oldargs = ['-std=legacy', '-w']
+  add_global_arguments('-Wextra', '-Wpedantic', f18flag, impnone, language : 'fortran')
+  oldargs += '-std=legacy'
 elif fc.get_id() == 'intel'
-  add_global_arguments('-stand', 'f18', '-warn declarations', language: 'fortran')
-  oldargs = '-nowarn'
+  add_global_arguments(f18flag, impnone, language: 'fortran')
 elif fc.get_id() == 'intel-cl'
   # /fpp allows #include etc preprocessor lines
-   add_global_arguments('/stand:f18', '/warn:declarations', '/fpp', language: 'fortran')
-   oldargs = '/nowarn'
+   add_global_arguments(f18flag, impnone, '/fpp', language: 'fortran')
 elif fc.get_id() == 'pgi'
-   add_global_arguments('-C', '-Mdclchk', language: 'fortran')
-   oldargs = '-w'
+   add_global_arguments('-C', impnone, language: 'fortran')
 elif fc.get_id() == 'flang'
   add_global_arguments('-W', language: 'fortran')
-  oldargs = '-w'
 endif
 
 os = host_machine.system()
@@ -32,6 +28,7 @@ f18errorstop = fc.links('character :: b; error stop b; end', name: 'F2018 error 
 
 subdir('array')
 subdir('benchmarks')
+subdir('block')
 subdir('character')
 subdir('coarray')
 subdir('contiguous')

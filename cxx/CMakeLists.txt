@@ -22,7 +22,7 @@ target_compile_options(f_call_c PRIVATE ${FFLAGS})
 add_test(NAME Fortran2C COMMAND f_call_c)
 
 # Workaround for PGI not having CXX on Windows and wrong CXX compiler being found
-if(WIN32 AND CMAKE_C_COMPILER_ID STREQUAL PGI OR CMAKE_Fortran_COMPILER_ID STREQUAL PGI)
+if(WIN32 AND CMAKE_C_COMPILER_ID STREQUAL PGI AND CMAKE_GENERATOR STREQUAL "MinGW Makefiles")
   message(STATUS "PGI on Windows does not currently have a CXX compiler")
   return()
 endif()

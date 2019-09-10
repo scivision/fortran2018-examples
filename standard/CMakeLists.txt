@@ -1,13 +1,6 @@
 
-if(f08block)
-add_executable(block block.f90)
-target_compile_options(block PRIVATE ${FFLAGS})
-target_link_libraries(block ${FLIBS})
-add_test(NAME Block COMMAND block)
-endif()
-
 if(WIN32 AND CMAKE_Fortran_COMPILER_ID STREQUAL PGI)
-  message(STATUS "PGI Windows bug")
+  message(STATUS "shortcircuit: PGI Windows bug")
 else()
   add_executable(shortcircuit short_circuit.f90)
   target_compile_options(shortcircuit PRIVATE ${FFLAGS})
