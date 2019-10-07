@@ -47,3 +47,5 @@ subdir('random')
 subdir('real')
 subdir('standard')
 subdir('system')
+
+submodule_proj = subproject('submodule')

@@ -1,11 +1,7 @@
 coarray = dependency('coarray', required : false)
-if not coarray.found()
-  subdir_done()
-endif
 
-coarray_ok = fc.run('sync all; end', dependencies: coarray, name:'Coarray runs').returncode() == 0
-if not coarray_ok
-  subdir_done()
+if not (fc.run('sync all; end', dependencies: coarray, name:'Coarray runs').returncode() == 0)
+  coarray = disabler()
 endif
 
 # this needs to be "run" to verify no dll runtime issues, particularly on Windows.

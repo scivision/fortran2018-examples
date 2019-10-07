@@ -1,9 +1,5 @@
 mpi = dependency('mpi', language : 'fortran', required : false)
 
-if not mpi.found()
-  subdir_done()
-endif
-
 if not fc.links('''
     use mpi
     integer :: i
@@ -12,7 +8,7 @@ if not fc.links('''
     end''',
     dependencies : mpi,
     name: 'Fortran MPI links')
-  subdir_done()
+  mpi = disabler()
 endif
 
 mpiexec = find_program('mpiexec')  # MS-MPI has only mpiexec
