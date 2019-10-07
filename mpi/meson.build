@@ -11,7 +11,7 @@ if not fc.links('''
   mpi = disabler()
 endif
 
-mpiexec = find_program('mpiexec')  # MS-MPI has only mpiexec
+mpiexec = find_program('mpiexec', required : false)  # MS-MPI has only mpiexec
 
 ver = executable('mpivers', 'mpivers.f90',
   dependencies : mpi)

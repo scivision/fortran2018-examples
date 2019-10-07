@@ -10,17 +10,13 @@ jobs:
     - uses: actions/checkout@v1
     - uses: actions/setup-python@v1
       with:
-        python-version: 3.7
-    - name: Install Meson
-      run: python -m pip install meson
-    - name: Install packages
-      run: sudo apt install -yq --no-install-recommends ninja-build gfortran g++
-    - name: Meson configure
-      run: meson setup build
+        python-version: '3.x'
+    - run: python -m pip install meson
+    - run: sudo apt install -yq --no-install-recommends ninja-build gfortran g++
+    - run: meson setup build
       env:
         FC: gfortran
-    - name: Meson test
-      run: meson test -C build -v
+    - run: meson test -C build -v
     - uses: actions/upload-artifact@v1
       if: failure()
       with:
@@ -33,17 +29,13 @@ jobs:
     - uses: actions/checkout@v1
     - uses: actions/setup-python@v1
       with:
-        python-version: 3.7
-    - name: Install dependencies
-      run: |
-        brew install gcc ninja
-        python -m pip install meson
-    - name: Meson configure
-      run: meson setup build
+        python-version: '3.x'
+    - run: brew install gcc ninja
+    - run: pip install meson
+    - run: meson setup build
       env:
         FC: gfortran
-    - name: Meson test
-      run: meson test -C build -v
+    - run: meson test -C build -v
     - uses: actions/upload-artifact@v1
       if: failure()
       with:
@@ -56,17 +48,13 @@ jobs:
     - uses: actions/checkout@v1
     - uses: actions/setup-python@v1
       with:
-        python-version: 3.7
-    - name: Install dependencies
-      run: |
-        cinst -y mingw ninja
-        python -m pip install meson
-    - name: Meson configure
-      run: meson setup build
+        python-version: '3.x'
+    - run: cinst -y mingw ninja
+    - run: pip install meson
+    - run: meson setup build
       env:
         FC: gfortran
-    - name: Meson test
-      run: meson test -C build -v
+    - run: meson test -C build -v
     - uses: actions/upload-artifact@v1
       if: failure()
       with:
@@ -77,12 +65,9 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v1
-    - name: Cmake configure
-      run: cmake -B build -G "MinGW Makefiles" -DCMAKE_SH="CMAKE_SH-NOTFOUND"
+    - run: cmake -B build -G "MinGW Makefiles" -DCMAKE_SH="CMAKE_SH-NOTFOUND"
       env:
         FC: gfortran
-    - name: Cmake build
-      run: cmake --build build --parallel
-    - name: Cmake test
-      run: ctest -V
+    - run: cmake --build build --parallel
+    - run: ctest -V
       working-directory: build
