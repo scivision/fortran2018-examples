@@ -1,0 +1,25 @@
+name: ci_cmake
+
+on:
+  push:
+    paths-ignore:
+      - "**/*.md"
+  pull_request:
+    paths-ignore:
+      - "**/*.md"
+
+jobs:
+
+  macos:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v1
+    - run: brew install gcc
+    - run: cmake -B build
+      env:
+        FC: gfortran-9
+        CC: gcc-9
+        CXX: g++-9
+    - run: cmake --build build --parallel
+    - run: ctest -V
+      working-directory: build

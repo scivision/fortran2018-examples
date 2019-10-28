@@ -1,5 +1,5 @@
-[![Actions Status](https://github.com/scivision/fortran2018-examples/workflows/ci/badge.svg)](https://github.com/scivision/fortran2018-examples/actions)
-
+[![Actions Status](https://github.com/scivision/fortran2018-examples/workflows/ci_cmake/badge.svg)](https://github.com/scivision/fortran2018-examples/actions)
+[![Actions Status](https://github.com/scivision/fortran2018-examples/workflows/ci_meson/badge.svg)](https://github.com/scivision/fortran2018-examples/actions)
 
 # Fortran 2018 Examples
 

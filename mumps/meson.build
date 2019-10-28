@@ -1,6 +1,6 @@
 
 mpi = dependency('MPI', language: 'fortran', required: false, disabler: true)
-if not fc.links('use mpi; end', dependencies: mpi, name: 'MPI')
+if mpi.found() and not fc.links('use mpi; end', dependencies: mpi, name: 'MPI')
   mpi = disabler()
 endif
 mpiexec = find_program('mpiexec', required: false, disabler: true)

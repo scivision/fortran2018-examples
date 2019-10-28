@@ -4,7 +4,7 @@
 netcdf = dependency('NetCDF', required : false, disabler: true,
   cmake_module_path : meson.source_root() / 'cmake/Modules')
 
-if not fc.links('use netcdf; end', name: 'NetCDF', dependencies : netcdf)
+if netcdf.found() and not fc.links('use netcdf; end', name: 'NetCDF', dependencies : netcdf)
   netcdf = disabler()
 endif
 

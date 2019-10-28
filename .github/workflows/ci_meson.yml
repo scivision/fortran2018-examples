@@ -1,10 +1,16 @@
-name: ci
+name: ci_meson
 
-on: [push, pull_request]
+on:
+  push:
+    paths-ignore:
+      - "**/*.md"
+  pull_request:
+    paths-ignore:
+      - "**/*.md"
 
 jobs:
 
-  linuxMeson:
+  linux:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
@@ -23,7 +29,7 @@ jobs:
         name: Linux_Meson_Testlog
         path: build/meson-logs/testlog.txt
 
-  macosMeson:
+  macos:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v1
@@ -42,7 +48,7 @@ jobs:
         name: MacOS_Meson_Testlog
         path: build/meson-logs/testlog.txt
 
-  windowsMeson:
+  windows:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v1
@@ -60,14 +66,3 @@ jobs:
       with:
         name: Windows_Meson_Testlog
         path: build/meson-logs/testlog.txt
-
-  windowsCmake:
-    runs-on: windows-latest
-    steps:
-    - uses: actions/checkout@v1
-    - run: cmake -B build -G "MinGW Makefiles" -DCMAKE_SH="CMAKE_SH-NOTFOUND"
-      env:
-        FC: gfortran
-    - run: cmake --build build --parallel
-    - run: ctest -V
-      working-directory: build
