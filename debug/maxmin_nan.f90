@@ -1,5 +1,5 @@
-!! how does Fortran handle NaN vis-a-vis max and min
-!! https://groups.google.com/forum/#!topic/comp.lang.fortran/MwVfrvUowHU
+!! Fortran standard does NOT specify how to handle NaN vis-a-vis max and min
+!! https://gcc.gnu.org/onlinedocs/gfortran/MAX-and-MIN-intrinsics-with-REAL-NaN-arguments.html
 
 use, intrinsic :: ieee_arithmetic
 use, intrinsic :: iso_fortran_env, stderr=>error_unit
@@ -16,17 +16,14 @@ if(.not.ieee_is_nan(nan)) then
 endif
 
 A = [0., 1., 2., nan]
-print *, 'maximum of ',A, 'is', maxval(A)
-if(maxval(A) /= 2) error stop 'maxval() not working with NaN'
+print '(4F10.7,A,F10.7)', A, ' maximum is', maxval(A)
 
 x = nan
 y = 1.
 
-print *, 'maximum of',x,'and',y,'is',max(x,y)
-if (max(x,y) /= 1) error stop 'max() not working with NaN'
+print '(F10.7,F10.7,A,F10.7)', x,y, ' maximum is ',max(x,y)
 
 ! Gfortran, Flang 7 say inf; PGI, Intel say NaN
 print *,'max of inf() and NaN is', max(inf, nan)
-
 
 end program
