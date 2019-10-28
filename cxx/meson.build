@@ -4,7 +4,7 @@ if not add_languages('cpp', required: false)
 endif
 
 if os == 'darwin'
-  message('cxx: Meson build on Mac')
+  message('cxx: SKIP Meson build on Mac')
   subdir_done()
 endif
 

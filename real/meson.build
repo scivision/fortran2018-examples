@@ -1,54 +1,43 @@
-f08kind = fc.links('''
-use, intrinsic:: iso_fortran_env, only: real128
-use, intrinsic:: ieee_arithmetic, only: ieee_is_nan
 
-if (huge(0._real128) /= 1.18973149535723176508575932662800702E+4932_real128) stop 1
-
-end program''', name: 'F2008 ieee kinds')
-
-f18prop = fc.links('complex :: z; print *,z%re,z%im,z%kind; end',
-  name: 'F2018 properties')
-
-if f08kind
-  r128 = '-DREAL128'
-else
-  r128 = ''
-endif
+r128 = f08kind ? '-DREAL128' : ''
 
 polymorph = executable('polymorph', 'polymorphic.F90',
   fortran_args: '-DREALBITS='+realbits)
-test('real:Polymorphic', polymorph)
+test('real:Polymorphic', polymorph,
+  timeout: 10)
 
 divprec = executable('divprec', 'div_precision.F90',
   fortran_args: r128)
-test('real:DivisionPrecision', divprec)
+test('real:DivisionPrecision', divprec,
+  timeout: 10)
 
 floatprec = executable('floatprec', 'floating_precision.F90',
   fortran_args: r128)
-test('real:FloatPrecision', floatprec)
+test('real:FloatPrecision', floatprec,
+  timeout: 10)
 
 hugeprec = executable('hugeprec', 'huge_precision.F90',
   fortran_args: r128)
-test('real:HugePrecision', hugeprec)
+test('real:HugePrecision', hugeprec,
+  timeout: 10)
 
 if f08kind
   precprob = executable('precprob', 'precision_problems.f90')
-  test('real:PrecisionProblems', precprob)
+  test('real:PrecisionProblems', precprob,
+    timeout: 15)
 endif
 
 if f18prop
   properties = executable('properties', 'properties.f90')
-  test('real:Fortran2018 Properties', properties)
+  test('real:Fortran2018 Properties', properties,
+    timeout: 10)
 endif
 
-if f08kind
-  nanargs = [r128, '-DIEEENAN']
-else
-  nanargs = []
-endif
+nanargs = f08kind ? [r128, '-DIEEENAN'] : []
 nan = executable('nan', 'nans.F90',
   fortran_args: nanargs)
-test('NaN', nan)
+test('NaN', nan,
+  timeout: 10)
 
 assert_lib = library('assert', 'assert.F90',
   fortran_args: '-DREALBITS='+realbits)
@@ -56,5 +45,6 @@ assert_lib = library('assert', 'assert.F90',
 if f08kind
   testassert_exe = executable('testassert', 'not-finite.f90', 'fib3.f90',
     link_with: assert_lib)
-  test('real:Assert', testassert_exe)
+  test('real:Assert', testassert_exe,
+    timeout: 10)
 endif

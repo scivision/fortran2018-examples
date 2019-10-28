@@ -5,7 +5,8 @@ append_exe = executable('test_logging', 'append_file.f90',
 termio = executable('termio', 'terminal_io.f90')
 
 leading_zeros = executable('leading_zeros', 'leading_zeros.f90')
-test('LeadingZeros', leading_zeros)
+test('LeadingZeros', leading_zeros,
+  timeout: 10)
 
 expanduser = executable('expanduser', 'expanduser.f90')
 

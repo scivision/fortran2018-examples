@@ -1,19 +1,20 @@
 color_exe = executable('color', 'color_text.f90')
+test('system: color', color_exe,
+  timeout: 10)
 
 osdet = library('osdet', 'os_detect.f90')
-
-f08command = fc.links('integer foo; call execute_command_line(" ", exitstat=foo); end',
-  name : 'F2008 execute_command_line')
 
 if not f08command
   subdir_done()
 endif
 
 gitrev = executable('gitrev', 'gitrev.f90')
-test('Git revision log', gitrev)
+test('Git revision log', gitrev,
+  timeout: 15)
 
 complog = executable('complog', 'compiler_log.f90')
-test('Compiler version logging', complog)
+test('Compiler version logging', complog,
+  timeout: 15)
 
 playsound_exe = executable('playsound', 'play_sound.f90')
 
