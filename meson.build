@@ -46,6 +46,5 @@ subdir('overloading')
 subdir('random')
 subdir('real')
 subdir('standard')
+subdir('submodule')
 subdir('system')
-
-submodule_proj = subproject('submodule')
