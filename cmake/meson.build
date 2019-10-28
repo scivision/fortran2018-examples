@@ -57,9 +57,7 @@ integer :: i
 call mpi_init(i)
 call mpi_finalize(i)
 end program'''
-if not fc.links(code,
-    dependencies : mpi,
-    name: 'Fortran MPI links')
+if mpi.found() and not fc.links(code, dependencies : mpi, name: 'Fortran MPI links')
   mpi = disabler()
 endif
 
