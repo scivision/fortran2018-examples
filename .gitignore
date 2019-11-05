@@ -1,6 +1,7 @@
 subprojects/
 .mypy_cache/
 build/
+build_win/
 *.s
 kind.txt
 cmake_install.cmake

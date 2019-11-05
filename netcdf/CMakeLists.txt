@@ -1,6 +1,5 @@
-# apt install libnetcdf-dev libnetcdff-dev     # need BOTH installed
+include(${CMAKE_SOURCE_DIR}/cmake/netcdf.cmake)
 
-find_package(NetCDF COMPONENTS Fortran)
 if(NOT NetCDF_FOUND)
   return()
 endif()
