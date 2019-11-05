@@ -14,7 +14,7 @@ jobs:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v1
-    - run: brew install gcc
+    - run: brew install gcc hdf5
     - run: cmake -B build
       env:
         FC: gfortran-9

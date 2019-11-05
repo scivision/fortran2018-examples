@@ -1,9 +1,4 @@
 # don't enclose this all in "if(NOT DEFINED HDF5OK)" because CMake intermittantly doesn't cache needed HDF5 variables.
-if(BUILD_SHARED_LIBS)
-  set(HDF5_USE_STATIC_LIBRARIES false)
-else()
-  set(HDF5_USE_STATIC_LIBRARIES true)
-endif()
 
 find_package(HDF5 REQUIRED COMPONENTS Fortran Fortran_HL)
 
