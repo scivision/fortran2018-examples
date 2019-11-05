@@ -1,5 +1,3 @@
-include(${CMAKE_SOURCE_DIR}/cmake/f03ieee.cmake)
-
 if(NOT realbits)
   set(realbits 64)
 endif()

@@ -9,7 +9,6 @@ Finds the FFMPEG library.
 Assumes path to ffmpeg binary is in PATH or FFMPEG_ROOT
 
 COMPONENTS
-  EXECUTABLE  FFMPEG main program
 
   PLAY  ffplay  program
 
@@ -31,11 +30,6 @@ FFMPEG_FFPROBE
 #]=======================================================================]
 
 cmake_policy(VERSION 3.3)
-
-if(NOT FFMPEG_FIND_COMPONENTS)
-  set(FFMPEG_FIND_COMPONENTS EXECUTABLE)
-endif()
-
 
 find_program(FFMPEG_FFMPEG
           NAMES ffmpeg

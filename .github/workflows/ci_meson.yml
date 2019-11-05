@@ -18,7 +18,10 @@ jobs:
       with:
         python-version: '3.x'
     - run: pip install meson
-    - run: sudo apt install -yq --no-install-recommends ninja-build gfortran g++
+    - name: Install packages
+      run: |
+        sudo apt update -yq
+        sudo apt install -yq --no-install-recommends ninja-build gfortran g++
     - run: meson setup build
       env:
         FC: gfortran

@@ -1,5 +1,3 @@
-include(${CMAKE_SOURCE_DIR}/cmake/f08block.cmake)
-
 if(f08block)
   add_executable(block block.f90)
   target_compile_options(block PRIVATE ${FFLAGS})

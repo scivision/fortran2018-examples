@@ -37,9 +37,12 @@ endif()
 
 
 include(CheckFortranSourceCompiles)
-include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/f08contig.cmake)
-include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/f18errorstop.cmake)
-include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/f18random.cmake)
-include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/f08kind.cmake)
-include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/f18prop.cmake)
-include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/f08command.cmake)
+
+include(${CMAKE_CURRENT_LIST_DIR}/f08block.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/f08contig.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/f18errorstop.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/f18random.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/f08kind.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/f18prop.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/f08command.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/f03ieee.cmake)
