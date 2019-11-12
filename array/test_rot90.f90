@@ -18,27 +18,39 @@ rarr = iarr
 
 call printarr(iarr,'before rot90')
 
-call printarr(rot90(iarr,0),'rot90(0)')
+call rot90(iarr, 0)
+call printarr(iarr, 'rot90(0)')
 
-call printarr(rot90(iarr,1), 'rot90(1)')
+call rot90(iarr, 1)
+call printarr(iarr, 'rot90(1)')
+call rot90(iarr, -1)
 
-call printarr(rot90(iarr,2),'rot90(2)')
+call rot90(iarr, 2)
+call printarr(iarr, 'rot90(2)')
+call rot90(iarr, -2)
 
-call printarr(rot90(iarr,3),'rot90(3)')
+call rot90(iarr, 3)
+call printarr(iarr, 'rot90(3)')
+call rot90(iarr, -3)
 
-call printarr(flipud(iarr), 'flipud()')
+call flipud(iarr)
+call printarr(iarr, 'flipud()')
+call flipud(iarr)
 
-call printarr(fliplr(iarr), 'fliplr()')
+call fliplr(iarr)
+call printarr(iarr, 'fliplr()')
+call fliplr(iarr)
 
 ! -- test non-default bounds
 Barr = iarr
-print *,lbound(Barr,1)
-Barr = rot90(Barr)
-print *,lbound(Barr,1)
+if (lbound(Barr,1) /= 0) error stop 'lbound should be 0'
+
+call rot90(Barr)
+if (lbound(Barr,1) /= 0) error stop 'lbound should be 0'
 
 ! -- Fortran polymorphic type
 rarr = iarr
-rarr = rot90(rarr)
+call rot90(rarr)
 
 contains
 

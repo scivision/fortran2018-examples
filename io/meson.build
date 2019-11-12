@@ -14,10 +14,10 @@ notermsize = executable('notermsize', 'noenv.f90')
 test('NoTermSize', notermsize)
 if f18errorstop
   readonly = executable('readonly', 'fileopen-readonly.f90')
-  test('ReadOnly', readonly)
+  test('ReadOnly', readonly, timeout: 10)
 
   if not(os == 'windows' and fc.get_id() == 'pgi')
     null = executable('null', 'devnull.f90')
-    test('Nullfile', null)
+    test('Nullfile', null, timeout: 10)
   endif
 endif

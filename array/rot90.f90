@@ -1,169 +1,123 @@
 module rotflip
 
 ! This module provides rot90, flipud, fliplr for Fortran like Matlab and NumPy
-! 
+!
 use, intrinsic:: iso_fortran_env, only: error_unit
 implicit none
 
-interface rot90
-  module procedure rot90_i, rot90_r
-end interface rot90
-
-interface flip
-  module procedure flip_i, flip_r
-end interface flip
-
-interface flipud
-  module procedure flipud_i, flipud_r
-end interface flipud
-
-interface fliplr
-  module procedure fliplr_i, fliplr_r
-end interface fliplr
-
 contains
 
-integer function rot90_i(A, k) result(rot)
+subroutine rot90(A, k)
 ! https://github.com/numpy/numpy/blob/v1.14.2/numpy/lib/function_base.py#L54-L138
 
-integer, intent(in) :: A(:,:)
+class(*), intent(inout) :: A(:,:)
 integer, intent(in), optional :: k
-dimension :: rot(size(A,1), size(A,2))
 integer :: r
 
 r = 1
 if (present(k)) r = k
 
-select case (modulo(r,4))
-  case (0)
-    rot = A  ! unmodified
-  case (1) 
-    rot = transpose(flip(A,1))
-  case (2)
-    rot = flip(A,0)
-  case (3)
-    rot = flip(transpose(A), 1)
+select type (A)
+  type is (integer)
+    select case (modulo(r,4))
+      case (0)  ! unmodified
+      case (1)
+        call flip(A,1)
+        A = transpose(A)
+      case (2)
+        call flip(A,0)
+      case (3)
+        A = transpose(A)
+        call flip(A, 1)
+    end select
+  type is (real)
+    select case (modulo(r,4))
+      case (0)  ! unmodified
+      case (1)
+        call flip(A,1)
+        A = transpose(A)
+      case (2)
+        call flip(A,0)
+      case (3)
+        A = transpose(A)
+        call flip(A, 1)
+    end select
+  class default
+    error stop 'unknown type'
 end select
 
-end function rot90_i
+end subroutine rot90
 
 
-real function rot90_r(A, k) result(rot)
-! https://github.com/numpy/numpy/blob/v1.14.2/numpy/lib/function_base.py#L54-L138
+subroutine flip(A, d)
 
-real, intent(in) :: A(:,:)
-integer, intent(in), optional :: k
-dimension :: rot(size(A,1), size(A,2))
-integer :: r
-
-r = 1
-if (present(k)) r = k
-
-select case (modulo(r,4))
-  case (0)
-    rot= A  ! unmodified
-  case (1) 
-    rot = transpose(flip(A,1))
-  case (2)
-    rot = flip(A,0)
-  case (3)
-    rot = flip(transpose(A), 1)
-end select
-
-end function rot90_r
-
-!------------------------------
-
-integer function flip_i(A, d) result(flip)
-
-integer, intent(in) :: A(:,:)
+class(*), intent(inout) :: A(:,:)
 integer, intent(in) :: d
 integer :: M, N
-dimension :: flip(size(A,1), size(A,2))
 
 M = size(A,1)
 N = size(A,2)
 
-select case (d)
-  case (0)  ! flip both dimensions
-    flip = A(M:1:-1, N:1:-1)
-  case (1)
-    flip = A(M:1:-1, :)
-  case (2)
-    flip = A(:, N:1:-1)
-  case default
-    error stop 'bad flip dimension, 2-D only  (1 or 2), or 0 for both dimensions'
+select type (A)
+  type is (integer)
+    select case (d)
+      case (0)  ! flip both dimensions
+        A = A(M:1:-1, N:1:-1)
+      case (1)
+        A = A(M:1:-1, :)
+      case (2)
+        A = A(:, N:1:-1)
+      case default
+        error stop 'bad flip dimension, 2-D only  (1 or 2), or 0 for both dimensions'
+    end select
+  type is (real)
+    select case (d)
+      case (0)  ! flip both dimensions
+        A = A(M:1:-1, N:1:-1)
+      case (1)
+        A = A(M:1:-1, :)
+      case (2)
+        A = A(:, N:1:-1)
+      case default
+        error stop 'bad flip dimension, 2-D only  (1 or 2), or 0 for both dimensions'
+    end select
+  class default
+    error stop 'not real or integer'
 end select
 
-end function flip_i
+end subroutine flip
 
 
-real function flip_r(A, d)  result(flip)
+subroutine flipud(A)
 
-real, intent(in) :: A(:,:)
-integer, intent(in) :: d
-integer :: M, N
-dimension :: flip(size(A,1), size(A,2))
+class(*), intent(inout) :: A(:,:)
 
-M = size(A,1)
-N = size(A,2)
-
-select case (d)
-  case (0)  ! flip both dimensions
-    flip = A(M:1:-1, N:1:-1)
-  case (1)
-    flip = A(M:1:-1, :)
-  case (2)
-    flip = A(:, N:1:-1)
-  case default
-    error stop 'bad flip dimension, 2-D only  (1 or 2), or 0 for both dimensions'
+select type (A)
+  type is (real)
+    call flip(A,1)
+  type is (integer)
+    call flip(A,1)
+  class default
+    error stop 'not an integer or real'
 end select
 
-end function flip_r
+end subroutine flipud
 
 
-!------------------
+subroutine fliplr(A)
 
+class(*), intent(inout) :: A(:,:)
 
-integer function flipud_i(A) result(flipud)
+select type (A)
+  type is (real)
+    call flip(A,2)
+  type is (integer)
+    call flip(A,2)
+  class default
+    error stop 'not an integer or real'
+end select
 
-integer, intent(in) :: A(:,:)
-dimension :: flipud(size(A,1), size(A,2))
+end subroutine fliplr
 
-flipud = flip(A,1)
-
-end function flipud_i
-
-
-real function flipud_r(A) result(flipud)
-
-real, intent(in) :: A(:,:)
-dimension :: flipud(size(A,1), size(A,2))
-
-flipud = flip(A,1)
-
-end function flipud_r
-
-
-!-----------------------------------------
-
-integer function fliplr_i(A) result(fliplr)
-
-integer, intent(in) :: A(:,:)
-dimension :: fliplr(size(A,1), size(A,2))
-
-fliplr = flip(A,2)
-
-end function fliplr_i
-
-
-real function fliplr_r(A) result(fliplr)
-
-real, intent(in) :: A(:,:)
-dimension :: fliplr(size(A,1), size(A,2))
-
-fliplr = flip(A,2)
-
-end function fliplr_r
 
 end module rotflip
