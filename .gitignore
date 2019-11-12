@@ -1,3 +1,6 @@
+
+*.dwf
+*.pdb
 subprojects/
 .mypy_cache/
 build/

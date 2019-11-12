@@ -37,6 +37,34 @@ if (huge(0._real128) /= 1.18973149535723176508575932662800702E+4932_real128) sto
 end program'''
 f08kind = fc.links(code, name: 'F2008 ieee kinds')
 f18prop = fc.links('complex :: z; print *,z%re,z%im,z%kind; end', name: 'F2018 properties')
+
+code = '''
+implicit none
+
+integer :: A0 = 0, A1(2) = [0,1], A2(2,2) = reshape([0,1,2,3], order=[2,1], shape=shape(A2))
+
+call foo(A0)
+call foo(A1)
+
+contains
+
+subroutine foo(A)
+integer, intent(inout) :: A(..)
+
+select rank (A)
+  rank is (0)
+  rank is (1)
+    A = A(size(A,1):1:-1, :)
+  rank default error stop
+end select
+
+end subroutine foo
+
+end program
+'''
+f18assumed_rank = fc.links(code, name: 'F2018 assumed rank')
+
+
 # -- Fortran coarray
 
 coarray = dependency('coarray', required : false, disabler: true)
