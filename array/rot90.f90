@@ -2,6 +2,9 @@ module rotflip
 
 ! This module provides rot90, flipud, fliplr for Fortran like Matlab and NumPy
 !
+! Note: PGI 19.10 still doesn't run this code correctly
+! (compiles but falls through to class default)
+!
 use, intrinsic:: iso_fortran_env, only: error_unit
 implicit none
 
@@ -43,7 +46,7 @@ select type (A)
         call flip(A, 1)
     end select
   class default
-    error stop 'unknown type'
+    error stop 'rot90: not real or integer'
 end select
 
 end subroutine rot90
@@ -82,7 +85,7 @@ select type (A)
         error stop 'bad flip dimension, 2-D only  (1 or 2), or 0 for both dimensions'
     end select
   class default
-    error stop 'not real or integer'
+    error stop 'flip: not real or integer'
 end select
 
 end subroutine flip
@@ -98,7 +101,7 @@ select type (A)
   type is (integer)
     call flip(A,1)
   class default
-    error stop 'not an integer or real'
+    error stop 'flipud: not an integer or real'
 end select
 
 end subroutine flipud
@@ -114,7 +117,7 @@ select type (A)
   type is (integer)
     call flip(A,2)
   class default
-    error stop 'not an integer or real'
+    error stop 'fliplr: not an integer or real'
 end select
 
 end subroutine fliplr
