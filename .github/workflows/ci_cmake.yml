@@ -2,11 +2,13 @@ name: ci_cmake
 
 on:
   push:
-    paths-ignore:
-      - "**/*.md"
+    paths:
+      - "**.f90"
+      - "**.F90"
   pull_request:
-    paths-ignore:
-      - "**/*.md"
+    paths:
+      - "**.f90"
+      - "**.F90"
 
 jobs:
 
