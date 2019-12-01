@@ -1,10 +1,10 @@
 project('Fortran2018examples', 'fortran', 'c',
   version : '1.0.0',
-  default_options : ['default_library=static', 'buildtype=release', 'cpp_std=c++14'])
+  default_options : ['default_library=static', 'buildtype=release', 'cpp_std=c++14', 'fortran_std=f2018'])
 
 realbits = get_option('realbits')
 
-subdir('cmake') # must be before other subdirs to get compiler capabilities and libraries
+subdir('meson') # must be before other subdirs to get compiler capabilities and libraries
 
 subdir('array')
 subdir('benchmarks')
