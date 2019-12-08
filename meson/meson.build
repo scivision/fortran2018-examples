@@ -4,7 +4,6 @@ impnone = fc.first_supported_argument(['-fimplicit-none', '-warn declarations', 
 oldargs = fc.first_supported_argument(['-w', '-nowarn', '/nowarn'])
 
 if fc.get_id() == 'gcc'
-  add_global_arguments('-Wextra', '-Wpedantic', impnone, language : 'fortran')
   oldargs += '-std=legacy'
 elif fc.get_id() == 'intel'
   add_global_arguments(impnone, '-heap-arrays', language: 'fortran')
@@ -13,9 +12,7 @@ elif fc.get_id() == 'intel-cl'
   # /heap-arrays necessary to avoid segfault
    add_global_arguments(impnone, '/fpp', '/heap-arrays', language: 'fortran')
 elif fc.get_id() == 'pgi'
-   add_global_arguments('-C', impnone, language: 'fortran')
-elif fc.get_id() == 'flang'
-  add_global_arguments('-W', language: 'fortran')
+   add_global_arguments(impnone, language: 'fortran')
 endif
 
 os = host_machine.system()
@@ -85,7 +82,7 @@ integer :: i
 call mpi_init(i)
 call mpi_finalize(i)
 end program'''
-if mpi.found() and not fc.links(code, dependencies : mpi, name: 'Fortran MPI links')
+if not fc.links(code, dependencies : mpi, name: 'Fortran MPI links')
   mpi = disabler()
 endif
 
@@ -95,45 +92,16 @@ mpiexec = find_program('mpiexec', required : false, disabler: true)  # MS-MPI ha
 
 hdf5 = dependency('hdf5', language : 'fortran', required : false, disabler: true)
 
-if hdf5.found() and not fc.links('use h5lt; end', name: 'HDF5', dependencies : hdf5)
+if not fc.links('use h5lt; end', name: 'HDF5', dependencies : hdf5)
   hdf5 = disabler()
-endif
-
-# -- NetCDF
-# apt install libnetcdf-dev libnetcdff-dev     # need BOTH installed
-
-# when using CMake, need to capitalize module name like in CMake
-netcdf = dependency('NetCDF', required : false, disabler: true,
-  cmake_module_path : meson.source_root() / 'cmake/Modules')
-
-if netcdf.found() and not fc.links('use netcdf; end', name: 'NetCDF', dependencies : netcdf)
-  netcdf = disabler()
 endif
 
 # --- Lapack
 lapack = dependency('lapack', required: false, disabler: true)
 
-# --- Scalapack
-# dependency('scalapack') not yet working in Meson
-# scalapack = dependency('scalapack', cmake_module_path : 'cmake/Modules', required: false, disabler: true)
-scalapack = fc.find_library('scalapack-openmpi', required: false, disabler: true)
-if not scalapack.found()
-  scalapack = fc.find_library('scalapack', required: false, disabler: true)
-endif
-
-# --- MUMPS
-# mumps = dependency('mumps', required: false, disabler: true)
-if os == 'linux'
-  mumpsinc = '/usr/include'
-else
-  mumpsinc = ''
-endif
-mumpslib = fc.find_library('dmumps', required : false, disabler: true)
-mumps = declare_dependency(include_directories: mumpsinc, dependencies: mumpslib)
-
 # -- OpenMP
 openmp = dependency('openmp', language : 'fortran', required : false, disabler: true)
 
-if openmp.found() and not fc.links('use omp_lib; rate = omp_get_wtick(); end', name: 'OpenMP', dependencies : openmp)
+if not fc.links('use omp_lib; rate = omp_get_wtick(); end', name: 'OpenMP', dependencies : openmp)
   openmp = disabler()
 endif
