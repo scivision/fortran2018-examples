@@ -1,4 +1,4 @@
-!! Demonstrate Fortran calling C.
+!! Demonstrate Fortran calling C++.
 !!
 !! Normally BIND(C) should be used after the function name in the interface block,
 !! rather than postpending underscore(s).

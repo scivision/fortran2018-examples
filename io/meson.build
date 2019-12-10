@@ -23,14 +23,16 @@ if add_languages('cpp', required: false)
   code = '''
   #include <filesystem>
   namespace fs = std::filesystem;
+
+  int main(void) {
   fs::path p = fs::path(".");
-  int main(void) { return 0; }
+  return 0; }
   '''
   # some compilers will compile and link, but only fail on run when accessing
   # the actual filesystem paths
   # e.g. MinGW G++ 9.2.0
-  f17filesystem_ok = cpp.run(code, name: 'C++ filesystem').returncode() == 0
-  if f17filesystem_ok
+  cpp17filesystem_ok = cpp.run(code, name: 'C++ filesystem').returncode() == 0
+  if cpp17filesystem_ok
     canonical_cxx = executable('canonical_cxx', 'canonical.cxx')
     test('canonicalC++', canonical_cxx, timeout: 10, suite: 'io')
   endif

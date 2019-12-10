@@ -13,13 +13,13 @@ if(CMAKE_Fortran_COMPILER_ID STREQUAL Intel)
   endif()
 endif()
 
-add_library(call_c call_c.c)
-target_compile_options(call_c PRIVATE ${CFLAGS})
+add_library(c_lib call_c.c)
+target_compile_options(c_lib PRIVATE ${CFLAGS})
 
 add_executable(f_call_c f_call_c.f90)
-target_link_libraries(f_call_c PRIVATE call_c ${FLIBS})
+target_link_libraries(f_call_c PRIVATE c_lib)
 target_compile_options(f_call_c PRIVATE ${FFLAGS})
-add_test(NAME Fortran2C COMMAND f_call_c)
+add_test(NAME FortranCallC COMMAND f_call_c)
 
 # Workaround for PGI not having CXX on Windows and wrong CXX compiler being found
 if(WIN32 AND CMAKE_C_COMPILER_ID STREQUAL PGI AND CMAKE_GENERATOR STREQUAL "MinGW Makefiles")
@@ -37,6 +37,7 @@ endif()
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# -- C++ calling Fortran
 add_library(call_f c_call_f.f90)
 target_compile_options(call_f PRIVATE ${FFLAGS})
 set_target_properties(call_f PROPERTIES POSITION_INDEPENDENT_CODE ON)
@@ -46,7 +47,15 @@ add_executable(cxx_call_f cxx_call_f.cxx)
 target_link_libraries(cxx_call_f PRIVATE call_f)
 target_compile_options(cxx_call_f PRIVATE ${CFLAGS})
 set_target_properties(cxx_call_f PROPERTIES CXX_STANDARD 11)
-add_test(NAME CXX2Fortran COMMAND cxx_call_f)
+add_test(NAME CXXCallFortran COMMAND cxx_call_f)
+
+# -- Fortran calling C++
+add_library(cxx_lib call_cxx.cxx)
+
+add_executable(f_call_cxx f_call_cxx.f90)
+target_link_libraries(f_call_cxx PRIVATE cxx_lib)
+target_compile_options(f_call_cxx PRIVATE ${FFLAGS})
+add_test(NAME FortranCallC++ COMMAND f_call_cxx)
 
 # manually:
 #

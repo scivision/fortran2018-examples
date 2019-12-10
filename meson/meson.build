@@ -1,18 +1,13 @@
 fc = meson.get_compiler('fortran')
 
-impnone = fc.first_supported_argument(['-fimplicit-none', '-warn declarations', '/warn:declarations', '-Mdclchk'])
-oldargs = fc.first_supported_argument(['-w', '-nowarn', '/nowarn'])
+oldargs = fc.get_supported_arguments(['-w', '-nowarn', '/nowarn', '-std=legacy'])
 
-if fc.get_id() == 'gcc'
-  oldargs += '-std=legacy'
-elif fc.get_id() == 'intel'
-  add_global_arguments(impnone, '-heap-arrays', language: 'fortran')
+if fc.get_id() == 'intel'
+  add_global_arguments('-heap-arrays', language: 'fortran')
 elif fc.get_id() == 'intel-cl'
   # /fpp allows #include etc preprocessor lines
   # /heap-arrays necessary to avoid segfault
-   add_global_arguments(impnone, '/fpp', '/heap-arrays', language: 'fortran')
-elif fc.get_id() == 'pgi'
-   add_global_arguments(impnone, language: 'fortran')
+   add_global_arguments('/fpp', '/heap-arrays', language: 'fortran')
 endif
 
 os = host_machine.system()
