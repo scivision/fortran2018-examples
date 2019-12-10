@@ -4,13 +4,13 @@ if not add_languages('cpp', required: false)
 endif
 
 if os == 'darwin'
-  message('cxx: SKIP Meson build on Mac')
+  message('SKIP: cxx on Mac')
   subdir_done()
 endif
 
 call_f = library('call_f', 'c_call_f.f90')
 c_call_f = executable('c_call_f', 'cxx_call_f.cxx', link_with: call_f)
-test('C++ calling Fortran', c_call_f)
+test('C++ calling Fortran', c_call_f, timeout: 10, suite: 'cxx')
 
 #call_c = library('call_c', 'call_c.c')
 #f_call_c = executable('f_call_c', 'f_call_c.f90',
