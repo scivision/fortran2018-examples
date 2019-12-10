@@ -50,16 +50,18 @@ end module fsutils
 
 program home
 
-use fsutils
+use fsutils, only : expanduser
 implicit none
 ! explores what '~' means for paths in Fortran
-! Note: when testing, enclose argument in '~/test.txt' quotes or 
+! Note: when testing, enclose argument in '~/test.txt' quotes or
 !  shell will expand '~' before it gets to Fortran!
 
 character(:), allocatable :: expanded
 character(256) :: buf
+integer :: i
 
-call get_command_argument(1, buf)
+call get_command_argument(1, buf, status=i)
+if (i/=0) buf = '~'
 
 expanded = expanduser(trim(buf))
 
