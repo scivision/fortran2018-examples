@@ -31,7 +31,7 @@ else()
 endif()
 
 if(UNIX AND NOT APPLE)
-  add_executable(realpath realpath.f90)
+  add_executable(realpath realpath_linux.f90)
   target_compile_options(realpath PRIVATE ${FFLAGS})
   add_test(NAME RealpathLinux COMMAND realpath)
 endif()

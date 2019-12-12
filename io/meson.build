@@ -14,7 +14,7 @@ test('expanduser', expanduser,
   timeout: 10, suite: 'io')
 
 if os == 'linux'
-  realpath = executable('realpath', 'realpath.f90')
+  realpath = executable('realpath', 'realpath_linux.f90')
   test('realpath', realpath, timeout: 10, suite: 'io')
 endif
 
@@ -33,8 +33,13 @@ if add_languages('cpp', required: false)
   # e.g. MinGW G++ 9.2.0
   cpp17filesystem_ok = cpp.run(code, name: 'C++ filesystem').returncode() == 0
   if cpp17filesystem_ok
-    canonical_cxx = executable('canonical_cxx', 'canonical.cxx')
-    test('canonicalC++', canonical_cxx, timeout: 10, suite: 'io')
+    canonical_lib = library('canonical', 'canonical.cxx')
+    canonical_cxx_exe = executable('canonical_cxx', 'canonical_demo.cxx', link_with: canonical_lib)
+    test('canonicalC++', canonical_cxx_exe, timeout: 10, suite: 'io')
+
+    # TODO: see if this is feasible with GCC 10 / Intel 20.0
+    # canonical_fortran_exe = executable('canonical_fortran', 'realpath_cxx.f90', link_with: canonical_lib)
+    # test('canonicalFortran', canonical_fortran_exe, timeout: 10, suite: 'io')
   endif
 endif
 
