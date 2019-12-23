@@ -142,7 +142,7 @@ if(LAPACK95 IN_LIST LAPACK_FIND_COMPONENTS)
   else()
     return()
   endif()
-endif()
+endif(LAPACK95 IN_LIST LAPACK_FIND_COMPONENTS)
 
 pkg_check_modules(LAPACK lapack-netlib)
 if(NOT LAPACK_FOUND)
@@ -186,7 +186,7 @@ if(LAPACKE IN_LIST LAPACK_FIND_COMPONENTS)
   endif()
 
   mark_as_advanced(LAPACKE_LIBRARY LAPACKE_INCLUDE_DIR)
-endif()
+endif(LAPACKE IN_LIST LAPACK_FIND_COMPONENTS)
 
 pkg_check_modules(BLAS blas-netlib)
 if(NOT BLAS_FOUND)
@@ -194,8 +194,9 @@ if(NOT BLAS_FOUND)
 endif()
 find_library(BLAS_LIBRARY
   NAMES refblas blas
+  PATHS /usr/local/opt
   HINTS ${BLAS_LIBRARY_DIRS} ${BLAS_LIBDIR}
-  PATH_SUFFIXES blas)
+  PATH_SUFFIXES lapack lapack/lib blas)
 
 if(BLAS_LIBRARY)
   list(APPEND LAPACK_LIBRARY ${BLAS_LIBRARY})
@@ -222,7 +223,7 @@ if(LAPACK95_LIBRARY)
   endif()
 
   set(LAPACK_LAPACK95_FOUND true PARENT_SCOPE)
-endif()
+endif(LAPACK95_LIBRARY)
 
 
 set(LAPACK_LIBRARY ${LAPACK_LIBRARY} PARENT_SCOPE)
@@ -339,15 +340,14 @@ else()
   return()
 endif()
 
-get_property(project_languages GLOBAL PROPERTY ENABLED_LANGUAGES)
-
 find_package(PkgConfig)
 
-include(CheckFortranFunctionExists)
 include(CheckFortranSourceCompiles)
 # ==== generic MKL variables ====
 
 if(MKL IN_LIST LAPACK_FIND_COMPONENTS)
+  list(APPEND CMAKE_PREFIX_PATH $ENV{MKLROOT}/bin/pkgconfig)
+
   if(NOT WIN32)
     find_package(Threads)
   endif()
@@ -370,7 +370,13 @@ if(MKL IN_LIST LAPACK_FIND_COMPONENTS)
   endif()
 
   unset(_tbb)
-  if(OpenMP IN_LIST LAPACK_FIND_COMPONENTS)
+  if(TBB IN_LIST LAPACK_FIND_COMPONENTS)
+    list(APPEND _mkl_libs mkl_tbb_thread mkl_core)
+    set(_tbb tbb stdc++)
+    if(WIN32)
+      list(APPEND _mkl_libs tbb.lib)
+    endif()
+  else()
     pkg_check_modules(MKL mkl-${_mkltype}-${_mkl_bitflag}lp64-iomp)
 
     set(_mp iomp5)
@@ -378,15 +384,10 @@ if(MKL IN_LIST LAPACK_FIND_COMPONENTS)
       set(_mp libiomp5md)  # "lib" is indeed necessary, even on CMake 3.14.0
     endif()
     list(APPEND _mkl_libs mkl_intel_thread mkl_core ${_mp})
-  elseif(TBB IN_LIST LAPACK_FIND_COMPONENTS)
-    list(APPEND _mkl_libs mkl_tbb_thread mkl_core)
-    set(_tbb tbb stdc++)
-    if(WIN32)
-      list(APPEND _mkl_libs tbb.lib)
-    endif()
-  else()
-    pkg_check_modules(MKL mkl-${_mkltype}-${_mkl_bitflag}lp64-seq)
-    list(APPEND _mkl_libs mkl_sequential mkl_core)
+
+    # most will want OpenMP by default if not TBB
+    # pkg_check_modules(MKL mkl-${_mkltype}-${_mkl_bitflag}lp64-seq)
+    # list(APPEND _mkl_libs mkl_sequential mkl_core)
   endif()
 
   find_mkl_libs(${_mkl_libs})
@@ -437,38 +438,9 @@ elseif(OpenBLAS IN_LIST LAPACK_FIND_COMPONENTS)
 
 endif()
 
-# verify LAPACK
-set(CMAKE_REQUIRED_INCLUDES ${LAPACK_INCLUDE_DIR})
-set(CMAKE_REQUIRED_LIBRARIES ${LAPACK_LIBRARY})
-
-if(CMAKE_Fortran_COMPILER AND LAPACK_LIBRARY)
-  check_fortran_function_exists(sgemm BLAS_OK)
-  check_fortran_function_exists(sgemv LAPACK_OK)
-
-  if(NOT (BLAS_OK AND LAPACK_OK))
-    set(LAPACK_OK false CACHE BOOL "All necessary LAPACK components OK" FORCE)
-  endif()
-endif()
-
-if(LAPACKE IN_LIST LAPACK_FIND_COMPONENTS OR MKL IN_LIST LAPACK_FIND_COMPONENTS)
-  if(MSVC OR CMAKE_C_COMPILER)
-    include(CheckSymbolExists)
-    if(MKL IN_LIST LAPACK_FIND_COMPONENTS)
-      check_symbol_exists(LAPACKE_cheev mkl_lapacke.h LAPACKE_OK)
-    else()
-      check_symbol_exists(LAPACKE_cheev lapacke.h LAPACKE_OK)
-    endif()
-  endif()
-
-  if(LAPACKE_OK)
-    set(LAPACK_OK true CACHE BOOL "All necessary LAPACK components OK" FORCE)
-  endif()
-endif()
-
 include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(
-  LAPACK
-  REQUIRED_VARS LAPACK_LIBRARY LAPACK_OK
+find_package_handle_standard_args(LAPACK
+  REQUIRED_VARS LAPACK_LIBRARY
   HANDLE_COMPONENTS)
 
 if(LAPACK_FOUND)

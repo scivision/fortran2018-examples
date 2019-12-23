@@ -15,7 +15,7 @@ Finds SCALAPACK libraries for MKL, OpenMPI and MPICH.
 Intel MKL relies on having environment variable MKLROOT set, typically by sourcing
 mklvars.sh beforehand.
 
-This also uses our FindLAPACK.cmake to deduplicate code.
+In general SCALAPACK requires linking LAPACK as well.
 
 
 Parameters
@@ -111,7 +111,6 @@ cmake_policy(VERSION 3.11)
 
 if(CMAKE_VERSION VERSION_GREATER_EQUAL 3.12)
   cmake_policy(SET CMP0074 NEW)
-  cmake_policy(SET CMP0075 NEW)
 endif()
 
 if(NOT (OpenMPI IN_LIST SCALAPACK_FIND_COMPONENTS
@@ -207,27 +206,12 @@ elseif(MPICH IN_LIST SCALAPACK_FIND_COMPONENTS)
 
 endif()
 
-# Finalize
-
-if(SCALAPACK_LIBRARY)
-  set(CMAKE_REQUIRED_INCLUDES ${SCALAPACK_INCLUDE_DIR})
-
-  find_package(LAPACK REQUIRED)
-  find_package(MPI REQUIRED COMPONENTS Fortran)
-  set(CMAKE_REQUIRED_LIBRARIES ${SCALAPACK_LIBRARY} ${LAPACK_LIBRARIES} MPI::MPI_Fortran)
-
-# This did not work with MKL on Linux only
-#  check_fortran_function_exists(numroc SCALAPACK_OK)
-
-  include(CheckFortranSourceCompiles)
-  check_fortran_source_compiles("Locq = numroc(1,1,1,1,1); end" SCALAPACK_OK SRC_EXT f90)
-endif()
-
+# --- Finalize
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(
   SCALAPACK
-  REQUIRED_VARS SCALAPACK_LIBRARY SCALAPACK_OK
+  REQUIRED_VARS SCALAPACK_LIBRARY
   HANDLE_COMPONENTS)
 
 if(SCALAPACK_FOUND)
