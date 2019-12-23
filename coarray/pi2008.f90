@@ -28,16 +28,16 @@ im = this_image()
 
 !---------------------------------
 if (im == 1) then
-    call system_clock(tic)
-    print '(A,I3)', 'number of Fortran coarray images:', num_images()
-    print *,'approximating pi in ',Ni,' steps.'
+  call system_clock(tic)
+  print '(A,I3)', 'number of Fortran coarray images:', num_images()
+  print *,'approximating pi in ',Ni,' steps.'
 end if
 !---------------------------------
 
 do i = im, Ni-1, num_images() ! Each image works on a subset of the problem
-    x = x0 + i*dx
-    f = dx / sqrt(1.0_wp - x**2)
-    psum = psum + f
+  x = x0 + i*dx
+  f = dx / sqrt(1.0_wp - x**2)
+  psum = psum + f
 !    print *,x,f,psum
 end do
 
@@ -51,15 +51,15 @@ if (im==1) then
 endif
 
 if (im == 1)  then
-    print *,'pi:',pi,'  iterated pi: ',psum
-    print '(A,E10.3)', 'pi error',pi - psum
+  print *,'pi:',pi,'  iterated pi: ',psum
+  print '(A,E10.3)', 'pi error',pi - psum
 endif
 
 if (im == 1) then
-    call system_clock(toc)
-    call system_clock(count_rate=rate)
-    telaps = real((toc - tic),wp)  / rate
-    print '(A,E10.3,A,I3,A)', 'Elapsed wall clock time ', telaps, ' seconds, using',num_images(),' images.'
+  call system_clock(toc)
+  call system_clock(count_rate=rate)
+  telaps = real((toc - tic),wp)  / rate
+  print '(A,E10.3,A,I3,A)', 'Elapsed wall clock time ', telaps, ' seconds, using',num_images(),' images.'
 end if
 
 end program
