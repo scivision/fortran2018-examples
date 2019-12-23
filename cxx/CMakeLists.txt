@@ -1,17 +1,14 @@
+cmake_minimum_required(VERSION 3.1)
+project(fortran2018io C Fortran)
+enable_testing()
+
 # This example demonstrates very basic linking of
-# * Fortran call from C++
-# * C call from Fortran
-#
-# FC=ifort CC=icc CXX=icpc cmake ..
-# make
+# * C++ calling Fortran
+# * Fortran calling C++
+# * Fortran calling C
+
 
 # https://stackoverflow.com/tags/fortran-iso-c-binding/info
-
-if(CMAKE_Fortran_COMPILER_ID STREQUAL Intel)
-  if(NOT WIN32)
-    list(APPEND FLIBS svml imf intlc ifcoremt ifport)  # FIXME: all these needed on Linux?
-  endif()
-endif()
 
 add_library(c_lib call_c.c)
 target_compile_options(c_lib PRIVATE ${CFLAGS})
@@ -22,7 +19,7 @@ target_compile_options(f_call_c PRIVATE ${FFLAGS})
 add_test(NAME FortranCallC COMMAND f_call_c)
 
 # Workaround for PGI not having CXX on Windows and wrong CXX compiler being found
-if(WIN32 AND CMAKE_C_COMPILER_ID STREQUAL PGI AND CMAKE_GENERATOR STREQUAL "MinGW Makefiles")
+if(WIN32 AND CMAKE_C_COMPILER_ID STREQUAL PGI)
   message(STATUS "PGI on Windows does not currently have a CXX compiler")
   return()
 endif()
@@ -55,10 +52,6 @@ add_library(cxx_lib call_cxx.cxx)
 add_executable(f_call_cxx f_call_cxx.f90)
 target_link_libraries(f_call_cxx PRIVATE cxx_lib)
 target_compile_options(f_call_cxx PRIVATE ${FFLAGS})
+# LINKER_LANGUAGE option is necessary for ifort at least
+set_target_properties(f_call_cxx PROPERTIES LINKER_LANGUAGE Fortran)
 add_test(NAME FortranCallC++ COMMAND f_call_cxx)
-
-# manually:
-#
-# source compilervars.sh
-# ifort -c -nofor-main fun.f90  -lsvml -limf -lintlc -lifcoremt -lifport
-# icpc cxx_call_f.cpp fun.o -lsvml -limf -lintlc -lifcoremt -lifport -pthread
