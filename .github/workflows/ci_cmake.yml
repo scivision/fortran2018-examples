@@ -23,5 +23,4 @@ jobs:
         CC: gcc-9
         CXX: g++-9
     - run: cmake --build build --parallel
-    - run: ctest -V
-      working-directory: build
+    - run: cmake --build build --target test
