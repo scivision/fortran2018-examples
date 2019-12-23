@@ -4,7 +4,7 @@ args = f08contig ? '-DISCONTIG' : ''
 if fc.get_id() != 'gcc'
   contig_exe = executable('contig', 'contiguous.F90',
     fortran_args : args)
-  test('Contiguous', contig_exe)
+  test('Contiguous', contig_exe, suite: 'contiguous', timeout: 10)
 else
   message('contiguous: Meson bug with gfortran')
 endif

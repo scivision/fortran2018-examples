@@ -1,7 +1,7 @@
+# Fortran 2018 Examples
+
 [![Actions Status](https://github.com/scivision/fortran2018-examples/workflows/ci_cmake/badge.svg)](https://github.com/scivision/fortran2018-examples/actions)
 [![Actions Status](https://github.com/scivision/fortran2018-examples/workflows/ci_meson/badge.svg)](https://github.com/scivision/fortran2018-examples/actions)
-
-# Fortran 2018 Examples
 
 Easy examples of scientific computing with modern, powerful, easy Fortran 2018 standard.
 Fortran 2018 began as the TS18508 extension, formerly known as Fortran 2015.
@@ -16,14 +16,14 @@ Based on widespread compiler support and beneficial features, most new and upgra
 
 ## Prereq
 
-* Linux / Windows: `apt install cmake gfortran libhdf5-dev libopenmpi-dev libnetcdff-dev libcoarrays-dev open-coarrays-bin`
+* Linux / Windows: `apt install cmake gfortran libhdf5-dev libopenmpi-dev libcoarrays-dev open-coarrays-bin`
 * Mac: `brew install gcc cmake open-mpi opencoarrays`
 
 ## Build
 
 The CMake or Meson build system automatically walks through the subdirectories:
 
-**CMake**
+### CMake
 
 ```sh
 cmake -B build
@@ -33,13 +33,15 @@ cd build
 ctest --parallel --output-on-failure
 ```
 
-**Meson**
+### Meson
 
 ```sh
 meson build
 
 meson test -C build
 ```
+
+## Compilers
 
 ### ifort Intel
 
@@ -83,7 +85,6 @@ Each directory has its own README and examples.
 ---
 
 * [io/](./io): modern Fortran File I/O
-* [netcdf/](./netcdf): Easy multidimensional file IO with NetCDF
 * [hdf5/](./hdf5): HDF5 is one of the most popular self-describing file formats for massively scalable files.
 
 ---
@@ -96,9 +97,15 @@ Each directory has its own README and examples.
 * [submodule](https://github.com/scivision/fortran-submodule): Fortran 2008 and CMake &ge; 3.12 enable even better large program architecture with `submodule`
 * [system/](./system): system (hardware) functionality accessible via Fortran
 
+## Companion libraries
+
+* [h5fortran](https://github.com/scivision/h5fortran)
+* [netcdf4fortran](https://github.com/scivision/netcdf4fortran)
+
 ## Bugs
 
 ### iso_fortran_env
+
 Flang 6 and PGI 18.10 seem to have a bug with `iso_fortran_env` that doesn't allow `compiler_version` and `compiler_options` to work unless `use iso_fortran_env` is ONLY used in `program` and NOT `module` *even if* using `only`.
 Thus, simple programs like `pragma.f90` work, but not the usual programs to print the compiler versions and options with Flang and PGI.
 
