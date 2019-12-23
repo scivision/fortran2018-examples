@@ -82,13 +82,13 @@ set_target_properties(canonical_cxx PROPERTIES CXX_STANDARD 17)
 # NOTE: icl canonical.cxx canonical_demo.cxx works, so this must be a CMake bug.
 #  LNK2019: unresolved external symbol wmemcmp referenced in function "public: static int __cdecl std::_WChar_traits<wchar_t>::compare
 if(WIN32 AND CMAKE_CXX_COMPILER_ID STREQUAL Intel)
+  message(STATUS "CMake has a bug with Intel 2020 linking c++17")
+else()
   add_executable(canonical_demo canonical_demo.cxx)
   target_link_libraries(canonical_demo PRIVATE canonical_cxx)
   set_target_properties(canonical_demo PROPERTIES CXX_STANDARD 17)
   add_test(NAME CanonicalC++ COMMAND canonical_demo)
-else()
-  message(STATUS "CMake has a bug with Intel 2020 linking c++17")
-endif()
 
-add_executable(realpath_fortran_cxx17 realpath_cxx.f90)
-target_link_libraries(realpath_fortran_cxx17 PRIVATE canonical_cxx)
+  add_executable(realpath_fortran_cxx17 realpath_cxx.f90)
+  target_link_libraries(realpath_fortran_cxx17 PRIVATE canonical_cxx)
+endif()
