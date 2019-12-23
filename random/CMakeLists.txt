@@ -1,7 +1,5 @@
 
 add_executable(random random.f90 random_demo.f90)
-target_compile_options(random PRIVATE ${FFLAGS})
-target_link_libraries(random PRIVATE ${FLIBS})
 add_test(NAME RandomInit COMMAND random)
 if(f18random)
   target_sources(random PRIVATE random_init_f2018.f90)

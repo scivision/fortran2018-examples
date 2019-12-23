@@ -10,7 +10,7 @@ real(wp), parameter :: pi = 4._wp*atan(1.0_wp)
 real(wp) :: psum[*]  ! this is a scalar coarray
 integer(int64) :: rate,tic,toc
 real(wp) :: f,x,telaps, dx
-integer :: i, stat, im, Ni
+integer :: i, stat, im, Ni, ierr
 character(16) :: cbuf
 
 psum = 0._wp
@@ -41,15 +41,12 @@ do i = im, Ni-1, num_images() ! Each image works on a subset of the problem
 !  print *,x,f,psum
 end do
 
-call co_sum(psum)!, stat=stat, errmsg=emsg)
-!if (stat /= 0) then
-!   write (stderr,*) emsg
-!   error stop
-!endif
+call co_sum(psum, stat=ierr)
+if (ierr /= 0) error stop ierr
 
 if (im == 1)  then
   print *,'pi:',pi,'  iterated pi: ',psum
-  print '(A,E10.3)', 'pi error',pi - psum
+  print '(A,E10.3)', 'pi error', pi - psum
 endif
 
 if (im == 1) then

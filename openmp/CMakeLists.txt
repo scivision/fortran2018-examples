@@ -10,8 +10,7 @@ check_fortran_source_compiles("use omp_lib; rate = omp_get_wtick(); end" hasOMP 
 
 if(hasOMP)
 add_executable(timeprec timeprec.f90)
-target_compile_options(timeprec PRIVATE ${FFLAGS})
-target_link_libraries(timeprec PRIVATE ${FLIBS} OpenMP::OpenMP_Fortran)
+target_link_libraries(timeprec PRIVATE OpenMP::OpenMP_Fortran)
 add_test(NAME "OpenMP:TimeMeasure" COMMAND timeprec)
 set_tests_properties(OpenMP:TimeMeasure PROPERTIES RUN_SERIAL true)
 endif()

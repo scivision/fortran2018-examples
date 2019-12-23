@@ -1,5 +1,3 @@
 add_executable(ackermann ackermann.f90)
-target_compile_options(ackermann PRIVATE ${FFLAGS})
-target_link_libraries(ackermann ${FLIBS})
 add_test(NAME Ackermann COMMAND ackermann)
 set_tests_properties(Ackermann PROPERTIES TIMEOUT 10)

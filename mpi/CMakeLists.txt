@@ -9,16 +9,13 @@ endif()
 
 
 add_executable(mpivers mpivers.f90)
-target_compile_options(mpivers PRIVATE ${FFLAGS})
-target_link_libraries(mpivers ${FLIBS} MPI::MPI_Fortran)
+target_link_libraries(mpivers MPI::MPI_Fortran)
 
 add_executable(mpi_hello helloworld.f90)
-target_compile_options(mpi_hello PRIVATE ${FFLAGS})
-target_link_libraries(mpi_hello ${FLIBS} MPI::MPI_Fortran)
+target_link_libraries(mpi_hello MPI::MPI_Fortran)
 
 add_executable(mpi_pass thread_pass.f90)
-target_compile_options(mpi_pass PRIVATE ${FFLAGS})
-target_link_libraries(mpi_pass ${FLIBS} MPI::MPI_Fortran)
+target_link_libraries(mpi_pass MPI::MPI_Fortran)
 
 add_test(NAME MPIversion COMMAND mpivers)
 
