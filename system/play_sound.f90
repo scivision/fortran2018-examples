@@ -1,7 +1,8 @@
 !! recommend using all lower case filenames and no spaces.
 !! plays sound in Fortran 2003+
 
-use,intrinsic:: iso_fortran_env,only: error_unit
+use, intrinsic :: iso_fortran_env, only : stderr=>error_unit
+
 implicit none
 
 ! configure ffplay -- could make if/else to allow other players
@@ -9,29 +10,26 @@ character(*),parameter :: playexe='ffplay'
 ! -autoexit clips off the end of the sound slightly, but otherwise thread hangs open even after Fortran program ends.
 character(*),parameter :: cmdopts='-autoexit -loglevel warning -nodisp'
 
-character(1000) :: fn
-character(1000) :: pcmd
+character(:), allocatable :: fn, pcmd
+character(2048) :: argv
 logical :: fexist
-integer :: ios, fsize, u
+integer :: ierr, istat
 
-call get_command_argument(1, fn, status=ios)
-if (ios/=0) error stop 'please include audio filename in command'
+call get_command_argument(1, argv, status=ierr)
+if (ierr /= 0) error stop 'please include audio filename in command'
+fn = trim(argv)
 
-open(newunit=u, file=fn, status='old', iostat=ios, action='read')
-if (ios==0) inquire(unit=u, opened=fexist, size=fsize)
-close(u)
+inquire(file=fn, exist=fexist)
 
-if (.not. fexist .or. ios/=0 .or. fsize<=256) then
-  write(error_unit,*) 'did not find FILE ',trim(fn)
-  error stop 'file I/O error'
+if (.not. fexist) then
+  write(stderr,*) 'did not find FILE ' // fn
+  error stop
 endif
 
 pcmd = playexe//' '//cmdopts//' '//trim(fn)
 
-print *,trim(pcmd) ! for debugging
-
-! exitstat only works for wait=.true. by Fortran 2008 spec.
-call execute_command_line(pcmd, cmdstat=ios)
-if(ios /= 0) error stop 'could not open player'
+call execute_command_line(pcmd, cmdstat=ierr, exitstat=istat)
+if(ierr /= 0) error stop 'could not open player'
+if(istat /= 0) error stop 'problem playing file'
 
 end program

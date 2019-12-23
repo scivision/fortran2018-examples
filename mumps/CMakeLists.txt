@@ -61,7 +61,7 @@ set_tests_properties(Scalapack PROPERTIES TIMEOUT 15)
 include(mumps.cmake)
 
 if(NOT MUMPS_FOUND)
-  message(STATUS "MUMPS skipped")
+  message(STATUS "SKIP: MUMPS")
   return()
 endif()
 
