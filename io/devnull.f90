@@ -1,7 +1,7 @@
-use, intrinsic:: iso_fortran_env, only: int64, wp=>real32
+use, intrinsic:: iso_fortran_env, only: int64, wp=>real64, stderr=>error_unit
 implicit none
 ! Benchmarks platform independent null file writing behavior
-! NUL or NUL: works on Windows 10
+! NUL: works on Windows 10
 ! /dev/null is used for Mac, Linux, BSD, Unix, WSL, Cygwin...
 !
 ! Flush() is used to avoid merely buffering the data, giving artificial results.
@@ -10,24 +10,40 @@ implicit none
 ! Yes, the benchmark is more aggressive than normal use--that's why
 ! filesystem buffering is used by Fortran and programs in general.
 !
-! The point of this program is to show that by inserting '/dev/null'
+! The point of this program is to show that by inserting '/dev/null' or 'NUL'
 ! as the filename for file outputs you never use, big speedups can result
 ! from modifying a single parameter (the file name).
+! This is generally true even for fast SSD.
 ! This saves you from commenting out lines, using IF statements and possibly
 ! making mistakes in doing so.
 !
 !
-character(*),parameter :: nulunix='/dev/null', nulwin='NUL',fout='out.txt'
-integer,parameter :: Nrun=1000
+character(*),parameter :: fout='out.txt'
+character(:), allocatable :: nullfile
+character(2048) :: argv
+integer,parameter :: Nrun=10000
 integer :: ios,u
 real(wp) :: tnul, tscratch, tfile
 
+call get_command_argument(1, argv, status=ios)
+if (ios == 0) then
+  nullfile = trim(argv)
+else
+  call get_environment_variable('userprofile', status=ios)
+  if (ios==0) then
+    nullfile = 'NUL'
+  else
+    nullfile = '/dev/null'
+  endif
+endif
+
 !---  BENCHMARK NUL -----------
-! status='old' is used as a failsafe, to avoid creating an actual file
-! in case of mistake. It is not necessary to specify status='old'.
-open(newunit=u,file=nulunix,status='old',iostat=ios, action='write')
-if (ios /= 0) open(newunit=u,file=nulwin,status='old',iostat=ios, action='write')
-if (ios /= 0) error stop 'could not open a NULL file handle'
+! do NOT use status='old' as this can fail on various OS, compiler including PGI + Windows
+open(newunit=u,file=nullfile,iostat=ios, action='write')
+if (ios /= 0) then
+  write(stderr,*) 'could not open NULL file: ' // nullfile
+  error stop
+endif
 
 tnul = writetime(u,Nrun)
 print '(A10,F10.3,A)','nul: ',tnul,' ms'
@@ -64,7 +80,7 @@ real(wp) function writetime(u,Nrun)
     if (toc-tic < tmin) tmin = toc-tic
   enddo
 
-  writetime = tmin / rate
+  writetime = real(tmin,wp) / rate
   close(u)
 
 end function writetime

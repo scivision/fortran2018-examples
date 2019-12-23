@@ -1,3 +1,7 @@
+cmake_minimum_required(VERSION 3.1)
+project(fortran2018io Fortran)
+enable_testing()
+
 add_library(logging logging.f90)
 target_compile_options(logging PRIVATE ${FFLAGS})
 
@@ -22,13 +26,9 @@ add_test(NAME LeadingZeros COMMAND leading_zeros)
 set_tests_properties(LeadingZeros PROPERTIES
   PASS_REGULAR_EXPRESSION "hello1234.5600000")
 
-if(WIN32 AND CMAKE_Fortran_COMPILER_ID STREQUAL PGI)
-  message(STATUS "CMake bug with PGI on Windows -- pgfortran.exe itself works")
-else()
-  add_executable(expanduser expanduser.f90)
-  target_compile_options(expanduser PRIVATE ${FFLAGS})
-  add_test(NAME Expanduser COMMAND expanduser '~')
-endif()
+add_executable(expanduser expanduser.f90)
+target_compile_options(expanduser PRIVATE ${FFLAGS})
+add_test(NAME Expanduser COMMAND expanduser '~')
 
 if(UNIX AND NOT APPLE)
   add_executable(realpath realpath_linux.f90)
@@ -44,10 +44,19 @@ add_executable(readonly fileopen-readonly.f90)
 target_compile_options(readonly PRIVATE ${FFLAGS})
 add_test(NAME FortranReadOnly COMMAND readonly)
 
+add_executable(null devnull.f90)
+target_compile_options(null PRIVATE ${FFLAGS})
+add_test(NAME FortranNullfile COMMAND null)
+
+# C++ is goofed up for PGI on Windows
 if(WIN32 AND CMAKE_Fortran_COMPILER_ID STREQUAL PGI)
-  message(STATUS "bug with PGI on Windows--PGI on Linux OK")
+  return()
+endif()
+
+include(CheckLanguage)
+check_language(CXX)
+if(CMAKE_CXX_COMPILER)
+  enable_language(CXX)
 else()
-  add_executable(null devnull.f90)
-  target_compile_options(null PRIVATE ${FFLAGS})
-  add_test(NAME FortranNullfile COMMAND null)
+  return()
 endif()
