@@ -8,7 +8,7 @@ endif()
 find_package(MPI COMPONENTS Fortran)
 
 if(NOT MPI_Fortran_FOUND)
-  message(STATUS "MUMPS skipped due to missing MPI")
+  message(STATUS "SKIP: MUMPS due to missing MPI")
   return()
 endif()
 
@@ -30,7 +30,7 @@ endif()
 # Lapack must work correctly for Scalapack to work
 find_package(LAPACK)
 if(NOT LAPACK_FOUND)
-  message(STATUS "MUMPS skipped due to missing Lapack")
+  message(STATUS "SKIP: MUMPS due to missing Lapack")
   return()
 endif()
 
@@ -38,7 +38,7 @@ endif()
 # Scalapack must work correctly for MUMPS to work
 find_package(SCALAPACK)
 if(NOT SCALAPACK_FOUND)
-  message(STATUS "MUMPS skipped due to missing Scalapack")
+  message(STATUS "SKIP: MUMPS due to missing Scalapack")
   return()
 endif()
 
@@ -50,14 +50,11 @@ target_include_directories(blacs1 PRIVATE ${SCALAPACK_INCLUDE_DIRS})
 add_test(NAME BLACS COMMAND ${MPIEXEC_EXECUTABLE} ${MPIEXEC_NUMPROC_FLAG} ${MPIEXEC_MAX_NUMPROCS} $<TARGET_FILE:blacs1>)
 set_tests_properties(BLACS PROPERTIES RUN_SERIAL true TIMEOUT 15)
 
-add_executable(scalapack1 scalapack_example1.f)
-target_compile_options(scalapack1 PRIVATE ${FFLAGS})
-target_link_libraries(scalapack1 PRIVATE ${SCALAPACK_LIBRARIES} ${LAPACK_LIBRARIES} MPI::MPI_Fortran)
-# note: this test needs at least 6 MPI processes, even if you're on a very small computer it's OK.
-add_test(NAME Scalapack
-  COMMAND ${MPIEXEC_EXECUTABLE} ${MPIEXEC_NUMPROC_FLAG} 6 --oversubscribe $<TARGET_FILE:scalapack1>
-  WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
-set_tests_properties(Scalapack PROPERTIES RUN_SERIAL true TIMEOUT 15)
+add_executable(scalapack_demo scalapack_demo.f90)
+target_compile_options(scalapack_demo PRIVATE ${FFLAGS})
+target_link_libraries(scalapack_demo PRIVATE ${SCALAPACK_LIBRARIES} ${LAPACK_LIBRARIES} MPI::MPI_Fortran)
+add_test(NAME Scalapack COMMAND scalapack_demo)
+set_tests_properties(Scalapack PROPERTIES TIMEOUT 15)
 
 # --- MUMPS
 

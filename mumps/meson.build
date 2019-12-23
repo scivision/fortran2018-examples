@@ -1,12 +1,6 @@
 
 # --- Scalapack
 scalapack = dependency('scalapack', cmake_module_path : 'cmake/Modules', required: false, disabler: true)
-if not scalapack.found()
-  scalapack = fc.find_library('scalapack-openmpi', required: false, disabler: true)
-endif
-if not scalapack.found()
-  scalapack = fc.find_library('scalapack', required: false, disabler: true)
-endif
 
 # --- MUMPS
 # mumps = dependency('mumps', required: false, disabler: true)
@@ -25,12 +19,9 @@ test('BLACS', mpiexec,
   args: ['-np', '1', blacs1_exe],
   timeout: 10)
 
-scalapack1_exe = executable('scalapack1', 'scalapack_example1.f',
+scalapack_exe = executable('scalapack_demo', 'scalapack_demo.f90',
   dependencies: [mpi, lapack, scalapack])
-# note: this test needs at least 6 MPI processes, even if you're on a very small computer it's OK.
-test('Scalapack', mpiexec,
-  args: ['-np', '6', '--oversubscribe', scalapack1_exe],
-  workdir: meson.current_source_dir(),
+test('Scalapack', scalapack_exe,
   timeout: 15)
 
 testmumps_exe = executable('testmumps', 'test_mumps.f90', dependencies: [mpi, mumps])
