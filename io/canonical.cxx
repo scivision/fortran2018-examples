@@ -36,7 +36,7 @@ if (!s.empty()){
 }
 
 
-void canonical(char *pathstr){
+extern "C" void canonical(char *pathstr){
 // does NOT expand tilde ~
 fs::path p = fs::path(pathstr);
 // get absolute canonical path from relative path

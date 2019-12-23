@@ -1,5 +1,5 @@
 void expanduser(char *);
 
-void canonical(char *);
+extern "C" void canonical(char *);
 
 const int LEN=2048;
