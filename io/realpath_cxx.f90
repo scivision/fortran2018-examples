@@ -45,7 +45,7 @@ end module abspath
 program demo
 
 use, intrinsic :: iso_fortran_env, only : stderr=>error_unit
-use canonical, only : realpath
+use abspath, only : realpath
 
 implicit none
 

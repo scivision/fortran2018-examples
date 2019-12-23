@@ -20,24 +20,16 @@ endif
 
 if add_languages('cpp', required: false)
   cpp = meson.get_compiler('cpp')
-  code = '''
-  #include <filesystem>
-  namespace fs = std::filesystem;
-
-  int main(void) {
-  fs::path p = fs::path(".");
-  return 0; }
-  '''
   # some compilers will compile and link, but only fail on run when accessing
   # the actual filesystem paths
   # e.g. MinGW G++ 9.2.0
-  cpp17filesystem_ok = cpp.run(code, name: 'C++ filesystem').returncode() == 0
+  cpp17filesystem_ok = cpp.run(files('cxx17filesystem.cxx'), name: 'C++ filesystem').returncode() == 0
   if cpp17filesystem_ok
     canonical_lib = library('canonical', 'canonical.cxx')
     canonical_cxx_exe = executable('canonical_cxx', 'canonical_demo.cxx', link_with: canonical_lib)
     test('canonicalC++', canonical_cxx_exe, timeout: 10, suite: 'io')
 
-    # TODO: see if this is feasible with GCC 10 / Intel 20.0
+    # FIXME: Intel 2020 has bugs, will it work for GCC 10 or LLVM 10?
     # canonical_fortran_exe = executable('canonical_fortran', 'realpath_cxx.f90', link_with: canonical_lib)
     # test('canonicalFortran', canonical_fortran_exe, timeout: 10, suite: 'io')
   endif

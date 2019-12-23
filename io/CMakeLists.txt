@@ -48,8 +48,9 @@ add_executable(null devnull.f90)
 target_compile_options(null PRIVATE ${FFLAGS})
 add_test(NAME FortranNullfile COMMAND null)
 
-# C++ is goofed up for PGI on Windows
+# C++ is goofed up for PGI on Windows, including with CL
 if(WIN32 AND CMAKE_Fortran_COMPILER_ID STREQUAL PGI)
+  message(STATUS "PGI does not have a C++ compiler on Windows")
   return()
 endif()
 
@@ -60,3 +61,34 @@ if(CMAKE_CXX_COMPILER)
 else()
   return()
 endif()
+
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# verify C++ compiler can do C++17 filesystem
+# GCC 10, Intel 2020
+file(READ cxx17filesystem.cxx _code)
+include(CheckCXXSourceCompiles)
+set(CMAKE_REQUIRED_FLAGS -std=c++17)
+check_cxx_source_compiles("${_code}" cxx17filesystem_ok)
+
+if(NOT cxx17filesystem_ok)
+  message(STATUS "${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION} does not support C++17 filesystem")
+  return()
+endif()
+
+add_library(canonical_cxx canonical.cxx)
+set_target_properties(canonical_cxx PROPERTIES CXX_STANDARD 17)
+
+# NOTE: icl canonical.cxx canonical_demo.cxx works, so this must be a CMake bug.
+#  LNK2019: unresolved external symbol wmemcmp referenced in function "public: static int __cdecl std::_WChar_traits<wchar_t>::compare
+if(WIN32 AND CMAKE_CXX_COMPILER_ID STREQUAL Intel)
+  add_executable(canonical_demo canonical_demo.cxx)
+  target_link_libraries(canonical_demo PRIVATE canonical_cxx)
+  set_target_properties(canonical_demo PROPERTIES CXX_STANDARD 17)
+  add_test(NAME CanonicalC++ COMMAND canonical_demo)
+else()
+  message(STATUS "CMake has a bug with Intel 2020 linking c++17")
+endif()
+
+add_executable(realpath_fortran_cxx17 realpath_cxx.f90)
+target_link_libraries(realpath_fortran_cxx17 PRIVATE canonical_cxx)
