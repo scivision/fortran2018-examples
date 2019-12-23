@@ -60,8 +60,7 @@ jobs:
     - uses: actions/setup-python@v1
       with:
         python-version: '3.x'
-    - run: cinst -y ninja
-    - run: pip install meson
+    - run: pip install meson ninja
     - run: meson setup build
       env:
         FC: gfortran
