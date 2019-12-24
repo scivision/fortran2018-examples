@@ -39,7 +39,7 @@ e64 = s64 - [2.460504870018764_dp, 1.699628148275318_dp, 0.239123278256554_dp]
 print *,compiler_version()
 print '(I3,A,3ES20.12)',storage_size(s64),' bits: error mag: ',e64
 
-#if USEMKL
+#ifdef USEMKL
 call gesvd(A32, s32)
 e32 = s32 - [2.460504870018764_sp, 1.699628148275318_sp, 0.239123278256554_sp]
 
