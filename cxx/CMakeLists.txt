@@ -20,7 +20,7 @@ add_test(NAME FortranCallC COMMAND f_call_c)
 
 # Workaround for PGI not having CXX on Windows and wrong CXX compiler being found
 if(WIN32 AND CMAKE_C_COMPILER_ID STREQUAL PGI)
-  message(STATUS "PGI on Windows does not currently have a CXX compiler")
+  message(STATUS "SKIP: CXX - PGI on Windows does not currently have a CXX compiler")
   return()
 endif()
 

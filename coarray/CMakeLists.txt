@@ -14,7 +14,7 @@ endif()
 find_package(Coarray)
 
 if(NOT Coarray_FOUND)
-  message(STATUS "SKIP: Coarray tests")
+  message(STATUS "SKIP: Coarray")
   return()
 endif()
 
@@ -25,6 +25,7 @@ set(CMAKE_REQUIRED_LIBRARIES ${Coarray_LIBRARY})
 check_fortran_source_runs("sync all; end"
   f08coarray SRC_EXT f90)
 if(NOT f08coarray)
+  message(STATUS "SKIP: Coarray")
   return()
 endif()
 check_fortran_source_runs("real :: x[*]; call co_sum(x); sync all; end"

@@ -6,10 +6,12 @@ badbounds = executable('badbounds', 'badbounds.f90',
 # Too unreliable to test--that's the point.
 
 nanmaxmin_exe = executable('nanmaxmin', 'maxmin_nan.f90')
-test('debug: NaN min, max', nanmaxmin_exe,
+test('NaNminmax', nanmaxmin_exe,
+  suite: 'debug',
   timeout: 10)
 
 typecast_exe = executable('typecast', 'typecast.f90',
   fortran_args: oldargs)
-test('debug: typecase', typecast_exe,
+test('typecast', typecast_exe,
+  suite: 'debug',
   timeout: 10)
