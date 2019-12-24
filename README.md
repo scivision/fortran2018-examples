@@ -101,6 +101,7 @@ Each directory has its own README and examples.
 
 * [h5fortran](https://github.com/scivision/h5fortran)
 * [netcdf4fortran](https://github.com/scivision/netcdf4fortran)
+* [sparse-fortran](https://github.com/scivision/sparse-fortran)
 
 ## Bugs
 
