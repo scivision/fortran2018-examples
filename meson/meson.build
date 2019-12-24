@@ -17,7 +17,7 @@ os = host_machine.system()
 f18errorstop = fc.links('character :: b; error stop b; end', name: 'F2018 error stop')
 f08block = fc.links('block; end block; end', name : 'F2008 block')
 f08contig = fc.links('contig = is_contiguous([1,2,3]); end', name: 'F2008 contiguous')
-f08command = fc.links('integer foo; call execute_command_line(" ", exitstat=foo); end', name : 'F2008 execute_command_line')
+f08command = fc.links('integer foo; call execute_command_line(" ", cmdstat=foo); end', name : 'F2008 execute_command_line')
 f18random = fc.links('call random_init(.false., .false.); end', name:'F2018 random_init')
 
 code = '''
@@ -30,31 +30,7 @@ end program'''
 f08kind = fc.links(code, name: 'F2008 ieee kinds')
 f18prop = fc.links('complex :: z; print *,z%re,z%im,z%kind; end', name: 'F2018 properties')
 
-code = '''
-implicit none
-
-integer :: A0 = 0, A1(2) = [0,1], A2(2,2) = reshape([0,1,2,3], order=[2,1], shape=shape(A2))
-
-call foo(A0)
-call foo(A1)
-
-contains
-
-subroutine foo(A)
-integer, intent(inout) :: A(..)
-
-select rank (A)
-  rank is (0)
-  rank is (1)
-    A = A(size(A,1):1:-1, :)
-  rank default error stop
-end select
-
-end subroutine foo
-
-end program
-'''
-f18assumed_rank = fc.links(code, name: 'F2018 assumed rank')
+f18assumed_rank = fc.links(files('../array/assumed-rank.f90'), name: 'F2018 assumed rank')
 
 
 # -- Fortran coarray
@@ -91,8 +67,28 @@ if not fc.links('use h5lt; end', name: 'HDF5', dependencies : hdf5)
   hdf5 = disabler()
 endif
 
+# == Intel OpenMP
+mklroot = get_option('mklroot')
+mkllib_root = mklroot/'lib/intel64'
+
+intelMP_lib = []
+if mklroot != ''
+  n = os == 'windows' ? 'iomp5md' : 'iomp5'
+  intelMP_lib = fc.find_library(n, dirs: mklroot / '../compiler/lib/intel64')
+endif
+
 # --- Lapack
-lapack = dependency('lapack', required: false, disabler: true)
+if mklroot == ''
+  lapack = dependency('lapack', required: false, disabler: true)
+else # MKL
+  lapack = []
+  n1 = fc.get_id() == 'gcc' ? 'mkl_gf_lp64' : 'mkl_intel_lp64'
+  names = [n1, 'mkl_intel_thread', 'mkl_core']
+  foreach n : names
+    lapack += fc.find_library(n, dirs: mkllib_root)
+  endforeach
+  lapack += intelMP_lib
+endif
 
 # -- OpenMP
 openmp = dependency('openmp', language : 'fortran', required : false, disabler: true)

@@ -1,1 +1,2 @@
 option('realbits', type : 'string', value : '64', description : 'real bits')
+option('mklroot', type: 'string', description: '-Dmklroot=$MKLROOT')
