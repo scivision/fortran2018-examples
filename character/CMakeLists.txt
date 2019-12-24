@@ -19,5 +19,6 @@ add_test(NAME CharacterLen COMMAND charlen)
 
 add_executable(overwrite_stdout overwrite_stdout.f90)
 target_link_libraries(overwrite_stdout PRIVATE sleep_std)
+set_target_properties(overwrite_stdout PROPERTIES Fortran_MODULE_DIRECTORY ${CMAKE_BINARY_DIR})
 add_test(NAME FortranOverwriteStdout COMMAND overwrite_stdout)
 set_tests_properties(FortranOverwriteStdout PROPERTIES TIMEOUT 6)

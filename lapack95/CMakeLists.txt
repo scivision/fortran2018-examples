@@ -1,8 +1,3 @@
-if(WIN32 AND CMAKE_Fortran_COMPILER_ID STREQUAL PGI)
-  message(STATUS "skipping: PGI Lapack is buggy on Windows")
-  return()
-endif()
-
 if(DEFINED ENV{MKLROOT})
   set(USEMKL 1)
   find_package(LAPACK COMPONENTS MKL LAPACK95)

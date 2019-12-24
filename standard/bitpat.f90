@@ -1,4 +1,3 @@
-program bitpat
 ! shows how bit masks "Z" and octets "O" work in Fortran
 ! https://gcc.gnu.org/onlinedocs/gfortran/BOZ-literal-constants.html
 use, intrinsic:: iso_fortran_env, only: int64, stderr=>error_unit
@@ -28,30 +27,16 @@ print '(A,5I12)','exp',j
 
 print '(A,5I12)','BOZ',i
 
-if (any(i /= j)) then
-  write(stderr,*) 'bit pattern mismatch'
-  stop 1
-endif
+if (any(i /= j)) error stop 'bit pattern mismatch'
 
-if (i(1) /= 536870912)  then
-  write(stderr,*)  'bit pattern mismatch'
-  stop 1
-endif
+if (i(1) /= 536870912) error stop 'bit pattern mismatch'
 
-if (j(1) /= 536870912)  then
-  write(stderr,*) 'bit pattern mismatch'
-  stop 1
-endif
+if (j(1) /= 536870912) error stop 'bit pattern mismatch'
 
-if (k1 /= 20583)  then
-  write(stderr,*) 'bit pattern mismatch'
-  stop 1
-endif
+if (k1 /= 20583) error stop 'bit pattern mismatch'
 
-if (k /= 17315143744_int64)  then
-  write(stderr,*) 'bit pattern mismatch'
-  stop 1
-endif
+if (k /= 17315143744_int64) error stop 'bit pattern mismatch'
+
 
 print *,'--------------'
 print *,hexa

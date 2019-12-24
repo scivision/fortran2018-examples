@@ -14,7 +14,8 @@ mumps = declare_dependency(include_directories: mumpsinc, dependencies: mumpslib
 
 # --- code
 
-blacs1_exe = executable('blacs1', 'blacs.f', dependencies: [mpi, lapack, scalapack])
+blacs1_exe = executable('blacs1', 'blacs.f',
+  dependencies: [mpi, lapack, scalapack])
 test('BLACS', mpiexec,
   args: ['-np', '1', blacs1_exe],
   suite: 'mumps',
@@ -26,7 +27,8 @@ test('Scalapack', scalapack_exe,
   suite: 'mumps',
   timeout: 15)
 
-testmumps_exe = executable('testmumps', 'test_mumps.f90', dependencies: [mpi, mumps])
+testmumps_exe = executable('testmumps', 'test_mumps.f90',
+  dependencies: [mpi, mumps])
 test('MUMPS', mpiexec,
   args: ['-np', '1', testmumps_exe, files('input_simpletest_real')],
   suite: 'mumps',
