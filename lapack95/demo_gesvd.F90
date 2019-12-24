@@ -1,4 +1,4 @@
-#if USEMKL
+#ifdef USEMKL
 use lapack95, only: gesvd
 #else
 use f95_lapack, only: gesvd=>la_gesvd
@@ -8,7 +8,7 @@ use,intrinsic:: iso_fortran_env, only: sp=>real32, dp=>real64, compiler_version,
 
 implicit none
 
-! Intel(R) Fortran Intel(R) 64 Compiler for applications running on Intel(R) 64, 
+! Intel(R) Fortran Intel(R) 64 Compiler for applications running on Intel(R) 64,
 ! Version 19.0.1.144 Build 20181018
 ! 64 bits: error mag:  -8.881784197001E-16 -2.220446049250E-16  5.551115123126E-16
 ! 32 bits: error mag:   2.384185791016E-07  0.000000000000E+00  5.960464477539E-08

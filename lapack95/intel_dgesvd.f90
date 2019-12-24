@@ -2,7 +2,7 @@ use,intrinsic:: iso_fortran_env, only: sp=>real32, dp=>real64, compiler_version,
 
 implicit none
 
-! Intel(R) Fortran Intel(R) 64 Compiler for applications running on Intel(R) 64, 
+! Intel(R) Fortran Intel(R) 64 Compiler for applications running on Intel(R) 64,
 ! Version 19.0.1.144 Build 20181018
 ! 64 bits: error mag:   0.000000000000E+00  0.000000000000E+00  0.000000000000E+00
 
@@ -38,7 +38,7 @@ real(dp), parameter :: s64ref(3) = [2.460504870018764_dp, 1.699628148275318_dp, 
 call dgesvd('A','N',M,M,A,M,SS64,U,M,VT,M, SWORK, LWORK,svdinfo)
 if (svdinfo /=0) then
   write(stderr,*) 'svd error: ',svdinfo
-  stop 1
+  error stop
 endif
 
 s64 = ss64(:,1)  ! NOT DIAG!!!!
@@ -49,12 +49,11 @@ print *,compiler_version()
 print '(I3,A,3ES20.12)',storage_size(s64),' bits: error mag: ',e64
 
 
-
 maxerr=maxval(abs(e64))
 
 if (maxerr > 1e-7_dp) then
   write(stderr,*) 'excessive singular value error'
-  stop 1
+  error stop
 endif
 
 end program
