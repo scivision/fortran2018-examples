@@ -1,6 +1,6 @@
 find_package(OpenMP COMPONENTS Fortran)
 if(NOT OpenMP_FOUND)
-  message(STATUS "OpenMP tests skipped")
+  message(STATUS "SKIP: OpenMP")
   return()
 endif()
 
