@@ -90,6 +90,10 @@ else # MKL
   lapack += intelMP_lib
 endif
 
+if not fc.links('print *,disnan(0.); end', dependencies: lapack, name: 'LAPACK')
+  lapack = disabler()
+endif
+
 # -- OpenMP
 openmp = dependency('openmp', language : 'fortran', required : false, disabler: true)
 

@@ -31,11 +31,13 @@ else()
   endforeach()
 endif()
 
-if(NOT WIN32)
-add_executable(sleepstd sleep.f90)
-add_test(NAME FortranMicrosleep COMMAND sleepstd)
-set_tests_properties(FortranMicrosleep PROPERTIES TIMEOUT 1)
-endif()
+
+add_library(sleep_std sleep_std.F90)
+
+add_executable(sleep_demo sleep_demo.f90)
+target_link_libraries(sleep_demo PRIVATE sleep_std
+add_test(NAME StandardSleep COMMAND sleep_demo)
+set_tests_properties(StandardSleep PROPERTIES TIMEOUT 5)
 
 add_executable(statement statement_function.f90)
 add_test(NAME Statement COMMAND statement)

@@ -7,6 +7,8 @@ realbits = get_option('realbits')
 
 subdir('meson') # must be before other subdirs to get compiler capabilities and libraries
 
+subdir('standard') # modules used by other programs
+
 subdir('array')
 subdir('benchmarks')
 subdir('block')
@@ -25,6 +27,5 @@ subdir('openmp')
 subdir('overloading')
 subdir('random')
 subdir('real')
-subdir('standard')
 subdir('submodule')
 subdir('system')

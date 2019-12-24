@@ -9,6 +9,8 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/)
 
 include(cmake/compilers.cmake)
 
+add_subdirectory(standard)  # modules used by other progras
+
 add_subdirectory(array)
 add_subdirectory(benchmarks)
 add_subdirectory(block)
@@ -28,6 +30,5 @@ add_subdirectory(openmp)
 add_subdirectory(overloading)
 add_subdirectory(random)
 add_subdirectory(real)
-add_subdirectory(standard)
 add_subdirectory(submodule)
 add_subdirectory(system)
