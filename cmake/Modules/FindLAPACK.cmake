@@ -210,21 +210,8 @@ if(NOT WIN32)
 endif()
 
 if(LAPACK95_LIBRARY)
-  set(CMAKE_REQUIRED_INCLUDES ${LAPACK_INCLUDE_DIR})
-  set(CMAKE_REQUIRED_LIBRARIES ${LAPACK_LIBRARY})
-  check_fortran_source_compiles("
-    use, intrinsic :: iso_fortran_env, only: wp=>real64
-    use f95_lapack, only: gesvd=>la_gesvd
-    real(wp) :: A(2,2), M(2)
-    call gesvd(A,M)
-    end" LAPACK95_OK SRC_EXT f90)
-  if(NOT LAPACK95_OK)
-    return()
-  endif()
-
   set(LAPACK_LAPACK95_FOUND true PARENT_SCOPE)
-endif(LAPACK95_LIBRARY)
-
+endif()
 
 set(LAPACK_LIBRARY ${LAPACK_LIBRARY} PARENT_SCOPE)
 set(LAPACK_INCLUDE_DIR ${LAPACK_INCLUDE_DIR} PARENT_SCOPE)
@@ -342,7 +329,6 @@ endif()
 
 find_package(PkgConfig)
 
-include(CheckFortranSourceCompiles)
 # ==== generic MKL variables ====
 
 if(MKL IN_LIST LAPACK_FIND_COMPONENTS)
@@ -405,14 +391,7 @@ if(MKL IN_LIST LAPACK_FIND_COMPONENTS)
     endif()
 
     if(LAPACK95 IN_LIST LAPACK_FIND_COMPONENTS)
-      set(CMAKE_REQUIRED_INCLUDES ${LAPACK_INCLUDE_DIR})
-      set(CMAKE_REQUIRED_LIBRARIES ${LAPACK_LIBRARY})
-      check_fortran_source_compiles("
-        use lapack95, only: gesvd
-        real :: A(2,2),M(2)
-        call gesvd(A,M)
-        end" LAPACK_LAPACK95_FOUND
-        SRC_EXT f90)
+      set(LAPACK_LAPACK95_FOUND true)
     endif()
 
     if(OpenMP IN_LIST LAPACK_FIND_COMPONENTS)
