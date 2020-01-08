@@ -1,7 +1,15 @@
 module canonical
 !! This is for POSIX systems
 !! see fullpath_windows.f90 for Windows
-!! path need not exist
+!!
+!! path MUST EXIST for MacOS realpath()
+!! path need not exist for Windows and Linux.
+!!
+!! https://developer.apple.com/library/archive/documentation/System/Conceptual/ManPages_iPhoneOS/man3/realpath.3.html
+!!
+!! https://linux.die.net/man/3/realpath
+!!
+!! https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/fullpath-wfullpath?view=vs-2019
 
 use, intrinsic :: iso_c_binding, only: c_char, c_null_char
 implicit none
@@ -49,6 +57,8 @@ use canonical, only : realpath
 implicit none
 
 character(:), allocatable :: canon
+character(*), parameter :: relpath = '../io/realpath_posix.f90'
+logical :: exists
 
 ! -- test directory
 canon = realpath('..')
@@ -58,8 +68,11 @@ if (len_trim(canon) < 20) then
   error stop
 endif
 
-! -- test file
-canon = realpath('../foo.txt')
+! -- test
+inquire(file=relpath, exist=exists)
+if(.not.exists) error stop 77
+
+canon = realpath(relpath)
 
 if (len_trim(canon) < 28) then
   write(stderr,*) 'ERROR: file ' // canon // ' was not canonicalized '

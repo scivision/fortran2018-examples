@@ -22,13 +22,13 @@ add_test(NAME MPIversion COMMAND mpivers)
 add_test(NAME MPIhello
          COMMAND ${MPIEXEC_EXECUTABLE} ${MPIEXEC_NUMPROC_FLAG} ${MPIEXEC_MAX_NUMPROCS}
   ${MPIEXEC_PREFLAGS} $<TARGET_FILE:mpi_hello> ${MPIEXEC_POSTFLAGS})
-set_tests_properties(MPIhello PROPERTIES RUN_SERIAL true TIMEOUT 20)
+set_tests_properties(MPIhello PROPERTIES RUN_SERIAL true)
 
 if(MPIEXEC_MAX_NUMPROCS GREATER_EQUAL 2)
 add_test(NAME MPIpass
          COMMAND ${MPIEXEC_EXECUTABLE} ${MPIEXEC_NUMPROC_FLAG} ${MPIEXEC_MAX_NUMPROCS}
   ${MPIEXEC_PREFLAGS} $<TARGET_FILE:mpi_pass> ${MPIEXEC_POSTFLAGS})
-set_tests_properties(MPIpass PROPERTIES RUN_SERIAL true TIMEOUT 20)
+set_tests_properties(MPIpass PROPERTIES RUN_SERIAL true)
 endif()
 
 # mpifort --showme

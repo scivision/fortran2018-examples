@@ -37,7 +37,7 @@ target_compile_options(coarray_hello PRIVATE ${Coarray_COMPILE_OPTIONS})
 target_link_libraries(coarray_hello PRIVATE ${Coarray_LIBRARIES})
 add_test(NAME CoarrayHello
          COMMAND ${Coarray_EXECUTABLE} ${Coarray_NUMPROC_FLAG} ${Coarray_MAX_NUMPROCS} $<TARGET_FILE:coarray_hello>)
-set_tests_properties(CoarrayHello PROPERTIES TIMEOUT 20 RUN_SERIAL TRUE)
+set_tests_properties(CoarrayHello PROPERTIES RUN_SERIAL TRUE)
 
 if(f18coarray)
   add_executable(coarray_pi pi.f90)
@@ -45,5 +45,5 @@ if(f18coarray)
   target_link_libraries(coarray_pi PRIVATE ${Coarray_LIBRARIES})
   add_test(NAME CoarrayPi
           COMMAND ${Coarray_EXECUTABLE} ${Coarray_NUMPROC_FLAG} ${Coarray_MAX_NUMPROCS} $<TARGET_FILE:coarray_pi>)
-  set_tests_properties(CoarrayPi PROPERTIES TIMEOUT 20 RUN_SERIAL TRUE)
+  set_tests_properties(CoarrayPi PROPERTIES RUN_SERIAL TRUE)
 endif()

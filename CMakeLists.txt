@@ -5,6 +5,8 @@ endif()
 project(Fortran2018Examples LANGUAGES C Fortran)
 enable_testing()
 
+set(CTEST_TEST_TIMEOUT 10)  # default timeout [seconds]
+
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/)
 
 include(cmake/compilers.cmake)

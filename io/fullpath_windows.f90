@@ -1,7 +1,16 @@
 module canonical
 !! This is for Windows systems
 !! see realpath_posix.f90 for POSIX
-!! path need not exist
+!!
+!! path MUST EXIST for MacOS realpath()
+!! path need not exist for Windows and Linux.
+!!
+!! https://developer.apple.com/library/archive/documentation/System/Conceptual/ManPages_iPhoneOS/man3/realpath.3.html
+!!
+!! https://linux.die.net/man/3/realpath
+!!
+!! https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/fullpath-wfullpath?view=vs-2019
+
 
 use, intrinsic :: iso_c_binding, only: c_long, c_char, c_null_char
 implicit none

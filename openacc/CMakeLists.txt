@@ -15,4 +15,3 @@ add_executable(simple_openacc simple_openacc.f90)
 target_compile_options(simple_openacc PRIVATE ${OpenACC_Fortran_FLAGS})
 
 add_test(NAME OpenACCsimple COMMAND simple_openacc)
-set_tests_properties(OpenACCsimple PROPERTIES TIMEOUT 15)
