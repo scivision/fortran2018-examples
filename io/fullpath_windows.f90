@@ -57,7 +57,7 @@ character(:), allocatable :: canon
 canon = realpath('..')
 
 if (len_trim(canon) < 20) then
-  write(stderr,*) 'ERROR: ' // canon // ' was not canonicalized '
+  write(stderr,*) 'ERROR: directory ' // canon // ' was not canonicalized '
   error stop
 endif
 
@@ -65,7 +65,7 @@ endif
 canon = realpath('../foo.txt')
 
 if (len_trim(canon) < 28) then
-  write(stderr,*) 'ERROR: ' // canon // ' was not canonicalized '
+  write(stderr,*) 'ERROR: file ' // canon // ' was not canonicalized '
   error stop
 endif
 
