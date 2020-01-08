@@ -77,3 +77,33 @@ jobs:
       with:
         name: Mac_CMake_Testlog
         path: build/Testing/Temporary/LastTest.log
+
+  windows:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-python@v1
+      with:
+        python-version: '3.x'
+
+    - run: pip install -r requirements.txt
+
+    - run: cmake -B build -G Ninja -DCMAKE_SH="CMAKE_SH-NOTFOUND"
+      env:
+        FC: gfortran
+        CC: gcc
+        CXX: g++
+    - run: cmake --build build --parallel
+    - uses: actions/upload-artifact@v1
+      if: failure()
+      with:
+        name: Windows_Cmake_Buildlog
+        path: build/CMakeFiles/CMakeError.log
+
+    - run: ctest -V
+      working-directory: build
+    - uses: actions/upload-artifact@v1
+      if: failure()
+      with:
+        name: Windows_CMake_Testlog
+        path: build/Testing/Temporary/LastTest.log

@@ -60,14 +60,6 @@ endif
 
 mpiexec = find_program('mpiexec', required : false, disabler: true)  # MS-MPI has only mpiexec
 
-# -- HDF5
-
-hdf5 = dependency('hdf5', language : 'fortran', required : false, disabler: true)
-
-if not fc.links('use h5lt; end', name: 'HDF5', dependencies : hdf5)
-  hdf5 = disabler()
-endif
-
 # == Intel OpenMP
 mklroot = get_option('mklroot')
 mkllib_root = mklroot/'lib/intel64'
