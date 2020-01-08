@@ -3,71 +3,71 @@ project(fortran2018io Fortran)
 enable_testing()
 
 add_library(logging logging.f90)
-target_compile_options(logging PRIVATE ${FFLAGS})
 
 if(CMAKE_Fortran_COMPILER_ID STREQUAL PGI)
   message(STATUS "PGI doesn't work correctly for this append_file example, even alone")
 else()
   add_executable(append_file append_file.f90)
-  target_compile_options(append_file PRIVATE ${FFLAGS})
   target_link_libraries(append_file PRIVATE logging)
   add_test(NAME AppendFile COMMAND append_file)
 endif()
 
 add_executable(termio terminal_io.f90)
-target_compile_options(termio PRIVATE ${FFLAGS})
 if(NOT WIN32)
   add_test(NAME FortranTerminalIO COMMAND bash -c "$<TARGET_FILE:termio> <<< 0")
 endif()
 
 add_executable(leading_zeros leading_zeros.f90)
-target_compile_options(leading_zeros PRIVATE ${FFLAGS})
 add_test(NAME LeadingZeros COMMAND leading_zeros)
 set_tests_properties(LeadingZeros PROPERTIES
   PASS_REGULAR_EXPRESSION "hello1234.5600000")
 
 add_executable(expanduser expanduser.f90)
-target_compile_options(expanduser PRIVATE ${FFLAGS})
 add_test(NAME Expanduser COMMAND expanduser '~')
 
+# has to be run() test for detecting defective system realpath()
 if(WIN32)
-  set(_code "#include <stdlib.h>
-  int main(void) {
-  const char *relPath; char *absPath;
-  _fullpath(absPath, relPath, _MAX_PATH);
-  return 0; }")
-  check_c_source_compiles("${_code}" windowsio_OK)
+  set(_code "
+#include <stdlib.h>
+#include <string.h>
+int main(void) {
+char resolved_path[_MAX_PATH];
+_fullpath(resolved_path, \"..\", _MAX_PATH);
+if(strcmp(\"..\", resolved_path) == 0 || strcmp(\".\", resolved_path) == 0) return 1;
+return 0; }")
+check_c_source_runs("${_code}" windowsio_OK)
   set(posixio_OK false)
 else()
-  set(_code "int main(void) {
-  const char *path; char *resolved_path;
-  realpath(path, resolved_path);
-  return 0; }")
-  check_c_source_compiles("${_code}" posixio_OK)
+  set(_code "
+#include <limits.h>
+#include <stdlib.h>
+#include <string.h>
+int main(void) {
+char resolved_path[PATH_MAX];
+realpath(\"..\", resolved_path);
+if(strcmp(\"..\", resolved_path) == 0 || strcmp(\".\", resolved_path) == 0) return 1;
+return 0; }")
+  check_c_source_runs("${_code}" posixio_OK)
   set(windowsio_OK false)
 endif()
 
 if(posixio_OK)
   add_executable(realpath realpath_posix.f90)
-  target_compile_options(realpath PRIVATE ${FFLAGS})
-  add_test(NAME CanonicalPath COMMAND realpath)
 elseif(windowsio_OK)
   add_executable(realpath fullpath_windows.f90)
-  target_compile_options(realpath PRIVATE ${FFLAGS})
-  add_test(NAME CanonicalPath COMMAND fullpath)
 endif()
-set_tests_properties(CanonicalPath PROPERTIES SKIP_RETURN_CODE 77)
+if(posixio_OK OR windowsio_OK)
+  add_test(NAME CanonicalPath COMMAND $<TARGET_FILE:realpath>)
+  set_tests_properties(CanonicalPath PROPERTIES SKIP_RETURN_CODE 77)
+endif()
 
 add_executable(notermsize noenv.f90)
-target_compile_options(notermsize PRIVATE ${FFLAGS})
 add_test(NAME NoTermSize COMMAND notermsize)
 
 add_executable(readonly fileopen-readonly.f90)
-target_compile_options(readonly PRIVATE ${FFLAGS})
 add_test(NAME FortranReadOnly COMMAND readonly)
 
 add_executable(null devnull.f90)
-target_compile_options(null PRIVATE ${FFLAGS})
 add_test(NAME FortranNullfile COMMAND null)
 
 # C++ is goofed up for PGI on Windows, including with CL

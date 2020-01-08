@@ -13,22 +13,33 @@ test('expanduser', expanduser,
   args: ['~'],
   timeout: 10, suite: 'io')
 
+# has to be run() test for detecting defective system realpath()
 if os == 'windows'
-  code = '''#include <stdlib.h>
-  int main(void) {const char *relPath; char *absPath;
-  _fullpath(absPath, relPath, _MAX_PATH);
-  return 0; }
-  '''
-  if cc.links(code, name: 'Windows _fullpath')
+  code = '''
+#include <stdlib.h>
+#include <string.h>
+int main(void) {
+char resolved_path[_MAX_PATH];
+_fullpath(resolved_path, "..", _MAX_PATH);
+if(strcmp("..", resolved_path) == 0 || strcmp(".", resolved_path) == 0) return 1;
+return 0; }
+'''
+  if (cc.run(code, name: 'Windows _fullpath').returncode() == 0)
     fullpath = executable('fullpath', 'fullpath_windows.f90')
     test('fullpath', fullpath, timeout: 10, suite: 'io')
   endif
 else
-  code = '''int main(void) {const char *path; char *resolved_path;
-  realpath(path, resolved_path);
-  return 0; }
-  '''
-  if cc.links(code, name: 'POSIXrealpath')
+  code = '''
+#include <limits.h>
+#include <stdlib.h>
+#include <string.h>
+int main(void) {
+char resolved_path[PATH_MAX];
+realpath("..", resolved_path);
+if(strcmp("..", resolved_path) == 0 || strcmp(".", resolved_path) == 0) return 1;
+return 0; }
+'''
+  if (cc.run(code, name: 'POSIXrealpath').returncode() == 0)
     realpath = executable('realpath', 'realpath_posix.f90')
     test('realpath', realpath, timeout: 10, suite: 'io')
   endif

@@ -33,6 +33,7 @@ elseif(CMAKE_Fortran_COMPILER_ID STREQUAL NAG)
 endif()
 
 include(CheckCSourceCompiles)
+include(CheckCSourceRuns)
 include(CheckFortranSourceCompiles)
 
 include(${CMAKE_CURRENT_LIST_DIR}/f08block.cmake)
