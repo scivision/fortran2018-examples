@@ -1,4 +1,5 @@
 fc = meson.get_compiler('fortran')
+cc = meson.get_compiler('c')
 
 oldargs = fc.get_supported_arguments(['-w', '-nowarn', '/nowarn', '-std=legacy'])
 

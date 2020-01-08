@@ -13,9 +13,25 @@ test('expanduser', expanduser,
   args: ['~'],
   timeout: 10, suite: 'io')
 
-if os == 'linux'
-  realpath = executable('realpath', 'realpath_linux.f90')
-  test('realpath', realpath, timeout: 10, suite: 'io')
+if os == 'windows'
+  code = '''#include <stdlib.h>
+  int main(void) {const char *relPath; char *absPath;
+  _fullpath(absPath, relPath, _MAX_PATH);
+  return 0; }
+  '''
+  if cc.links(code, name: 'Windows _fullpath')
+    fullpath = executable('fullpath', 'fullpath_windows.f90')
+    test('fullpath', fullpath, timeout: 10, suite: 'io')
+  endif
+else
+  code = '''int main(void) {const char *path; char *resolved_path;
+  realpath(path, resolved_path);
+  return 0; }
+  '''
+  if cc.links(code, name: 'POSIX realpath')
+    realpath = executable('realpath', 'realpath_linux.f90')
+    test('realpath', realpath, timeout: 10, suite: 'io')
+  endif
 endif
 
 if add_languages('cpp', required: false)

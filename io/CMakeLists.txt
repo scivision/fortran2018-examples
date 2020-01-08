@@ -30,10 +30,31 @@ add_executable(expanduser expanduser.f90)
 target_compile_options(expanduser PRIVATE ${FFLAGS})
 add_test(NAME Expanduser COMMAND expanduser '~')
 
-if(UNIX AND NOT APPLE)
+if(WIN32)
+  set(_code "#include <stdlib.h>
+  int main(void) {
+  const char *relPath; char *absPath;
+  _fullpath(absPath, relPath, _MAX_PATH);
+  return 0; }")
+  check_c_source_compiles("${_code}" windowsio_OK)
+  set(posixio_OK false)
+else()
+  set(_code "int main(void) {
+  const char *path; char *resolved_path;
+  realpath(path, resolved_path);
+  return 0; }")
+  check_c_source_compiles("${_code}" posixio_OK)
+  set(windowsio_OK false)
+endif()
+
+if(posixio_OK)
   add_executable(realpath realpath_linux.f90)
   target_compile_options(realpath PRIVATE ${FFLAGS})
   add_test(NAME RealpathLinux COMMAND realpath)
+elseif(windowsio_OK)
+  add_executable(fullpath fullpath_windows.f90)
+  target_compile_options(fullpath PRIVATE ${FFLAGS})
+  add_test(NAME FullpathWindows COMMAND fullpath)
 endif()
 
 add_executable(notermsize noenv.f90)

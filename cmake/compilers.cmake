@@ -32,7 +32,7 @@ elseif(CMAKE_Fortran_COMPILER_ID STREQUAL NAG)
   list(APPEND FFLAGS -f2008 -C -colour -gline -nan -info -u)
 endif()
 
-
+include(CheckCSourceCompiles)
 include(CheckFortranSourceCompiles)
 
 include(${CMAKE_CURRENT_LIST_DIR}/f08block.cmake)
