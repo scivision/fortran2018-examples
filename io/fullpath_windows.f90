@@ -1,4 +1,7 @@
 module canonical
+!! This is for Windows systems
+!! see realpath_posix.f90 for POSIX
+!! path need not exist
 
 use, intrinsic :: iso_c_binding, only: c_long, c_char, c_null_char
 implicit none
@@ -48,13 +51,21 @@ use canonical, only : fullpath
 
 implicit none
 
-character(*), parameter :: rel = '..'
 character(:), allocatable :: canon
 
-canon = fullpath(rel)
+! -- test directory
+canon = realpath('..')
 
-if (canon == rel) then
-  write(stderr,*) rel // ' was not canonicalized ' // canon
+if (len_trim(canon) < 20) then
+  write(stderr,*) 'ERROR: ' // canon // ' was not canonicalized '
+  error stop
+endif
+
+! -- test file
+canon = realpath('../foo.txt')
+
+if (len_trim(canon) < 28) then
+  write(stderr,*) 'ERROR: ' // canon // ' was not canonicalized '
   error stop
 endif
 

@@ -1,7 +1,7 @@
 module canonical
-!! This only works for Linux / GNU systems
-!! it does *not* work for MinGW or other Windows compilers
-!! it also does not work for MacOS
+!! This is for POSIX systems
+!! see fullpath_windows.f90 for Windows
+!! path need not exist
 
 use, intrinsic :: iso_c_binding, only: c_char, c_null_char
 implicit none
@@ -48,13 +48,21 @@ use canonical, only : realpath
 
 implicit none
 
-character(*), parameter :: rel = '..'
 character(:), allocatable :: canon
 
-canon = realpath(rel)
+! -- test directory
+canon = realpath('..')
 
-if (canon == rel) then
-  write(stderr,*) rel // ' was not canonicalized ' // canon
+if (len_trim(canon) < 20) then
+  write(stderr,*) 'ERROR: ' // canon // ' was not canonicalized '
+  error stop
+endif
+
+! -- test file
+canon = realpath('../foo.txt')
+
+if (len_trim(canon) < 28) then
+  write(stderr,*) 'ERROR: ' // canon // ' was not canonicalized '
   error stop
 endif
 

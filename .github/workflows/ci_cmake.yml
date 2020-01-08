@@ -5,22 +5,75 @@ on:
     paths:
       - "**.f90"
       - "**.F90"
+      - "**.cmake"
+      - "**.txt"
+      - ".github/workflows/cmake.yml"
   pull_request:
     paths:
       - "**.f90"
       - "**.F90"
+      - "**.cmake"
+      - "**.txt"
+      - ".github/workflows/cmake.yml"
 
 jobs:
+
+  linux:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-python@v1
+      with:
+        python-version: '3.x'
+
+    - name: install prereqs
+      run: |
+        pip install cmake
+        sudo apt update -yq
+        sudo apt install -yq --no-install-recommends gfortran g++
+
+    - run: cmake -B build
+      env:
+        FC: gfortran
+        CC: gcc
+        CXX: g++
+    - run: cmake --build build --parallel
+    - uses: actions/upload-artifact@v1
+      if: failure()
+      with:
+        name: Linux_Cmake_Buildlog
+        path: build/CMakeFiles/CMakeError.log
+
+    - run: ctest -V
+      working-directory: build
+    - uses: actions/upload-artifact@v1
+      if: failure()
+      with:
+        name: Linux_CMake_Testlog
+        path: build/Testing/Temporary/LastTest.log
 
   macos:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v1
     - run: brew install gcc hdf5
+
     - run: cmake -B build
       env:
         FC: gfortran-9
         CC: gcc-9
         CXX: g++-9
     - run: cmake --build build --parallel
-    - run: cmake --build build --target test
+    - uses: actions/upload-artifact@v1
+      if: failure()
+      with:
+        name: MacOS_Cmake_Buildlog
+        path: build/CMakeFiles/CMakeError.log
+
+    - run: ctest -V
+      working-directory: build
+    - uses: actions/upload-artifact@v1
+      if: failure()
+      with:
+        name: Mac_CMake_Testlog
+        path: build/Testing/Temporary/LastTest.log

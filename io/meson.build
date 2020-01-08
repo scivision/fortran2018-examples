@@ -28,8 +28,8 @@ else
   realpath(path, resolved_path);
   return 0; }
   '''
-  if cc.links(code, name: 'POSIX realpath')
-    realpath = executable('realpath', 'realpath_linux.f90')
+  if cc.links(code, name: 'POSIXrealpath')
+    realpath = executable('realpath', 'realpath_posix.f90')
     test('realpath', realpath, timeout: 10, suite: 'io')
   endif
 endif
