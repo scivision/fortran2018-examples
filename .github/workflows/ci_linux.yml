@@ -1,4 +1,4 @@
-name: ci_cmake
+name: ci_linux
 
 on:
   push:
@@ -7,18 +7,20 @@ on:
       - "**.F90"
       - "**.cmake"
       - "**.txt"
-      - ".github/workflows/cmake.yml"
+      - "**.build"
+      - ".github/workflows/ci_linux.yml"
   pull_request:
     paths:
       - "**.f90"
       - "**.F90"
       - "**.cmake"
       - "**.txt"
-      - ".github/workflows/cmake.yml"
+      - "**.build"
+      - ".github/workflows/ci_linux.yml"
 
 jobs:
 
-  linux:
+  linuxCMake:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
@@ -52,34 +54,8 @@ jobs:
         name: Linux_CMake_Testlog
         path: build/Testing/Temporary/LastTest.log
 
-  macos:
-    runs-on: macos-latest
-    steps:
-    - uses: actions/checkout@v1
-    - run: brew install gcc
-
-    - run: cmake -B build
-      env:
-        FC: gfortran-9
-        CC: gcc-9
-        CXX: g++-9
-    - run: cmake --build build --parallel
-    - uses: actions/upload-artifact@v1
-      if: failure()
-      with:
-        name: MacOS_Cmake_Buildlog
-        path: build/CMakeFiles/CMakeError.log
-
-    - run: ctest -V
-      working-directory: build
-    - uses: actions/upload-artifact@v1
-      if: failure()
-      with:
-        name: Mac_CMake_Testlog
-        path: build/Testing/Temporary/LastTest.log
-
-  windows:
-    runs-on: windows-latest
+  linuxMeson:
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
     - uses: actions/setup-python@v1
@@ -88,22 +64,24 @@ jobs:
 
     - run: pip install -r requirements.txt
 
-    - run: cmake -B build -G Ninja -DCMAKE_SH="CMAKE_SH-NOTFOUND"
+    - name: Install packages
+      run: |
+        sudo apt update -yq
+        sudo apt install -yq --no-install-recommends ninja-build gfortran g++
+
+    - run: meson setup build
       env:
         FC: gfortran
-        CC: gcc
-        CXX: g++
-    - run: cmake --build build --parallel
+    - run: ninja -C build
     - uses: actions/upload-artifact@v1
       if: failure()
       with:
-        name: Windows_Cmake_Buildlog
-        path: build/CMakeFiles/CMakeError.log
+        name: Linux_Meson_Configlog
+        path: build/meson-logs/meson-log.txt
 
-    - run: ctest -V
-      working-directory: build
+    - run: meson test -C build -v
     - uses: actions/upload-artifact@v1
       if: failure()
       with:
-        name: Windows_CMake_Testlog
-        path: build/Testing/Temporary/LastTest.log
+        name: Linux_Meson_Testlog
+        path: build/meson-logs/testlog.txt

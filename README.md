@@ -1,7 +1,8 @@
 # Fortran 2018 Examples
 
-[![Actions Status](https://github.com/scivision/fortran2018-examples/workflows/ci_cmake/badge.svg)](https://github.com/scivision/fortran2018-examples/actions)
-[![Actions Status](https://github.com/scivision/fortran2018-examples/workflows/ci_meson/badge.svg)](https://github.com/scivision/fortran2018-examples/actions)
+[![Actions Status](https://github.com/scivision/fortran2018-examples/workflows/ci_linux/badge.svg)](https://github.com/scivision/fortran2018-examples/actions)
+[![Actions Status](https://github.com/scivision/fortran2018-examples/workflows/ci_windows/badge.svg)](https://github.com/scivision/fortran2018-examples/actions)
+[![Actions Status](https://github.com/scivision/fortran2018-examples/workflows/ci_macos/badge.svg)](https://github.com/scivision/fortran2018-examples/actions)
 
 Easy examples of scientific computing with modern, powerful, easy Fortran 2018 standard.
 Fortran 2018 began as the TS18508 extension, formerly known as Fortran 2015.
