@@ -49,19 +49,12 @@ jobs:
         path: build/meson-logs/testlog.txt
 
   macos:
-    if: false
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v1
     - uses: actions/setup-python@v1
       with:
         python-version: '3.x'
-
-# FIXME: need Meson >= 0.53.1 to have better MacOS HDF5 finding
-    - run: |
-        git clone https://github.com/mesonbuild/meson
-        pip install -e meson
-      working-directory: /tmp
 
     - run: pip install -r requirements.txt
 

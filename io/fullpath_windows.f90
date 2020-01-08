@@ -5,7 +5,7 @@ module canonical
 
 use, intrinsic :: iso_c_binding, only: c_long, c_char, c_null_char
 implicit none
-public :: fullpath
+public :: realpath
 
 interface
 subroutine fullpath_c(absPath, relPath, maxLength) bind(c, name='_fullpath')
@@ -20,9 +20,9 @@ end interface
 
 contains
 
-function fullpath(path)
+function realpath(path)
 
-character(:), allocatable :: fullpath
+character(:), allocatable :: realpath
 character(*), intent(in) :: path
 
 integer(c_long), parameter :: N = 260
@@ -37,9 +37,9 @@ do i = 1,N
   buf(i:i) = c_buf(i)
 enddo
 
-fullpath = trim(buf(:i-1))
+realpath = trim(buf(:i-1))
 
-end function fullpath
+end function realpath
 
 end module canonical
 
@@ -47,7 +47,7 @@ end module canonical
 program demo
 
 use, intrinsic :: iso_fortran_env, only : stderr=>error_unit
-use canonical, only : fullpath
+use canonical, only : realpath
 
 implicit none
 

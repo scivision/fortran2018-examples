@@ -56,7 +56,7 @@ jobs:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@v1
-    - run: brew install gcc hdf5
+    - run: brew install gcc
 
     - run: cmake -B build
       env:

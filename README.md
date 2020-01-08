@@ -84,8 +84,7 @@ Each directory has its own README and examples.
 
 ---
 
-* [io/](./io): modern Fortran File I/O
-* [hdf5/](./hdf5): HDF5 is one of the most popular self-describing file formats for massively scalable files.
+* [io/](./io): modern Fortran File I/O including resolving absolute path
 
 ---
 
