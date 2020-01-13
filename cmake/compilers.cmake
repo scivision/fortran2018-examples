@@ -35,6 +35,7 @@ endif()
 include(CheckCSourceCompiles)
 include(CheckCSourceRuns)
 include(CheckFortranSourceCompiles)
+include(CheckCXXSourceRuns)
 
 include(${CMAKE_CURRENT_LIST_DIR}/f08block.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/f08contig.cmake)

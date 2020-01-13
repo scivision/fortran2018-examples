@@ -25,6 +25,16 @@ set_tests_properties(LeadingZeros PROPERTIES
 add_executable(expanduser expanduser.f90)
 add_test(NAME Expanduser COMMAND expanduser '~')
 
+add_executable(notermsize noenv.f90)
+add_test(NAME NoTermSize COMMAND notermsize)
+
+add_executable(readonly fileopen-readonly.f90)
+add_test(NAME FortranReadOnly COMMAND readonly)
+
+add_executable(null devnull.f90)
+add_test(NAME FortranNullfile COMMAND null)
+
+if(NOT APPLE)  # FIXME: need to make check in Fortran not C.
 # has to be run() test for detecting defective system realpath()
 if(WIN32)
   set(_code "
@@ -60,15 +70,8 @@ if(posixio_OK OR windowsio_OK)
   add_test(NAME CanonicalPath COMMAND $<TARGET_FILE:realpath>)
   set_tests_properties(CanonicalPath PROPERTIES SKIP_RETURN_CODE 77)
 endif()
+endif(NOT APPLE)
 
-add_executable(notermsize noenv.f90)
-add_test(NAME NoTermSize COMMAND notermsize)
-
-add_executable(readonly fileopen-readonly.f90)
-add_test(NAME FortranReadOnly COMMAND readonly)
-
-add_executable(null devnull.f90)
-add_test(NAME FortranNullfile COMMAND null)
 
 # C++ is goofed up for PGI on Windows, including with CL
 if(WIN32 AND CMAKE_Fortran_COMPILER_ID STREQUAL PGI)
@@ -89,9 +92,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # verify C++ compiler can do C++17 filesystem
 # GCC 10, Intel 2020
 file(READ cxx17filesystem.cxx _code)
-include(CheckCXXSourceCompiles)
 set(CMAKE_REQUIRED_FLAGS -std=c++17)
-check_cxx_source_compiles("${_code}" cxx17filesystem_ok)
+check_cxx_source_runs("${_code}" cxx17filesystem_ok)
 
 if(NOT cxx17filesystem_ok)
   message(STATUS "${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION} does not support C++17 filesystem")
