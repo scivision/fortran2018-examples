@@ -28,7 +28,7 @@ return 0; }
     fullpath = executable('fullpath', 'fullpath_windows.f90')
     test('fullpath', fullpath, timeout: 10, suite: 'io')
   endif
-elseif os != 'darwin'  # FIXME: make test in Fortran not C
+elif os != 'darwin'  # FIXME: make test in Fortran not C
   code = '''
 #include <limits.h>
 #include <stdlib.h>
