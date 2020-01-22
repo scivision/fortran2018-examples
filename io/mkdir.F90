@@ -5,6 +5,8 @@ use, intrinsic:: iso_fortran_env, only: stderr=>error_unit
 
 implicit none
 
+logical, parameter :: debug = .false.
+
 !> This interface connects to C stdlib functions present on any system.
 interface
 
@@ -16,6 +18,7 @@ character(kind=c_char), intent(in) :: path(*)
 end function mkdir_win
 #else
 integer(c_int) function mkdir_posix(path, mask) bind (C, name='mkdir')
+!! https://linux.die.net/man/3/mkdir
 import c_int, c_char
 character(kind=c_char), intent(in) :: path(*)
 integer(c_int), value, intent(in) :: mask
@@ -34,6 +37,7 @@ character(len=*), intent(in) :: path
 character(kind=c_char, len=:), allocatable :: buf
 !! must use allocatable buffer, not direct substring to C
 
+ret = 0
 buf = trim(path)
 
 if (len(buf) == 0) then
@@ -53,7 +57,7 @@ endif
 
 !> handles parents
 !> Note: auto-allocation also auto-reallocates--no deallocate() needed.
-i=-1
+i=1
 i0=1
 do while( i > 0 )
   i = index(path(i0:), '/')
@@ -63,19 +67,22 @@ do while( i > 0 )
     ilast = i0 - 1
   else  !< last path segment
     i0 = len_trim(path)
+    if (i0 == ilast) exit  !< trailing slash
     ilast = i0
   endif
 
   !> allocated string buffer necessary for C interface
   buf = path(1:ilast)  !< don't include separator for Windows compatibility
 
-  ! print *,'i:',i,'i0:',i0,'ilast:',ilast,buf, len(buf)
+  if(debug) print '(A,I4,A,I4,A,I4,A,I4)','i:',i,' i0:',i0,' ilast:',ilast,' '//buf, len(buf)
 
 #ifdef _WIN32
   ret = mkdir_win(buf//C_NULL_CHAR)
 #else
   ret = mkdir_posix(buf//C_NULL_CHAR, int(o'755', c_int))
 #endif
+
+  if(debug) print *,'mkdir() return code:',ret
 
 enddo
 
