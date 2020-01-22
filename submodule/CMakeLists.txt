@@ -12,5 +12,4 @@ FetchContent_MakeAvailable(FortranSubmodules)
 
 add_executable(useext use_ext.f90)
 target_link_libraries(useext PRIVATE ext)
-set_target_properties(useext PROPERTIES Fortran_MODULE_DIRECTORY ${CMAKE_BINARY_DIR})
-add_test(NAME ExternalSubmodule COMMAND useext)
+add_test(NAME ExternalSubmodule COMMAND $<TARGET_FILE:useext>)

@@ -15,7 +15,6 @@ target_compile_options(c_lib PRIVATE ${CFLAGS})
 
 add_executable(f_call_c f_call_c.f90)
 target_link_libraries(f_call_c PRIVATE c_lib)
-target_compile_options(f_call_c PRIVATE ${FFLAGS})
 add_test(NAME FortranCallC COMMAND f_call_c)
 
 # Workaround for PGI not having CXX on Windows and wrong CXX compiler being found
@@ -36,7 +35,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # -- C++ calling Fortran
 add_library(call_f c_call_f.f90)
-target_compile_options(call_f PRIVATE ${FFLAGS})
 set_target_properties(call_f PROPERTIES POSITION_INDEPENDENT_CODE ON)
 
 # LD_LIBRARY_PATH=~/.local/pgi/linux86-64/2018/lib:$LD_LIBRARY_PATH ./cxx_call_f
@@ -51,7 +49,6 @@ add_library(cxx_lib call_cxx.cxx)
 
 add_executable(f_call_cxx f_call_cxx.f90)
 target_link_libraries(f_call_cxx PRIVATE cxx_lib)
-target_compile_options(f_call_cxx PRIVATE ${FFLAGS})
 # LINKER_LANGUAGE option is necessary for ifort at least
 set_target_properties(f_call_cxx PROPERTIES LINKER_LANGUAGE Fortran)
 add_test(NAME FortranCallC++ COMMAND f_call_cxx)
