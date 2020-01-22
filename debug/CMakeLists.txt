@@ -5,6 +5,3 @@ endif()
 
 add_executable(nanmaxmin maxmin_nan.f90)
 add_test(NAME debug:NaNminmax COMMAND nanmaxmin)
-
-add_executable(typecast typecast.f90)
-add_test(NAME debug:Typecasting COMMAND typecast)
