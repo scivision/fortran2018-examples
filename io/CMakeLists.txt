@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.14)
-project(fortran2018io Fortran)
+project(fortran2018io C Fortran)
 enable_testing()
 
 add_library(logging logging.f90)
@@ -14,7 +14,7 @@ endif()
 
 add_executable(termio terminal_io.f90)
 if(NOT WIN32)
-  add_test(NAME FortranTerminalIO COMMAND bash -c "$<TARGET_FILE:termio> <<< 0")
+  add_test(NAME TerminalIO COMMAND bash -c "$<TARGET_FILE:termio> <<< 0")
 endif()
 
 add_executable(leading_zeros leading_zeros.f90)
@@ -29,11 +29,19 @@ add_executable(notermsize noenv.f90)
 add_test(NAME NoTermSize COMMAND notermsize)
 
 add_executable(readonly fileopen-readonly.f90)
-add_test(NAME FortranReadOnly COMMAND readonly)
+add_test(NAME ReadOnly COMMAND readonly)
 
 add_executable(null devnull.f90)
-add_test(NAME FortranNullfile COMMAND null)
+add_test(NAME Nullfile COMMAND null)
 
+add_executable(mkdirstd mkdir.F90)
+add_test(NAME mkdirSimple
+  COMMAND $<TARGET_FILE:mkdirstd> ${CMAKE_CURRENT_BINARY_DIR}/testdir/hello)
+add_test(NAME mkdirTrailingSep
+  COMMAND $<TARGET_FILE:mkdirstd> ${CMAKE_CURRENT_BINARY_DIR}/testdir/hello/)
+
+
+include(CheckCSourceRuns)
 if(NOT APPLE)  # FIXME: need to make check in Fortran not C.
 # has to be run() test for detecting defective system realpath()
 if(WIN32)
@@ -87,6 +95,7 @@ else()
   return()
 endif()
 
+include(CheckCXXSourceRuns)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # verify C++ compiler can do C++17 filesystem

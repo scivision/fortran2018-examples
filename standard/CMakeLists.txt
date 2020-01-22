@@ -6,13 +6,7 @@ add_executable(bitpat bitpat.f90)
 add_test(NAME BitPattern COMMAND bitpat)
 
 add_executable(justwait pause.f90)
-target_compile_options(justwait PRIVATE ${FFLAGS})
-target_link_libraries(justwait ${FLIBS})
 # NO test
-
-add_executable(mkdirstd mkdir.f90)
-target_sources(mkdirstd PRIVATE $<IF:$<Fortran_COMPILER_ID:Intel>,isdir_intel.f90,isdir.f90>)
-add_test(NAME mkdir COMMAND $<TARGET_FILE:mkdirstd> testdir/hello)
 
 # -- sleep
 add_library(sleep_std sleep_std.F90)

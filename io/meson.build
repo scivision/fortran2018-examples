@@ -1,4 +1,5 @@
 logging_lib = library('logging', 'logging.f90')
+
 append_exe = executable('test_logging', 'append_file.f90',
   link_with : logging_lib)
 
@@ -12,6 +13,31 @@ expanduser = executable('expanduser', 'expanduser.f90')
 test('expanduser', expanduser,
   args: ['~'],
   timeout: 10, suite: 'io')
+
+notermsize = executable('notermsize', 'noenv.f90')
+test('NoTermSize', notermsize)
+
+readonly = executable('readonly', 'fileopen-readonly.f90')
+test('ReadOnly', readonly,
+  timeout: 10, suite: 'io')
+
+if not(os == 'windows' and fc.get_id() == 'pgi')
+  null = executable('null', 'devnull.f90')
+  test('Nullfile', null,
+    timeout: 10, suite: 'io')
+endif
+
+
+mkdirstd = executable('mkdirstd',
+  sources: 'mkdir.F90')
+test('mkdirSimple', mkdirstd,
+  args: meson.current_build_dir() / 'testdir/hello',
+  suite: 'standard',
+  timeout: 20)
+test('mkdirTrailingSep', mkdirstd,
+  args: meson.current_build_dir() / 'testdir/hello/',
+  suite: 'standard',
+  timeout: 20)
 
 # has to be run() test for detecting defective system realpath()
 if os == 'windows'
@@ -61,17 +87,5 @@ if add_languages('cpp', required: false)
     # FIXME: Intel 2020 has bugs, will it work for GCC 10 or LLVM 10?
     # canonical_fortran_exe = executable('canonical_fortran', 'realpath_cxx.f90', link_with: canonical_lib)
     # test('canonicalFortran', canonical_fortran_exe, timeout: 10, suite: 'io')
-  endif
-endif
-
-notermsize = executable('notermsize', 'noenv.f90')
-test('NoTermSize', notermsize)
-if f18errorstop
-  readonly = executable('readonly', 'fileopen-readonly.f90')
-  test('ReadOnly', readonly, timeout: 10, suite: 'io')
-
-  if not(os == 'windows' and fc.get_id() == 'pgi')
-    null = executable('null', 'devnull.f90')
-    test('Nullfile', null, timeout: 10, suite: 'io')
   endif
 endif
