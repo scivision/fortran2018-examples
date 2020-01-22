@@ -1,5 +1,3 @@
-program st
-
 implicit none
 
 integer :: f,i,j,k,n
@@ -14,10 +12,10 @@ if (.not. f(i-j) == g(i-j,i,j,k)) stop 1
 
 contains
 
-  integer function g(n,i,j,k) ! use this instead of statement function
-    integer, intent(in) :: n,i,j,k
-    g = n+(i*j)**k 
-  end function g
-
+elemental integer function g(n,i,j,k)
+!! use this instead of statement function
+integer, intent(in) :: n,i,j,k
+g = n+(i*j)**k
+end function g
 
 end program

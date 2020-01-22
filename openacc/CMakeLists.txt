@@ -1,6 +1,6 @@
 # https://cmake.org/cmake/help/latest/module/FindOpenACC.html
 
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.14)
 project(DemoOpenACC Fortran)
 enable_testing()
 

@@ -11,22 +11,21 @@ target_link_libraries(justwait ${FLIBS})
 # NO test
 
 add_executable(mkdirstd mkdir.f90)
-if(CMAKE_Fortran_COMPILER_ID STREQUAL Intel)
-  target_sources(mkdirstd PRIVATE isdir_intel.f90)
-else()
-  target_sources(mkdirstd PRIVATE isdir.f90)
-endif()
+target_sources(mkdirstd PRIVATE $<IF:$<Fortran_COMPILER_ID:Intel>,isdir_intel.f90,isdir.f90>)
 add_test(NAME mkdir COMMAND $<TARGET_FILE:mkdirstd> testdir/hello)
 
-
+# -- sleep
 add_library(sleep_std sleep_std.F90)
-set_target_properties(sleep_std PROPERTIES Fortran_MODULE_DIRECTORY ${CMAKE_BINARY_DIR})
+target_include_directories(sleep_std INTERFACE
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
+  $<INSTALL_INTERFACE:include>)
+set_target_properties(sleep_std PROPERTIES
+  Fortran_MODULE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/include)
 
 add_executable(sleep_demo sleep_demo.f90)
-target_link_libraries(sleep_demo PRIVATE sleep_std)
-set_target_properties(sleep_demo PROPERTIES Fortran_MODULE_DIRECTORY ${CMAKE_BINARY_DIR})
-add_test(NAME StandardSleep COMMAND sleep_demo)
+target_link_libraries(sleep_demo sleep_std)
+add_test(NAME StandardSleep COMMAND $<TARGET_FILE:sleep_demo> 150)
 
+# --
 add_executable(statement statement_function.f90)
 add_test(NAME Statement COMMAND statement)
-
