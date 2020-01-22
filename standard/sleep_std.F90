@@ -1,49 +1,44 @@
 module sleep_std
-!! uses unistd.h or Windows.h for Fortran standard compliant sleep.
-!! sleep() is a GNU extension, not standard Fortran.
-use, intrinsic:: iso_c_binding, only: c_int
-
+use, intrinsic :: iso_c_binding, only : c_int, c_long
 implicit none
-
 private
+public :: sleep
 
 interface
-
 #ifdef _WIN32
-
-subroutine system_sleep(ms) bind (C, name='Sleep')
-import c_int
-integer(c_int), value, intent(in) :: ms
-end subroutine system_sleep
-
+subroutine winsleep(dwMilliseconds) bind (C, name='Sleep')
+!! void Sleep(DWORD dwMilliseconds)
+!! https://docs.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-sleep
+import c_long
+integer(c_long), value, intent(in) :: dwMilliseconds
+end subroutine winsleep
 #else
-
-subroutine system_sleep(us) bind (C, name='usleep')
+integer(c_int) function usleep(usec) bind (C)
+!! int usleep(useconds_t usec);
+!! https://linux.die.net/man/3/usleep
 import c_int
-integer(c_int), value, intent(in) :: us
-end subroutine system_sleep
-
+integer(c_int), value, intent(in) :: usec
+end function usleep
 #endif
-
 end interface
 
-public :: sleep_millisec
 
 contains
 
 
-subroutine sleep_millisec(t)
-integer, intent(in) :: t
-integer(c_int) :: tsys
+subroutine sleep(millisec)
+integer, intent(in) :: millisec
+integer(c_int) :: ierr
 
 #ifdef _WIN32
-tsys = int(t, c_int)
+!! PGI Windows, Ifort Windows, ....
+call winsleep(int(millisec, c_long))
 #else
-tsys = int(t, c_int) * 1000
+!! Linux, Unix, MacOS, MSYS2, ...
+ierr = usleep(int(millisec * 1000, c_int))
+if (ierr/=0) error stop 'problem with usleep() system call'
 #endif
 
-call system_sleep(tsys)
-
-end subroutine sleep_millisec
+end subroutine sleep
 
 end module sleep_std
