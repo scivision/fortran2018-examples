@@ -1,23 +1,38 @@
 use, intrinsic:: iso_fortran_env, only: stderr=>error_unit
-use pathlib, only: copyfile, mkdir
+use pathlib, only: copyfile, mkdir, expanduser
 implicit none
 
-call test_mkdir()
+call test_expanduser('~')
+call test_mkdir('testdir/hello')
+call test_mkdir('testdir/hello/')
 
 contains
 
-subroutine test_mkdir()
+subroutine test_expanduser(path)
+!! NOTE: when testing, enclose argument in '~/test.txt' quotes or
+!!  shell will expand '~' before it gets to Fortran!
 
-character(4096) :: buf
-character(:), allocatable :: path, fpath
+character(:), allocatable :: expanded
+character(*), intent(in) :: path
+integer :: i
+
+expanded = expanduser(path)
+
+if (len_trim(expanded) <= len_trim(path)) error stop 'did not expand path'
+
+print *,'OK: expanduser'
+
+end subroutine test_expanduser
+
+
+subroutine test_mkdir(path)
+character(*), intent(in) :: path
+character(:), allocatable :: fpath
 integer :: ret, u
 logical :: exists
 
-call get_command_argument(1,buf)
-path = trim(buf)
-fpath = path // '/foo.txt'
-
 ret = mkdir(path)
+fpath = path // '/foo.txt'
 
 ! check existance of path by writing file and checking file's existance
 open(newunit=u, file=fpath, action='write', status='replace')

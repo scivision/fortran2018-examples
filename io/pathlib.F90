@@ -4,12 +4,12 @@ use, intrinsic:: iso_fortran_env, only: stderr=>error_unit
 
 implicit none
 private
-public :: mkdir, copyfile
+public :: mkdir, copyfile, expanduser, home
 
 contains
 
 integer function copyfile(source, dest) result(istat)
-
+!! overwrites existing file in destination
 character(*), intent(in) :: source, dest
 character(len(source)) :: src
 character(len(dest)) :: dst
@@ -17,7 +17,8 @@ logical :: exists
 integer :: icstat
 
 #if defined(_WIN32)
-character(*), parameter :: CMD='copy '
+!! https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/copy
+character(*), parameter :: CMD='copy /y '
 src = filesep_swap(source)
 dst = filesep_swap(dest)
 #else
@@ -35,12 +36,12 @@ end function copyfile
 
 integer function mkdir(path) result(istat)
 !! create a directory, with parents if needed
-
 character(*), intent(in) :: path
 character(len(path)) :: p
 integer :: icstat
 
 #if defined(_WIN32)
+!! https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/md
 character(*), parameter :: CMD='mkdir '
 p = filesep_swap(path)
 #else
@@ -56,7 +57,7 @@ end function mkdir
 
 
 function filesep_swap(path) result(swapped)
-! swaps '/' to '\' for Windows systems
+!! swaps '/' to '\' for Windows systems
 
 character(*), intent(in) :: path
 character(len(path)) :: swapped
@@ -70,5 +71,57 @@ do
 end do
 
 end function filesep_swap
+
+
+function expanduser(indir)
+!! resolve home directory as Fortran does not understand tilde
+!! works for Linux, Mac, Windows, etc.
+character(:), allocatable :: expanduser, homedir
+character(*), intent(in) :: indir
+
+if (len_trim(indir) < 1 .or. indir(1:1) /= '~') then
+  !! nothing to expand
+  expanduser = trim(adjustl(indir))
+  return
+endif
+
+homedir = home()
+if (len_trim(homedir) == 0) then
+  !! could not determine the home directory
+  expanduser = trim(adjustl(indir))
+  return
+endif
+
+if (len_trim(indir) < 3) then
+  !! ~ or ~/
+  expanduser = homedir
+else
+  !! ~/...
+  expanduser = homedir // trim(adjustl(indir(3:)))
+endif
+
+end function expanduser
+
+
+function home()
+
+character(:), allocatable :: home, var
+character(256) :: buf
+integer :: L, istat
+
+#if defined(_WIN32)
+var = "USERPROFILE"
+#else
+var = "HOME"
+#endif
+
+call get_environment_variable(var, buf, length=L, status=istat)
+if (L==0 .or. istat /= 0) then
+  home = ""
+else
+  home = trim(buf) // '/'
+endif
+
+end function home
 
 end module pathlib

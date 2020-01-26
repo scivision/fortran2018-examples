@@ -9,11 +9,6 @@ leading_zeros = executable('leading_zeros', 'leading_zeros.f90')
 test('LeadingZeros', leading_zeros,
   timeout: 10, suite: 'io')
 
-expanduser = executable('expanduser', 'expanduser.f90')
-test('expanduser', expanduser,
-  args: ['~'],
-  timeout: 10, suite: 'io')
-
 notermsize = executable('notermsize', 'noenv.f90')
 test('NoTermSize', notermsize)
 
@@ -31,14 +26,8 @@ pathlib = library('pathlib', 'pathlib.F90')
 test_pathlib = executable('test_pathlib',
   sources: 'test_pathlib.f90',
   link_with: pathlib)
-test('mkdirSimple', test_pathlib,
-  args: meson.current_build_dir() / 'testdir/hello',
-  suite: 'io',
-  timeout: 20)
-test('mkdirTrailingSep', test_pathlib,
-  args: meson.current_build_dir() / 'testdir/hello/',
-  suite: 'io',
-  timeout: 20)
+test('pathlib', test_pathlib,
+  suite: 'io', timeout: 20)
 
 # has to be run() test for detecting defective system realpath()
 if os == 'windows'

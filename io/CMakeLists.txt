@@ -22,9 +22,6 @@ add_test(NAME io:leading_zeros COMMAND leading_zeros)
 set_tests_properties(io:leading_zeros PROPERTIES
   PASS_REGULAR_EXPRESSION "hello1234.5600000")
 
-add_executable(expanduser expanduser.f90)
-add_test(NAME io:expanduser COMMAND expanduser '~')
-
 add_executable(notermsize noenv.f90)
 add_test(NAME io:NoTermSize COMMAND notermsize)
 
@@ -37,10 +34,7 @@ add_test(NAME io:nullfile COMMAND null)
 add_library(pathlib pathlib.F90)
 add_executable(test_pathlib test_pathlib.f90)
 target_link_libraries(test_pathlib pathlib)
-add_test(NAME io:mkdirSimple
-  COMMAND $<TARGET_FILE:test_pathlib> ${CMAKE_CURRENT_BINARY_DIR}/testdir/hello)
-add_test(NAME io:mkdirTrailingSep
-  COMMAND $<TARGET_FILE:test_pathlib> ${CMAKE_CURRENT_BINARY_DIR}/testdir/hello/)
+add_test(NAME io:pathlib COMMAND $<TARGET_FILE:test_pathlib>)
 
 
 include(CheckCSourceRuns)
