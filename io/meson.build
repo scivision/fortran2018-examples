@@ -27,16 +27,17 @@ if not(os == 'windows' and fc.get_id() == 'pgi')
     timeout: 10, suite: 'io')
 endif
 
-
-mkdirstd = executable('mkdirstd',
-  sources: 'mkdir.F90')
-test('mkdirSimple', mkdirstd,
+pathlib = library('pathlib', 'pathlib.F90')
+test_pathlib = executable('test_pathlib',
+  sources: 'test_pathlib.f90',
+  link_with: pathlib)
+test('mkdirSimple', test_pathlib,
   args: meson.current_build_dir() / 'testdir/hello',
-  suite: 'standard',
+  suite: 'io',
   timeout: 20)
-test('mkdirTrailingSep', mkdirstd,
+test('mkdirTrailingSep', test_pathlib,
   args: meson.current_build_dir() / 'testdir/hello/',
-  suite: 'standard',
+  suite: 'io',
   timeout: 20)
 
 # has to be run() test for detecting defective system realpath()

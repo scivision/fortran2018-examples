@@ -9,36 +9,38 @@ if(CMAKE_Fortran_COMPILER_ID STREQUAL PGI)
 else()
   add_executable(append_file append_file.f90)
   target_link_libraries(append_file PRIVATE logging)
-  add_test(NAME AppendFile COMMAND append_file)
+  add_test(NAME io:appendFile COMMAND append_file)
 endif()
 
 add_executable(termio terminal_io.f90)
 if(NOT WIN32)
-  add_test(NAME TerminalIO COMMAND bash -c "$<TARGET_FILE:termio> <<< 0")
+  add_test(NAME io:terminal COMMAND bash -c "$<TARGET_FILE:termio> <<< 0")
 endif()
 
 add_executable(leading_zeros leading_zeros.f90)
-add_test(NAME LeadingZeros COMMAND leading_zeros)
-set_tests_properties(LeadingZeros PROPERTIES
+add_test(NAME io:leading_zeros COMMAND leading_zeros)
+set_tests_properties(io:leading_zeros PROPERTIES
   PASS_REGULAR_EXPRESSION "hello1234.5600000")
 
 add_executable(expanduser expanduser.f90)
-add_test(NAME Expanduser COMMAND expanduser '~')
+add_test(NAME io:expanduser COMMAND expanduser '~')
 
 add_executable(notermsize noenv.f90)
-add_test(NAME NoTermSize COMMAND notermsize)
+add_test(NAME io:NoTermSize COMMAND notermsize)
 
 add_executable(readonly fileopen-readonly.f90)
-add_test(NAME ReadOnly COMMAND readonly)
+add_test(NAME io:ReadOnly COMMAND readonly)
 
 add_executable(null devnull.f90)
-add_test(NAME Nullfile COMMAND null)
+add_test(NAME io:nullfile COMMAND null)
 
-add_executable(mkdirstd mkdir.F90)
-add_test(NAME mkdirSimple
-  COMMAND $<TARGET_FILE:mkdirstd> ${CMAKE_CURRENT_BINARY_DIR}/testdir/hello)
-add_test(NAME mkdirTrailingSep
-  COMMAND $<TARGET_FILE:mkdirstd> ${CMAKE_CURRENT_BINARY_DIR}/testdir/hello/)
+add_library(pathlib pathlib.F90)
+add_executable(test_pathlib test_pathlib.f90)
+target_link_libraries(test_pathlib pathlib)
+add_test(NAME io:mkdirSimple
+  COMMAND $<TARGET_FILE:test_pathlib> ${CMAKE_CURRENT_BINARY_DIR}/testdir/hello)
+add_test(NAME io:mkdirTrailingSep
+  COMMAND $<TARGET_FILE:test_pathlib> ${CMAKE_CURRENT_BINARY_DIR}/testdir/hello/)
 
 
 include(CheckCSourceRuns)
@@ -75,8 +77,8 @@ elseif(windowsio_OK)
   add_executable(realpath fullpath_windows.f90)
 endif()
 if(posixio_OK OR windowsio_OK)
-  add_test(NAME CanonicalPath COMMAND $<TARGET_FILE:realpath>)
-  set_tests_properties(CanonicalPath PROPERTIES SKIP_RETURN_CODE 77)
+  add_test(NAME io:canonical COMMAND $<TARGET_FILE:realpath>)
+  set_tests_properties(io:canonical PROPERTIES SKIP_RETURN_CODE 77)
 endif()
 endif(NOT APPLE)
 
