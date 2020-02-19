@@ -40,8 +40,6 @@ The following cache variables may also be set:
   The coarray libraries, if needed and found
 #]=======================================================================]
 
-cmake_policy(VERSION 3.3)
-
 set(options_coarray Intel)  # flags needed
 set(opencoarray_supported GNU)  # future: Flang, etc.
 

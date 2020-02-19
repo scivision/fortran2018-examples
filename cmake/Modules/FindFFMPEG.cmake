@@ -29,8 +29,6 @@ FFMPEG_FFPROBE
 
 #]=======================================================================]
 
-cmake_policy(VERSION 3.3)
-
 find_program(FFMPEG_FFMPEG
           NAMES ffmpeg
           DOC "FFmpeg main executable")

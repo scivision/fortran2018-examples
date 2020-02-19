@@ -7,7 +7,7 @@ enable_testing()
 find_package(OpenACC)
 
 if(NOT OpenACC_Fortran_FOUND)
-  message('SKIP: OpenACC')
+  message(STATUS "SKIP: OpenACC")
   return()
 endif()
 

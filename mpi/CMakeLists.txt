@@ -1,6 +1,5 @@
 # If you have a custom location for mpif90 / mpifort and CMake doesn't find it, try
 #   FC=mpif90 cmake ..
-cmake_policy(SET CMP0074 NEW)
 
 include(mpi.cmake)
 if(NOT hasMPI)
