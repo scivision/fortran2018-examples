@@ -89,7 +89,7 @@ Each directory has its own README and examples.
 
 ---
 
-* [CMake/](./CMake): CMake work well with modern Fortran features
+* [CMake/](./cmake): CMake work well with modern Fortran features
 * [cxx/](./cxx): standard Fortran C / C++ bindings
 * [real/](./real): Numerous examples dealing with practical features of real floating point numbers, including sentinel NaN and polymorphism.
 * [character/](./character): String handling is easy and performant in modern Fortran.
