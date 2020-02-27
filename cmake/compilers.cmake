@@ -3,10 +3,15 @@ set(CMAKE_NMC_DEFAULT_BUILD_FILE_CONFIG "Release" CACHE STRING "Default Build ty
 
 
 if(CMAKE_Fortran_COMPILER_ID STREQUAL Intel)
-  string(APPEND CMAKE_Fortran_FLAGS $<IF:WIN32," /stand:f18 /traceback /warn /heap-arrays"," -stand f18 -traceback -warn -heap-arrays">)
+  if(WIN32)
+    string(APPEND CMAKE_Fortran_FLAGS " /stand:f18 /traceback /warn /heap-arrays")
+  else()
+    string(APPEND CMAKE_Fortran_FLAGS " -stand f18 -traceback -warn -heap-arrays")
 
   if(CMAKE_BUILD_TYPE STREQUAL Debug)
-    string(APPEND CMAKE_Fortran_FLAGS $<IF:WIN32," /debug /check:all"," -debug extended -check all">)
+    string(APPEND CMAKE_Fortran_FLAGS " /debug /check:all")
+  else()
+    string(APPEND CMAKE_Fortran_FLAGS " -debug extended -check all")
   endif()
 elseif(CMAKE_Fortran_COMPILER_ID STREQUAL GNU)
   add_compile_options(-march=native -Wall -Wextra)
