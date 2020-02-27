@@ -40,7 +40,7 @@ The following cache variables may also be set:
   The coarray libraries, if needed and found
 #]=======================================================================]
 
-set(options_coarray Intel)  # flags needed
+set(options_coarray Intel NAG)  # flags needed
 set(opencoarray_supported GNU)  # future: Flang, etc.
 
 unset(Coarray_COMPILE_OPTIONS)
@@ -52,12 +52,15 @@ if(CMAKE_Fortran_COMPILER_ID IN_LIST options_coarray)
   if(CMAKE_Fortran_COMPILER_ID STREQUAL Intel)
     if(WIN32)
       set(Coarray_COMPILE_OPTIONS /Qcoarray:shared)
-      list(APPEND Coarray_REQUIRED_VARS ${Coarray_COMPILE_OPTIONS})
+      set(Coarray_REQUIRED_VARS ${Coarray_COMPILE_OPTIONS})
     elseif(UNIX AND NOT APPLE)
       set(Coarray_COMPILE_OPTIONS -coarray=shared)
       set(Coarray_LIBRARY -coarray=shared)  # ifort requires it at build AND link
-      list(APPEND Coarray_REQUIRED_VARS ${Coarray_LIBRARY})
+      set(Coarray_REQUIRED_VARS ${Coarray_LIBRARY})
     endif()
+  elseif(CMAKE_Fortran_COMPILER_ID STREQUAL NAG)
+    set(Coarray_COMPILE_OPTIONS -coarray)
+    set(Coarray_REQUIRED_VARS ${Coarray_COMPILE_OPTIONS})
   endif()
 
 elseif(CMAKE_Fortran_COMPILER_ID IN_LIST opencoarray_supported)

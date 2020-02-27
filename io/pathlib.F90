@@ -104,7 +104,7 @@ end function expanduser
 
 
 function home()
-
+!! https://en.wikipedia.org/wiki/Home_directory#Default_home_directory_per_operating_system
 character(:), allocatable :: home, var
 character(256) :: buf
 integer :: L, istat
@@ -117,6 +117,8 @@ var = "HOME"
 
 call get_environment_variable(var, buf, length=L, status=istat)
 if (L==0 .or. istat /= 0) then
+  write(stderr,*) 'ERROR: could not determine home directory from env var ',var
+  if (istat==1) write(stderr,*) 'env var ',var,' does not exist.'
   home = ""
 else
   home = trim(buf) // '/'

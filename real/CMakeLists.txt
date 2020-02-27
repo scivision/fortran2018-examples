@@ -45,7 +45,7 @@ target_compile_definitions(nan PRIVATE REAL128 IEEENAN)
 endif()
 add_test(NAME NaN COMMAND nan)
 
-add_library(assert assert.F90)
+add_library(assert OBJECT assert.F90)
 target_compile_definitions(assert PRIVATE REALBITS=${realbits})
 
 if(f08kind)

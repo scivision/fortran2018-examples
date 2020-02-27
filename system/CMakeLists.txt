@@ -1,11 +1,11 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.15)
 project(F18system Fortran)
 enable_testing()
 
 add_executable(color color_text.f90)
 add_test(NAME Color COMMAND color)
 
-add_library(osdet os_detect.f90)
+add_library(osdet OBJECT os_detect.f90)
 
 add_executable(gitrev gitrev.f90)
 add_test(NAME Git COMMAND gitrev)
@@ -24,7 +24,7 @@ if(Python3_FOUND)
 endif()
 if(Python_OK)
   add_executable(callpython call_python_script.f90)
-  target_link_libraries(callpython PRIVATE osdet)
+  target_link_libraries(callpython osdet)
   add_test(NAME CallPython COMMAND callpython)
 else()
   message(STATUS "SKIP: Python test ${Python3_EXECUTABLE} ${_ret}")

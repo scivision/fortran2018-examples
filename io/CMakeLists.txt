@@ -1,8 +1,8 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.15)
 project(fortran2018io C Fortran)
 enable_testing()
 
-add_library(logging logging.f90)
+add_library(logging OBJECT logging.f90)
 
 if(CMAKE_Fortran_COMPILER_ID STREQUAL PGI)
   message(STATUS "PGI doesn't work correctly for this append_file example, even alone")
@@ -31,7 +31,7 @@ add_test(NAME io:ReadOnly COMMAND readonly)
 add_executable(null devnull.f90)
 add_test(NAME io:nullfile COMMAND null)
 
-add_library(pathlib pathlib.F90)
+add_library(pathlib OBJECT pathlib.F90)
 add_executable(test_pathlib test_pathlib.f90)
 target_link_libraries(test_pathlib pathlib)
 add_test(NAME io:pathlib COMMAND $<TARGET_FILE:test_pathlib>)
@@ -105,7 +105,7 @@ if(NOT cxx17filesystem_ok)
   return()
 endif()
 
-add_library(canonical_cxx canonical.cxx)
+add_library(canonical_cxx OBJECT canonical.cxx)
 set_target_properties(canonical_cxx PROPERTIES CXX_STANDARD 17)
 
 # NOTE: icl canonical.cxx canonical_demo.cxx works, so this must be a CMake bug.
