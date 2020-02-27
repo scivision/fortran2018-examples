@@ -1,7 +1,8 @@
-program complog
-call compiler_log('./compiler.log')
-end program
+implicit none
 
+call compiler_log('./compiler.log')
+
+contains
 
 subroutine compiler_log(logpath)
 use, intrinsic :: iso_fortran_env, only: compiler_version, compiler_options
@@ -17,3 +18,4 @@ write(u,'(A)') compiler_options()
 close(u)
 
 end subroutine compiler_log
+end program

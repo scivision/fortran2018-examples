@@ -1,6 +1,6 @@
+implicit none
 call log_gitrev('.', 'gitrev.log')
-end program
-
+contains
 
 subroutine log_gitrev(dir, logfn)
 !! Logs current git revision for reproducibility
@@ -29,3 +29,4 @@ endif
 
 end subroutine log_gitrev
 
+end program

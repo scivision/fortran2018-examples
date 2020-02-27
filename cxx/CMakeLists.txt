@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.15)
 project(fortran2018io
-LANGUAGES C Fortran)
+LANGUAGES C Fortran CXX)
 enable_testing()
 
 # This example demonstrates very basic linking of
@@ -23,16 +23,6 @@ if(WIN32 AND CMAKE_C_COMPILER_ID STREQUAL PGI)
   message(STATUS "SKIP: CXX - PGI on Windows does not currently have a CXX compiler")
   return()
 endif()
-
-include(CheckLanguage)
-check_language(CXX)
-if(CMAKE_CXX_COMPILER)
-  enable_language(CXX)
-else()
-  return()
-endif()
-
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # -- C++ calling Fortran
 add_library(call_f OBJECT c_call_f.f90)

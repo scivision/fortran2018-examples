@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.15)
-project(fortran2018io C Fortran)
+project(fortran2018io
+LANGUAGES C Fortran CXX)
 enable_testing()
 
 add_library(logging OBJECT logging.f90)
@@ -83,16 +84,7 @@ if(WIN32 AND CMAKE_Fortran_COMPILER_ID STREQUAL PGI)
   return()
 endif()
 
-include(CheckLanguage)
-check_language(CXX)
-if(CMAKE_CXX_COMPILER)
-  enable_language(CXX)
-else()
-  return()
-endif()
 
-include(CheckCXXSourceRuns)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # verify C++ compiler can do C++17 filesystem
 # GCC 10, Intel 2020

@@ -42,7 +42,10 @@ do i = im, Ni-1, num_images() ! Each image works on a subset of the problem
 end do
 
 call co_sum(psum, stat=ierr)
-if (ierr /= 0) error stop ierr
+if (ierr /= 0) then
+  write(stderr,*) 'error stop', ierr
+  error stop
+endif
 
 if (im == 1)  then
   print *,'pi:',pi,'  iterated pi: ',psum
