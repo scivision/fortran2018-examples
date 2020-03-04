@@ -73,7 +73,9 @@ elseif(windowsio_OK)
 endif()
 if(posixio_OK OR windowsio_OK)
   add_test(NAME io:canonical COMMAND $<TARGET_FILE:realpath>)
-  set_tests_properties(io:canonical PROPERTIES SKIP_RETURN_CODE 77)
+  set_tests_properties(io:canonical PROPERTIES
+    SKIP_RETURN_CODE 77
+    DISABLED true)
 endif()
 endif(NOT APPLE)
 
@@ -108,7 +110,10 @@ else()
   add_executable(canonical_demo canonical_demo.cxx)
   target_link_libraries(canonical_demo PRIVATE canonical_cxx)
   set_target_properties(canonical_demo PROPERTIES CXX_STANDARD 17)
+
   add_test(NAME CanonicalC++ COMMAND canonical_demo)
+  set_tests_properties(CanonicalC++ PROPERTIES
+    DISABLED true)
 
   add_executable(realpath_fortran_cxx17 realpath_cxx.f90)
   target_link_libraries(realpath_fortran_cxx17 PRIVATE canonical_cxx)

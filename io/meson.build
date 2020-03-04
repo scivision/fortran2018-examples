@@ -57,7 +57,7 @@ return 0; }
 '''
   if (cc.run(code, name: 'POSIXrealpath').returncode() == 0)
     realpath = executable('realpath', 'realpath_posix.f90')
-    test('realpath', realpath, timeout: 10, suite: 'io')
+    # test('realpath', realpath, timeout: 10, suite: 'io')
   endif
 endif
 
@@ -72,7 +72,7 @@ if add_languages('cpp', required: false)
   # error LNK2019: unresolved external symbol wmemcmp referenced in function "enum __std_win_error __cdecl std::filesystem::_Canonical
     canonical_lib = library('canonical', 'canonical.cxx')
     canonical_cxx_exe = executable('canonical_cxx', 'canonical_demo.cxx', link_with: canonical_lib)
-    test('canonicalC++', canonical_cxx_exe, timeout: 10, suite: 'io')
+    # test('canonicalC++', canonical_cxx_exe, timeout: 10, suite: 'io')
 
     # FIXME: Intel 2020 has bugs, will it work for GCC 10 or LLVM 10?
     # canonical_fortran_exe = executable('canonical_fortran', 'realpath_cxx.f90', link_with: canonical_lib)
