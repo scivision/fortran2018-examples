@@ -1,7 +1,5 @@
 set(CMAKE_CONFIGURATION_TYPES "Release;Debug" CACHE STRING "Build type selections" FORCE)
 
-
-
 if(CMAKE_Fortran_COMPILER_ID STREQUAL Intel)
   if(WIN32)
     add_compile_options(/arch:native)

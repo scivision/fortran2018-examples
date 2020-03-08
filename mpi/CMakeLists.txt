@@ -1,11 +1,15 @@
+cmake_minimum_required(VERSION 3.14)
+project(mpi_fortran LANGUAGES Fortran)
 # If you have a custom location for mpif90 / mpifort and CMake doesn't find it, try
 #   FC=mpif90 cmake ..
+
+# Windows Intel 2019 MPI doesn't yet have mpi_f08
+# MS-MPI 2.0 only have mpif.h not mpi.mod
 
 include(mpi.cmake)
 if(NOT hasMPI)
   return()
 endif()
-
 
 add_executable(mpivers mpivers.f90)
 target_link_libraries(mpivers MPI::MPI_Fortran)
@@ -29,11 +33,3 @@ add_test(NAME MPIpass
   ${MPIEXEC_PREFLAGS} $<TARGET_FILE:mpi_pass> ${MPIEXEC_POSTFLAGS})
 set_tests_properties(MPIpass PROPERTIES RUN_SERIAL true)
 endif()
-
-# mpifort --showme
-#
-# gfortran -I/usr/lib/openmpi/include -pthread -I/usr/lib/openmpi/lib -Wl,-rpath -Wl,/usr/lib/openmpi/lib -Wl,--enable-new-dtags -L/usr/lib/openmpi/lib -lmpi_usempif08 -lmpi_usempi_ignore_tkr -lmpi_mpifh -lmpi
-
-# make VERBOSE=1
-#
-#/usr/bin/f95  -I/usr/lib/openmpi/include -I/usr/lib/openmpi/lib  -Wl,-rpath,/usr/lib/openmpi/lib /usr/lib/openmpi/lib/libmpi_usempif08.so /usr/lib/openmpi/lib/libmpi_usempi_ignore_tkr.so /usr/lib/openmpi/lib/libmpi_mpifh.so /usr/lib/openmpi/lib/libmpi.so

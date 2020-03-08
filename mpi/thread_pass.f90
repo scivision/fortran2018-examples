@@ -1,8 +1,10 @@
 !! passes data between two threads
 !!  Author:  John Burkardt
 use, intrinsic :: iso_fortran_env, only: sp=>real32, stderr=>error_unit, compiler_version
-use mpi  ! Windows Intel 2019 MPI doesn't have mpi_f08 yet (grrr)
+
 implicit none
+
+include 'mpif.h'
 
 character(10) :: time
 integer :: mcount
