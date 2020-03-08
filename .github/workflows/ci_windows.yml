@@ -10,20 +10,14 @@ on:
       - "**.build"
       - ".github/workflows/ci_windows.yml"
   pull_request:
-    paths:
-      - "**.f90"
-      - "**.F90"
-      - "**.cmake"
-      - "**.txt"
-      - "**.build"
-      - ".github/workflows/ci_windows.yml"
+  release:
 
 jobs:
 
   windowsCmake:
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - uses: actions/setup-python@v1
       with:
         python-version: '3.x'
@@ -53,7 +47,7 @@ jobs:
   windowsMeson:
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - uses: actions/setup-python@v1
       with:
         python-version: '3.x'
