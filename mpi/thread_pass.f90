@@ -1,10 +1,9 @@
 !! passes data between two threads
 !!  Author:  John Burkardt
 use, intrinsic :: iso_fortran_env, only: sp=>real32, stderr=>error_unit, compiler_version
+use mpi
 
 implicit none
-
-include 'mpif.h'
 
 character(10) :: time
 integer :: mcount

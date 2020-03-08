@@ -6,7 +6,6 @@ enable_testing()
 #   FC=mpif90 cmake ..
 
 # Windows Intel 2019 MPI doesn't yet have mpi_f08
-# MS-MPI 2.0 only have mpif.h not mpi.mod
 
 include(mpi.cmake)
 if(NOT hasMPI)

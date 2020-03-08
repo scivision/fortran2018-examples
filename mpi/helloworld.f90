@@ -2,10 +2,10 @@
 !!  Original Author:  John Burkardt
 !!  Modified: Michael Hirsch, Ph.D.
 
+use mpi  ! Windows Intel 2019 MPI doesn't have mpi_f08 yet (grrr)
 use, intrinsic:: iso_fortran_env, only: dp=>real64, compiler_version
-implicit none
 
-include 'mpif.h'
+implicit none
 
 integer :: i, Nproc, ierr
 real(dp) :: wtime
