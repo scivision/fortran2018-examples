@@ -3,8 +3,7 @@
 *.pdb
 subprojects/
 .mypy_cache/
-build/
-build_win/
+build*/
 *.s
 kind.txt
 cmake_install.cmake

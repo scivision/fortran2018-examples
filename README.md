@@ -17,8 +17,9 @@ Based on widespread compiler support and beneficial features, most new and upgra
 
 ## Prereq
 
-* Linux / Windows: `apt install cmake gfortran libhdf5-dev libopenmpi-dev libcoarrays-dev open-coarrays-bin`
+* Linux: `apt install cmake gfortran libhdf5-dev libopenmpi-dev libcoarrays-dev open-coarrays-bin`
 * Mac: `brew install gcc cmake open-mpi opencoarrays`
+* Windows MSYS2: `pacman -S mingw-w64-x86_64-gcc-fortran mingw-w64-x86_64-msmpi` and install [Microsoft MS-MPI](https://docs.microsoft.com/en-us/message-passing-interface/microsoft-mpi-release-notes)
 
 ## Build
 
@@ -78,7 +79,7 @@ Each directory has its own README and examples.
 * [block/](./block): Highly useful `block` element is demonstrated
 * [coarray/](./coarray): modern Fortran is the only major compiled language standard with intrinsic massively parallel arrays.
 * [contiguous/](./contiguous): Fortran 2008 `contiguous` array examples, including Fortran preprocessor with modern CMake.
-* [mpi/](./mpi): OpenMPI parallel computing examples
+* [mpi/](./mpi): MPI parallel computing examples
 * [namelist/](./namelist): Fortran 90 / 2003 Namelist parsing -- native text config files for Fortran
 * [openmp/](./openmp): OpenMP threading exmaples
 * [random/](./random): random numbers with modern Fortran
