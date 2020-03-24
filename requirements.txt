@@ -1,2 +1,0 @@
-meson >= 0.52
-ninja

@@ -48,9 +48,9 @@ jobs:
       with:
         python-version: '3.x'
 
-    - run: pip install -r requirements.txt
+    - run: pip install meson
 
-    - run: brew install gcc
+    - run: brew install gcc ninja
     - run: meson setup build
       env:
         FC: gfortran

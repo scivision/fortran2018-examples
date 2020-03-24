@@ -56,7 +56,7 @@ jobs:
       with:
         python-version: '3.x'
 
-    - run: pip install -r requirements.txt
+    - run: pip install meson
 
     - name: Install packages
       run: |
