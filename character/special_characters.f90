@@ -1,7 +1,10 @@
+program special_characters
 !! This program shows a few special ASCII characters in Fortran.
 !! https://en.wikipedia.org/wiki/ASCII#Character_groups
 
 use iso_c_binding, only: c_null_char
+implicit none
+
 character, parameter :: &
 nul = c_null_char, &
 etx = char(3), &

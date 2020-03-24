@@ -1,6 +1,9 @@
 add_executable(ascii ascii.f90)
 add_test(NAME char:AsciiSpecial COMMAND ascii)
 
+add_executable(character_array character_array.f90)
+add_test(NAME char:array COMMAND character_array)
+
 add_executable(split split_string.f90)
 add_test(NAME char:SplitString COMMAND split)
 

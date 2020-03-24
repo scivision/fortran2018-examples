@@ -1,3 +1,8 @@
+program ascii
+!! prints a couple special characters
+
+implicit none
+
 print *,'next is a form feed',achar(12)
 print *,'that was a form feed'
 

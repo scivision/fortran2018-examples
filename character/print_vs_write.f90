@@ -1,3 +1,4 @@
+program print_vs_write
 !! Fortran 2003 standard states that
 !!  print *,
 !!  write (*,*)
