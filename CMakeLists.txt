@@ -2,7 +2,10 @@ cmake_minimum_required(VERSION 3.15)  # implicit CMP0094
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Release CACHE STRING "Debug or Release")
 endif()
-project(Fortran2018Examples LANGUAGES C Fortran)
+project(Fortran2018Examples
+LANGUAGES C Fortran
+DESCRIPTION "Example of using modern Fortran syntax"
+VERSION 1.2.0)
 enable_testing()
 
 set(CTEST_TEST_TIMEOUT 10)  # default timeout [seconds]
