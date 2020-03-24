@@ -4,6 +4,9 @@ test('Ascii Special', ascii, suite: 'char', timeout: 10)
 char_array = executable('character_array', 'character_array.f90')
 test('CharacterArray', char_array, suite: 'char', timeout: 10)
 
+char_alloc = executable('character_allocatable', 'character_allocatable.f90')
+test('CharacterAllocatable', char_alloc, suite: 'char', timeout: 10)
+
 split = executable('split', 'split_string.f90')
 test('Split Character', split, suite: 'char', timeout: 10)
 
