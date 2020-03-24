@@ -1,4 +1,4 @@
-program str2int
+program str2int_demo
 !! very simple demo of string to integer
 implicit none
 
@@ -7,7 +7,7 @@ integer :: m
 
 x = '42'
 m = str2int(x)
-if (x/=42) error stop
+if (m/=42) error stop
 
 contains
 

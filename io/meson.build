@@ -22,7 +22,11 @@ if not(os == 'windows' and fc.get_id() == 'pgi')
     timeout: 10, suite: 'io')
 endif
 
-pathlib = library('pathlib', 'pathlib.F90')
+pathlib_src = os == 'windows' ? files('pathlib_windows.f90') : files('pathlib_unix.f90')
+pathlib_src += ['intel', 'intel-cl'].contains(fc.get_id()) ? files('path_exists_intel.f90') : files('path_exists.f90')
+
+pathlib = library('pathlib',
+sources: ['pathlib.f90', pathlib_src])
 test_pathlib = executable('test_pathlib',
   sources: 'test_pathlib.f90',
   link_with: pathlib)
