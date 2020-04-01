@@ -7,14 +7,12 @@ on:
       - "**.F90"
       - "**.cmake"
       - "**.txt"
-      - "**.build"
       - ".github/workflows/ci_windows.yml"
   pull_request:
-  release:
 
 jobs:
 
-  windowsCmake:
+  windows:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
@@ -22,55 +20,10 @@ jobs:
       with:
         python-version: '3.x'
 
-    - run: |
-        pip install meson
-        cinst -y ninja
+    - run: cinst -y ninja
 
-    - run: cmake -B build -G Ninja -DCMAKE_SH="CMAKE_SH-NOTFOUND"
+    - run: ctest -S setup.cmake -VV
       env:
         FC: gfortran
         CC: gcc
         CXX: g++
-    - run: cmake --build build --parallel
-    - uses: actions/upload-artifact@v1
-      if: failure()
-      with:
-        name: Windows_Cmake_Buildlog
-        path: build/CMakeFiles/CMakeError.log
-
-    - run: ctest -V
-      working-directory: build
-    - uses: actions/upload-artifact@v1
-      if: failure()
-      with:
-        name: Windows_CMake_Testlog
-        path: build/Testing/Temporary/LastTest.log
-
-  windowsMeson:
-    runs-on: windows-latest
-    steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-python@v1
-      with:
-        python-version: '3.x'
-
-    - run: |
-        pip install meson
-        cinst -y ninja
-
-    - run: meson setup build
-      env:
-        FC: gfortran
-    - run: ninja -C build
-    - uses: actions/upload-artifact@v1
-      if: failure()
-      with:
-        name: Windows_Meson_Configlog
-        path: build/meson-logs/meson-log.txt
-
-    - run: meson test -C build -v
-    - uses: actions/upload-artifact@v1
-      if: failure()
-      with:
-        name: Windows_Meson_Testlog
-        path: build/meson-logs/testlog.txt

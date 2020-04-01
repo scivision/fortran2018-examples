@@ -7,14 +7,12 @@ on:
       - "**.F90"
       - "**.cmake"
       - "**.txt"
-      - "**.build"
       - ".github/workflows/ci_linux.yml"
   pull_request:
-  release:
 
 jobs:
 
-  linuxCMake:
+  linux:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -22,60 +20,8 @@ jobs:
       with:
         python-version: '3.x'
 
-    - name: install prereqs
-      run: |
-        pip install cmake
-        sudo apt update -yq
-        sudo apt install -yq --no-install-recommends gfortran g++
-
-    - run: cmake -B build
+    - run: ctest -S setup.cmake -VV
       env:
-        FC: gfortran
-        CC: gcc
-        CXX: g++
-    - run: cmake --build build --parallel
-    - uses: actions/upload-artifact@v1
-      if: failure()
-      with:
-        name: Linux_Cmake_Buildlog
-        path: build/CMakeFiles/CMakeError.log
-
-    - run: ctest -V
-      working-directory: build
-    - uses: actions/upload-artifact@v1
-      if: failure()
-      with:
-        name: Linux_CMake_Testlog
-        path: build/Testing/Temporary/LastTest.log
-
-  linuxMeson:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-python@v1
-      with:
-        python-version: '3.x'
-
-    - run: pip install meson
-
-    - name: Install packages
-      run: |
-        sudo apt update -yq
-        sudo apt install -yq --no-install-recommends ninja-build gfortran g++
-
-    - run: meson setup build
-      env:
-        FC: gfortran
-    - run: ninja -C build
-    - uses: actions/upload-artifact@v1
-      if: failure()
-      with:
-        name: Linux_Meson_Configlog
-        path: build/meson-logs/meson-log.txt
-
-    - run: meson test -C build -v
-    - uses: actions/upload-artifact@v1
-      if: failure()
-      with:
-        name: Linux_Meson_Testlog
-        path: build/meson-logs/testlog.txt
+        FC: gfortran-9
+        CC: gcc-9
+        CXX: g++-9

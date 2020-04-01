@@ -87,14 +87,14 @@ find_library(ATLAS_LIB
   NAMES atlas
   PATH_SUFFIXES atlas)
 
-pkg_check_modules(LAPACK_ATLAS lapack-atlas)
+pkg_check_modules(LAPACK_ATLAS lapack-atlas QUIET)
 
 find_library(LAPACK_ATLAS
   NAMES ptlapack lapack_atlas lapack
   PATH_SUFFIXES atlas
   HINTS ${LAPACK_ATLAS_LIBRARY_DIRS} ${LAPACK_ATLAS_LIBDIR})
 
-pkg_check_modules(LAPACK_BLAS blas-atlas)
+pkg_check_modules(LAPACK_BLAS blas-atlas QUIET)
 
 find_library(BLAS_LIBRARY
   NAMES ptf77blas f77blas blas
@@ -148,9 +148,9 @@ if(LAPACK95 IN_LIST LAPACK_FIND_COMPONENTS)
   endif()
 endif(LAPACK95 IN_LIST LAPACK_FIND_COMPONENTS)
 
-pkg_check_modules(LAPACK lapack-netlib)
+pkg_check_modules(LAPACK lapack-netlib QUIET)
 if(NOT LAPACK_FOUND)
-  pkg_check_modules(LAPACK lapack)  # Netlib on Cygwin, Homebrew and others
+  pkg_check_modules(LAPACK lapack QUIET)  # Netlib on Cygwin, Homebrew and others
 endif()
 find_library(LAPACK_LIB
   NAMES lapack
@@ -164,7 +164,7 @@ else()
 endif()
 
 if(LAPACKE IN_LIST LAPACK_FIND_COMPONENTS)
-  pkg_check_modules(LAPACKE lapacke)
+  pkg_check_modules(LAPACKE lapacke QUIET)
   find_library(LAPACKE_LIBRARY
     NAMES lapacke
     PATHS /usr/local/opt
@@ -192,9 +192,9 @@ if(LAPACKE IN_LIST LAPACK_FIND_COMPONENTS)
   mark_as_advanced(LAPACKE_LIBRARY LAPACKE_INCLUDE_DIR)
 endif(LAPACKE IN_LIST LAPACK_FIND_COMPONENTS)
 
-pkg_check_modules(BLAS blas-netlib)
+pkg_check_modules(BLAS blas-netlib QUIET)
 if(NOT BLAS_FOUND)
-  pkg_check_modules(BLAS blas)  # Netlib on Cygwin and others
+  pkg_check_modules(BLAS blas QUIET)  # Netlib on Cygwin and others
 endif()
 find_library(BLAS_LIBRARY
   NAMES refblas blas
@@ -225,14 +225,14 @@ endfunction(netlib_libs)
 #===============================
 function(openblas_libs)
 
-pkg_check_modules(LAPACK lapack-openblas)
+pkg_check_modules(LAPACK lapack-openblas QUIET)
 find_library(LAPACK_LIBRARY
   NAMES lapack
   HINTS ${LAPACK_LIBRARY_DIRS} ${LAPACK_LIBDIR}
   PATH_SUFFIXES openblas)
 
 
-pkg_check_modules(BLAS blas-openblas)
+pkg_check_modules(BLAS blas-openblas QUIET)
 find_library(BLAS_LIBRARY
   NAMES openblas blas
   HINTS ${BLAS_LIBRARY_DIRS} ${BLAS_LIBDIR}
@@ -323,7 +323,7 @@ if(NOT (OpenBLAS IN_LIST LAPACK_FIND_COMPONENTS
   endif()
 endif()
 
-find_package(PkgConfig)
+find_package(PkgConfig QUIET)
 
 # ==== generic MKL variables ====
 
@@ -359,7 +359,7 @@ if(MKL IN_LIST LAPACK_FIND_COMPONENTS)
       list(APPEND _mkl_libs tbb.lib)
     endif()
   elseif(OpenMP IN_LIST LAPACK_FIND_COMPONENTS)
-    pkg_check_modules(MKL mkl-${_mkltype}-${_mkl_bitflag}lp64-iomp)
+    pkg_check_modules(MKL mkl-${_mkltype}-${_mkl_bitflag}lp64-iomp QUIET)
 
     set(_mp iomp5)
     if(WIN32)
@@ -367,7 +367,7 @@ if(MKL IN_LIST LAPACK_FIND_COMPONENTS)
     endif()
     list(APPEND _mkl_libs mkl_intel_thread mkl_core ${_mp})
   else()
-    pkg_check_modules(MKL mkl-${_mkltype}-${_mkl_bitflag}lp64-seq)
+    pkg_check_modules(MKL mkl-${_mkltype}-${_mkl_bitflag}lp64-seq QUIET)
     list(APPEND _mkl_libs mkl_sequential mkl_core)
   endif()
 

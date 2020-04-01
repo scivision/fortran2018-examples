@@ -1,8 +1,8 @@
 # Fortran 2018 Examples
 
-[![Actions Status](https://github.com/scivision/fortran2018-examples/workflows/ci_linux/badge.svg)](https://github.com/scivision/fortran2018-examples/actions)
-[![Actions Status](https://github.com/scivision/fortran2018-examples/workflows/ci_windows/badge.svg)](https://github.com/scivision/fortran2018-examples/actions)
-[![Actions Status](https://github.com/scivision/fortran2018-examples/workflows/ci_macos/badge.svg)](https://github.com/scivision/fortran2018-examples/actions)
+![Actions Status](https://github.com/scivision/fortran2018-examples/workflows/ci_linux/badge.svg)
+![Actions Status](https://github.com/scivision/fortran2018-examples/workflows/ci_windows/badge.svg)
+![Actions Status](https://github.com/scivision/fortran2018-examples/workflows/ci_macos/badge.svg)
 
 Easy examples of scientific computing with modern, powerful, easy Fortran 2018 standard.
 Fortran 2018 began as the TS18508 extension, formerly known as Fortran 2015.
@@ -26,6 +26,14 @@ Based on widespread compiler support and beneficial features, most new and upgra
 The CMake or Meson build system automatically walks through the subdirectories:
 
 ### CMake
+
+One step CMake build and test:
+
+```sh
+ctest -S setup.cmake -VV
+```
+
+OR more manually:
 
 ```sh
 cmake -B build
