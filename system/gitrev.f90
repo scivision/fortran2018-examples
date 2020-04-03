@@ -10,7 +10,6 @@ subroutine log_gitrev(dir, logfn)
 !!
 !! Demonstrates Fortran 2003 Standard character auto-allocation
 use, intrinsic:: iso_fortran_env, only: stderr=>error_unit
-implicit none (external)
 
 character(*), intent(in) :: dir, logfn
 character(:), allocatable :: logpath

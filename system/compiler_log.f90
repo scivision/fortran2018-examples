@@ -8,7 +8,6 @@ contains
 
 subroutine compiler_log(logpath)
 use, intrinsic :: iso_fortran_env, only: compiler_version, compiler_options
-implicit none (external)
 
 character(*), intent(in) :: logpath
 integer :: u
