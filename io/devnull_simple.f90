@@ -1,6 +1,8 @@
 
+program devnull
 use, intrinsic:: iso_fortran_env, only: int64
-implicit none
+implicit none (external)
+
 
 integer(int64) :: tic,toc,rate
 character(*), parameter :: nulunix='/dev/null', nulwin='NUL',fout='out.txt'

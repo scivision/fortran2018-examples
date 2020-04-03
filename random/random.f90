@@ -1,6 +1,6 @@
 module random
 
-implicit none
+  implicit none (external)
 
 interface
   module subroutine rand_init(repeatable, image_distinct)

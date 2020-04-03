@@ -1,8 +1,9 @@
+program mpi_vers
 ! https://github.com/open-mpi/ompi/blob/master/examples/hello_usempif08.f90
 
 use, intrinsic :: iso_fortran_env
 use mpi
-implicit none
+implicit none (external)
 
 integer :: ierr, mrank, msize, vlen
 character(MPI_MAX_LIBRARY_VERSION_STRING) :: version  ! allocatable not ok

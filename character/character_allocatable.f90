@@ -1,6 +1,7 @@
 program character_alloctable
 !! shows Fortran 2003 allocatable character and auto-allocated array
-implicit none
+
+implicit none (external)
 
 character(:), allocatable :: flex(:)
 

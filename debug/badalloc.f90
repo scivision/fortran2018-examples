@@ -2,7 +2,8 @@ program badbounds
 !! This program should trigger array bounds checking (at runtime if not compile time)
 
 use, intrinsic :: iso_fortran_env
-implicit none
+implicit none (external)
+
 
 real, allocatable :: A(:)
 

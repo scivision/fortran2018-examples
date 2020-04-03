@@ -1,10 +1,12 @@
 module Ackp
-implicit none
+
+implicit none (external)
+
 contains
 
 recursive pure integer function Ap(m, n) result(A)
 integer, intent(in) :: m,n
-   
+
 if (m == 0) then
   A = n+1
 elseif (n == 0) then
@@ -18,8 +20,10 @@ end module Ackp
 
 
 program AckermannPeter
+
 use Ackp
-implicit none
+
+implicit none (external)
 
 integer :: Ack, M, N
 character(8) :: buf

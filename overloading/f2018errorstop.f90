@@ -1,7 +1,9 @@
+program es
 !! checks if compiler can handle F2018 Error Stop with variable
 
 use, intrinsic :: iso_fortran_env
-implicit none
+
+implicit none (external)
 
 real :: r
 character(10) :: c

@@ -1,5 +1,6 @@
+program hugeprec
 use,intrinsic:: iso_fortran_env, stderr=>error_unit
-implicit none
+implicit none (external)
 
 ! real128 is enabled but buggy in Gfortran 4.8. Better use Gfortran >= 5.
 

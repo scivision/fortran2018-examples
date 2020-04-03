@@ -1,6 +1,7 @@
 program charlen
 !! shows how to properly specify character length and character array
-implicit none
+
+implicit none (external)
 
 character*(5) :: cb5  !< obsolete, don't use
 

@@ -1,6 +1,6 @@
 use, intrinsic:: iso_fortran_env, only: stderr=>error_unit
 use pathlib, only: copyfile, mkdir, expanduser, home
-implicit none
+implicit none (external)
 
 call test_home()
 call test_expanduser('~')

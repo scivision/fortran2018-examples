@@ -1,6 +1,7 @@
 module sleep_std
 use, intrinsic :: iso_c_binding, only : c_int, c_long
-implicit none
+implicit none (external)
+
 private
 public :: sleep
 

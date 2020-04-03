@@ -1,6 +1,6 @@
 submodule (pathlib) pathlib_unix
 
-implicit none
+implicit none (external)
 
 contains
 

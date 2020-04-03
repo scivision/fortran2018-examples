@@ -1,6 +1,7 @@
+program sleep_demo
 use, intrinsic :: iso_fortran_env, only : int64, real64
 use sleep_std, only : sleep
-implicit none
+implicit none (external)
 
 integer :: ierr, millisec
 character(8) :: argv

@@ -3,7 +3,8 @@ program character_array
 !! the general concept is to make the character(len=) the length of the
 !! longest string you will need.
 !! trim() each element when actually used if needed.
-implicit none
+
+implicit none (external)
 
 !> specify (*) or maximum len=, else each will be length one.
 character(*), parameter :: foo(3) = [character(9) :: 'hi', 'hello', 'greetings']

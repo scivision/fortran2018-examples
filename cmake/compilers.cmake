@@ -1,4 +1,4 @@
-set(CMAKE_CONFIGURATION_TYPES "Release;Debug" CACHE STRING "Build type selections" FORCE)
+set(CMAKE_CONFIGURATION_TYPES "Release;RelWithDebInfo;Debug" CACHE STRING "Build type selections" FORCE)
 
 if(CMAKE_Fortran_COMPILER_ID STREQUAL Intel)
   if(WIN32)
@@ -16,6 +16,9 @@ elseif(CMAKE_Fortran_COMPILER_ID STREQUAL GNU)
   add_compile_options(-mtune=native -Wall -Wextra)
   if(CMAKE_Fortran_COMPILER_VERSION VERSION_GREATER_EQUAL 8)
     string(APPEND CMAKE_Fortran_FLAGS " -std=f2018")
+  endif()
+  if(CMAKE_Fortran_COMPILER_VERSION VERSION_EQUAL 9.3.0)
+    string(APPEND CMAKE_Fortran_FLAGS " -Wno-maybe-uninitialized")
   endif()
   string(APPEND CMAKE_Fortran_FLAGS " -fimplicit-none")
 

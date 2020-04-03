@@ -1,13 +1,14 @@
+program open_ro
 !! NOTE: chmod is non-standard, and will crash ifort runtime.
 
 use, intrinsic :: iso_fortran_env, only: stderr=>error_unit
-implicit none
+implicit none (external)
 
 character(*),parameter :: fnro='ro.txt'
 
-  call createro(fnro)
-  call deletefile(fnro) ! this is MY unlink, since the GNU extension is non-standard and crashes ifort runtimes.
-  print *,'deleted read-only: ',fnro
+call createro(fnro)
+call deletefile(fnro) ! this is MY unlink, since the GNU extension is non-standard and crashes ifort runtimes.
+print *,'deleted read-only: ',fnro
 
 contains
 

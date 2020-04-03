@@ -1,9 +1,10 @@
+program prop
 !! Show:
 !! * %re and %im properties of real number in Fortran 2018
 !! * %len property of character
 
 use, intrinsic :: iso_fortran_env, only: real32
-implicit none
+implicit none (external)
 
 character(:), allocatable :: c
 complex :: z

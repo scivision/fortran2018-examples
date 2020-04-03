@@ -1,5 +1,6 @@
+program problems
 use, intrinsic:: iso_fortran_env, only: wp=>real32
-implicit none
+implicit none (external)
 
 ! look at classic problems with any floating point usages.
 ! To save agony, it's best for EVERY float constant to have a decimal point and _wp after EACH float number in an equation.

@@ -1,9 +1,9 @@
 module funcs
 use, intrinsic:: iso_fortran_env, only: sp=>real32, dp=>real64
-implicit none
+implicit none (external)
 
 interface addtwo
-  procedure addtwo_s, addtwo_d, addtwo_i
+procedure addtwo_s, addtwo_d, addtwo_i
 end interface addtwo
 
 contains
@@ -34,7 +34,7 @@ end module funcs
 program test2
 
 use funcs
-implicit none
+implicit none (external)
 
 real(sp) :: twos = 2._sp
 real(dp) :: twod = 2._dp

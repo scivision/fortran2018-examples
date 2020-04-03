@@ -1,3 +1,4 @@
+program demo_block
 !! Shows Fortran 2008 block namespace
 !! At BLOCK exit, local allocatables are deallocated, but outer scope allocatable are NOT deallocated
 !!
@@ -7,6 +8,8 @@
 !!  block scope size(B)=           4
 !!  outer scope i=          10
 !!  A allocated T size(a)           4
+
+implicit none (external)
 
 integer :: i, j
 real, allocatable :: A(:)

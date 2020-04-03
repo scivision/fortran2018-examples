@@ -1,5 +1,5 @@
 use, intrinsic:: iso_fortran_env
-implicit none
+implicit none (external)
 
 character(80) :: txt
 

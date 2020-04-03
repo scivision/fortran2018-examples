@@ -1,5 +1,6 @@
+program divprec
 use, intrinsic:: iso_fortran_env, stderr=>error_unit
-implicit none
+implicit none (external)
 
 ! shows pitfall of not being mindful with input Kind
 

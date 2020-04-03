@@ -6,7 +6,8 @@ module rotflip
 ! (compiles but falls through to class default)
 !
 use, intrinsic:: iso_fortran_env, only: error_unit
-implicit none
+
+implicit none (external)
 
 contains
 

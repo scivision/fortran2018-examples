@@ -9,7 +9,7 @@ program print_vs_write
 
 use, intrinsic:: iso_fortran_env, only: stdout=>output_unit
 
-implicit none
+implicit none (external)
 
 
 print *,'☀ ☁ ☂ ☃ ☄'

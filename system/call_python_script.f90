@@ -1,3 +1,4 @@
+program call_python
 !! demos calling a Python script, without crashing Fortran program if Python interpreter is not found.
 !! this technique works in general, as Fortran will crash if calling a non-existant program
 !! without exitstat= and/or cmdstat= parameter
@@ -5,7 +6,8 @@
 use os_detect, only: getos
 use, intrinsic:: iso_fortran_env, only: stderr=>error_unit
 
-implicit none
+implicit none (external)
+
 
 integer :: ierr, istat
 character(:), allocatable :: cmd, oscmd, os

@@ -1,7 +1,7 @@
 ! demo rotating a 2-D array 90 degrees clockwise
 use rotflip, only: rot90, flipud, fliplr
 
-implicit none
+implicit none (external)
 
 integer, parameter :: N=3
 integer :: i, iarr(N,N),  Barr(0:2, 0:2)

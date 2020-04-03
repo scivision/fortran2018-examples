@@ -2,7 +2,7 @@ module pathlib
 
 use, intrinsic:: iso_fortran_env, only: stderr=>error_unit
 
-implicit none
+implicit none (external)
 private
 public :: mkdir, copyfile, expanduser, home, get_suffix, filesep_swap, assert_directory_exists, assert_file_exists
 

@@ -1,5 +1,7 @@
 submodule (std_mkdir) isdir
 
+implicit none (external)
+
 contains
 
 module procedure is_directory

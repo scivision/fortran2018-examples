@@ -1,4 +1,6 @@
-implicit none
+program statement_function
+implicit none (external)
+
 
 integer :: f,i,j,k,n
 ! obsolete statement function (don't use)

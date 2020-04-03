@@ -1,5 +1,6 @@
+program float_prec
 use,intrinsic:: iso_fortran_env, stderr=>error_unit
-implicit none
+implicit none (external)
 
 real(real32) :: pi32 = 4*atan(1.0_real32)
 real(real64) :: pi64 = 4*atan(1.0_real64)

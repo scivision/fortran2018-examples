@@ -4,7 +4,7 @@
 
 use, intrinsic :: iso_fortran_env, only: int32, int64, real32, real64
 use logging, only : logger
-implicit none
+implicit none (external)
 
 integer :: u, i
 character(*), parameter :: logfn = 'test_append.txt'

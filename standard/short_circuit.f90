@@ -1,3 +1,4 @@
+program sc
 !! Fortran does NOT have [short-circuit logic](https://www.scivision.dev/fortran-short-circuit-logic/),
 !! but some compilers enact short-circuit logic anyway.
 !! This can lead to confusion between different users.
@@ -6,7 +7,7 @@
 !! NAG will raise Runtime error noting reference to not present variable.
 !!
 
-implicit none
+implicit none (external)
 
 call msg_bad_code('I did it')
 

@@ -1,4 +1,7 @@
+program demo_rand
 use random, only: rand_init
+
+implicit none (external)
 
 real :: r
 integer :: i

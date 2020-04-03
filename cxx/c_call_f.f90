@@ -1,10 +1,11 @@
 module mytest
 
 use, intrinsic:: iso_c_binding, only: dp=>c_double, c_int
-implicit none
+
+implicit none (external)
 
 contains
-   
+
 pure subroutine timestwo(z,z2,N) bind(c)
 ! elemental is not allowed with BIND(C)
 

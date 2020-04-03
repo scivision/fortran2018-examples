@@ -2,7 +2,8 @@ module contig
 
 use, intrinsic:: iso_fortran_env, only: sp=>real32, dp=>real64, i64=>int64
 
-implicit none
+implicit none (external)
+
 
 contains
 
@@ -32,13 +33,14 @@ end subroutine timestwo
 end module contig
 
 
+program test_contigous
 !! The ::2 indexing is not contiguous,
 !! but the contiguous parameter in timestwo_contig copies the array into contiguous temporary array,
 !! which could be faster for some operations
 use, intrinsic:: iso_fortran_env, only: compiler_version
 use contig
 
-implicit none
+implicit none (external)
 
 integer, parameter :: N = 1000000
 

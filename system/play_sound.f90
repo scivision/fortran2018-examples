@@ -1,9 +1,11 @@
+program play_sound
 !! recommend using all lower case filenames and no spaces.
 !! plays sound in Fortran 2003+
 
 use, intrinsic :: iso_fortran_env, only : stderr=>error_unit
 
-implicit none
+implicit none (external)
+
 
 ! configure ffplay -- could make if/else to allow other players
 character(*),parameter :: playexe='ffplay'

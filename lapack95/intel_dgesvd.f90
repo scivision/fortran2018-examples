@@ -1,6 +1,8 @@
 use,intrinsic:: iso_fortran_env, only: sp=>real32, dp=>real64, compiler_version, stderr=>error_unit
 
-implicit none
+implicit none (external)
+
+external :: dgesvd
 
 ! Intel(R) Fortran Intel(R) 64 Compiler for applications running on Intel(R) 64,
 ! Version 19.0.1.144 Build 20181018

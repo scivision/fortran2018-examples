@@ -3,7 +3,7 @@ module assert
 
 use, intrinsic:: iso_fortran_env, stderr=>error_unit
 use, intrinsic:: ieee_arithmetic
-implicit none
+implicit none (external)
 private
 
 #if REALBITS==32
@@ -32,31 +32,31 @@ elemental logical function isclose(actual, desired, rtol, atol, equal_nan)
 ! https://www.python.org/dev/peps/pep-0485/#proposed-implementation
 ! https://github.com/PythonCHB/close_pep/blob/master/is_close.py
 
-  real(wp), intent(in) :: actual, desired
-  real(wp), intent(in), optional :: rtol, atol
-  logical, intent(in), optional :: equal_nan
+real(wp), intent(in) :: actual, desired
+real(wp), intent(in), optional :: rtol, atol
+logical, intent(in), optional :: equal_nan
 
-  real(wp) :: r,a
-  logical :: n
-  ! this is appropriate INSTEAD OF merge(), since non present values aren't defined.
-  r = 1e-5_wp
-  a = 0._wp
-  n = .false.
-  if (present(rtol)) r = rtol
-  if (present(atol)) a = atol
-  if (present(equal_nan)) n = equal_nan
+real(wp) :: r,a
+logical :: n
+! this is appropriate INSTEAD OF merge(), since non present values aren't defined.
+r = 1e-5_wp
+a = 0._wp
+n = .false.
+if (present(rtol)) r = rtol
+if (present(atol)) a = atol
+if (present(equal_nan)) n = equal_nan
 
-  !print*,r,a,n,actual,desired
+!print*,r,a,n,actual,desired
 
 !--- sanity check
-  if ((r < 0._wp).or.(a < 0._wp)) error stop 'invalid tolerance parameter(s)'
+if ((r < 0._wp).or.(a < 0._wp)) error stop 'invalid tolerance parameter(s)'
 !--- equal nan
-  isclose = n.and.(ieee_is_nan(actual).and.ieee_is_nan(desired))
-  if (isclose) return
+isclose = n.and.(ieee_is_nan(actual).and.ieee_is_nan(desired))
+if (isclose) return
 !--- Inf /= Inf, unequal NaN
-  if (.not.ieee_is_finite(actual) .or. .not.ieee_is_finite(desired)) return
+if (.not.ieee_is_finite(actual) .or. .not.ieee_is_finite(desired)) return
 !--- floating point closeness check
-  isclose = abs(actual-desired) <= max(r * max(abs(actual), abs(desired)), a)
+isclose = abs(actual-desired) <= max(r * max(abs(actual), abs(desired)), a)
 
 end function isclose
 
@@ -73,15 +73,15 @@ impure elemental subroutine assert_isclose(actual, desired, rtol, atol, equal_na
 !
 ! rtol overrides atol when both are specified
 
-  real(wp), intent(in) :: actual, desired
-  real(wp), intent(in), optional :: rtol, atol
-  logical, intent(in), optional :: equal_nan
-  character(*), intent(in), optional :: err_msg
+real(wp), intent(in) :: actual, desired
+real(wp), intent(in), optional :: rtol, atol
+logical, intent(in), optional :: equal_nan
+character(*), intent(in), optional :: err_msg
 
-  if (.not.isclose(actual,desired,rtol,atol,equal_nan)) then
-    write(stderr,*) merge(err_msg,'',present(err_msg)),': actual',actual,'desired',desired
-    error stop
-  endif
+if (.not.isclose(actual,desired,rtol,atol,equal_nan)) then
+  write(stderr,*) merge(err_msg,'',present(err_msg)),': actual',actual,'desired',desired
+  error stop
+endif
 
 end subroutine assert_isclose
 

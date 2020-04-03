@@ -3,7 +3,8 @@ program special_characters
 !! https://en.wikipedia.org/wiki/ASCII#Character_groups
 
 use iso_c_binding, only: c_null_char
-implicit none
+
+implicit none (external)
 
 character, parameter :: &
 nul = c_null_char, &

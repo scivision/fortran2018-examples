@@ -1,7 +1,8 @@
+program bitpat
 ! shows how bit masks "Z" and octets "O" work in Fortran
 ! https://gcc.gnu.org/onlinedocs/gfortran/BOZ-literal-constants.html
 use, intrinsic:: iso_fortran_env, only: int64, stderr=>error_unit
-implicit none
+implicit none (external)
 
 ! note that if you want other than default elements of array, you must use e.g. int( , int64) on each element
 ! or use a DATA statement, as per

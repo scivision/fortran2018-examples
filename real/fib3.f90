@@ -1,6 +1,6 @@
 module fib3
 use assert, only: wp
-implicit none
+implicit none (external)
 
 contains
 

@@ -1,10 +1,12 @@
+program call_cxx
 !! Demonstrate Fortran calling C++.
 !!
 !! Normally BIND(C) should be used after the function name in the interface block,
 !! rather than postpending underscore(s).
 
 use, intrinsic :: iso_c_binding, only: dp=>c_double, c_int
-implicit none
+implicit none (external)
+
 
 interface
 
