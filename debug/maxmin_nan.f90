@@ -4,7 +4,7 @@ program maxmin
 
 use, intrinsic :: ieee_arithmetic
 use, intrinsic :: iso_fortran_env, stderr=>error_unit
-implicit none (external)
+implicit none (type, external)
 
 
 real :: A(4), x, y, nan, inf

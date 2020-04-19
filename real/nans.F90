@@ -9,7 +9,7 @@ program nans
 use, intrinsic :: iso_fortran_env, only: sp=>real32, dp=>real64, qp=>real128
 use, intrinsic :: iso_fortran_env, only: int32, int64
 use, intrinsic :: ieee_arithmetic, only: ieee_value, ieee_quiet_nan, ieee_is_nan
-implicit none (external)
+implicit none (type, external)
 
 real(sp) :: nan_sp,nan_bit
 real(dp) :: nan_dp

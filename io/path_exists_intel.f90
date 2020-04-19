@@ -1,6 +1,6 @@
 submodule (pathlib) path_exists
 !! Intel compilers require non-standard inquire(directory=)
-implicit none (external)
+implicit none (type, external)
 
 contains
 

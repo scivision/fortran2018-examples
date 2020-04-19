@@ -4,7 +4,7 @@ program mpi_pass
 use, intrinsic :: iso_fortran_env, only: sp=>real32, stderr=>error_unit, compiler_version
 use mpi
 
-implicit none (external)
+implicit none (type, external)
 
 character(10) :: time
 integer :: mcount

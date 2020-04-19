@@ -13,7 +13,7 @@ module canonical
 
 
 use, intrinsic :: iso_c_binding, only: c_long, c_char, c_null_char
-implicit none (external)
+implicit none (type, external)
 public :: realpath
 
 interface

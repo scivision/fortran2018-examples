@@ -30,7 +30,7 @@ add_library(call_f OBJECT c_call_f.f90)
 # LD_LIBRARY_PATH=~/.local/pgi/linux86-64/2018/lib:$LD_LIBRARY_PATH ./cxx_call_f
 add_executable(cxx_call_f cxx_call_f.cxx)
 target_link_libraries(cxx_call_f PRIVATE call_f)
-set_target_properties(cxx_call_f PROPERTIES CXX_STANDARD 11)
+target_compile_features(cxx_call_f PRIVATE cxx_std_11)
 add_test(NAME CXXCallFortran COMMAND cxx_call_f)
 
 # -- Fortran calling C++

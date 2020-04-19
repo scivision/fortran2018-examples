@@ -1,6 +1,6 @@
 module os_detect
 
-implicit none (external)
+implicit none (type, external)
 
 
 contains

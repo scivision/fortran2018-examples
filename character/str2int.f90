@@ -1,6 +1,6 @@
 program str2int_demo
 !! very simple demo of string to integer
-implicit none (external)
+implicit none (type, external)
 
 character(:), allocatable :: x
 integer :: m

@@ -2,7 +2,7 @@ program open_ro
 !! NOTE: chmod is non-standard, and will crash ifort runtime.
 
 use, intrinsic :: iso_fortran_env, only: stderr=>error_unit
-implicit none (external)
+implicit none (type, external)
 
 character(*),parameter :: fnro='ro.txt'
 

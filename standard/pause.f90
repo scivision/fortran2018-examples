@@ -2,7 +2,7 @@ program replace_pause
 ! demostrates replacement of obsolete Fortran 66 "pause" statement
 ! https://www.scivision.dev/upgrade-obsolete-fortran-pause/
 use, intrinsic:: iso_fortran_env, only: stdin=>input_unit
-implicit none (external)
+implicit none (type, external)
 
 character(80) :: userinp
 

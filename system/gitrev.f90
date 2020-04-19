@@ -1,6 +1,6 @@
 program demo_git
 
-implicit none (external)
+implicit none (type, external)
 
 call log_gitrev('.', 'gitrev.log')
 contains

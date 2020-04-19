@@ -4,7 +4,7 @@ module abspath
 !! waiting for GCC 10, Clang 10, Intel 20. to see if practical yet.
 
 use, intrinsic :: iso_c_binding, only: c_int, c_char, c_null_char
-implicit none (external)
+implicit none (type, external)
 public :: realpath
 
 interface

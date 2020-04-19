@@ -6,11 +6,11 @@ program call_python
 use os_detect, only: getos
 use, intrinsic:: iso_fortran_env, only: stderr=>error_unit
 
-implicit none (external)
+implicit none (type, external)
 
 
 integer :: ierr, istat
-character(:), allocatable :: cmd, oscmd, os
+character(:), allocatable :: cmd, oscmd
 character(*), parameter :: exe='python3'
 
 cmd = "import psutil; print(f'{psutil.virtual_memory().available} MB RAM free')"

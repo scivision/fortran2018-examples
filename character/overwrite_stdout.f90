@@ -5,7 +5,7 @@ use, intrinsic:: iso_c_binding, only: c_int
 use, intrinsic:: iso_fortran_env, only: stdout=>output_unit
 use sleep_std, only : sleep
 
-implicit none (external)
+implicit none (type, external)
 
 integer :: i
 integer, parameter :: N=5

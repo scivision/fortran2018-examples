@@ -7,7 +7,7 @@ module rotflip
 !
 use, intrinsic:: iso_fortran_env, only: error_unit
 
-implicit none (external)
+implicit none (type, external)
 
 contains
 

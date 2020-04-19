@@ -3,7 +3,7 @@ program mpi_vers
 
 use, intrinsic :: iso_fortran_env
 use mpi
-implicit none (external)
+implicit none (type, external)
 
 integer :: ierr, mrank, msize, vlen
 character(MPI_MAX_LIBRARY_VERSION_STRING) :: version  ! allocatable not ok

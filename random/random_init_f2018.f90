@@ -1,6 +1,6 @@
 submodule (random) randinit
 
-implicit none (external)
+implicit none (type, external)
 
 contains
 

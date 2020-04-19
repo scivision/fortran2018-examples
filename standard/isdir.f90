@@ -1,6 +1,6 @@
 submodule (std_mkdir) isdir
 
-implicit none (external)
+implicit none (type, external)
 
 contains
 

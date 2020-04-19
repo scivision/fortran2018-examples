@@ -5,7 +5,7 @@ program call_cxx
 !! rather than postpending underscore(s).
 
 use, intrinsic :: iso_c_binding, only: dp=>c_double, c_int
-implicit none (external)
+implicit none (type, external)
 
 
 interface

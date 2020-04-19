@@ -6,7 +6,7 @@ use f95_lapack, only: gesvd=>la_gesvd
 
 use,intrinsic:: iso_fortran_env, only: sp=>real32, dp=>real64, compiler_version, stderr=>error_unit
 
-implicit none (external)
+implicit none (type, external)
 
 ! Intel(R) Fortran Intel(R) 64 Compiler for applications running on Intel(R) 64,
 ! Version 19.0.1.144 Build 20181018

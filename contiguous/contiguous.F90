@@ -2,7 +2,7 @@ module contig
 
 use, intrinsic:: iso_fortran_env, only: sp=>real32, dp=>real64, i64=>int64
 
-implicit none (external)
+implicit none (type, external)
 
 
 contains
@@ -40,7 +40,7 @@ program test_contigous
 use, intrinsic:: iso_fortran_env, only: compiler_version
 use contig
 
-implicit none (external)
+implicit none (type, external)
 
 integer, parameter :: N = 1000000
 

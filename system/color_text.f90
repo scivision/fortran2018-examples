@@ -6,7 +6,7 @@ program color_text
 !! More colors: https://en.wikipedia.org/wiki/ANSI_escape_code#Colors
 
 use, intrinsic :: iso_fortran_env, only: stderr=>error_unit
-implicit none (external)
+implicit none (type, external)
 
 character, parameter :: e = char(27) !< escape
 

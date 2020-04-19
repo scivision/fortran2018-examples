@@ -3,7 +3,7 @@ program es
 
 use, intrinsic :: iso_fortran_env
 
-implicit none (external)
+implicit none (type, external)
 
 real :: r
 character(10) :: c

@@ -1,6 +1,6 @@
 use, intrinsic:: iso_fortran_env, only: error_unit
 
-implicit none (external)
+implicit none (type, external)
 
 character(4) :: buf
 integer :: h,ios

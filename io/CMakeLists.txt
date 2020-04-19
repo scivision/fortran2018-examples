@@ -105,12 +105,11 @@ set(CMAKE_REQUIRED_FLAGS -std=c++17)
 check_cxx_source_runs("${_code}" cxx17filesystem_ok)
 
 if(NOT cxx17filesystem_ok)
-  message(STATUS "${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER_VERSION} does not support C++17 filesystem")
   return()
 endif()
 
 add_library(canonical_cxx OBJECT canonical.cxx)
-set_target_properties(canonical_cxx PROPERTIES CXX_STANDARD 17)
+target_compile_features(canonical_cxx PRIVATE cxx_std_17)
 
 # NOTE: icl canonical.cxx canonical_demo.cxx works, so this must be a CMake bug.
 #  LNK2019: unresolved external symbol wmemcmp referenced in function "public: static int __cdecl std::_WChar_traits<wchar_t>::compare
@@ -119,7 +118,7 @@ if(WIN32 AND CMAKE_CXX_COMPILER_ID STREQUAL Intel)
 else()
   add_executable(canonical_demo canonical_demo.cxx)
   target_link_libraries(canonical_demo PRIVATE canonical_cxx)
-  set_target_properties(canonical_demo PROPERTIES CXX_STANDARD 17)
+  target_compile_features(canonical_demo PRIVATE cxx_std_17)
 
   add_test(NAME CanonicalC++ COMMAND canonical_demo)
   set_tests_properties(CanonicalC++ PROPERTIES

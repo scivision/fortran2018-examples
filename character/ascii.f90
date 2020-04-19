@@ -1,7 +1,7 @@
 program ascii
 !! prints a couple special characters
 
-implicit none (external)
+implicit none (type, external)
 
 print *,'next is a form feed',achar(12)
 print *,'that was a form feed'

@@ -10,7 +10,7 @@ program hello_world
 ! ifort -coarray helloworld.f90
 
 use, intrinsic:: iso_fortran_env, only: int64, dp=>real64, compiler_version
-implicit none (external)
+implicit none (type, external)
 
 integer(int64) :: rate,tic=0,toc
 real(dp) :: telaps

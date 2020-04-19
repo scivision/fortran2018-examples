@@ -3,7 +3,7 @@ module assert
 
 use, intrinsic:: iso_fortran_env, stderr=>error_unit
 use, intrinsic:: ieee_arithmetic
-implicit none (external)
+implicit none (type, external)
 private
 
 #if REALBITS==32

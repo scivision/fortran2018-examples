@@ -4,7 +4,7 @@ module rotflip_rank
 !!
 !! * Gfortran >= 10
 !! * Intel Fortran >= 20.0
-implicit none (external)
+implicit none (type, external)
 
 contains
 
@@ -33,7 +33,7 @@ program assumed_rank
 
 use rotflip_rank, only: flipud
 
-implicit none (external)
+implicit none (type, external)
 
 integer :: i, A0 = 0, A1(3) = [0,1,2]
 integer :: A2(3,3) = reshape( &

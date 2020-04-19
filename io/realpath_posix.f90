@@ -12,7 +12,7 @@ module canonical
 !! https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/fullpath-wfullpath?view=vs-2019
 
 use, intrinsic :: iso_c_binding, only: c_char, c_null_char
-implicit none (external)
+implicit none (type, external)
 public :: realpath
 
 interface

@@ -2,7 +2,7 @@ program timeprec
 !! demonstrates  timing methods
 use, intrinsic:: iso_fortran_env, only: dp=>real64, int64
 
-implicit none (external)
+implicit none (type, external)
 
 integer(int64) :: tic,toc,rate
 

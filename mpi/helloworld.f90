@@ -6,7 +6,7 @@ program hw_mpi
 use mpi  ! Windows Intel 2019 MPI doesn't have mpi_f08 yet (grrr)
 use, intrinsic:: iso_fortran_env, only: dp=>real64, compiler_version
 
-implicit none (external)
+implicit none (type, external)
 
 integer :: i, Nproc, ierr
 real(dp) :: wtime

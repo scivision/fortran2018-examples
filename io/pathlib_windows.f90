@@ -1,5 +1,5 @@
 submodule (pathlib) pathlib_windows
-implicit none (external)
+implicit none (type, external)
 contains
 
 module procedure copyfile

@@ -3,7 +3,7 @@ program test_pi
 !! $$ \pi = \int^1_{-1} \frac{dx}{\sqrt{1-x^2}}
 
 use, intrinsic:: iso_fortran_env, only: dp=>real64, int64, stderr=>error_unit
-implicit none (external)
+implicit none (type, external)
 
 integer, parameter :: wp = dp
 real(wp), parameter :: x0 = -1.0_wp, x1 = 1.0_wp

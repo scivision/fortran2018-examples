@@ -4,7 +4,7 @@ use, intrinsic:: iso_fortran_env, only: stderr=>error_unit, sp=>real32, dp=>real
 use fib3, only: fib
 use assert, only: wp, isclose, assert_isclose
 
-implicit none (external)
+implicit none (type, external)
 
 real(wp), parameter :: pi = 4.*atan(1._wp)
 

@@ -1,5 +1,5 @@
 program statement_function
-implicit none (external)
+implicit none (type, external)
 
 
 integer :: f,i,j,k,n

@@ -1,6 +1,6 @@
 use, intrinsic:: iso_fortran_env, only: stderr=>error_unit
 use pathlib, only: copyfile, mkdir, expanduser, home
-implicit none (external)
+implicit none (type, external)
 
 call test_home()
 call test_expanduser('~')
@@ -26,7 +26,6 @@ subroutine test_expanduser(path)
 
 character(:), allocatable :: expanded
 character(*), intent(in) :: path
-integer :: i
 
 expanded = expanduser(path)
 

@@ -2,7 +2,7 @@ program jacobi_omp
 !! https://nanohub.org/resources/19384/download/Directive_Based_Programming.pdf
 
 use, intrinsic :: iso_fortran_env, only : int64
-implicit none (external)
+implicit none (type, external)
 
 integer(int64) :: tic, toc, trate
 real :: err, tol
