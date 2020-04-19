@@ -10,13 +10,15 @@ call system_clock(tic,count_rate=rate)
 call timempi()
 call system_clock(toc)
 
-print '(A,ES12.5,A)','instrinsic time: ',(toc-tic)/real(rate,dp),' seconds.'
+print '(A,ES12.5,A)','intrinsic time: ',(toc-tic)/real(rate,dp),' seconds.'
 
 contains
 
 subroutine timempi()
 
-use omp_lib
+use omp_lib, only : omp_get_wtime, omp_get_num_procs, omp_get_num_threads, omp_get_thread_num
+
+integer(int64), external :: omp_get_wtick
 
 integer :: Ncore, Nthread
 real(dp) :: tic,toc,rate
