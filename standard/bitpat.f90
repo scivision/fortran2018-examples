@@ -11,18 +11,16 @@ implicit none (type, external)
 integer :: I(5)
 integer, parameter :: J(5) = [  2**29      ,  2**22    , 2**15   , 2**8 , 2**1 ]
 
-
 integer(int64), parameter :: hexa = int(z'80000000',int64)
 
 integer(int64),parameter :: K = int(O"201004020100",int64)
 !2**34+2**27+2**20+2**13+2**6
 
-! while it's allowed to put BOZ at end, standard is to put BOZ at front
 integer,parameter :: K1 = int(O'50147')
+!! while it's allowed to put BOZ at end, standard is to put BOZ at front
 
-! non-standard (2003 or 2008) but virtually all compilers accept
-I = [O"4000000000",O"20000000",O"100000",O"400",O"2"]
-
+!> need to put each in int() otherwise compilers like GCC 10 error
+I = [int(O"4000000000"), int(O"20000000"), int(O"100000"), int(O"400"), int(O"2")]
 
 print '(A,5I12)','exp',j
 

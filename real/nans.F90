@@ -32,14 +32,9 @@ nan_zp = ieee_value(1.,ieee_quiet_nan)
 nan_zqp = ieee_value(1.,ieee_quiet_nan)
 #endif
 
-! this is a bit-pattern way to get NaN by IEEE754 definition
-#ifdef IEEENAN
-nan_bit = transfer(Z'7FC00000', 1.)
-#endif
-! this is equivalent to transfer() by Fortran 2003
-!nan_bit = real(z'7fc00000')
-! however, you will get Error: Result of FLOAT is NaN so use transfer() for the case where you're deliberately setting NaN
-
+! nan_bit = transfer(Z'7FC00000', 1.)
+!! this was a bit-pattern way to get NaN by IEEE754 definition,
+!! but strict compilers like GCC 10 do not allow transfer(nan)
 
 ! --------- print results
 
@@ -56,12 +51,6 @@ print '(A4,2X,F5.1,6X,L1,2X,Z32)','qp',nan_qp, ieee_is_nan(nan_qp), nan_qp
 print '(A4,2X,F5.1,6X,L1,2X,Z32)','zp',real(nan_zp),ieee_is_nan(real(nan_zp)),nan_zp
 print '(A4,2X,F5.1,6X,L1,2X,Z32)','zqp',real(nan_zqp),ieee_is_nan(real(nan_zqp)),nan_zqp
 #endif
-
-#ifdef IEEENAN
-print '(A4,2X,F5.1,6X,L1,2X,Z32)','bit',nan_bit,ieee_is_nan(nan_bit),nan_bit
-#endif
-!ieee_is_nan works on real part only, by the bit pattern definition.
-
 
 ! for single prec.:
 ! gfortran 8.0: FFC00000

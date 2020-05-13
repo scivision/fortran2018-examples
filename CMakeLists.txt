@@ -7,10 +7,9 @@ endif()
 project(Fortran2018Examples
 LANGUAGES C Fortran
 DESCRIPTION "Example of using modern Fortran syntax"
-VERSION 1.2.0)
+VERSION 1.2.3)
 
 enable_testing()
-include(FeatureSummary)
 
 set(CTEST_TEST_TIMEOUT 10)  # default timeout [seconds]
 
@@ -32,12 +31,10 @@ add_subdirectory(character)
 add_subdirectory(coarray)
 add_subdirectory(contiguous)
 if(CMAKE_CXX_COMPILER)
+  add_subdirectory(io)
   add_subdirectory(cxx)
 endif()
 add_subdirectory(debug)
-if(CMAKE_CXX_COMPILER)
-  add_subdirectory(io)
-endif()
 add_subdirectory(lapack95)
 add_subdirectory(mpi)
 add_subdirectory(namelist)
@@ -50,6 +47,9 @@ add_subdirectory(standard)
 add_subdirectory(submodule)
 add_subdirectory(system)
 
+
+
+include(FeatureSummary)
 add_feature_info(cxx_fs cxx17filesystem_ok "tests using C++17 filesystem")
 add_feature_info(Openmp hasOMP "tests using OpenMP")
 add_feature_info(mpi hasMPI "tests using MPI")

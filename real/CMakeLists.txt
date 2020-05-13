@@ -41,7 +41,7 @@ if(f03ieee)
 
 add_executable(nan nans.F90)
 if(f08kind)
-target_compile_definitions(nan PRIVATE REAL128 IEEENAN)
+target_compile_definitions(nan PRIVATE REAL128)
 endif()
 add_test(NAME NaN COMMAND nan)
 
