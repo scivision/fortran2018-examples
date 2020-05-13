@@ -5,17 +5,18 @@ use, intrinsic :: iso_fortran_env
 use mpi
 implicit none (type, external)
 
-integer :: ierr, mrank, msize, vlen
+integer :: ierr, id, Nimg, vlen
 character(MPI_MAX_LIBRARY_VERSION_STRING) :: version  ! allocatable not ok
+external :: mpi_finalize
 
 print *,compiler_version()
 
 call MPI_INIT(ierr)
-call MPI_COMM_RANK(MPI_COMM_WORLD, mrank, ierr)
-call MPI_COMM_SIZE(MPI_COMM_WORLD, msize, ierr)
+call MPI_COMM_RANK(MPI_COMM_WORLD, id, ierr)
+call MPI_COMM_SIZE(MPI_COMM_WORLD, Nimg, ierr)
 call MPI_GET_LIBRARY_VERSION(version, vlen, ierr)
 
-print '(A,I3,A,I3,A)', 'Image ', mrank, ' / ', msize, ':',version
+print '(A,I3,A,I3,A)', 'Image ', id, ' / ', Nimg, ':',version
 
 call MPI_FINALIZE(ierr)
 

@@ -12,6 +12,7 @@ real(sp) :: dat(0:99), val(200)
 integer :: dest, i, num_procs, rank, tag, ierr, status(MPI_STATUS_SIZE)
 ! type(MPI_STATUS) :: status  !< MPI_F08
 
+external :: mpi_recv, mpi_send, mpi_finalize
 
 !  Initialize MPI.
 call MPI_Init(ierr)

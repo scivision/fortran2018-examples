@@ -11,6 +11,8 @@ implicit none (type, external)
 integer :: i, Nproc, ierr
 real(dp) :: wtime
 
+external :: mpi_finalize
+
 !>  Initialize MPI.
 call MPI_Init(ierr)
 if (ierr /= 0) error stop 'mpi init error'
