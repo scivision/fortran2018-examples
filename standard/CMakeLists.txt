@@ -3,7 +3,10 @@ add_executable(shortcircuit short_circuit.f90)
 # shaky result, don't CI test
 
 add_executable(bitpat bitpat.f90)
-add_test(NAME BitPattern COMMAND bitpat)
+add_test(NAME BitPattern COMMAND $<TARGET_FILE:bitpat>)
+
+add_executable(big_integer big_integer.f90)
+add_test(NAME BigInteger COMMAND $<TARGET_FILE:big_integer>)
 
 add_executable(justwait pause.f90)
 # NO test
