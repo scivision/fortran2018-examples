@@ -12,22 +12,14 @@ enable_testing()
 # https://stackoverflow.com/tags/fortran-iso-c-binding/info
 
 add_library(c_lib call_c.c)
-target_compile_options(c_lib PRIVATE ${CFLAGS})
 
 add_executable(f_call_c f_call_c.f90)
 target_link_libraries(f_call_c PRIVATE c_lib)
 add_test(NAME FortranCallC COMMAND f_call_c)
 
-# Workaround for PGI not having CXX on Windows and wrong CXX compiler being found
-if(WIN32 AND CMAKE_C_COMPILER_ID STREQUAL PGI)
-  message(STATUS "SKIP: CXX - PGI on Windows does not currently have a CXX compiler")
-  return()
-endif()
-
 # -- C++ calling Fortran
 add_library(call_f OBJECT c_call_f.f90)
 
-# LD_LIBRARY_PATH=~/.local/pgi/linux86-64/2018/lib:$LD_LIBRARY_PATH ./cxx_call_f
 add_executable(cxx_call_f cxx_call_f.cxx)
 target_link_libraries(cxx_call_f PRIVATE call_f)
 target_compile_features(cxx_call_f PRIVATE cxx_std_11)
