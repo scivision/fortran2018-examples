@@ -49,6 +49,10 @@ endif()
 
 
 include(CheckCSourceRuns)
+include(CheckCXXSourceCompiles)
+include(CheckCXXSourceRuns)
+include(CheckIncludeFileCXX)
+
 if(NOT APPLE)  # FIXME: need to make check in Fortran not C.
 # has to be run() test for detecting defective system realpath()
 if(WIN32)
@@ -81,28 +85,21 @@ if(posixio_OK)
 elseif(windowsio_OK)
   add_executable(realpath fullpath_windows.f90)
 endif()
-if(posixio_OK OR windowsio_OK)
-  add_test(NAME io:canonical COMMAND $<TARGET_FILE:realpath>)
-  set_tests_properties(io:canonical PROPERTIES
-    SKIP_RETURN_CODE 77
-    DISABLED true)
-endif()
+# if(posixio_OK OR windowsio_OK)
+#   add_test(NAME io:canonical COMMAND $<TARGET_FILE:realpath>)
+#   set_tests_properties(io:canonical PROPERTIES
+#     SKIP_RETURN_CODE 77)
+# endif()
 endif(NOT APPLE)
 
 
-# C++ is goofed up for PGI on Windows, including with CL
-if(WIN32 AND CMAKE_Fortran_COMPILER_ID STREQUAL PGI)
-  message(STATUS "PGI does not have a C++ compiler on Windows")
-  return()
-endif()
-
-
-
 # verify C++ compiler can do C++17 filesystem
-# GCC 10, Intel 2020
-file(READ cxx17filesystem.cxx _code)
-set(CMAKE_REQUIRED_FLAGS -std=c++17)
-check_cxx_source_runs("${_code}" cxx17filesystem_ok)
+if(MSVC)
+  set(CMAKE_REQUIRED_FLAGS /std:c++17)
+else()
+  set(CMAKE_REQUIRED_FLAGS -std=c++17)
+endif()
+check_include_file_cxx("filesystem" cxx17filesystem_ok)
 
 if(NOT cxx17filesystem_ok)
   return()
@@ -121,8 +118,6 @@ else()
   target_compile_features(canonical_demo PRIVATE cxx_std_17)
 
   add_test(NAME CanonicalC++ COMMAND canonical_demo)
-  set_tests_properties(CanonicalC++ PROPERTIES
-    DISABLED true)
 
   add_executable(realpath_fortran_cxx17 realpath_cxx.f90)
   target_link_libraries(realpath_fortran_cxx17 PRIVATE canonical_cxx)
