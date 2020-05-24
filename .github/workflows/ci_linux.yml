@@ -8,7 +8,7 @@ on:
       - "**.cmake"
       - "**.txt"
       - ".github/workflows/ci_linux.yml"
-  pull_request:
+
 
 jobs:
 

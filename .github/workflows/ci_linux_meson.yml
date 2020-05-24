@@ -7,7 +7,7 @@ on:
       - "**.F90"
       - "**.build"
       - ".github/workflows/ci_linux_meson.yml"
-  pull_request:
+
 
 jobs:
 
