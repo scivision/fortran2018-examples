@@ -1,8 +1,6 @@
-#ifdef USEMKL
-use lapack95, only: gesvd
-#else
-use f95_lapack, only: gesvd=>la_gesvd
-#endif
+program demo_gesvd
+
+@lapack95_use@
 
 use,intrinsic:: iso_fortran_env, only: sp=>real32, dp=>real64, compiler_version, stderr=>error_unit
 
@@ -39,14 +37,12 @@ e64 = s64 - [2.460504870018764_dp, 1.699628148275318_dp, 0.239123278256554_dp]
 print *,compiler_version()
 print '(I3,A,3ES20.12)',storage_size(s64),' bits: error mag: ',e64
 
-#ifdef USEMKL
 call gesvd(A32, s32)
 e32 = s32 - [2.460504870018764_sp, 1.699628148275318_sp, 0.239123278256554_sp]
 
 print '(I3,A,3ES20.12)',storage_size(s32),' bits: error mag: ',e32
-#endif
 
-maxerr=maxval(abs(e64))
+maxerr = maxval(abs(e64))
 
 if (maxerr > 1e-7_dp) error stop 'excessive singular value error'
 

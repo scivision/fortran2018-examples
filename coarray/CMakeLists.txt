@@ -9,6 +9,7 @@ enable_testing()
 get_directory_property(hasParent PARENT_DIRECTORY)
 if(NOT hasParent)
   list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../cmake/Modules)
+  find_package(MPI COMPONENTS Fortran)
 endif()
 
 find_package(Coarray)
@@ -17,8 +18,6 @@ if(NOT Coarray_FOUND)
   message(STATUS "SKIP: Coarray")
   return()
 endif()
-
-find_package(MPI COMPONENTS Fortran REQUIRED)
 
 # # "sync all" call is necessary to actually verify dynamically linked MPI stack works.
 # include(CheckFortranSourceRuns)

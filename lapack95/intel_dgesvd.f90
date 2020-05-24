@@ -1,3 +1,5 @@
+program intel_dgesvd
+
 use,intrinsic:: iso_fortran_env, only: sp=>real32, dp=>real64, compiler_version, stderr=>error_unit
 
 implicit none (type, external)
@@ -21,7 +23,6 @@ external :: dgesvd
 ! pgf90 18.10-0 (MKL 19)
 ! 64 bits: error mag:   0.000000000000E+00  0.000000000000E+00  0.000000000000E+00
 
-! Flang does not work with system Lapack, may need to compile lapack
 real(dp):: A(3,3) = reshape( &
         [ 1, 0, 1, &
          -1,-2, 0, &
