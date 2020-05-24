@@ -1,5 +1,5 @@
 program poly
-! Polymorphic-like real kind at compile time by using preprocessing
+! Polymorphic-like real kind at compile time
 !
 ! Output:
 ! cmake -Drealbits=32      2pi   6.28318548
@@ -9,13 +9,7 @@ program poly
 use, intrinsic:: iso_fortran_env
 implicit none (type, external)
 
-#if REALBITS==32
-integer,parameter :: wp=real32
-#elif REALBITS==64
-integer,parameter :: wp=real64
-#elif REALBITS==128
-integer,parameter :: wp=real128
-#endif
+@real_prec@
 
 real(wp), parameter :: pi = 4._wp * atan(1._wp)
 

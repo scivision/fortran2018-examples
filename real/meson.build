@@ -1,22 +1,21 @@
-r128 = f08kind ? '-DREAL128' : ''
+conf_data = configuration_data()
+configure_file(input : 'polymorphic.in.f90',
+               output : 'polymorphic.f90',
+               configuration : conf_data)
 
-polymorph = executable('polymorph', 'polymorphic.F90',
-  fortran_args: '-DREALBITS='+realbits)
+polymorph = executable('polymorph', meson.current_build_dir() / 'polymorphic.f90')
 test('Polymorphic', polymorph, suite: 'real', timeout: 10)
 
-divprec = executable('divprec', 'div_precision.F90',
-  fortran_args: r128)
-test('DivisionPrecision', divprec, suite: 'real', timeout: 10)
-
-floatprec = executable('floatprec', 'floating_precision.F90',
-  fortran_args: r128)
-test('FloatPrecision', floatprec, suite: 'real', timeout: 10)
-
-hugeprec = executable('hugeprec', 'huge_precision.F90',
-  fortran_args: r128)
-test('HugePrecision', hugeprec, suite: 'real', timeout: 10)
-
 if f08kind
+  divprec = executable('divprec', 'div_precision.f90')
+  test('DivisionPrecision', divprec, suite: 'real', timeout: 10)
+
+  floatprec = executable('floatprec', 'floating_precision.f90')
+  test('FloatPrecision', floatprec, suite: 'real', timeout: 10)
+
+  hugeprec = executable('hugeprec', 'huge_precision.f90')
+  test('HugePrecision', hugeprec, suite: 'real', timeout: 10)
+
   precprob = executable('precprob', 'precision_problems.f90')
   test('PrecisionProblems', precprob, suite: 'real', timeout: 15)
 endif
@@ -26,16 +25,13 @@ if f18prop
   test('Fortran2018 Properties', properties, suite: 'real', timeout: 10)
 endif
 
-nanargs = f08kind ? [r128] : []
-nan = executable('nan', 'nans.F90',
-  fortran_args: nanargs)
-test('NaN', nan, suite: 'real', timeout: 10)
-
-assert_lib = library('assert', 'assert.F90',
-  fortran_args: '-DREALBITS='+realbits)
+assert_lib = library('assert', 'assert.f90')
 
 if f08kind
-  testassert_exe = executable('testassert', 'not-finite.f90', 'fib3.f90',
+  nan = executable('nan', 'nans.f90')
+  test('NaN', nan, suite: 'real', timeout: 10)
+
+  testassert_exe = executable('testassert', 'finite.f90',
     link_with: assert_lib)
   test('Assert', testassert_exe, suite: 'real', timeout: 10)
 endif

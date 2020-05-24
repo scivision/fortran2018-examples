@@ -13,10 +13,8 @@ implicit none (type, external)
 
 real(real32), parameter :: huge32 = huge(1.0_real32)
 real(real64), parameter :: huge64 = huge(1.0_real64)
-#ifdef REAL128
 real(real128), parameter :: huge128 = huge(1.0_real128)
 complex(real128), parameter :: ch256 = (huge128,huge128)
-#endif
 integer(int64), parameter :: hugeint64 = huge(1_int64)
 
 ! check 32-bit real
@@ -40,7 +38,6 @@ if (huge64 /= 1.7976931348623157E+308_real64) write(stderr,*) 'warning: huge64 w
 
 print *,'64-bit real Huge',huge64
 
-#ifdef REAL128
 ! Check 128-bit real
 if (storage_size(huge128) /= 128) then
     write(stderr,*) 'expected 128-bit real but have', storage_size(huge128),'bits.'
@@ -62,7 +59,6 @@ if (ch256 /= (huge128,huge128)) write(stderr,*) 'warning: complex256 was ',ch256
     'instead of (1.18973149535723176508575932662800702E+4932,1.18973149535723176508575932662800702E+4932)'
 
 print *,'256-bit complex huge',ch256,'consisting of',storage_size(ch256),'bits'
-#endif
 
 ! Check 64-bit int
 if (storage_size(hugeint64) /= 64) then

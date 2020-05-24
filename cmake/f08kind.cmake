@@ -1,3 +1,5 @@
+include(CheckFortranSourceCompiles)
+
 check_fortran_source_compiles("
 use, intrinsic:: iso_fortran_env, only: real128
 use, intrinsic:: ieee_arithmetic, only: ieee_is_nan

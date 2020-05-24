@@ -11,9 +11,7 @@ implicit none (type, external)
 
 real(real32) :: huge32 = 9/5.0_real32
 real(real64) :: huge64 = 9/5.0_real64
-#ifdef REAL128
 real(real128) :: huge128 = 9/5.0_real128
-#endif
 integer(int64) :: hugeint64 = 9/5_int64
 
 real(real64) :: imdouble = 9/5.
@@ -42,13 +40,11 @@ if (storage_size(huge32) /= 32) then
 endif
 print *,'32-bit',huge32
 
-#ifdef REAL128
 if (storage_size(huge128) /= 128) then
   write(stderr,*) 'expected real128 but you have real bits: ', storage_size(huge128)
   error stop
 endif
 print *,'128-bit',huge128
-#endif
 
 if (storage_size(hugeint64) /= 64) then
   write(stderr,*) 'expected int64 but you have integer bits: ', storage_size(hugeint64)
