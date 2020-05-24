@@ -27,13 +27,13 @@ add_executable(polymorph ${CMAKE_CURRENT_BINARY_DIR}/polymorphic.f90)
 add_test(NAME Polymorphic COMMAND polymorph)
 
 if(f08kind)
-  add_executable(divprec div_precision.F90)
+  add_executable(divprec div_precision.f90)
   add_test(NAME DivisionPrecision COMMAND divprec)
 
-  add_executable(floatprec floating_precision.F90)
+  add_executable(floatprec floating_precision.f90)
   add_test(NAME FloatPrecision COMMAND floatprec)
 
-  add_executable(hugeprec huge_precision.F90)
+  add_executable(hugeprec huge_precision.f90)
   add_test(NAME HugePrecision COMMAND hugeprec)
 
   add_executable(precprob precision_problems.f90)

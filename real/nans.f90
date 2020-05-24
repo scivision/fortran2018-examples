@@ -11,7 +11,7 @@ use, intrinsic :: iso_fortran_env, only: int32, int64
 use, intrinsic :: ieee_arithmetic, only: ieee_value, ieee_quiet_nan, ieee_is_nan
 implicit none (type, external)
 
-real(sp) :: nan_sp,nan_bit
+real(sp) :: nan_sp
 real(dp) :: nan_dp
 real(qp) :: nan_qp
 complex(dp) :: nan_zp
@@ -27,10 +27,6 @@ nan_dp = ieee_value(1.,ieee_quiet_nan)
 nan_qp = ieee_value(1.,ieee_quiet_nan)
 nan_zp = ieee_value(1.,ieee_quiet_nan)
 nan_zqp = ieee_value(1.,ieee_quiet_nan)
-
-! nan_bit = transfer(Z'7FC00000', 1.)
-!! this was a bit-pattern way to get NaN by IEEE754 definition,
-!! but strict compilers like GCC 10 do not allow transfer(nan)
 
 ! --------- print results
 

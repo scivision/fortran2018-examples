@@ -1,4 +1,5 @@
 conf_data = configuration_data()
+conf_data.set('real_prec', 'integer,parameter :: wp=real' + realbits)
 configure_file(input : 'polymorphic.in.f90',
                output : 'polymorphic.f90',
                configuration : conf_data)
