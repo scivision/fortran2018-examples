@@ -88,13 +88,9 @@ elseif(CMAKE_Fortran_COMPILER_ID IN_LIST opencoarray_supported)
     if(CMAKE_Fortran_COMPILER_ID STREQUAL GNU)
       set(Coarray_COMPILE_OPTIONS -fcoarray=lib)
     endif()
-    list(APPEND Coarray_REQUIRED_VARS ${Coarray_INCLUDE_DIR})
-  endif(NOT Coarray_LIBRARY)
 
-  if(NOT Coarray_LIBRARY AND CMAKE_Fortran_COMPILER_ID STREQUAL GNU)
-    set(Coarray_COMPILE_OPTIONS -fcoarray=single)
-    list(APPEND Coarray_REQUIRED_VARS ${Coarray_COMPILE_OPTIONS})
-  endif()
+    set(Coarray_REQUIRED_VARS ${Coarray_LIBRARY})
+  endif(NOT Coarray_LIBRARY)
 
 endif()
 

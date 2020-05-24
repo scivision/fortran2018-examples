@@ -14,7 +14,7 @@ endif()
 
 find_package(Coarray)
 
-if(NOT Coarray_FOUND)
+if(NOT (Coarray_FOUND AND MPI_Fortran_FOUND))
   message(STATUS "SKIP: Coarray")
   return()
 endif()
