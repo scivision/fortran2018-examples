@@ -6,6 +6,7 @@ Modern Fortran handles [file I/O](./io) much more cleanly.
 ## C++17 Filesystem
 
 The GCC 10 and Intel 2020 compiler seem broken for std::filesystem support. Visual Sudio 2019 does work.
+See [cxx20-examples](https://github.com/scivision/cxx20-examples) repo for C++17 filesystem examples.
 
 ## Writing to /dev/null
 
