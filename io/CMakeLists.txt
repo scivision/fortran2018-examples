@@ -53,6 +53,3 @@ endif()
 # elseif(windowsio_OK)
 #   add_executable(realpath fullpath_windows.f90)
 # endif()
-
-# add_executable(realpath_fortran_cxx17 realpath_cxx.f90)
-# target_link_libraries(realpath_fortran_cxx17 PRIVATE canonical_cxx)
