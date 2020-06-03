@@ -24,7 +24,10 @@ set(real_prec "integer,parameter :: wp=real${realbits}")
 
 configure_file(polymorphic.in.f90 polymorphic.f90)
 add_executable(polymorph ${CMAKE_CURRENT_BINARY_DIR}/polymorphic.f90)
-add_test(NAME Polymorphic COMMAND polymorph)
+add_test(NAME Polymorphic COMMAND $<TARGET_FILE:polymorph>)
+
+add_executable(coerce coerce.f90)
+add_test(NAME Coerce COMMAND $<TARGET_FILE:coerce>)
 
 if(f08kind)
   add_executable(divprec div_precision.f90)

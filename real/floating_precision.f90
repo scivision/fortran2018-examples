@@ -9,20 +9,20 @@ real(real128) :: pi128 = 4*atan(1.0_real128)
 print *,compiler_version()
 
 if (storage_size(pi64) /= 64) then
-    write(stderr,*) 'expected real64 but you have real bits: ', storage_size(pi64)
-    error stop
+  write(stderr,*) 'expected real64 but you have real bits: ', storage_size(pi64)
+  error stop
 endif
 print *,'64-bit PI',pi64
 
 if (storage_size(pi32) /= 32) then
-    write(stderr,*) 'expected real32 but you have real bits: ', storage_size(pi32)
-    error stop
+  write(stderr,*) 'expected real32 but you have real bits: ', storage_size(pi32)
+  error stop
 endif
 print *,'32-bit PI',pi32
 
 if (storage_size(pi128) /= 128) then
-    write(stderr,*) 'expected real128 but you have real bits: ', storage_size(pi128)
-    error stop
+  write(stderr,*) 'expected real128 but you have real bits: ', storage_size(pi128)
+  error stop
 endif
 print *,'128-bit PI',pi128
 

@@ -7,6 +7,9 @@ configure_file(input : 'polymorphic.in.f90',
 polymorph = executable('polymorph', meson.current_build_dir() / 'polymorphic.f90')
 test('Polymorphic', polymorph, suite: 'real', timeout: 10)
 
+coerce = executable('coerce', 'coerce.f90')
+test('Coerce', coerce, suite: 'real', timeout: 10)
+
 if f08kind
   divprec = executable('divprec', 'div_precision.f90')
   test('DivisionPrecision', divprec, suite: 'real', timeout: 10)
