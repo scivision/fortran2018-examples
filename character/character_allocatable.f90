@@ -3,7 +3,14 @@ program character_alloctable
 
 implicit none (type, external)
 
-character(:), allocatable :: flex(:)
+character(:), allocatable :: flex(:), scalar
+
+scalar = 'hi'
+if (len(scalar) /= 2) error stop 'auto-alloc char scalar'
+scalar = 'hello'
+if (len(scalar) /= 5) error stop 'auto-alloc longer'
+scalar = 'bye'
+if (len(scalar) /= 3) error stop 'auto-alloc shorter'
 
 flex = [character(9) :: 'hi', 'hello', 'greetings']
 
