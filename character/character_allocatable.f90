@@ -1,6 +1,24 @@
+module demo
+
+implicit none (type, external)
+
+contains
+
+pure function drop_last_char(instr)
+
+character(*), intent(in) :: instr
+character(:), allocatable :: drop_last_char
+
+drop_last_char = instr(1:len_trim(instr)-1)
+
+end function drop_last_char
+
+end module demo
+
 program character_alloctable
 !! shows Fortran 2003 allocatable character and auto-allocated array
 
+use demo, only : drop_last_char
 implicit none (type, external)
 
 character(:), allocatable :: flex(:), scalar
@@ -11,6 +29,8 @@ scalar = 'hello'
 if (len(scalar) /= 5) error stop 'auto-alloc longer'
 scalar = 'bye'
 if (len(scalar) /= 3) error stop 'auto-alloc shorter'
+
+if(drop_last_char('hello.') /= 'hello') error stop 'allocatable char function'
 
 flex = [character(9) :: 'hi', 'hello', 'greetings']
 
