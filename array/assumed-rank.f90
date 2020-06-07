@@ -63,5 +63,4 @@ do i = 1,size(A2,1)
   print '(3I3)', A2(i,:)
 enddo
 
-
 end program assumed_rank
