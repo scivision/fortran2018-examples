@@ -3,7 +3,7 @@ program hw_mpi
 !!  Original Author:  John Burkardt
 !!  Modified: Michael Hirsch, Ph.D.
 
-use mpi  ! Windows Intel 2019 MPI doesn't have mpi_f08 yet (grrr)
+use mpi, only : mpi_init, mpi_comm_size, mpi_comm_world, mpi_wtime
 use, intrinsic:: iso_fortran_env, only: dp=>real64, compiler_version
 
 implicit none (type, external)
@@ -11,7 +11,7 @@ implicit none (type, external)
 integer :: i, Nproc, ierr
 real(dp) :: wtime
 
-external :: mpi_finalize
+external :: mpi_comm_rank, mpi_finalize
 
 !>  Initialize MPI.
 call MPI_Init(ierr)
@@ -42,4 +42,3 @@ call MPI_Finalize(ierr)
 if (ierr /= 0) error stop 'mpi finalize error'
 
 end program
-

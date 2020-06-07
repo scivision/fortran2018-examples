@@ -2,7 +2,8 @@ program mpi_pass
 !! passes data between two threads
 !!  Author:  John Burkardt
 use, intrinsic :: iso_fortran_env, only: sp=>real32, stderr=>error_unit, compiler_version
-use mpi
+use mpi, only : MPI_STATUS_SIZE, mpi_comm_world, mpi_init, mpi_get_count, &
+  mpi_real, mpi_any_source, mpi_any_tag, mpi_source, mpi_tag, mpi_comm_size
 
 implicit none (type, external)
 
@@ -12,7 +13,7 @@ real(sp) :: dat(0:99), val(200)
 integer :: dest, i, num_procs, rank, tag, ierr, status(MPI_STATUS_SIZE)
 ! type(MPI_STATUS) :: status  !< MPI_F08
 
-external :: mpi_recv, mpi_send, mpi_finalize
+external :: mpi_recv, mpi_send, mpi_finalize, mpi_comm_rank
 
 !  Initialize MPI.
 call MPI_Init(ierr)
