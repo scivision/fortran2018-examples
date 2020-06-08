@@ -2,55 +2,38 @@ program open_ro
 !! NOTE: chmod is non-standard, and will crash ifort runtime.
 
 use, intrinsic :: iso_fortran_env, only: stderr=>error_unit
+use pathlib, only : unlink
+
 implicit none (type, external)
 
 character(*),parameter :: fnro='ro.txt'
+logical :: exists
 
-call createro(fnro)
-call deletefile(fnro) ! this is MY unlink, since the GNU extension is non-standard and crashes ifort runtimes.
+call create_ro(fnro)
+call unlink(fnro)
+!! this is MY unlink, since the GNU extension is non-standard and crashes ifort runtimes.
+inquire(file=fnro, exist=exists)
+if(exists) error stop 'could not delete file'
+
 print *,'deleted read-only: ',fnro
 
 contains
 
 
-subroutine createro(fn)
-  ! creates  file to delete
-  character(*),intent(in) :: fn
-  character(*),parameter :: txt='i am read only'
-  integer :: u
+subroutine create_ro(fn)
+!! creates  file to delete
+character(*),intent(in) :: fn
+character(*),parameter :: txt='i am read only'
+integer :: u
 
-  open(newunit=u, file=fn, form='formatted', status='unknown', action='write')
+open(newunit=u, file=fn, form='formatted', status='unknown', action='write')
 
-  write(u, *) txt
+write(u, *) txt
 
-  close(u)
+close(u)
 
-  print *,'created read-only: ',fn
+print *,'created read-only: ',fn
 
-end subroutine
-
-
-subroutine deletefile(fn)
-  character(*), intent(in) :: fn
-  integer :: u, ios
-  logical :: fexist
-
-!! Fortran-standard way to delete a file.
-  open(newunit=u, file=fn, status='old')
-  close(u, status='delete', iostat=ios)
-
-  if (ios/=0) then
-    write(stderr,*) 'failed to delete',fn,ios
-    error stop
-  endif
-
-  inquire(file=fn, exist=fexist)
-
-  if (fexist) then
-    write(stderr,*) 'failed to delete',fn
-    error stop
-  endif
-
-end subroutine deletefile
+end subroutine create_ro
 
 end program

@@ -4,7 +4,8 @@ use, intrinsic:: iso_fortran_env, only: stderr=>error_unit
 
 implicit none (type, external)
 private
-public :: mkdir, copyfile, expanduser, home, get_suffix, filesep_swap, assert_directory_exists, assert_file_exists
+public :: mkdir, copyfile, expanduser, home, unlink, get_suffix, filesep_swap, &
+  assert_directory_exists, directory_exists, assert_file_exists
 
 interface  ! pathlib_{unix,windows}.f90
 module integer function copyfile(source, dest) result(istat)
@@ -16,21 +17,52 @@ character(*), intent(in) :: path
 end function mkdir
 end interface
 
-interface ! path_exists*.f90
-module subroutine assert_directory_exists(path)
-character(*), intent(in) :: path
-end subroutine assert_directory_exists
-end interface
 
 contains
 
+
+subroutine unlink(filename)
+!! deletes file in Fortran standard manner.
+!! Silently continues if file doesn't exist or cannot be deleted.
+character(*), intent(in) :: filename
+integer :: i, u
+
+open(newunit=u, file=filename, iostat=i)
+close(u, status='delete', iostat=i)
+
+end subroutine unlink
+
+
 pure function get_suffix(filename)
+!! extracts path suffix, including the final "." dot
 character(*), intent(in) :: filename
 character(:), allocatable :: get_suffix
 
 get_suffix = filename(index(filename, '.', back=.true.) : len(filename))
 
 end function get_suffix
+
+
+subroutine assert_directory_exists(path)
+!! throw error if directory does not exist
+character(*), intent(in) :: path
+
+if (directory_exists(path)) return
+
+write(stderr,*) path // ' directory does not exist'
+error stop
+
+end subroutine assert_directory_exists
+
+
+logical function directory_exists(path) result(exists)
+!! check if directory exists, handling Intel compiler-specific behavior
+character(*), intent(in) :: path
+
+print *, 'check exist ', path
+@dir_exist@
+
+end function directory_exists
 
 
 subroutine assert_file_exists(path)
