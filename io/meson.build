@@ -1,8 +1,5 @@
 logging_lib = library('logging', 'logging.f90')
 
-append_exe = executable('test_logging', 'append_file.f90',
-  link_with : logging_lib)
-
 termio = executable('termio', 'terminal_io.f90')
 
 leading_zeros = executable('leading_zeros', 'leading_zeros.f90')
@@ -12,26 +9,34 @@ test('LeadingZeros', leading_zeros,
 notermsize = executable('notermsize', 'noenv.f90')
 test('NoTermSize', notermsize)
 
-readonly = executable('readonly', 'fileopen-readonly.f90')
-test('ReadOnly', readonly,
-  timeout: 10, suite: 'io')
-
 if not(os == 'windows' and fc.get_id() == 'pgi')
   null = executable('null', 'devnull.f90')
-  test('Nullfile', null,
-    timeout: 10, suite: 'io')
+  test('Nullfile', null, timeout: 10, suite: 'io')
 endif
 
+# --- pathlib
+conf_data = configuration_data()
 pathlib_src = os == 'windows' ? files('pathlib_windows.f90') : files('pathlib_unix.f90')
-pathlib_src += ['intel', 'intel-cl'].contains(fc.get_id()) ? files('path_exists_intel.f90') : files('path_exists.f90')
+if ['intel', 'intel-cl'].contains(fc.get_id())
+  conf_data.set('dir_exist', 'inquire(directory=path, exist=exists)')
+else
+  conf_data.set('dir_exist', 'inquire(file=path, exist=exists)')
+endif
+configure_file(input : 'pathlib.in.f90',
+               output : 'pathlib.f90',
+               configuration : conf_data)
 
 pathlib = library('pathlib',
-sources: ['pathlib.f90', pathlib_src])
-test_pathlib = executable('test_pathlib',
-  sources: 'test_pathlib.f90',
-  link_with: pathlib)
-test('pathlib', test_pathlib,
-  suite: 'io', timeout: 20)
+  sources: [meson.current_build_dir() / 'pathlib.f90', pathlib_src])
+test_pathlib = executable('test_pathlib', 'test_pathlib.f90', link_with: pathlib)
+test('pathlib', test_pathlib, suite: 'io', timeout: 20)
+
+
+readonly = executable('readonly', 'fileopen-readonly.f90', link_with: pathlib)
+test('ReadOnly', readonly, timeout: 10, suite: 'io')
+
+append_exe = executable('test_logging', 'append_file.f90',
+  link_with : [logging_lib, pathlib])
 
 # has to be run() test for detecting defective system realpath()
 if os == 'windows'
