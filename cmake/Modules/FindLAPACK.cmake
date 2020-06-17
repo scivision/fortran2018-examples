@@ -87,28 +87,28 @@ find_library(ATLAS_LIB
   NAMES atlas
   PATH_SUFFIXES atlas)
 
-pkg_check_modules(LAPACK_ATLAS lapack-atlas QUIET)
+pkg_check_modules(pc_atlas_lapack lapack-atlas QUIET)
 
 find_library(LAPACK_ATLAS
   NAMES ptlapack lapack_atlas lapack
   PATH_SUFFIXES atlas
-  HINTS ${LAPACK_ATLAS_LIBRARY_DIRS} ${LAPACK_ATLAS_LIBDIR})
+  HINTS ${pc_atlas_lapack_LIBRARY_DIRS} ${pc_atlas_lapack_LIBDIR})
 
-pkg_check_modules(LAPACK_BLAS blas-atlas QUIET)
+pkg_check_modules(pc_atlas_blas blas-atlas QUIET)
 
 find_library(BLAS_LIBRARY
   NAMES ptf77blas f77blas blas
   PATH_SUFFIXES atlas
-  HINTS ${LAPACK_BLAS_LIBRARY_DIRS} ${LAPACK_BLAS_LIBDIR})
+  HINTS ${pc_atlas_blas_LIBRARY_DIRS} ${pc_atlas_blas_LIBDIR})
 # === C ===
 find_library(BLAS_C_ATLAS
   NAMES ptcblas cblas
   PATH_SUFFIXES atlas
-  HINTS ${LAPACK_BLAS_LIBRARY_DIRS} ${LAPACK_BLAS_LIBDIR})
+  HINTS ${pc_atlas_blas_LIBRARY_DIRS} ${pc_atlas_blas_LIBDIR})
 
 find_path(LAPACK_INCLUDE_DIR
   NAMES cblas-atlas.h cblas.h clapack.h
-  HINTS ${LAPACK_BLAS_INCLUDE_DIRS} ${LAPACK_BLAS_LIBDIR})
+  HINTS ${pc_atlas_blas_INCLUDE_DIRS} ${pc_atlas_blas_LIBDIR})
 
 #===========
 if(LAPACK_ATLAS AND BLAS_C_ATLAS AND BLAS_LIBRARY AND ATLAS_LIB)
@@ -148,15 +148,21 @@ if(LAPACK95 IN_LIST LAPACK_FIND_COMPONENTS)
   endif()
 endif(LAPACK95 IN_LIST LAPACK_FIND_COMPONENTS)
 
-pkg_check_modules(LAPACK lapack-netlib QUIET)
-if(NOT LAPACK_FOUND)
-  pkg_check_modules(LAPACK lapack QUIET)  # Netlib on Cygwin, Homebrew and others
+set(_lapack_hints)
+if(CMAKE_Fortran_COMPILER_ID STREQUAL PGI)
+  get_filename_component(_pgi_path ${CMAKE_Fortran_COMPILER} DIRECTORY)
+  set(_lapack_hints ${_pgi_path}/../)
+endif()
+
+pkg_check_modules(pc_lapack lapack-netlib QUIET)
+if(NOT pc_lapack_FOUND)
+  pkg_check_modules(pc_lapack lapack QUIET)  # Netlib on Cygwin, Homebrew and others
 endif()
 find_library(LAPACK_LIB
   NAMES lapack
-  PATHS /usr/local/opt
-  HINTS ${LAPACK_LIBRARY_DIRS} ${LAPACK_LIBDIR}
-  PATH_SUFFIXES lapack lapack/lib)
+  PATHS /usr/local/opt  # homebrew
+  HINTS ${_lapack_hints} ${pc_lapack_LIBRARY_DIRS} ${pc_lapack_LIBDIR}
+  PATH_SUFFIXES lib lapack lapack/lib)
 if(LAPACK_LIB)
   list(APPEND LAPACK_LIBRARY ${LAPACK_LIB})
 else()
@@ -164,18 +170,18 @@ else()
 endif()
 
 if(LAPACKE IN_LIST LAPACK_FIND_COMPONENTS)
-  pkg_check_modules(LAPACKE lapacke QUIET)
+  pkg_check_modules(pc_lapacke lapacke QUIET)
   find_library(LAPACKE_LIBRARY
     NAMES lapacke
     PATHS /usr/local/opt
-    HINTS ${LAPACKE_LIBRARY_DIRS} ${LAPACKE_LIBDIR}
+    HINTS ${pc_lapacke_LIBRARY_DIRS} ${pc_lapacke_LIBDIR}
     PATH_SUFFIXES lapack lapack/lib)
 
   # lapack/include for Homebrew
   find_path(LAPACKE_INCLUDE_DIR
     NAMES lapacke.h
     PATHS /usr/local/opt
-    HINTS ${LAPACKE_INCLUDE_DIRS} ${LAPACKE_LIBDIR}
+    HINTS ${pc_lapacke_INCLUDE_DIRS} ${pc_lapacke_LIBDIR}
     PATH_SUFFIXES lapack lapack/include)
 
   if(LAPACKE_LIBRARY AND LAPACKE_INCLUDE_DIR)
@@ -192,15 +198,15 @@ if(LAPACKE IN_LIST LAPACK_FIND_COMPONENTS)
   mark_as_advanced(LAPACKE_LIBRARY LAPACKE_INCLUDE_DIR)
 endif(LAPACKE IN_LIST LAPACK_FIND_COMPONENTS)
 
-pkg_check_modules(BLAS blas-netlib QUIET)
-if(NOT BLAS_FOUND)
-  pkg_check_modules(BLAS blas QUIET)  # Netlib on Cygwin and others
+pkg_check_modules(pc_blas blas-netlib QUIET)
+if(NOT pc_blas_FOUND)
+  pkg_check_modules(pc_blas blas QUIET)  # Netlib on Cygwin and others
 endif()
 find_library(BLAS_LIBRARY
   NAMES refblas blas
   PATHS /usr/local/opt
-  HINTS ${BLAS_LIBRARY_DIRS} ${BLAS_LIBDIR}
-  PATH_SUFFIXES lapack lapack/lib blas)
+  HINTS ${_lapack_hints} ${pc_blas_LIBRARY_DIRS} ${pc_blas_LIBDIR}
+  PATH_SUFFIXES lib lapack lapack/lib blas)
 
 if(BLAS_LIBRARY)
   list(APPEND LAPACK_LIBRARY ${BLAS_LIBRARY})
@@ -225,22 +231,22 @@ endfunction(netlib_libs)
 #===============================
 function(openblas_libs)
 
-pkg_check_modules(LAPACK lapack-openblas QUIET)
+pkg_check_modules(pc_lapack lapack-openblas QUIET)
 find_library(LAPACK_LIBRARY
   NAMES lapack
-  HINTS ${LAPACK_LIBRARY_DIRS} ${LAPACK_LIBDIR}
+  HINTS ${pc_lapack_LIBRARY_DIRS} ${pc_lapack_LIBDIR}
   PATH_SUFFIXES openblas)
 
 
-pkg_check_modules(BLAS blas-openblas QUIET)
+pkg_check_modules(pc_blas blas-openblas QUIET)
 find_library(BLAS_LIBRARY
   NAMES openblas blas
-  HINTS ${BLAS_LIBRARY_DIRS} ${BLAS_LIBDIR}
+  HINTS ${pc_blas_LIBRARY_DIRS} ${pc_blas_LIBDIR}
   PATH_SUFFIXES openblas)
 
 find_path(LAPACK_INCLUDE_DIR
     NAMES cblas-openblas.h cblas.h f77blas.h openblas_config.h
-    HINTS ${LAPACK_INCLUDE_DIRS})
+    HINTS ${pc_lapack_INCLUDE_DIRS})
 
 if(LAPACK_LIBRARY AND BLAS_LIBRARY)
   list(APPEND LAPACK_LIBRARY ${BLAS_LIBRARY})
@@ -286,7 +292,7 @@ foreach(s ${_mkl_libs})
              lib/intel64/gcc4.7 ../tbb/lib/intel64/gcc4.7
              lib/intel64/vc_mt ../tbb/lib/intel64/vc_mt
              ../compiler/lib/intel64
-           HINTS ${MKL_LIBRARY_DIRS} ${MKL_LIBDIR}
+           HINTS ${pc_mkl_LIBRARY_DIRS} ${pc_mkl_LIBDIR}
            NO_DEFAULT_PATH)
 
   if(NOT LAPACK_${s}_LIBRARY)
@@ -301,11 +307,12 @@ if(NOT BUILD_SHARED_LIBS AND (UNIX AND NOT APPLE))
   set(LAPACK_LIB -Wl,--start-group ${LAPACK_LIB} -Wl,--end-group)
 endif()
 
+set(BLAS_LIBRARY PARENT_SCOPE)
 set(LAPACK_LIBRARY ${LAPACK_LIB} PARENT_SCOPE)
 set(LAPACK_INCLUDE_DIR
   $ENV{MKLROOT}/include
   $ENV{MKLROOT}/include/intel64/${_mkl_bitflag}lp64
-  ${MKL_INCLUDE_DIRS}
+  ${pc_mkl_INCLUDE_DIRS}
   PARENT_SCOPE)
 
 endfunction(find_mkl_libs)
@@ -359,7 +366,7 @@ if(MKL IN_LIST LAPACK_FIND_COMPONENTS)
       list(APPEND _mkl_libs tbb.lib)
     endif()
   elseif(OpenMP IN_LIST LAPACK_FIND_COMPONENTS)
-    pkg_check_modules(MKL mkl-${_mkltype}-${_mkl_bitflag}lp64-iomp QUIET)
+    pkg_check_modules(pc_mkl mkl-${_mkltype}-${_mkl_bitflag}lp64-iomp QUIET)
 
     set(_mp iomp5)
     if(WIN32)
@@ -367,7 +374,7 @@ if(MKL IN_LIST LAPACK_FIND_COMPONENTS)
     endif()
     list(APPEND _mkl_libs mkl_intel_thread mkl_core ${_mp})
   else()
-    pkg_check_modules(MKL mkl-${_mkltype}-${_mkl_bitflag}lp64-seq QUIET)
+    pkg_check_modules(pc_mkl mkl-${_mkltype}-${_mkl_bitflag}lp64-seq QUIET)
     list(APPEND _mkl_libs mkl_sequential mkl_core)
   endif()
 
@@ -418,6 +425,7 @@ find_package_handle_standard_args(LAPACK
   HANDLE_COMPONENTS)
 
 if(LAPACK_FOUND)
+  set(BLAS_LIBRARIES ${BLAS_LIBRARY})
   set(LAPACK_LIBRARIES ${LAPACK_LIBRARY})
   set(LAPACK_INCLUDE_DIRS ${LAPACK_INCLUDE_DIR})
 endif()
