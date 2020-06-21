@@ -1,6 +1,6 @@
 module contig
 
-use, intrinsic:: iso_fortran_env, only: sp=>real32, dp=>real64, i64=>int64
+use, intrinsic:: iso_fortran_env, only: int64, real64
 
 implicit none (type, external)
 
@@ -8,11 +8,13 @@ implicit none (type, external)
 contains
 
 subroutine timestwo_contig(x, contig)
-real(dp), contiguous, intent(inout) :: x(:,:)
+real, contiguous, intent(inout) :: x(:,:)
 logical, intent(out) :: contig
 
 #ifdef ISCONTIG
 contig = is_contiguous(x)
+#else
+contig = .false.
 #endif
 
 x = 2*x
@@ -20,11 +22,13 @@ end subroutine timestwo_contig
 
 
 subroutine timestwo(x, contig)
-real(dp), intent(inout) :: x(:,:)
+real, intent(inout) :: x(:,:)
 logical, intent(out), optional :: contig
 
 #ifdef ISCONTIG
 contig = is_contiguous(x)
+#else
+contig = .false.
 #endif
 
 x = 2*x
@@ -44,22 +48,27 @@ implicit none (type, external)
 
 integer, parameter :: N = 1000000
 
-real(dp) :: x(2,N) = 1.
-integer(i64) :: tic, toc, rate
-real(dp) :: t1, t2
+real, allocatable :: x(:,:)
+integer(int64) :: tic, toc, rate
+real(real64) :: t1, t2
 logical :: iscontig1, iscontig2
 !print *,compiler_version()  ! bug in flang 6 and PGI 18.10
+
+allocate(x(2,N))
+
+x = 1.
 
 #ifdef ISCONTIG
 call system_clock(tic)
 call timestwo(x(:, ::2), iscontig1)
 call system_clock(toc, rate)
-t1 = (toc-tic) / real(rate, dp)
+t1 = (toc-tic) / real(rate, real64)
 
 call system_clock(tic)
 call timestwo_contig(x(:, ::2), iscontig2)
 call system_clock(toc, rate)
-t2 = (toc-tic) / real(rate, dp)
+t2 = (toc-tic) / real(rate, real64)
+if (.not.iscontig2) error stop 'contiguous array not contiguous'
 
 print '(L2,A,F7.3,A)', iscontig1,' contig: ',t1,' sec.'
 print '(L2,A,F7.3,A)', iscontig2,' contig: ',t2,' sec.'
@@ -67,7 +76,7 @@ print '(L2,A,F7.3,A)', iscontig2,' contig: ',t2,' sec.'
 call system_clock(tic)
 call timestwo(x(:, ::2))
 call system_clock(toc, rate)
-t1 = (toc-tic) / real(rate, dp)
+t1 = (toc-tic) / real(rate, real64)
 
 print '(A,F7.3,A)', 'non-contig: ',t1,' sec.'
 #endif

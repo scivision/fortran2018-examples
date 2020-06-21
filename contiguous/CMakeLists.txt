@@ -4,4 +4,4 @@ if(f08contig)
   target_compile_definitions(contig PRIVATE ISCONTIG)
 endif()
 
-add_test(NAME Contiguous COMMAND contig)
+add_test(NAME contiguous COMMAND contig)
