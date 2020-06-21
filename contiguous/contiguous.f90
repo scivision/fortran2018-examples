@@ -4,32 +4,23 @@ use, intrinsic:: iso_fortran_env, only: int64, real64
 
 implicit none (type, external)
 
-
 contains
 
-subroutine timestwo_contig(x, contig)
+pure subroutine timestwo_contig(x, contig)
 real, contiguous, intent(inout) :: x(:,:)
 logical, intent(out) :: contig
 
-#ifdef ISCONTIG
 contig = is_contiguous(x)
-#else
-contig = .false.
-#endif
 
 x = 2*x
 end subroutine timestwo_contig
 
 
-subroutine timestwo(x, contig)
+pure subroutine timestwo(x, contig)
 real, intent(inout) :: x(:,:)
 logical, intent(out), optional :: contig
 
-#ifdef ISCONTIG
 contig = is_contiguous(x)
-#else
-contig = .false.
-#endif
 
 x = 2*x
 end subroutine timestwo
@@ -58,7 +49,6 @@ allocate(x(2,N))
 
 x = 1.
 
-#ifdef ISCONTIG
 call system_clock(tic)
 call timestwo(x(:, ::2), iscontig1)
 call system_clock(toc, rate)
@@ -72,12 +62,5 @@ if (.not.iscontig2) error stop 'contiguous array not contiguous'
 
 print '(L2,A,F7.3,A)', iscontig1,' contig: ',t1,' sec.'
 print '(L2,A,F7.3,A)', iscontig2,' contig: ',t2,' sec.'
-#else
-call system_clock(tic)
-call timestwo(x(:, ::2))
-call system_clock(toc, rate)
-t1 = (toc-tic) / real(rate, real64)
 
-print '(A,F7.3,A)', 'non-contig: ',t1,' sec.'
-#endif
 end program

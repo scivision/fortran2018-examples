@@ -17,7 +17,7 @@ os = host_machine.system()
 
 f18errorstop = fc.links('character :: b; error stop b; end', name: 'F2018 error stop')
 f08block = fc.links('block; end block; end', name : 'F2008 block')
-f08contig = fc.links('contig = is_contiguous([1,2,3]); end', name: 'F2008 contiguous')
+f08contig = fc.links('print*,is_contiguous([0,0]); end', name: 'F2008 contiguous')
 f08command = fc.links('integer foo; call execute_command_line(" ", cmdstat=foo); end', name : 'F2008 execute_command_line')
 f18random = fc.links('call random_init(.false., .false.); end', name:'F2018 random_init')
 
