@@ -20,8 +20,7 @@ if(LAPACK_LAPACK95_FOUND)
   configure_file(demo_gesvd.in.f90 demo_gesvd.f90)
 
   add_executable(svd ${CMAKE_CURRENT_BINARY_DIR}/demo_gesvd.f90)
-  target_link_libraries(svd PRIVATE ${LAPACK_LIBRARIES})
-  target_include_directories(svd PRIVATE ${LAPACK_INCLUDE_DIRS})
+  target_link_libraries(svd PRIVATE LAPACK::LAPACK)
   add_test(NAME Lapack95SVD COMMAND svd)
 endif()
 
@@ -32,7 +31,6 @@ endif()
 
 if(LAPACK_FOUND)
   add_executable(dsvd intel_dgesvd.f90)
-  target_link_libraries(dsvd PRIVATE ${LAPACK_LIBRARIES})
-  target_include_directories(dsvd PRIVATE ${LAPACK_INCLUDE_DIRS})
+  target_link_libraries(dsvd PRIVATE LAPACK::LAPACK)
   add_test(NAME LapackDsvd COMMAND dsvd)
 endif()

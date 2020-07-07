@@ -19,7 +19,19 @@ endif()
 # test name is Fortran compiler in FC
 # Note: ctest scripts cannot read cache variables like CMAKE_Fortran_COMPILER
 if(DEFINED ENV{FC})
-  set(CTEST_BUILD_NAME $ENV{FC})
+  set(FC $ENV{FC})
+  set(CTEST_BUILD_NAME ${FC})
+
+  if(NOT DEFINED ENV{CC})
+    # use same compiler for C and Fortran, which CMake might not do itself
+    if(FC STREQUAL ifort)
+      if(WIN32)
+        set(ENV{CC} icl)
+      else()
+        set(ENV{CC} icc)
+      endif()
+    endif()
+  endif()
 endif()
 
 if(NOT DEFINED CTEST_BUILD_CONFIGURATION)
@@ -45,18 +57,36 @@ if(NOT DEFINED CTEST_CMAKE_GENERATOR)
   endif()
 endif()
 
+# -- build and test
 ctest_start("Experimental" ${CTEST_SOURCE_DIRECTORY} ${CTEST_BINARY_DIRECTORY})
-if(NOT EXISTS ${CTEST_BINARY_DIRECTORY}/CMakeCache.txt)
-  ctest_configure(BUILD ${CTEST_BINARY_DIRECTORY} SOURCE ${CTEST_SOURCE_DIRECTORY} OPTIONS "${_opts}")
-endif()
-ctest_build(BUILD ${CTEST_BINARY_DIRECTORY} CONFIGURATION ${CTEST_BUILD_CONFIGURATION})
-ctest_test(BUILD ${CTEST_BINARY_DIRECTORY})
 
-# using ctest_submit makes error code 0 even if test(s) failed!
-if(DEFINED ENV{CI})
-  set(CI $ENV{CI})
+ctest_configure(
+  BUILD ${CTEST_BINARY_DIRECTORY}
+  SOURCE ${CTEST_SOURCE_DIRECTORY}
+  OPTIONS "${_opts}"
+  RETURN_VALUE return_code
+  CAPTURE_CMAKE_ERROR cmake_err)
+
+if(return_code EQUAL 0 AND cmake_err EQUAL 0)
+  ctest_build(
+    BUILD ${CTEST_BINARY_DIRECTORY}
+    CONFIGURATION ${CTEST_BUILD_CONFIGURATION}
+    RETURN_VALUE return_code
+    NUMBER_ERRORS Nerror
+    CAPTURE_CMAKE_ERROR cmake_err
+    )
+else()
+  message(STATUS "SKIP: ctest_build(): returncode: ${return_code}; CMake error code: ${cmake_err}")
 endif()
 
-if(NOT CI)
-  # ctest_submit()
+if(return_code EQUAL 0 AND Nerror EQUAL 0 AND cmake_err EQUAL 0)
+  ctest_test(
+  BUILD ${CTEST_BINARY_DIRECTORY}
+  RETURN_VALUE return_code
+  CAPTURE_CMAKE_ERROR ctest_err
+  )
+else()
+  message(STATUS "SKIP: ctest_test(): returncode: ${return_code}; CMake error code: ${cmake_err}")
 endif()
+
+# ctest_submit()

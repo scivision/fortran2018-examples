@@ -85,12 +85,14 @@ function(atlas_libs)
 
 find_library(ATLAS_LIB
   NAMES atlas
+  NAMES_PER_DIR
   PATH_SUFFIXES atlas)
 
 pkg_check_modules(pc_atlas_lapack lapack-atlas QUIET)
 
 find_library(LAPACK_ATLAS
   NAMES ptlapack lapack_atlas lapack
+  NAMES_PER_DIR
   PATH_SUFFIXES atlas
   HINTS ${pc_atlas_lapack_LIBRARY_DIRS} ${pc_atlas_lapack_LIBDIR})
 
@@ -98,11 +100,13 @@ pkg_check_modules(pc_atlas_blas blas-atlas QUIET)
 
 find_library(BLAS_LIBRARY
   NAMES ptf77blas f77blas blas
+  NAMES_PER_DIR
   PATH_SUFFIXES atlas
   HINTS ${pc_atlas_blas_LIBRARY_DIRS} ${pc_atlas_blas_LIBDIR})
 # === C ===
 find_library(BLAS_C_ATLAS
   NAMES ptcblas cblas
+  NAMES_PER_DIR
   PATH_SUFFIXES atlas
   HINTS ${pc_atlas_blas_LIBRARY_DIRS} ${pc_atlas_blas_LIBDIR})
 
@@ -137,6 +141,7 @@ if(LAPACK95 IN_LIST LAPACK_FIND_COMPONENTS)
 
   find_library(LAPACK95_LIBRARY
                  NAMES lapack95
+                 NAMES_PER_DIR
                  PATH_SUFFIXES lib
                  PATHS ${LAPACK95_ROOT})
 
@@ -160,6 +165,7 @@ if(NOT pc_lapack_FOUND)
 endif()
 find_library(LAPACK_LIB
   NAMES lapack
+  NAMES_PER_DIR
   PATHS /usr/local/opt  # homebrew
   HINTS ${_lapack_hints} ${pc_lapack_LIBRARY_DIRS} ${pc_lapack_LIBDIR}
   PATH_SUFFIXES lib lapack lapack/lib)
@@ -173,6 +179,7 @@ if(LAPACKE IN_LIST LAPACK_FIND_COMPONENTS)
   pkg_check_modules(pc_lapacke lapacke QUIET)
   find_library(LAPACKE_LIBRARY
     NAMES lapacke
+    NAMES_PER_DIR
     PATHS /usr/local/opt
     HINTS ${pc_lapacke_LIBRARY_DIRS} ${pc_lapacke_LIBDIR}
     PATH_SUFFIXES lapack lapack/lib)
@@ -204,6 +211,7 @@ if(NOT pc_blas_FOUND)
 endif()
 find_library(BLAS_LIBRARY
   NAMES refblas blas
+  NAMES_PER_DIR
   PATHS /usr/local/opt
   HINTS ${_lapack_hints} ${pc_blas_LIBRARY_DIRS} ${pc_blas_LIBDIR}
   PATH_SUFFIXES lib lapack lapack/lib blas)
@@ -234,6 +242,7 @@ function(openblas_libs)
 pkg_check_modules(pc_lapack lapack-openblas QUIET)
 find_library(LAPACK_LIBRARY
   NAMES lapack
+  NAMES_PER_DIR
   HINTS ${pc_lapack_LIBRARY_DIRS} ${pc_lapack_LIBDIR}
   PATH_SUFFIXES openblas)
 
@@ -241,6 +250,7 @@ find_library(LAPACK_LIBRARY
 pkg_check_modules(pc_blas blas-openblas QUIET)
 find_library(BLAS_LIBRARY
   NAMES openblas blas
+  NAMES_PER_DIR
   HINTS ${pc_blas_LIBRARY_DIRS} ${pc_blas_LIBDIR}
   PATH_SUFFIXES openblas)
 
@@ -286,7 +296,8 @@ endif()
 foreach(s ${_mkl_libs})
   find_library(LAPACK_${s}_LIBRARY
            NAMES ${s}
-           PATHS ENV MKLROOT ENV TBBROOT
+           NAMES_PER_DIR
+           PATHS ${MKLROOT} ENV TBBROOT
            PATH_SUFFIXES
              lib lib/intel64 lib/intel64_win
              lib/intel64/gcc4.7 ../tbb/lib/intel64/gcc4.7
@@ -296,7 +307,7 @@ foreach(s ${_mkl_libs})
            NO_DEFAULT_PATH)
 
   if(NOT LAPACK_${s}_LIBRARY)
-    message(WARNING "MKL component not found: " ${s})
+    message(STATUS "MKL component not found: " ${s})
     return()
   endif()
 
@@ -310,10 +321,10 @@ endif()
 set(BLAS_LIBRARY PARENT_SCOPE)
 set(LAPACK_LIBRARY ${LAPACK_LIB} PARENT_SCOPE)
 set(LAPACK_INCLUDE_DIR
-  $ENV{MKLROOT}/include
-  $ENV{MKLROOT}/include/intel64/${_mkl_bitflag}lp64
-  ${pc_mkl_INCLUDE_DIRS}
+  ${MKLROOT}/include
+  ${MKLROOT}/include/intel64/${_mkl_bitflag}lp64
   PARENT_SCOPE)
+ # ${pc_mkl_INCLUDE_DIRS} has garbage on Windows
 
 endfunction(find_mkl_libs)
 
@@ -335,7 +346,11 @@ find_package(PkgConfig QUIET)
 # ==== generic MKL variables ====
 
 if(MKL IN_LIST LAPACK_FIND_COMPONENTS)
-  list(APPEND CMAKE_PREFIX_PATH $ENV{MKLROOT}/bin/pkgconfig)
+  # we have to sanitize MKLROOT if it has Windows backslashes (\) otherwise it will break at build time
+  # double-quotes are necessary per CMake to_cmake_path docs.
+  file(TO_CMAKE_PATH "$ENV{MKLROOT}" MKLROOT)
+
+  list(APPEND CMAKE_PREFIX_PATH ${MKLROOT}/bin/pkgconfig)
 
   if(NOT WIN32)
     find_package(Threads)
@@ -424,10 +439,26 @@ find_package_handle_standard_args(LAPACK
   REQUIRED_VARS LAPACK_LIBRARY
   HANDLE_COMPONENTS)
 
+set(BLAS_LIBRARIES ${BLAS_LIBRARY})
+set(LAPACK_LIBRARIES ${LAPACK_LIBRARY})
+set(LAPACK_INCLUDE_DIRS ${LAPACK_INCLUDE_DIR})
+
 if(LAPACK_FOUND)
-  set(BLAS_LIBRARIES ${BLAS_LIBRARY})
-  set(LAPACK_LIBRARIES ${LAPACK_LIBRARY})
-  set(LAPACK_INCLUDE_DIRS ${LAPACK_INCLUDE_DIR})
+# need if _FOUND guard to allow project to autobuild; can't overwrite imported target even if bad
+  if(NOT TARGET BLAS::BLAS)
+    add_library(BLAS::BLAS INTERFACE IMPORTED)
+    set_target_properties(BLAS::BLAS PROPERTIES
+                          INTERFACE_LINK_LIBRARIES "${BLAS_LIBRARY}"
+                        )
+  endif()
+
+  if(NOT TARGET LAPACK::LAPACK)
+    add_library(LAPACK::LAPACK INTERFACE IMPORTED)
+    set_target_properties(LAPACK::LAPACK PROPERTIES
+                          INTERFACE_LINK_LIBRARIES "${LAPACK_LIBRARY}"
+                          INTERFACE_INCLUDE_DIRECTORIES "${LAPACK_INCLUDE_DIR}"
+                        )
+  endif()
 endif()
 
 mark_as_advanced(LAPACK_LIBRARY LAPACK_INCLUDE_DIR)
