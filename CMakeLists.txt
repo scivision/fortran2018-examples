@@ -52,6 +52,6 @@ add_subdirectory(system)
 include(FeatureSummary)
 add_feature_info(cxx_fs cxx17filesystem_ok "tests using C++17 filesystem")
 add_feature_info(Openmp hasOMP "tests using OpenMP")
-add_feature_info(mpi hasMPI "tests using MPI")
+add_feature_info(mpi MPI_Fortran_OK "tests using MPI")
 
 feature_summary(WHAT ALL)

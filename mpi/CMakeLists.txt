@@ -8,7 +8,7 @@ enable_testing()
 # Windows Intel 2019 MPI doesn't yet have mpi_f08
 
 include(mpi.cmake)
-if(NOT hasMPI)
+if(NOT MPI_Fortran_OK)
   return()
 endif()
 
