@@ -19,7 +19,7 @@ jobs:
       with:
         python-version: '3.x'
 
-    - run: pip install meson==0.53.2 ninja
+    - run: pip install meson ninja
 
     - run: meson setup build
       env:
@@ -27,7 +27,7 @@ jobs:
         CC: gcc-9
         CXX: g++-9
 
-    - run: ninja -C build
+    - run: meson compile -C build
     - uses: actions/upload-artifact@v1
       if: failure()
       with:
