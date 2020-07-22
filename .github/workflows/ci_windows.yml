@@ -21,10 +21,4 @@ jobs:
       with:
         python-version: '3.x'
 
-    - run: cinst -y ninja
-
     - run: ctest -S setup.cmake -VV
-      env:
-        FC: gfortran
-        CC: gcc
-        CXX: g++
