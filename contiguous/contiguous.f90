@@ -32,7 +32,6 @@ program test_contigous
 !! The ::2 indexing is not contiguous,
 !! but the contiguous parameter in timestwo_contig copies the array into contiguous temporary array,
 !! which could be faster for some operations
-use, intrinsic:: iso_fortran_env, only: compiler_version
 use contig
 
 implicit none (type, external)
@@ -43,7 +42,6 @@ real, allocatable :: x(:,:)
 integer(int64) :: tic, toc, rate
 real(real64) :: t1, t2
 logical :: iscontig1, iscontig2
-!print *,compiler_version()  ! bug in flang 6 and PGI 18.10
 
 allocate(x(2,N))
 

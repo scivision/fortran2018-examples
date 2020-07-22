@@ -1,4 +1,4 @@
 [wrap-git]
 directory = submodule
 url = https://github.com/scivision/fortran-submodule.git
-revision = v1.2.0
+revision = v1.2.2

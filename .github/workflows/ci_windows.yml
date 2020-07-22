@@ -6,7 +6,7 @@ on:
       - "**.f90"
       - "**.F90"
       - "**.cmake"
-      - "**.txt"
+      - "**/CMakeLists.txt"
       - ".github/workflows/ci_windows.yml"
 
 

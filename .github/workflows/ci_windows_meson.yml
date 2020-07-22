@@ -5,7 +5,7 @@ on:
     paths:
       - "**.f90"
       - "**.F90"
-      - "**.build"
+      - "**/meson.build"
       - ".github/workflows/ci_windows_meson.yml"
 
 
@@ -20,8 +20,7 @@ jobs:
         python-version: '3.x'
 
     - run: |
-        pip install meson
-        cinst -y ninja
+        pip install meson ninja
 
     - run: meson setup build
 

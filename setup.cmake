@@ -72,6 +72,18 @@ ctest_configure(
   RETURN_VALUE return_code
   CAPTURE_CMAKE_ERROR cmake_err)
 
+# if it's a generator or compiler mismatch, delete cache and try again
+if(NOT cmake_err EQUAL 0)
+  file(REMOVE ${CTEST_BINARY_DIRECTORY}/CMakeCache.txt)
+
+  ctest_configure(
+    BUILD ${CTEST_BINARY_DIRECTORY}
+    SOURCE ${CTEST_SOURCE_DIRECTORY}
+    OPTIONS "${_opts}"
+    RETURN_VALUE return_code
+    CAPTURE_CMAKE_ERROR cmake_err)
+endif()
+
 if(return_code EQUAL 0 AND cmake_err EQUAL 0)
   ctest_build(
     BUILD ${CTEST_BINARY_DIRECTORY}

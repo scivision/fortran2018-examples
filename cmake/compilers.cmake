@@ -6,6 +6,7 @@ include(CheckCSourceCompiles)
 include(CheckCSourceRuns)
 include(CheckFortranSourceCompiles)
 
+include(${CMAKE_CURRENT_LIST_DIR}/f18impnone.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/f08block.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/f08contig.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/f18errorstop.cmake)

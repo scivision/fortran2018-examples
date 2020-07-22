@@ -5,7 +5,7 @@ on:
     paths:
       - "**.f90"
       - "**.F90"
-      - "**.build"
+      - "**/meson.build"
       - ".github/workflows/ci_linux_meson.yml"
 
 
