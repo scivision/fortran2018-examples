@@ -1,8 +1,14 @@
 short_circuit = executable('shortcircuit', 'short_circuit.f90')
 # test is too unreliable--sometimes pass sometimes fail, that's the point.
 
-bitpat= executable('bitpat', 'bitpat.f90')
+bitpat = executable('bitpat', 'bitpat.f90')
 test('Bit Pattern', bitpat, suite: 'standard', timeout: 10)
+
+boolean_c = executable('boolean_c', 'logical_kind.c')
+test('boolean_c', boolean_c, suite : 'standard')
+
+logical_f = executable('logical_f', 'logical_kind.f90')
+test('logical_kind', logical_f, suite : 'standard')
 
 big_integer = executable('big_integer', 'big_integer.f90')
 test('BigInteger', big_integer, suite: 'standard', timeout: 5)
