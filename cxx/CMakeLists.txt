@@ -27,6 +27,7 @@ add_test(NAME CXXCallFortran COMMAND cxx_call_f)
 
 # -- Fortran calling C++
 add_library(cxx_lib OBJECT call_cxx.cxx)
+target_compile_features(cxx_lib PRIVATE cxx_std_11)
 
 add_executable(f_call_cxx f_call_cxx.f90)
 target_link_libraries(f_call_cxx PRIVATE cxx_lib)
