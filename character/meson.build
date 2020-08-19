@@ -25,3 +25,6 @@ test('Character Len', charlen, suite: 'char', timeout: 10)
 overwrite_stdout = executable('overwrite_stdout', 'overwrite_stdout.f90',
   link_with: sleep_std)
 test('Overwrite Stdout', overwrite_stdout, suite: 'char', timeout: 10)
+
+string_utils = executable('string_utils', 'string_utils.f90', 'test_string.f90')
+test('utils', string_utils, suite: 'char', timeout: 10)
