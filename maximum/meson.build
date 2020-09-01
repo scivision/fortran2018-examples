@@ -1,11 +1,7 @@
-project('max_check', 'fortran',
-default_options : ['default_library=static'])
-
 alpha = 'KgZ3zMXY2vBCqOgMGNkk5zJZ1MzXyHEE82KptTX0ozh9RdiG85UhBcYOzy1IoDZ'
 alpha2 = 'KgZ3zMXY2vBCqOgMGNkk5zJZ1MzXyHEE82KptTX0ozh9RdiG85UhBcYOzy1IoDX'
 
 fc = meson.get_compiler('fortran')
-
 
 fc.compiles('''
 module @0@
