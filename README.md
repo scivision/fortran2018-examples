@@ -53,30 +53,42 @@ meson test -C build
 
 ## Compilers
 
-### ifort Intel
+### Intel oneAPI
 
-Be sure you have the
-[Intel Parallel Studio Cluster Edition](https://www.scivision.dev/install-intel-compiler-icc-icpc-ifort/)
-that has `mpiifort`.
+[Intel oneAPI](https://www.scivision.dev/intel-oneapi-fortran-install)
+has essentially complete Fortran 2018 support.
+Use Intel compilers  (oneAPI or Parallel Studio) by:
 
-```bash
-FC=ifort CC=icc CXX=icpc cmake ..
-```
+
+* MacOS or Linux:
+
+    ```sh
+    FC=ifort CC=icc ctest -S setup.cmake -VV
+    ```
+* Windows
+
+    ```post
+    set FC=ifort
+    set CC=icl
+
+    ctest -S setup.cmake -VV
+    ```
 
 ### Flang / Clang
 
 [Flang](https://www.scivision.dev/flang-compiler-build-tips/) is a Free compiler.
 
 ```bash
-FC=flang CC=clang CXX=clang++ cmake ..
+FC=flang CC=clang ctest -S setup.cmake -VV
 ```
 
-### PGI
+### Nvidia HPC SDK
 
-[PGI](https://www.scivision.dev/install-pgi-free-compiler/) is available at no cost.
+[Nvidia HPC SDK](https://www.scivision.dev/install-nvidia-hpc-free-compiler)
+is available at no cost.
 
 ```bash
-FC=pgf90 CC=pgcc CXX=pgc++ cmake ..
+FC=nvfortran CC=nvcc ctest -S setup.cmake -VV
 ```
 
 ## Programs
@@ -98,25 +110,19 @@ Each directory has its own README and examples.
 
 ---
 
-* [cxx/](./cxx): standard Fortran C / C++ bindings
 * [real/](./real): Numerous examples dealing with practical features of real floating point numbers, including sentinel NaN and polymorphism.
 * [character/](./character): String handling is easy and performant in modern Fortran.
 * [standard/](./standard): advanced features that can be done with Fortran standard coding
 * [submodule](https://github.com/scivision/fortran-submodule): Fortran 2008 and CMake &ge; 3.12 enable even better large program architecture with `submodule`
 * [system/](./system): system (hardware) functionality accessible via Fortran
 
-## Companion libraries
+## Companion libraries and examples
 
+* [C / C++ interfaced with Fortran](https://github.com/scivision/fortran-c-cpp-interface)
 * [h5fortran](https://github.com/scivision/h5fortran)
 * [netcdf4fortran](https://github.com/scivision/netcdf4fortran)
 * [sparse-fortran](https://github.com/scivision/sparse-fortran)
 
-## Bugs
-
-### iso_fortran_env
-
-Flang 6 and PGI 18.10 seem to have a bug with `iso_fortran_env` that doesn't allow `compiler_version` and `compiler_options` to work unless `use iso_fortran_env` is ONLY used in `program` and NOT `module` *even if* using `only`.
-Thus, simple programs like `pragma.f90` work, but not the usual programs to print the compiler versions and options with Flang and PGI.
 
 ## Resources
 
@@ -152,7 +158,7 @@ Thus, simple programs like `pragma.f90` work, but not the usual programs to prin
 * [IBM XL](https://www-01.ibm.com/support/docview.wss?uid=swg27036672)
 * [Intel Fortran](https://software.intel.com/en-us/fortran-compiler-developer-guide-and-reference)
 * [NAG Fortran](https://www.nag.com/nagware/np/r62_doc/manual/compiler.html)
-* [PGI Fortran](https://www.pgroup.com/resources/docs/18.10/x86/pvf-user-guide/index.htm)
+* [Nvidia HPC SDK](https://docs.nvidia.com/hpc-sdk/index.html)
 
 ### Surveys
 
