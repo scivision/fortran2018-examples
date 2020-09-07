@@ -3,31 +3,13 @@ program call_python
 !! this technique works in general, as Fortran will crash if calling a non-existant program
 !! without exitstat= and/or cmdstat= parameter
 
-use os_detect, only: getos
-use, intrinsic:: iso_fortran_env, only: stderr=>error_unit
-
 implicit none (type, external)
 
+character(:), allocatable :: cmd
+character(*), parameter :: exe='python'
 
-integer :: ierr, istat
-character(:), allocatable :: cmd, oscmd
-character(*), parameter :: exe='python3'
+cmd = "import os; print(f'{os.cpu_count()} CPUs detected')"
 
-cmd = "import psutil; print(f'{psutil.virtual_memory().available} MB RAM free')"
-
-select case (getos())
-case('windows')
-  oscmd = 'where '//exe
-case('unix')
-  oscmd = 'which '//exe
-case default
-  error stop 'unknown os'
-end select
-
-call execute_command_line(oscmd, cmdstat=ierr, exitstat=istat)
-if (ierr/=0 .or. istat /= 0) error stop 'python not found'
-
-call execute_command_line(exe//' -c "'//cmd//'"', cmdstat=ierr, exitstat=istat)
-if (ierr/=0 .or. istat/=0) write(stderr,*) 'Python psutil not available'
+call execute_command_line(exe//' -c "'//cmd//'"')
 
 end program

@@ -15,18 +15,14 @@ test('Compiler version logging', complog,
   suite: 'system',
   timeout: 15)
 
-playsound_exe = executable('playsound', 'play_sound.f90')
 if find_program('ffplay', required: false).found()
-  test('PlaySound', playsound_exe,
+  test('PlaySound',
+    executable('playsound', 'play_sound.f90'),
     args: files('bell.aac'),
     suite: 'system',
     timeout: 15)
 endif
 
-if run_command(['python', '-c', 'import psutil']).returncode() == 0
-  callpython_exe = executable('callpython', 'call_python_script.f90',
-    link_with : osdet)
-  test('call python', callpython_exe,
-    suite: 'system',
-    timeout: 10)
-endif
+test('call python',
+executable('callpython', 'call_python_script.f90'),
+suite: 'system', timeout: 15)
