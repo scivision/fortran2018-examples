@@ -1,8 +1,7 @@
 project('Fortran2018examples', 'fortran', 'c',
   version : '1.2.3',
   meson_version: '>= 0.52.0',
-  default_options : ['default_library=static', 'buildtype=release', 'warning_level=3',
-                     'cpp_std=c++11'])
+  default_options : ['default_library=static', 'buildtype=release', 'warning_level=3'])
 
 realbits = get_option('realbits')
 
@@ -16,7 +15,6 @@ subdir('block')
 subdir('character')
 subdir('coarray')
 subdir('contiguous')
-subdir('cxx')
 subdir('debug')
 subdir('io')
 subdir('lapack95')

@@ -5,7 +5,7 @@ if(NOT CMAKE_BUILD_TYPE)
 endif()
 
 project(Fortran2018Examples
-LANGUAGES C CXX Fortran
+LANGUAGES C Fortran
 DESCRIPTION "Example of using modern Fortran syntax"
 VERSION 1.2.3)
 
@@ -24,7 +24,6 @@ add_subdirectory(character)
 add_subdirectory(coarray)
 add_subdirectory(contiguous)
 add_subdirectory(io)
-add_subdirectory(cxx)
 add_subdirectory(debug)
 add_subdirectory(lapack95)
 add_subdirectory(maximum)
