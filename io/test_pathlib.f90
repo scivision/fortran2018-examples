@@ -1,4 +1,4 @@
-use, intrinsic:: iso_fortran_env, only: stderr=>error_unit
+program test_pathlib
 use pathlib, only: copyfile, mkdir, expanduser, home
 implicit none (type, external)
 
@@ -13,10 +13,7 @@ subroutine test_home()
 character(:), allocatable :: h
 
 h = home()
-if (len(h) < 2) then
-  write(stderr,'(A)') h
-  error stop 'failed to obtain home directory'
-endif
+if (len(h) < 2) error stop 'failed to obtain home directory: ' // h
 
 end subroutine test_home
 
@@ -29,11 +26,7 @@ character(*), intent(in) :: path
 
 expanded = expanduser(path)
 
-if (len_trim(expanded) <= len_trim(path)) then
-  write(stderr,'(A)') path
-  write(stderr,'(A)') expanded
-  error stop 'did not expand path'
-endif
+if (len_trim(expanded) <= len_trim(path)) error stop 'did not expand path' // path // ' ' // expanded
 
 print *,'OK: expanduser'
 
@@ -56,10 +49,7 @@ write(u,'(A)') 'bar'
 close(u)
 
 inquire(file=fpath, exist=exists)
-if(.not.exists) then
-  write(stderr,'(A)') fpath // ' failed to be created'
-  error stop
-endif
+if(.not.exists) error stop fpath // ' failed to be created'
 
 print *, 'OK: mkdir()'
 end subroutine test_mkdir

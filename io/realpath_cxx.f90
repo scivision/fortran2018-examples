@@ -44,19 +44,15 @@ end module abspath
 
 program demo
 
-use, intrinsic :: iso_fortran_env, only : stderr=>error_unit
 use abspath, only : realpath
 
-implicit none
+implicit none (type, external)
 
 character(*), parameter :: rel = '..'
 character(:), allocatable :: canon
 
 canon = realpath(rel)
 
-if (canon == rel) then
-  write(stderr,*) rel // ' was not canonicalized ' // canon
-  error stop
-endif
+if (canon == rel) error stop rel // ' was not canonicalized ' // canon
 
 end program

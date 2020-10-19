@@ -3,10 +3,8 @@ test('Pragma', proc,
   suite: 'overloading',
   timeout: 10)
 
-if f18errorstop
-  f18es_exe = executable('f18es', 'f2018errorstop.f90')
-  test('F18errorstop', f18es_exe,
-    should_fail: true,
-    suite: 'overloading',
-    timeout: 5)
-endif
+f18es_exe = executable('f18es', 'f2018errorstop.f90')
+test('F18errorstop', f18es_exe,
+  should_fail: true,
+  suite: 'overloading',
+  timeout: 5)

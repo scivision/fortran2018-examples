@@ -2,7 +2,7 @@ program test_pi
 !! implements calculation:
 !! $$ \pi = \int^1_{-1} \frac{dx}{\sqrt{1-x^2}}
 
-use, intrinsic:: iso_fortran_env, only: dp=>real64, int64, stderr=>error_unit
+use, intrinsic:: iso_fortran_env, only: dp=>real64, int64
 implicit none (type, external)
 
 integer, parameter :: wp = dp
@@ -42,11 +42,7 @@ do i = im, Ni-1, num_images() ! Each image works on a subset of the problem
 !  print *,x,f,psum
 end do
 
-call co_sum(psum, stat=ierr)
-if (ierr /= 0) then
-  write(stderr,*) 'error stop', ierr
-  error stop
-endif
+call co_sum(psum)
 
 if (im == 1)  then
   print *,'pi:',pi,'  iterated pi: ',psum

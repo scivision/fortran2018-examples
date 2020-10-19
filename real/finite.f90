@@ -1,6 +1,6 @@
 program finiteness
 
-  use, intrinsic:: ieee_arithmetic
+use, intrinsic:: ieee_arithmetic
 use, intrinsic:: iso_fortran_env, only: stderr=>error_unit, sp=>real32, dp=>real64, qp=>real128
 
 use assert, only: isclose, assert_isclose

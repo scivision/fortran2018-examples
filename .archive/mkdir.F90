@@ -1,9 +1,8 @@
 module std_mkdir
 !! C binding to C-stdlib mkdir()
 use, intrinsic:: iso_c_binding, only: c_int, c_char, C_NULL_CHAR
-use, intrinsic:: iso_fortran_env, only: stderr=>error_unit
 
-implicit none
+implicit none (type, external)
 
 logical, parameter :: debug = .false.
 
@@ -94,7 +93,7 @@ end module std_mkdir
 program test_mkdir
 !! just for testing
 use std_mkdir
-implicit none
+implicit none (type, external)
 
 !> demo
 character(4096) :: buf
@@ -115,8 +114,6 @@ write(u,'(A)') 'bar'
 close(u)
 
 inquire(file=fpath, exist=exists)
-if(.not.exists) then
-  write(stderr,*) fpath // ' failed to be created'
-  error stop
-endif
+if(.not.exists) error stop fpath // ' failed to be created'
+
 end program

@@ -142,7 +142,7 @@ endif
 
 if (L==0 .or. istat /= 0) then
   write(stderr,*) 'ERROR: could not determine home directory from env variable'
-  if (istat==1) write(stderr,*) 'env variable does not exist.'
+  if (istat==1) write(stderr,*) 'environment variable does not exist.'
   home = ""
 else
   home = trim(buf) // '/'

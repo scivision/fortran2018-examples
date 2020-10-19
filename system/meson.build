@@ -5,11 +5,6 @@ test('color', color_exe,
 
 osdet = library('osdet', 'os_detect.f90')
 
-gitrev = executable('gitrev', 'gitrev.f90')
-test('Git revision log', gitrev,
-  suite: 'system',
-  timeout: 15)
-
 complog = executable('complog', 'compiler_log.f90')
 test('Compiler version logging', complog,
   suite: 'system',

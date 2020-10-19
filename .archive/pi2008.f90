@@ -1,7 +1,8 @@
+program pi2008
 !! implements calculation:
 !! $$ \pi = \int^1_{-1} \frac{dx}{\sqrt{1-x^2}}
 
-use, intrinsic:: iso_fortran_env, only: dp=>real64, int64, stderr=>error_unit
+use, intrinsic:: iso_fortran_env, only: dp=>real64, int64
 implicit none
 
 integer, parameter :: wp = dp

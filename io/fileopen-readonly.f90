@@ -1,7 +1,6 @@
 program open_ro
 !! NOTE: chmod is non-standard, and will crash ifort runtime.
 
-use, intrinsic :: iso_fortran_env, only: stderr=>error_unit
 use pathlib, only : unlink
 
 implicit none (type, external)

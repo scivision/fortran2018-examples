@@ -54,9 +54,6 @@ print '(I3,A,3ES20.12)',storage_size(s64),' bits: error mag: ',e64
 
 maxerr=maxval(abs(e64))
 
-if (maxerr > 1e-7_dp) then
-  write(stderr,*) 'excessive singular value error'
-  error stop
-endif
+if (maxerr > 1e-7_dp) error stop 'excessive singular value error'
 
 end program

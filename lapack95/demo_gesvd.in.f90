@@ -2,7 +2,7 @@ program demo_gesvd
 
 @lapack95_use@
 
-use,intrinsic:: iso_fortran_env, only: sp=>real32, dp=>real64, compiler_version, stderr=>error_unit
+use,intrinsic:: iso_fortran_env, only: sp=>real32, dp=>real64, compiler_version
 
 implicit none (type, external)
 

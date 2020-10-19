@@ -55,28 +55,21 @@ end module canonical
 
 program demo
 
-use, intrinsic :: iso_fortran_env, only : stderr=>error_unit
 use canonical, only : realpath
 
-implicit none
+implicit none (type, external)
 
 character(:), allocatable :: canon
 
 ! -- test directory
 canon = realpath('..')
 
-if (len_trim(canon) < 20) then
-  write(stderr,*) 'ERROR: directory ' // canon // ' was not canonicalized '
-  error stop
-endif
+if (len_trim(canon) < 20) error stop 'ERROR: directory ' // canon // ' was not canonicalized '
 
 ! -- test file
 canon = realpath('../foo.txt')
 
-if (len_trim(canon) < 28) then
-  write(stderr,*) 'ERROR: file ' // canon // ' was not canonicalized '
-  error stop
-endif
+if (len_trim(canon) < 28) error stop 'ERROR: file ' // canon // ' was not canonicalized '
 
 print *, canon
 

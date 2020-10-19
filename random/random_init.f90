@@ -1,7 +1,5 @@
 submodule (random) randinit
 
-use, intrinsic:: iso_fortran_env, only: stderr=>error_unit
-
 implicit none (type, external)
 
 contains
@@ -16,17 +14,10 @@ allocate(seed(n),check(n))
 open(newunit=u, file='/dev/urandom', access="stream", &
      form="unformatted", action="read", status="old", iostat=ios)
 
-if (ios==0) then
-  read(u,iostat=ios) seed
-  close(u)
-endif
+if (ios/=0) return
 
-if (ios/=0) then
-  write(stderr,*) 'falling back to internal random number generator'
-  do i = 1,n
-    seed(i) = randint(-1073741823, 1073741823)
-  enddo
-endif
+read(u,iostat=ios) seed
+close(u)
 
 call random_seed(put=seed)
 !print *,'seed: ',seed    ! for debug/test

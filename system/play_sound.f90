@@ -2,10 +2,7 @@ program play_sound
 !! recommend using all lower case filenames and no spaces.
 !! plays sound in Fortran 2003+
 
-use, intrinsic :: iso_fortran_env, only : stderr=>error_unit
-
 implicit none (type, external)
-
 
 ! configure ffplay -- could make if/else to allow other players
 character(*),parameter :: playexe='ffplay'
@@ -23,10 +20,7 @@ fn = trim(argv)
 
 inquire(file=fn, exist=fexist)
 
-if (.not. fexist) then
-  write(stderr,*) 'did not find FILE ' // fn
-  error stop
-endif
+if (.not. fexist) error stop 'did not find FILE ' // fn
 
 pcmd = playexe//' '//cmdopts//' '//trim(fn)
 

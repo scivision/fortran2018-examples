@@ -1,4 +1,5 @@
-use, intrinsic:: iso_fortran_env, only: int64, wp=>real64, stderr=>error_unit
+program devnull
+use, intrinsic:: iso_fortran_env, only: int64, wp=>real64
 implicit none (type, external)
 ! Benchmarks platform independent null file writing behavior
 ! NUL: works on Windows 10
@@ -40,10 +41,7 @@ endif
 !---  BENCHMARK NUL -----------
 ! do NOT use status='old' as this can fail on various OS, compiler including PGI + Windows
 open(newunit=u,file=nullfile,iostat=ios, action='write')
-if (ios /= 0) then
-  write(stderr,*) 'could not open NULL file: ' // nullfile
-  error stop
-endif
+if (ios /= 0) error stop 'could not open NULL file: ' // nullfile
 
 tnul = writetime(u,Nrun)
 print '(A10,F10.3,A)','nul: ',tnul,' ms'

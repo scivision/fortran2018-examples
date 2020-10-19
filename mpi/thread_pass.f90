@@ -1,7 +1,7 @@
 program mpi_pass
 !! passes data between two threads
 !!  Author:  John Burkardt
-use, intrinsic :: iso_fortran_env, only: sp=>real32, stderr=>error_unit, compiler_version
+use, intrinsic :: iso_fortran_env, only: sp=>real32, compiler_version
 use mpi, only : MPI_STATUS_SIZE, mpi_comm_world, mpi_init, mpi_get_count, &
   mpi_real, mpi_any_source, mpi_any_tag, mpi_source, mpi_tag, mpi_comm_size
 

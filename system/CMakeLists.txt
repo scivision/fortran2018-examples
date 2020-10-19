@@ -7,9 +7,6 @@ add_test(NAME system:Color COMMAND color)
 
 add_library(osdet OBJECT os_detect.f90)
 
-add_executable(gitrev gitrev.f90)
-add_test(NAME system:Git COMMAND gitrev)
-
 add_executable(complog compiler_log.f90)
 add_test(NAME system:Compiler COMMAND complog)
 
