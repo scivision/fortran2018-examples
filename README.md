@@ -17,9 +17,9 @@ Based on widespread compiler support and beneficial features, most new and upgra
 
 ## Prereq
 
-* Linux: `apt install cmake gfortran libhdf5-dev libopenmpi-dev libcoarrays-dev open-coarrays-bin`
-* Mac: `brew install gcc cmake open-mpi opencoarrays`
-* Windows MSYS2: `pacman -S mingw-w64-x86_64-gcc-fortran mingw-w64-x86_64-msmpi` and install [Microsoft MS-MPI](https://docs.microsoft.com/en-us/message-passing-interface/microsoft-mpi-release-notes)
+* Linux: `apt install cmake gfortran`
+* Mac: `brew install gcc cmake`
+* Windows MSYS2: `pacman -S mingw-w64-x86_64-gcc-fortran`
 
 ## Build
 
@@ -40,7 +40,7 @@ cmake -B build
 cmake --build build --parallel
 
 cd build
-ctest --parallel --output-on-failure
+ctest --parallel 4 --output-on-failure
 ```
 
 ### Meson
@@ -56,7 +56,7 @@ meson test -C build
 ### Intel oneAPI
 
 [Intel oneAPI](https://www.scivision.dev/intel-oneapi-fortran-install)
-has essentially complete Fortran 2018 support.
+has complete Fortran 2018 support.
 Use Intel compilers  (oneAPI or Parallel Studio) by:
 
 
@@ -74,23 +74,6 @@ Use Intel compilers  (oneAPI or Parallel Studio) by:
     ctest -S setup.cmake -VV
     ```
 
-### Flang / Clang
-
-[Flang](https://www.scivision.dev/flang-compiler-build-tips/) is a Free compiler.
-
-```bash
-FC=flang CC=clang ctest -S setup.cmake -VV
-```
-
-### Nvidia HPC SDK
-
-[Nvidia HPC SDK](https://www.scivision.dev/install-nvidia-hpc-free-compiler)
-is available at no cost.
-
-```bash
-FC=nvfortran CC=nvcc ctest -S setup.cmake -VV
-```
-
 ## Programs
 
 Each directory has its own README and examples.
@@ -99,6 +82,7 @@ Each directory has its own README and examples.
 * [block/](./block): Highly useful `block` element is demonstrated
 * [coarray/](./coarray): modern Fortran is the only major compiled language standard with intrinsic massively parallel arrays.
 * [contiguous/](./contiguous): Fortran 2008 `contiguous` array examples, including Fortran preprocessor with modern CMake.
+* [git/](./git) Git tracability
 * [mpi/](./mpi): MPI parallel computing examples
 * [namelist/](./namelist): Fortran 90 / 2003 Namelist parsing -- native text config files for Fortran
 * [openmp/](./openmp): OpenMP threading exmaples
