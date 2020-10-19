@@ -9,7 +9,9 @@ execute_process(COMMAND ${GIT_EXECUTABLE} rev-parse --short HEAD
 OUTPUT_VARIABLE git_rev OUTPUT_STRIP_TRAILING_WHITESPACE)
 execute_process(COMMAND ${GIT_EXECUTABLE} status --porcelain
 OUTPUT_VARIABLE git_porcelain OUTPUT_STRIP_TRAILING_WHITESPACE)
+if(git_porcelain)
 string(REGEX REPLACE "\n" " " git_porcelain ${git_porcelain})
+endif(git_porcelain)
 else()
 set(git_branch)
 set(git_rev)
