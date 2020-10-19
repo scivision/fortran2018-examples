@@ -16,6 +16,7 @@ include(${CMAKE_CURRENT_LIST_DIR}/f08kind.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/f18prop.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/f08command.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/f03ieee.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/f03utf8.cmake)
 
 # compiler feature checks BEFORE setting flags to avoid intermittant failures in general
 

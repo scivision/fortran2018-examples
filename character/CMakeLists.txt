@@ -14,9 +14,15 @@ add_test(NAME char:SplitString COMMAND $<TARGET_FILE:split>)
 add_executable(str2int str2int.f90)
 add_test(NAME char:Str2Int COMMAND $<TARGET_FILE:str2int>)
 
+if(f03utf8)
+add_executable(utf8 utf8.f90)
+add_test(NAME char:utf8 COMMAND $<TARGET_FILE:utf8>)
+else()
+message(STATUS "SKIP: UTF8 ${CMAKE_Fortran_COMPILER_ID} ${CMAKE_Fortran_COMPILER_VERSION}")
+endif()
 
 add_executable(printorwrite print_vs_write.f90)
-add_test(NAME char:UTF8 COMMAND $<TARGET_FILE:printorwrite>)
+add_test(NAME char:print_utf8 COMMAND $<TARGET_FILE:printorwrite>)
 
 add_executable(special_char special_characters.f90)
 add_test(NAME char:Special COMMAND $<TARGET_FILE:special_char>)
