@@ -17,7 +17,7 @@ endif(_porcelain)
 else()
 set(git_branch)
 set(git_rev)
-set(git_porcelain)
+set(git_porcelain .false.)
 endif()
 
 message(STATUS "${PROJECT_NAME}  git revision: ${git_rev}  git_branch: ${git_branch}  git_porcelain: ${git_porcelain}")
