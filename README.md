@@ -19,7 +19,7 @@ Based on widespread compiler support and beneficial features, most new and upgra
 
 * Linux: `apt install cmake gfortran`
 * Mac: `brew install gcc cmake`
-* Windows MSYS2: `pacman -S mingw-w64-x86_64-gcc-fortran`
+* Windows MSYS2: `pacman -S mingw-w64-x86_64-gcc-fortran mingw-w64-x86_64-cmake`
 
 ## Build
 
