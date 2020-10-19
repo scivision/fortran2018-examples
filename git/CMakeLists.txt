@@ -8,12 +8,12 @@ OUTPUT_VARIABLE git_branch OUTPUT_STRIP_TRAILING_WHITESPACE)
 execute_process(COMMAND ${GIT_EXECUTABLE} rev-parse --short HEAD
 OUTPUT_VARIABLE git_rev OUTPUT_STRIP_TRAILING_WHITESPACE)
 
-execute_process(COMMAND ${GIT_EXECUTABLE} status --porcelain
-OUTPUT_VARIABLE git_porcelain OUTPUT_STRIP_TRAILING_WHITESPACE)
 set(git_porcelain .true.)
-if(git_porcelain)
+execute_process(COMMAND ${GIT_EXECUTABLE} status --porcelain
+OUTPUT_VARIABLE _porcelain OUTPUT_STRIP_TRAILING_WHITESPACE)
+if(_porcelain)
   set(git_porcelain .false.)
-endif(git_porcelain)
+endif(_porcelain)
 else()
 set(git_branch)
 set(git_rev)

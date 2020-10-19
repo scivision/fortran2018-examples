@@ -10,7 +10,7 @@ branch = "@git_branch@"
 rev = "@git_rev@"
 porcelain = @git_porcelain@
 
-print *, "MyProgram  git_version:", git_version, " git_branch: ", branch, " git revision: ", rev, 'git_porcelain', porcelain
+print *, "MyProgram  git_version:", git_version, " git_branch: ", branch, " git revision: ", rev, ' git_porcelain', porcelain
 !! could also use this to set a warning or other logical flag
 
 end program

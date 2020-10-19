@@ -7,7 +7,7 @@ endif()
 project(Fortran2018Examples
 LANGUAGES C Fortran
 DESCRIPTION "Example of using modern Fortran syntax"
-VERSION 1.2.3)
+VERSION 1.3.1)
 
 enable_testing()
 
