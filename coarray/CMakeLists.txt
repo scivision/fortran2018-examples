@@ -37,11 +37,11 @@ add_executable(coarray_hello helloworld.f90)
 target_link_libraries(coarray_hello PRIVATE Coarray::Coarray)
 add_test(NAME coarray:Hello
          COMMAND ${MPIEXEC_EXECUTABLE} ${MPIEXEC_NUMPROC_FLAG} ${MPIEXEC_MAX_NUMPROCS} $<TARGET_FILE:coarray_hello>)
-set_tests_properties(coarray:Hello PROPERTIES RUN_SERIAL TRUE)
+set_tests_properties(coarray:Hello PROPERTIES RESOURCE_LOCK cpu_mpi)
 
 
 add_executable(coarray_pi pi.f90)
 target_link_libraries(coarray_pi PRIVATE Coarray::Coarray)
 add_test(NAME coarray:pi_sum
         COMMAND ${MPIEXEC_EXECUTABLE} ${MPIEXEC_NUMPROC_FLAG} ${MPIEXEC_MAX_NUMPROCS} $<TARGET_FILE:coarray_pi>)
-set_tests_properties(coarray:pi_sum PROPERTIES RUN_SERIAL TRUE)
+set_tests_properties(coarray:pi_sum PROPERTIES RESOURCE_LOCK cpu_mpi)
