@@ -88,7 +88,7 @@ find_library(ATLAS_LIB
   NAMES_PER_DIR
   PATH_SUFFIXES atlas)
 
-pkg_check_modules(pc_atlas_lapack lapack-atlas QUIET)
+pkg_check_modules(pc_atlas_lapack lapack-atlas)
 
 find_library(LAPACK_ATLAS
   NAMES ptlapack lapack_atlas lapack
@@ -96,7 +96,7 @@ find_library(LAPACK_ATLAS
   PATH_SUFFIXES atlas
   HINTS ${pc_atlas_lapack_LIBRARY_DIRS} ${pc_atlas_lapack_LIBDIR})
 
-pkg_check_modules(pc_atlas_blas blas-atlas QUIET)
+pkg_check_modules(pc_atlas_blas blas-atlas)
 
 find_library(BLAS_LIBRARY
   NAMES ptf77blas f77blas blas
@@ -159,10 +159,8 @@ if(CMAKE_Fortran_COMPILER_ID STREQUAL PGI)
   set(_lapack_hints ${_pgi_path}/../)
 endif()
 
-pkg_check_modules(pc_lapack lapack-netlib QUIET)
-if(NOT pc_lapack_FOUND)
-  pkg_check_modules(pc_lapack lapack QUIET)  # Netlib on Cygwin, Homebrew and others
-endif()
+pkg_search_module(pc_lapack lapack lapack-netlib)
+
 find_library(LAPACK_LIB
   NAMES lapack
   NAMES_PER_DIR
@@ -176,7 +174,7 @@ else()
 endif()
 
 if(LAPACKE IN_LIST LAPACK_FIND_COMPONENTS)
-  pkg_check_modules(pc_lapacke lapacke QUIET)
+  pkg_check_modules(pc_lapacke lapacke)
   find_library(LAPACKE_LIBRARY
     NAMES lapacke
     NAMES_PER_DIR
@@ -205,9 +203,9 @@ if(LAPACKE IN_LIST LAPACK_FIND_COMPONENTS)
   mark_as_advanced(LAPACKE_LIBRARY LAPACKE_INCLUDE_DIR)
 endif(LAPACKE IN_LIST LAPACK_FIND_COMPONENTS)
 
-pkg_check_modules(pc_blas blas-netlib QUIET)
+pkg_check_modules(pc_blas blas-netlib)
 if(NOT pc_blas_FOUND)
-  pkg_check_modules(pc_blas blas QUIET)  # Netlib on Cygwin and others
+  pkg_check_modules(pc_blas blas)  # Netlib on Cygwin and others
 endif()
 find_library(BLAS_LIBRARY
   NAMES refblas blas
@@ -239,7 +237,7 @@ endfunction(netlib_libs)
 #===============================
 function(openblas_libs)
 
-pkg_check_modules(pc_lapack lapack-openblas QUIET)
+pkg_check_modules(pc_lapack lapack-openblas)
 find_library(LAPACK_LIBRARY
   NAMES lapack
   NAMES_PER_DIR
@@ -247,7 +245,7 @@ find_library(LAPACK_LIBRARY
   PATH_SUFFIXES openblas)
 
 
-pkg_check_modules(pc_blas blas-openblas QUIET)
+pkg_check_modules(pc_blas blas-openblas)
 find_library(BLAS_LIBRARY
   NAMES openblas blas
   NAMES_PER_DIR
@@ -341,7 +339,7 @@ if(NOT (OpenBLAS IN_LIST LAPACK_FIND_COMPONENTS
   endif()
 endif()
 
-find_package(PkgConfig QUIET)
+find_package(PkgConfig)
 
 # ==== generic MKL variables ====
 
@@ -350,7 +348,7 @@ if(MKL IN_LIST LAPACK_FIND_COMPONENTS)
   # double-quotes are necessary per CMake to_cmake_path docs.
   file(TO_CMAKE_PATH "$ENV{MKLROOT}" MKLROOT)
 
-  list(APPEND CMAKE_PREFIX_PATH ${MKLROOT}/bin/pkgconfig)
+  list(APPEND CMAKE_PREFIX_PATH ${MKLROOT}/tools/pkgconfig)
 
   if(NOT WIN32)
     find_package(Threads)
@@ -370,7 +368,7 @@ if(MKL IN_LIST LAPACK_FIND_COMPONENTS)
 
   unset(_mkl_libs)
   if(LAPACK95 IN_LIST LAPACK_FIND_COMPONENTS)
-    list(APPEND _mkl_libs mkl_blas95_${_mkl_bitflag}lp64 mkl_lapack95_${_mkl_bitflag}lp64)
+    set(_mkl_libs mkl_blas95_${_mkl_bitflag}lp64 mkl_lapack95_${_mkl_bitflag}lp64)
   endif()
 
   unset(_tbb)
@@ -381,7 +379,7 @@ if(MKL IN_LIST LAPACK_FIND_COMPONENTS)
       list(APPEND _mkl_libs tbb.lib)
     endif()
   elseif(OpenMP IN_LIST LAPACK_FIND_COMPONENTS)
-    pkg_check_modules(pc_mkl mkl-${_mkltype}-${_mkl_bitflag}lp64-iomp QUIET)
+    pkg_check_modules(pc_mkl mkl-${_mkltype}-${_mkl_bitflag}lp64-iomp)
 
     set(_mp iomp5)
     if(WIN32)
@@ -389,7 +387,7 @@ if(MKL IN_LIST LAPACK_FIND_COMPONENTS)
     endif()
     list(APPEND _mkl_libs mkl_intel_thread mkl_core ${_mp})
   else()
-    pkg_check_modules(pc_mkl mkl-${_mkltype}-${_mkl_bitflag}lp64-seq QUIET)
+    pkg_check_modules(pc_mkl mkl-${_mkltype}-${_mkl_bitflag}lp64-seq)
     list(APPEND _mkl_libs mkl_sequential mkl_core)
   endif()
 
@@ -434,9 +432,41 @@ elseif(OpenBLAS IN_LIST LAPACK_FIND_COMPONENTS)
 
 endif()
 
+# -- verify library works
+
+set(CMAKE_REQUIRED_FLAGS)
+set(CMAKE_REQUIRED_LINK_OPTIONS)
+set(CMAKE_REQUIRED_INCLUDES)
+set(CMAKE_REQUIRED_LIBRARIES ${LAPACK_LIBRARY})
+
+if(LAPACK_LIBRARY)
+if(CMAKE_Fortran_COMPILER)
+  include(CheckFortranSourceCompiles)
+  check_fortran_source_compiles("program check_lapack
+  implicit none
+  double precision, external :: disnan
+  print *, disnan(0.)
+  end" LAPACK_real64_links SRC_EXT f90)
+
+  check_fortran_source_compiles("program check_lapack
+  implicit none
+  real, external :: sisnan
+  print *, sisnan(0.)
+  end" LAPACK_real32_links SRC_EXT f90)
+
+  if(LAPACK_real64_links OR LAPACK_real32_links)
+    set(LAPACK_links TRUE)
+  endif()
+else(CMAKE_Fortran_COMPILER)
+  set(LAPACK_links TRUE)  # complex to check with various distinct LapackE APIs
+endif(CMAKE_Fortran_COMPILER)
+endif(LAPACK_LIBRARY)
+
+set(CMAKE_REQUIRED_LIBRARIES)
+
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(LAPACK
-  REQUIRED_VARS LAPACK_LIBRARY
+  REQUIRED_VARS LAPACK_LIBRARY LAPACK_links
   HANDLE_COMPONENTS)
 
 set(BLAS_LIBRARIES ${BLAS_LIBRARY})
