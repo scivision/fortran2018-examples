@@ -37,7 +37,7 @@ elseif(CMAKE_Fortran_COMPILER_ID STREQUAL GNU)
   endif()
 
   string(APPEND CMAKE_Fortran_FLAGS " -fimplicit-none")
-  string(APPEND CMAKE_Fortran_FLAGS " -Wrealloc-lhs")  # not -Wrealloc-lhs-all which warns on character
+  # string(APPEND CMAKE_Fortran_FLAGS " -Wrealloc-lhs")  # not -Wrealloc-lhs-all which warns on character
   string(APPEND CMAKE_Fortran_FLAGS " -Werror=array-bounds -fcheck=all")
 elseif(CMAKE_Fortran_COMPILER_ID STREQUAL PGI)
   string(APPEND CMAKE_Fortran_FLAGS " -C -Mdclchk")
