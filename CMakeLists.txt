@@ -1,17 +1,17 @@
-cmake_minimum_required(VERSION 3.15)  # implicit CMP0094
+cmake_minimum_required(VERSION 3.15)
 
-if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE RelWithDebInfo CACHE STRING "default build type")
-endif()
+include(cmake/policy.cmake)
+include(cmake/compiler_find.cmake)
 
 project(Fortran2018Examples
 LANGUAGES C Fortran
 DESCRIPTION "Example of using modern Fortran syntax"
 VERSION 1.3.2)
 
-enable_testing()
-
-set(CTEST_TEST_TIMEOUT 10)  # default timeout [seconds]
+include(CTest)
+if(NOT DEFINED ${PROJECT_NAME}_BUILD_TESTING)
+  set(${PROJECT_NAME}_BUILD_TESTING ${BUILD_TESTING})
+endif()
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/)
 

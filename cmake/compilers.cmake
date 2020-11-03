@@ -1,5 +1,3 @@
-set(CMAKE_CONFIGURATION_TYPES "Release;RelWithDebInfo;Debug" CACHE STRING "Build type selections" FORCE)
-
 find_package(MPI COMPONENTS Fortran)
 
 include(CheckCSourceCompiles)

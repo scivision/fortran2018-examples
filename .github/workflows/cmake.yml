@@ -1,4 +1,4 @@
-name: ci_windows
+name: cmake
 
 on:
   push:
@@ -7,14 +7,16 @@ on:
       - "**.F90"
       - "**.cmake"
       - "**/CMakeLists.txt"
-      - ".github/workflows/ci_windows.yml"
-
+      - ".github/workflows/cmake.yml"
 
 
 jobs:
 
-  windows:
-    runs-on: windows-latest
+  linux:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
     - uses: actions/checkout@v2
 

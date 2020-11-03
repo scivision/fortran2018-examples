@@ -1,0 +1,66 @@
+name: meson
+
+on:
+  push:
+    paths:
+      - "**/meson.build"
+      - ".github/workflows/meson.yml"
+
+
+jobs:
+
+  linux:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - run: pip install meson ninja
+
+    - run: meson setup build
+      env:
+        FC: gfortran-9
+        CC: gcc-9
+        CXX: g++-9
+
+    - run: meson compile -C build
+
+    - run: meson test -C build -v
+
+  macos:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - run: pip install meson ninja
+
+    - run: meson setup build
+      env:
+        FC: gfortran-9
+        CC: gcc-9
+        CXX: g++-9
+
+    - run: meson compile -C build
+
+    - run: meson test -C build -v
+
+  windows:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - run: pip install meson ninja
+
+    - run: meson setup build
+
+    - run: meson compile -C build
+
+    - run: meson test -C build -v
