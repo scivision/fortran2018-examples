@@ -6,7 +6,7 @@ include(cmake/compiler_find.cmake)
 project(Fortran2018Examples
 LANGUAGES C Fortran
 DESCRIPTION "Example of using modern Fortran syntax"
-VERSION 1.3.2)
+VERSION 1.3.3)
 
 include(CTest)
 if(NOT DEFINED ${PROJECT_NAME}_BUILD_TESTING)
