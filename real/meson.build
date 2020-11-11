@@ -10,6 +10,9 @@ test('Polymorphic', polymorph, suite: 'real', timeout: 10)
 coerce = executable('coerce', 'coerce.f90')
 test('Coerce', coerce, suite: 'real', timeout: 10)
 
+eps = executable('epsilon', 'epsilon.f90')
+test('Epsilon1', eps, suite: 'real', timeout: 10)
+
 if f08kind
   divprec = executable('divprec', 'div_precision.f90')
   test('DivisionPrecision', divprec, suite: 'real', timeout: 10)
