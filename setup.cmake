@@ -12,7 +12,6 @@ if(CMAKE_VERSION VERSION_LESS 3.15)
     Try 'pip install -U cmake' or https://cmake.org/download/")
 endif()
 
-
 # CTEST_CMAKE_GENERATOR must always be defined
 if(NOT DEFINED CTEST_CMAKE_GENERATOR AND CMAKE_VERSION VERSION_GREATER_EQUAL 3.17)
   find_program(_gen NAMES ninja ninja-build samu)
@@ -28,12 +27,11 @@ if(NOT DEFINED CTEST_CMAKE_GENERATOR AND CMAKE_VERSION VERSION_GREATER_EQUAL 3.1
   endif(_gen)
 endif()
 if(NOT DEFINED CTEST_CMAKE_GENERATOR)
+  set(CTEST_BUILD_FLAGS -j)  # not --parallel as this goes to generator directly
   if(WIN32)
     set(CTEST_CMAKE_GENERATOR "MinGW Makefiles")
-    set(CTEST_BUILD_FLAGS -j)  # not --parallel as this goes to generator directly
   else()
     set(CTEST_CMAKE_GENERATOR "Unix Makefiles")
-    set(CTEST_BUILD_FLAGS -j)  # not --parallel as this goes to generator directly
   endif()
 endif()
 
