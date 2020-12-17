@@ -16,6 +16,9 @@ endif()
 
 set(real_prec "integer,parameter :: wp=real${realbits}")
 
+add_executable(cast_int2real cast_int2real.f90)
+add_test(NAME real:cast_int2real COMMAND $<TARGET_FILE:cast_int2real>)
+
 configure_file(polymorphic.in.f90 polymorphic.f90)
 add_executable(polymorph ${CMAKE_CURRENT_BINARY_DIR}/polymorphic.f90)
 add_test(NAME real:polymorphic COMMAND $<TARGET_FILE:polymorph>)
