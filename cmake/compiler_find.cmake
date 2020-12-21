@@ -8,8 +8,20 @@ set(CMAKE_CONFIGURATION_TYPES "Release;RelWithDebInfo;Debug" CACHE STRING "Build
 
 # Help CMake find matching compilers, especially needed for MacOS
 
+function(find_compilers)
+
+if(APPLE)
+  set(_paths /usr/local/bin /opt/homebrew/bin)
+  # for Homebrew that's not on PATH (can be an issue on CI)
+else()
+  set(_paths)
+endif()
+
 if(NOT DEFINED ENV{FC})
-  find_program(FC NAMES ifort gfortran gfortran-11 gfortran-10 gfortran-9 gfortran-8 gfortran-7)
+  # temporarily removed ifort, because Intel oneAPI release Dec 8, 2020 is broken for HDF5 and MPI in general.
+  find_program(FC
+    NAMES gfortran gfortran-11 gfortran-10 gfortran-9 gfortran-8 gfortran-7
+    PATHS ${_paths})
   if(FC)
     set(ENV{FC} ${FC})
   endif()
@@ -19,7 +31,9 @@ if(NOT DEFINED ENV{FC} OR DEFINED ENV{CC})
   return()
 endif()
 # ensure FC exists as a executable program
-find_program(FC NAMES $ENV{FC})
+find_program(FC
+  NAMES $ENV{FC}
+  PATHS ${_paths})
 
 if(NOT FC)
   return()
@@ -47,3 +61,7 @@ NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH)
 if(CC)
   set(ENV{CC} ${CC})
 endif()
+
+endfunction(find_compilers)
+
+find_compilers()
