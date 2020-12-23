@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.15)
 
 include(cmake/policy.cmake)
 include(cmake/compiler_find.cmake)
+find_c_fortran()
 
 project(Fortran2018Examples
 LANGUAGES C Fortran
