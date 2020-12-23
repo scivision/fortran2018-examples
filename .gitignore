@@ -1,7 +1,8 @@
 .vscode/
 *.dwf
 *.pdb
-subprojects/
+/subprojects/*
+!/subprojects/*.wrap
 .mypy_cache/
 build*/
 *.s
