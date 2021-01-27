@@ -3,8 +3,6 @@ message(FATAL_ERROR "C compiler ${CMAKE_C_COMPILER_ID} does not match Fortran co
 Set environment variables CC and FC to control compiler selection in general.")
 endif()
 
-find_package(MPI COMPONENTS Fortran)
-
 include(CheckCSourceCompiles)
 include(CheckCSourceRuns)
 include(CheckFortranSourceCompiles)
