@@ -1,8 +1,6 @@
 function(check_mpi)
 
-find_package(MPI COMPONENTS C Fortran REQUIRED)
-# NOTE: to make this not REQUIRED means making a 2nd target that is used instead of MPI::MPI_Fortran directly
-# this is because the imported targets cannot be overwritten from find_package attempt
+find_package(MPI COMPONENTS C Fortran)
 find_package(Threads)
 
 set(CMAKE_REQUIRED_INCLUDES)

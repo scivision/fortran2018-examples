@@ -20,13 +20,7 @@ jobs:
     - run: pip install meson ninja
 
     - run: meson setup build
-      env:
-        FC: gfortran-9
-        CC: gcc-9
-        CXX: g++-9
-
     - run: meson compile -C build
-
     - run: meson test -C build -v
 
   macos:
@@ -41,12 +35,11 @@ jobs:
 
     - run: meson setup build
       env:
-        FC: gfortran-9
-        CC: gcc-9
-        CXX: g++-9
+        FC: gfortran-10
+        CC: gcc-10
+        CXX: g++-10
 
     - run: meson compile -C build
-
     - run: meson test -C build -v
 
   windows:
@@ -60,7 +53,5 @@ jobs:
     - run: pip install meson ninja
 
     - run: meson setup build
-
     - run: meson compile -C build
-
     - run: meson test -C build -v
