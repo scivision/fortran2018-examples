@@ -5,6 +5,9 @@ add_executable(shortcircuit short_circuit.f90)
 add_executable(bitpat bitpat.f90)
 add_test(NAME standard:bit_pattern COMMAND $<TARGET_FILE:bitpat>)
 
+add_executable(do_cycle do_cycle.f90)
+add_test(NAME standard:doCycle COMMAND $<TARGET_FILE:do_cycle>)
+
 # --- logical / boolean sized
 include(CheckTypeSize)
 set(CMAKE_EXTRA_INCLUDE_FILES stdbool.h)

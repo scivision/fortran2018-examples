@@ -4,6 +4,9 @@ short_circuit = executable('shortcircuit', 'short_circuit.f90')
 bitpat = executable('bitpat', 'bitpat.f90')
 test('Bit Pattern', bitpat, suite: 'standard', timeout: 10)
 
+cycler = executable('do_cycle', 'do_cycle.f90')
+test('doCycle', cycler, suite: 'standard', timeout: 5)
+
 boolean_c = executable('boolean_c', 'logical_kind.c')
 test('boolean_c', boolean_c, suite : 'standard')
 
