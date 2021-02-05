@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.14)
 
 include(cmake/policy.cmake)
 include(cmake/compiler_find.cmake)
@@ -7,7 +7,7 @@ find_c_fortran()
 project(Fortran2018Examples
 LANGUAGES C Fortran
 DESCRIPTION "Example of using modern Fortran syntax"
-VERSION 1.3.3)
+VERSION 1.3.4)
 
 include(CTest)
 if(NOT DEFINED ${PROJECT_NAME}_BUILD_TESTING)

@@ -21,7 +21,7 @@ if not f18errorstop
 endif
 
 f03utf8 = fc.links('character(kind=selected_char_kind("ISO_10646")) :: x; end', name: 'F2003 UTF8')
-f08block = fc.links('block; end block; end', name : 'F2008 block')
+# f08block = fc.links('block; end block; end', name : 'F2008 block')
 f08contig = fc.links('print*,is_contiguous([0,0]); end', name: 'F2008 contiguous')
 f08command = fc.links('integer foo; call execute_command_line(" ", cmdstat=foo); end', name : 'F2008 execute_command_line')
 f18random = fc.links('call random_init(.false., .false.); end', name:'F2018 random_init')
