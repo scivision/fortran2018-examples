@@ -159,7 +159,7 @@ if(CMAKE_Fortran_COMPILER_ID STREQUAL PGI)
   set(_lapack_hints ${_pgi_path}/../)
 endif()
 
-pkg_search_module(pc_lapack lapack lapack-netlib)
+pkg_search_module(pc_lapack lapack-netlib lapack)
 
 find_library(LAPACK_LIB
   NAMES lapack
@@ -203,10 +203,9 @@ if(LAPACKE IN_LIST LAPACK_FIND_COMPONENTS)
   mark_as_advanced(LAPACKE_LIBRARY LAPACKE_INCLUDE_DIR)
 endif(LAPACKE IN_LIST LAPACK_FIND_COMPONENTS)
 
-pkg_check_modules(pc_blas blas-netlib)
-if(NOT pc_blas_FOUND)
-  pkg_check_modules(pc_blas blas)  # Netlib on Cygwin and others
-endif()
+pkg_search_module(pc_blas blas-netlib blas)
+# Netlib on Cygwin and others
+
 find_library(BLAS_LIBRARY
   NAMES refblas blas
   NAMES_PER_DIR
@@ -387,7 +386,10 @@ if(MKL IN_LIST LAPACK_FIND_COMPONENTS)
     endif()
     list(APPEND _mkl_libs mkl_intel_thread mkl_core ${_mp})
   else()
-    pkg_check_modules(pc_mkl mkl-${_mkltype}-${_mkl_bitflag}lp64-seq)
+    if(NOT WIN32)
+      # Windows oneAPI crashes here due to bad *.pc
+      pkg_check_modules(pc_mkl mkl-${_mkltype}-${_mkl_bitflag}lp64-seq)
+    endif()
     list(APPEND _mkl_libs mkl_sequential mkl_core)
   endif()
 
