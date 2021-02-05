@@ -1,6 +1,2 @@
-if f08block
-  block_exe = executable('block', 'block.f90')
-  test('block', block_exe,
-    suite: 'block',
-    timeout: 10)
-endif
+block_exe = executable('block', 'block.f90')
+test('block', block_exe, suite: 'block', timeout: 10)

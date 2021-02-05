@@ -3,12 +3,10 @@ message(FATAL_ERROR "C compiler ${CMAKE_C_COMPILER_ID} does not match Fortran co
 Set environment variables CC and FC to control compiler selection in general.")
 endif()
 
-include(CheckCSourceCompiles)
-include(CheckCSourceRuns)
 include(CheckFortranSourceCompiles)
 
 include(${CMAKE_CURRENT_LIST_DIR}/f18impnone.cmake)
-include(${CMAKE_CURRENT_LIST_DIR}/f08block.cmake)
+# include(${CMAKE_CURRENT_LIST_DIR}/f08block.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/f08contig.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/f18errorstop.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/f18random.cmake)
