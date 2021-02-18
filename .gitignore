@@ -1,3 +1,5 @@
+CMakeUserPresets.json
+
 .vscode/
 *.dwf
 *.pdb
