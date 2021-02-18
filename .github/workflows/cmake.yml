@@ -20,7 +20,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - run: cmake -B build
+    - run: cmake --preset=make
     - run: cmake --build build
     - run: ctest --parallel 2 --output-on-failure
       working-directory: build
@@ -30,7 +30,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - run: cmake -B build -G "MinGW Makefiles"
+    - run: cmake --preset=makewin
     - run: cmake --build build
     - run: ctest --parallel 2 --output-on-failure
       working-directory: build

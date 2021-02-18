@@ -1,7 +1,7 @@
-if(NOT CMAKE_Fortran_COMPILER_ID STREQUAL ${CMAKE_C_COMPILER_ID})
-message(WARNING "C compiler ${CMAKE_C_COMPILER_ID} does not match Fortran compiler ${CMAKE_Fortran_COMPILER_ID}.
-Set environment variables CC and FC to control compiler selection in general.")
-endif()
+# if(NOT CMAKE_Fortran_COMPILER_ID STREQUAL ${CMAKE_C_COMPILER_ID})
+# message(WARNING "C compiler ${CMAKE_C_COMPILER_ID} does not match Fortran compiler ${CMAKE_Fortran_COMPILER_ID}.
+# Set environment variables CC and FC to control compiler selection in general.")
+# endif()
 
 include(CheckFortranSourceCompiles)
 

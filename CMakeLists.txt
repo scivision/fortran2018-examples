@@ -16,6 +16,8 @@ endif()
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/)
 
+option(mpi "MPI tests" on)
+
 include(cmake/compilers.cmake)
 
 add_subdirectory(array)
@@ -40,9 +42,9 @@ add_subdirectory(standard)
 add_subdirectory(submodule)
 add_subdirectory(system)
 
-
+# --- summary
 include(FeatureSummary)
 add_feature_info(Openmp hasOMP "tests using OpenMP")
-add_feature_info(mpi MPI_Fortran_OK "tests using MPI")
+add_feature_info(MPI MPI_Fortran_OK "tests using MPI")
 
 feature_summary(WHAT ALL)

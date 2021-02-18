@@ -6,8 +6,6 @@ include(CTest)
 # If you have a custom location for mpif90 / mpifort and CMake doesn't find it, try
 #   FC=mpif90 cmake ..
 
-# Windows Intel 2019 MPI doesn't yet have mpi_f08
-
 include(mpi.cmake)
 if(NOT MPI_Fortran_OK)
   return()

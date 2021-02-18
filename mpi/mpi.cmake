@@ -1,5 +1,4 @@
 include(CheckFortranSourceCompiles)
-include(CheckCSourceCompiles)
 
 function(check_mpi)
 

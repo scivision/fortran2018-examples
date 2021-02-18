@@ -1,0 +1,83 @@
+{
+"version": 1,
+"cmakeMinimumRequired": {
+"major": 3,
+"minor": 19,
+"patch": 0
+},
+
+"configurePresets": [
+{
+  "name": "_default", "hidden": true,
+  "binaryDir": "${sourceDir}/build"
+},
+{
+  "name": "ninja", "inherits": "_default",
+  "displayName": "build with Ninja",
+  "description": "Ninja is faster and more reliable than Make",
+  "generator": "Ninja"
+},
+{
+  "name": "gcc10", "inherits": "ninja",
+  "displayName": "GCC-10",
+  "description": "specify GCC version -- helpful for MacOS Homebrew to avoid Clang /usr/bin/gcc",
+  "environment": {
+    "CC": "gcc-10",
+    "CXX": "g++-10",
+    "FC": "gfortran-10"
+  }
+},
+{
+  "name": "make", "inherits": "_default",
+  "displayName": "build with GNU Make: Linux/MacOS",
+  "description": "build with GNU Make on Linux/MacOS",
+  "generator": "Unix Makefiles"
+},
+{
+  "name": "makegcc10", "inherits": ["make", "gcc10"],
+  "displayName": "build with GNU Make and GCC",
+  "description": "build with GNU Make and GCC -- useful for MacOS"
+},
+{
+  "name": "makewin", "inherits": "_default",
+  "displayName": "build with GNU Make: Windows",
+  "description": "build with GNU Make on Windows",
+  "generator": "MinGW Makefiles"
+},
+{
+  "name": "intel", "inherits": "ninja",
+  "displayName": "Intel Classic compiler: Linux/MacOS",
+  "description": "build with Intel Classic on Linux/MacOS",
+  "environment": {
+    "CC": "icc",
+    "CXX": "icpc",
+    "FC": "ifort",
+    "LAPACK_ROOT": "$env{MKLROOT}",
+    "MPI_ROOT": "$env{I_MPI_ROOT}"
+  }
+},
+{
+  "name": "intelwin", "inherits": "intel",
+  "displayName": "Intel Classic compiler: Windows",
+  "description": "build with Intel Classic on Windows",
+  "environment": {
+    "CC": "icl",
+    "CXX": "icl"
+  }
+},
+{
+  "name": "intelnext", "inherits": "intel",
+  "displayName": "Intel oneAPI LLVM",
+  "description": "build with Intel oneAPI NextGen LLVM",
+  "environment": {
+    "CC": "icx",
+    "CXX": "icx",
+    "FC": "ifx"
+  }
+}
+
+]
+
+
+
+}
