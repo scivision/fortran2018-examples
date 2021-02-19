@@ -1,9 +1,5 @@
 cmake_minimum_required(VERSION 3.14)
 
-include(cmake/policy.cmake)
-include(cmake/compiler_find.cmake)
-find_c_fortran()
-
 project(Fortran2018Examples
 LANGUAGES C Fortran
 DESCRIPTION "Example of using modern Fortran syntax"
@@ -18,6 +14,7 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/)
 
 option(mpi "MPI tests" on)
 
+include(cmake/policy.cmake)
 include(cmake/compilers.cmake)
 
 add_subdirectory(array)
@@ -47,4 +44,4 @@ include(FeatureSummary)
 add_feature_info(Openmp hasOMP "tests using OpenMP")
 add_feature_info(MPI MPI_Fortran_OK "tests using MPI")
 
-feature_summary(WHAT ALL)
+feature_summary(WHAT ENABLED_FEATURES)

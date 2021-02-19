@@ -26,14 +26,6 @@ The CMake or Meson build system automatically walks through the subdirectories:
 
 ### CMake
 
-One step CMake build and test:
-
-```sh
-ctest -S setup.cmake -VV
-```
-
-OR more manually:
-
 ```sh
 cmake -B build
 cmake --build build --parallel
@@ -58,19 +50,15 @@ meson test -C build
 has complete Fortran 2018 support.
 Use Intel compilers  (oneAPI or Parallel Studio) by:
 
-
 * MacOS or Linux:
 
     ```sh
-    FC=ifort CC=icc ctest -S setup.cmake -VV
+    cmake --preset=intel
     ```
 * Windows
 
     ```post
-    set FC=ifort
-    set CC=icl
-
-    ctest -S setup.cmake -VV
+    cmake --preset=intelwin
     ```
 
 ## Programs
