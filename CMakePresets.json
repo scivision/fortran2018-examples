@@ -9,7 +9,8 @@
 "configurePresets": [
 {
   "name": "_default", "hidden": true,
-  "binaryDir": "${sourceDir}/build"
+  "binaryDir": "${sourceDir}/build",
+  "cacheVariables": {"CMAKE_BUILD_TYPE": "Release"}
 },
 {
   "name": "ninja", "inherits": "_default",
