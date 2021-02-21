@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.14...3.20)
 project(mpi_fortran
 LANGUAGES C Fortran)
 

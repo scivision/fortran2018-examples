@@ -1,6 +1,7 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.14...3.20)
 project(F18system Fortran)
-enable_testing()
+
+include(CTest)
 
 add_executable(color color_text.f90)
 add_test(NAME system:Color COMMAND color)

@@ -1,7 +1,8 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.14...3.20)
 project(OpenMP_Fortran
 LANGUAGES Fortran)
-enable_testing()
+
+include(CTest)
 
 find_package(OpenMP COMPONENTS Fortran)
 

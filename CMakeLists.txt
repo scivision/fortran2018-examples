@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 3.14...3.20)
 
 project(Fortran2018Examples
 LANGUAGES C Fortran
@@ -14,7 +14,8 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/)
 
 option(mpi "MPI tests" on)
 
-include(cmake/policy.cmake)
+set(CMAKE_EXPORT_COMPILE_COMMANDS on)
+
 include(cmake/compilers.cmake)
 
 add_subdirectory(array)

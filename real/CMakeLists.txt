@@ -1,9 +1,8 @@
-cmake_minimum_required(VERSION 3.15)
-if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE Release CACHE STRING "default build type")
-endif()
+cmake_minimum_required(VERSION 3.14...3.20)
+
 project(F18real LANGUAGES Fortran)
-enable_testing()
+
+include(CTest)
 
 # ctest -N => 8 tests
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../cmake/Modules)

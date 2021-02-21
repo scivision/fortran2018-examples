@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.14...3.20)
 project(F18coarray Fortran)
 enable_testing()
 # Coarrays are easier to use than MPI and more general as an intrinsic part of Fortran 2008.
