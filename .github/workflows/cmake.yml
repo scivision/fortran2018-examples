@@ -12,16 +12,13 @@ on:
 
 jobs:
 
-  linux-mac:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, macos-latest]
+  linux:
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
 
     - run: cmake --preset=make
-    - run: cmake --build build
+    - run: cmake --build build --parallel
     - run: ctest --parallel 2 --output-on-failure
       working-directory: build
 
@@ -31,6 +28,6 @@ jobs:
     - uses: actions/checkout@v2
 
     - run: cmake --preset=makewin
-    - run: cmake --build build
+    - run: cmake --build build --parallel
     - run: ctest --parallel 2 --output-on-failure
       working-directory: build
