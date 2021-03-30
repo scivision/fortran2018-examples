@@ -30,7 +30,7 @@ end module contig
 
 program test_contigous
 !! The ::2 indexing is not contiguous,
-!! but the contiguous parameter in timestwo_contig copies the array into contiguous temporary array,
+!! but the contiguous parameter in timestwo_contig COPIES the array into a contiguous temporary array,
 !! which could be faster for some operations
 use contig
 

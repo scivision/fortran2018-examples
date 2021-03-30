@@ -5,4 +5,4 @@ if(NOT f08contig)
 endif()
 
 add_executable(contig contiguous.f90)
-add_test(NAME contiguous COMMAND contig)
+add_test(NAME contiguous COMMAND $<TARGET_FILE:contig>)
