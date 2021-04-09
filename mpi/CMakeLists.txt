@@ -40,7 +40,7 @@ add_executable(mpi_hello helloworld.f90)
 target_link_libraries(mpi_hello MPI::MPI_Fortran)
 
 add_test(NAME mpi:hello
-  COMMAND ${MPIEXEC_EXECUTABLE} ${MPIEXEC_NUMPROC_FLAG} ${MPIEXEC_MAX_NUMPROCS} ${MPIEXEC_PREFLAGS} $<TARGET_FILE:mpi_hello> ${MPIEXEC_POSTFLAGS})
+  COMMAND ${MPIEXEC_EXECUTABLE} ${MPIEXEC_NUMPROC_FLAG} ${MPIEXEC_MAX_NUMPROCS} $<TARGET_FILE:mpi_hello>)
 set_tests_properties(mpi:hello PROPERTIES
   RESOURCE_LOCK cpu_mpi
   TIMEOUT 5
@@ -54,7 +54,7 @@ target_link_libraries(mpi_pass MPI::MPI_Fortran)
 if(MPIEXEC_MAX_NUMPROCS GREATER_EQUAL 2)
 
 add_test(NAME mpi:pass
-  COMMAND ${MPIEXEC_EXECUTABLE} ${MPIEXEC_NUMPROC_FLAG} ${MPIEXEC_MAX_NUMPROCS} ${MPIEXEC_PREFLAGS} $<TARGET_FILE:mpi_pass> ${MPIEXEC_POSTFLAGS})
+  COMMAND ${MPIEXEC_EXECUTABLE} ${MPIEXEC_NUMPROC_FLAG} 2 $<TARGET_FILE:mpi_pass>)
 
 set_tests_properties(mpi:pass PROPERTIES
   RESOURCE_LOCK cpu_mpi
