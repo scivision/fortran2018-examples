@@ -16,12 +16,17 @@ character(MPI_MAX_LIBRARY_VERSION_STRING) :: version  ! allocatable not ok
 print *,compiler_version()
 
 call MPI_INIT(ierr)
+if(ierr /= 0) error stop "could not init MPI"
+
 call MPI_COMM_RANK(MPI_COMM_WORLD, id, ierr)
+if (ierr /= 0) error stop "could not get MPI rank"
+
 call MPI_COMM_SIZE(MPI_COMM_WORLD, Nimg, ierr)
 call MPI_GET_LIBRARY_VERSION(version, vlen, ierr)
 
-print '(A,I3,A,I3,A)', 'Image ', id, ' / ', Nimg, ':',version
+print '(A,I3,A,I3,A)', 'MPI: Image ', id, ' / ', Nimg, ':',version
 
 call MPI_FINALIZE(ierr)
+if(ierr /= 0) error stop "could not close MPI"
 
 end program

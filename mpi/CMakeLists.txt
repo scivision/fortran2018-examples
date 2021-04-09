@@ -11,10 +11,19 @@ if(NOT MPI_Fortran_OK)
   return()
 endif()
 
+# ---
+
 add_executable(mpi_version mpivers.f90)
 target_link_libraries(mpi_version MPI::MPI_Fortran)
-add_test(NAME mpi:version COMMAND $<TARGET_FILE:mpi_version>)
-set_tests_properties(mpi:version PROPERTIES RESOURCE_LOCK cpu_mpi)
+add_test(NAME mpi:fortran:version COMMAND $<TARGET_FILE:mpi_version>)
+set_tests_properties(mpi:fortran:version PROPERTIES RESOURCE_LOCK cpu_mpi)
+
+add_executable(mpi_version-C mpivers.c)
+target_link_libraries(mpi_version-C MPI::MPI_C)
+add_test(NAME mpi:C:version COMMAND $<TARGET_FILE:mpi_version-C>)
+set_tests_properties(mpi:C:version PROPERTIES RESOURCE_LOCK cpu_mpi)
+
+# ---
 
 add_executable(mpi_hello helloworld.f90)
 target_link_libraries(mpi_hello MPI::MPI_Fortran)
