@@ -1,4 +1,3 @@
-
 # Fortran standard coding
 
 Examples of standard and non-standard coding

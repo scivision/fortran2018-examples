@@ -1,6 +1,6 @@
 project('Fortran2018examples', 'fortran', 'c',
-  version : '1.3.4',
-  meson_version: '>= 0.52.0',
+  version : files('VERSION'),
+  meson_version: '>= 0.57.0',
   default_options : ['default_library=static', 'buildtype=release'])
 
 realbits = get_option('realbits')

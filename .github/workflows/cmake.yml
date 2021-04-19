@@ -14,20 +14,22 @@ jobs:
 
   linux:
     runs-on: ubuntu-latest
+    env:
+      CTEST_PARALLEL_LEVEL: 2
     steps:
     - uses: actions/checkout@v2
 
     - run: cmake --preset=make
     - run: cmake --build build --parallel
-    - run: ctest --parallel 2 --output-on-failure
-      working-directory: build
+    - run: ctest --preset default
 
   windows:
     runs-on: windows-latest
+    env:
+      CTEST_PARALLEL_LEVEL: 2
     steps:
     - uses: actions/checkout@v2
 
     - run: cmake --preset=makewin
     - run: cmake --build build --parallel
-    - run: ctest --parallel 2 --output-on-failure
-      working-directory: build
+    - run: ctest --preset default

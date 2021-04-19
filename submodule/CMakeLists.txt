@@ -5,7 +5,7 @@ include(FetchContent)
 
 FetchContent_Declare(submodules_proj
   GIT_REPOSITORY https://github.com/scivision/fortran-submodule
-  GIT_TAG v1.2.2
+  GIT_TAG v1.3.0
 )
 
 FetchContent_MakeAvailable(submodules_proj)
