@@ -2,43 +2,47 @@ program hw_mpi
 !!    Each process prints out a "Hello, world!" message with a process ID
 !!  Original Author:  John Burkardt
 !!  Modified: Michael Hirsch, Ph.D.
+!!  Modified: Jeff Hammond
 
-use mpi, only : mpi_init, mpi_comm_size, mpi_comm_world, mpi_wtime
+use mpi_f08, only : MPI_Init, MPI_Finalize, MPI_Wtime, &
+                    MPI_Comm_size, MPI_Comm_rank, MPI_COMM_WORLD, &
+                    MPI_Barrier
+
 use, intrinsic:: iso_fortran_env, only: dp=>real64, compiler_version
 
 implicit none (type, external)
 
-integer :: i, Nproc, ierr
+integer :: me, np, i
 real(dp) :: wtime
 
-external :: mpi_comm_rank, mpi_finalize
-
 !>  Initialize MPI.
-call MPI_Init(ierr)
-if (ierr /= 0) error stop 'mpi init error'
+call MPI_Init()
 
 !>  Get the number of processes.
-call MPI_Comm_size(MPI_COMM_WORLD, Nproc, ierr)
+call MPI_Comm_size(MPI_COMM_WORLD, np)
 
 !>  Get the individual process ID.
-call MPI_Comm_rank(MPI_COMM_WORLD, i, ierr)
+call MPI_Comm_rank(MPI_COMM_WORLD, me)
 
 !>  Print a message.
-if (i == 0) then
+if (me == 0) then
   print *,compiler_version()
   wtime = MPI_Wtime()
-  print *, 'number of processes: ', Nproc
+  print *, 'number of processes: ', np
 end if
 
-print *, 'Process ', i
+!> Print process ranks with total ordering
+do i=0,np
+    call MPI_Barrier(MPI_COMM_WORLD)
+    if (me.eq.i) print *, 'Process ', me
+end do
 
-if ( i == 0 ) then
+if ( me == 0 ) then
   wtime = MPI_Wtime() - wtime
   print *, 'Elapsed wall clock time = ', wtime, ' seconds.'
 end if
 
 !>  Shut down MPI.
-call MPI_Finalize(ierr)
-if (ierr /= 0) error stop 'mpi finalize error'
+call MPI_Finalize()
 
 end program
