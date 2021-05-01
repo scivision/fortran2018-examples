@@ -1,21 +1,16 @@
 program basic
 
-use mpi, only : mpi_init
+use mpi_f08, only : MPI_Init, MPI_Finalize
 
 implicit none (type, external)
 
-external :: mpi_finalize
-integer :: ierr
-
 print *, "going to init MPI"
 
-call MPI_INIT(ierr)
-if(ierr /= 0) error stop "could not init MPI"
+call MPI_Init()
 
 print *, "MPI Init OK"
 
-call MPI_FINALIZE(ierr)
-if(ierr /= 0) error stop "could not close MPI"
+call MPI_Finalize()
 
 print *, "MPI closed"
 
