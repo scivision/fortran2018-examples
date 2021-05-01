@@ -1,32 +1,35 @@
 program mpi_pass
 !! passes data between two threads
 !!  Author:  John Burkardt
+!!  Modified: Jeff Hammond
 use, intrinsic :: iso_fortran_env, only: sp=>real32, compiler_version
-use mpi, only : MPI_STATUS_SIZE, mpi_comm_world, mpi_init, mpi_get_count, &
-  mpi_real, mpi_any_source, mpi_any_tag, mpi_source, mpi_tag, mpi_comm_size
+
+use mpi_f08, only : MPI_Init, MPI_Finalize, MPI_Wtime, &
+                    MPI_Comm_size, MPI_Comm_rank, MPI_COMM_WORLD, &
+                    MPI_Barrier, MPI_Send, MPI_Recv, &
+                    MPI_Get_count, MPI_STATUS_SIZE, &
+                    MPI_REAL, MPI_ANY_SOURCE, MPI_ANY_TAG, &
+                    MPI_TAG, MPI_SOURCE, MPI_STATUS
 
 implicit none (type, external)
 
 character(10) :: time
 integer :: mcount
 real(sp) :: dat(0:99), val(200)
-integer :: dest, i, num_procs, rank, tag, ierr, status(MPI_STATUS_SIZE)
-! type(MPI_STATUS) :: status  !< MPI_F08
-
-external :: mpi_recv, mpi_send, mpi_finalize, mpi_comm_rank
+integer :: dest, i, num_procs, rank, tag
+type(MPI_STATUS) :: status  !< MPI_F08
 
 !  Initialize MPI.
-call MPI_Init(ierr)
-if (ierr /= 0) error stop 'mpi init error'
+call MPI_Init()
 
 !  Determine this process's rank.
-call MPI_Comm_rank ( MPI_COMM_WORLD, rank, ierr)
-if (ierr /= 0) error stop 'mpi rank error'
+call MPI_Comm_rank ( MPI_COMM_WORLD, rank)
 
 !  Find out the number of processes available.
-call MPI_Comm_size ( MPI_COMM_WORLD, num_procs, ierr)
-if (ierr /= 0) error stop 'mpi size error'
+call MPI_Comm_size ( MPI_COMM_WORLD, num_procs)
 if (num_procs < 2) error stop 'two threads are required, use: mpiexec -np 2 ./mpi_pass'
+
+call MPI_Barrier(MPI_COMM_WORLD)
 
 !  Have Process 0 say hello.
 if ( rank == 0 ) then
@@ -34,14 +37,15 @@ if ( rank == 0 ) then
   print *, '  An MPI test program. number of processes available ', num_procs
 end if
 
+call MPI_Barrier(MPI_COMM_WORLD)
+
 !  Process 0 expects to receive as much as 200 real values, from any source.
 if ( rank == 0 ) then
-  call MPI_Recv (val, size(val), MPI_REAL, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, status, ierr)
-  if (ierr /= 0) error stop 'mpi receive error'
+  call MPI_Recv (val, size(val), MPI_REAL, MPI_ANY_SOURCE, MPI_ANY_TAG, MPI_COMM_WORLD, status)
 
-  print *, rank, ' Got data from processor ', status(MPI_SOURCE), 'tag',status(MPI_TAG)
+  print *, rank, ' Got data from processor ', status%MPI_SOURCE, 'tag',status%MPI_TAG
 
-  call MPI_Get_count ( status, MPI_REAL, mcount, ierr)
+  call MPI_Get_count ( status, MPI_REAL, mcount)
 
   print *, rank, ' Got ', mcount, ' elements.'
 
@@ -57,18 +61,16 @@ else if ( rank == 1 ) then
 
   dest = 0
   tag = 55
-  call MPI_Send ( dat, size(dat), MPI_REAL, dest, tag, MPI_COMM_WORLD, ierr)
-  if (ierr /= 0) error stop 'mpi send error'
+  call MPI_Send ( dat, size(dat), MPI_REAL, dest, tag, MPI_COMM_WORLD)
 else
   print *, rank, ' - MPI has no work for me!'
 end if
-
-call MPI_Finalize(ierr)
-if (ierr /= 0) error stop 'mpi finalize error'
 
 if ( rank == 0 ) then
   call date_and_time (time = time )
   print *, '  Normal  execution. ',time
 end if
+
+call MPI_Finalize()
 
 end program
