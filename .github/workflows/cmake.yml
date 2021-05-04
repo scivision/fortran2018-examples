@@ -19,7 +19,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - run: cmake --preset=make
+    - run: cmake --preset make
     - run: cmake --build build --parallel
     - run: ctest --preset default
 
@@ -30,6 +30,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - run: cmake --preset=makewin
+    - run: cmake --preset makewin
     - run: cmake --build build --parallel
     - run: ctest --preset default

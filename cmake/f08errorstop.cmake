@@ -1,1 +1,0 @@
-check_fortran_source_compiles("error stop; end" f08errorstop SRC_EXT f90)

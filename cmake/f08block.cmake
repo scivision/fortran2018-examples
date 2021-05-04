@@ -1,1 +1,0 @@
-check_fortran_source_compiles("block; end block; end" f08block SRC_EXT f90)

@@ -1,8 +1,3 @@
-cmake_minimum_required(VERSION 3.14)
-project(max_check
-LANGUAGES Fortran
-DESCRIPTION "check compiler support of maximum name lengths")
-
 include(CheckFortranSourceCompiles)
 
 set(_alpha "abcdefghijklmnopqrstuvwxyz")
