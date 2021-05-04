@@ -1,10 +1,17 @@
+include(CheckCSourceCompiles)
 include(CheckFortranSourceCompiles)
 
-function(check_mpi)
 
 set(CMAKE_REQUIRED_INCLUDES)
 set(CMAKE_REQUIRED_FLAGS)
-set(CMAKE_REQUIRED_LIBRARIES)
+
+
+find_package(MPI COMPONENTS C Fortran)
+if(NOT MPI_FOUND)
+  return()
+endif()
+
+find_package(Threads REQUIRED)
 
 # --- test Fortran MPI
 
@@ -18,21 +25,18 @@ if(NOT DEFINED MPI_Fortran_OK)
   )
 endif()
 
-check_fortran_source_compiles("use mpi
-integer :: i
-call mpi_init(i)
-call mpi_finalize(i)
-end" MPI_Fortran_OK SRC_EXT F90)
-
-if(NOT MPI_Fortran_OK)
-  message(STATUS "SKIP: MPI_Fortran not working.")
-  return()
-endif()
+# MPI_VERSION isn't always defined. Better test the required API level.
+check_fortran_source_compiles("
+program test
+use mpi_f08, only : mpi_init, mpi_finalize
+implicit none
+call mpi_init()
+call mpi_finalize()
+end program" MPI_Fortran_OK SRC_EXT F90)
 
 # --- test C MPI
 
 set(CMAKE_REQUIRED_LIBRARIES MPI::MPI_C Threads::Threads)
-include(CheckCSourceCompiles)
 
 if(NOT DEFINED MPI_C_OK)
   message(STATUS "C MPI:
@@ -52,18 +56,4 @@ int main(void) {
     return 0;}
 " MPI_C_OK)
 
-if(NOT MPI_C_OK)
-  message(STATUS "SKIP: MPI_C not working.")
-  return()
-endif()
-
-endfunction(check_mpi)
-
-find_package(MPI COMPONENTS C Fortran)
-if(NOT MPI_FOUND)
-  return()
-endif()
-
-find_package(Threads REQUIRED)
-
-check_mpi()
+set(CMAKE_REQUIRED_LIBRARIES)

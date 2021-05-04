@@ -15,9 +15,11 @@ endif()
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/)
 
-option(mpi "MPI tests" on)
-
 set(CMAKE_EXPORT_COMPILE_COMMANDS on)
+
+# -- must find MPI before flags set
+
+include(cmake/mpi.cmake)
 
 include(cmake/compilers.cmake)
 

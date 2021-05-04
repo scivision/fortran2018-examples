@@ -1,13 +1,7 @@
-cmake_minimum_required(VERSION 3.14...3.20)
-project(mpi_fortran
-LANGUAGES C Fortran)
+# we have to find MPI before other flags and settings or MPI won't be found properly.
 
-include(CTest)
-# If you have a custom location for mpif90 / mpifort and CMake doesn't find it, try
-#   FC=mpif90 cmake ..
-
-include(mpi.cmake)
 if(NOT MPI_Fortran_OK)
+  message(STATUS "SKIP: MPI Fortran not found/working")
   return()
 endif()
 

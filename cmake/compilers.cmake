@@ -24,7 +24,8 @@ include(${CMAKE_CURRENT_LIST_DIR}/f18prop.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/f03ieee.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/f03utf8.cmake)
 
-# compiler feature checks BEFORE setting flags to avoid intermittant failures in general
+
+# -- compiler feature checks BEFORE setting flags to avoid intermittant failures in general
 
 if(CMAKE_Fortran_COMPILER_ID STREQUAL Intel OR CMAKE_Fortran_COMPILER_ID STREQUAL IntelLLVM)
   if(WIN32)
