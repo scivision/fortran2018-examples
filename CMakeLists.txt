@@ -17,9 +17,7 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS on)
 
-# -- must find MPI before flags set
-
-include(cmake/mpi.cmake)
+# ---
 
 include(cmake/compilers.cmake)
 
@@ -34,7 +32,6 @@ add_subdirectory(io)
 add_subdirectory(debug)
 add_subdirectory(lapack95)
 add_subdirectory(maximum)
-add_subdirectory(mpi)
 add_subdirectory(namelist)
 # add_subdirectory(openacc)
 add_subdirectory(openmp)
@@ -48,6 +45,5 @@ add_subdirectory(system)
 # --- summary
 include(FeatureSummary)
 add_feature_info(Openmp hasOMP "tests using OpenMP")
-add_feature_info(MPI MPI_Fortran_OK "tests using MPI")
 
 feature_summary(WHAT ENABLED_FEATURES)

@@ -1,16 +1,16 @@
-cmake_minimum_required(VERSION 3.14...3.20)
-project(F18coarray Fortran)
+cmake_minimum_required(VERSION 3.14...${CMAKE_VERSION})
+
+project(F18coarray LANGUAGES Fortran)
+
 enable_testing()
 # Coarrays are easier to use than MPI and more general as an intrinsic part of Fortran 2008.
 
 # Linux: apt install libcoarrays-dev open-coarrays-bin
 # Mac: brew install opencoarrays
 
-get_directory_property(hasParent PARENT_DIRECTORY)
-if(NOT hasParent)
-  list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../cmake/Modules)
-  find_package(MPI COMPONENTS Fortran)
-endif()
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/../cmake/Modules)
+find_package(MPI COMPONENTS Fortran)
+
 
 find_package(Coarray)
 

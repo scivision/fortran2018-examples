@@ -70,7 +70,7 @@ Each directory has its own README and examples.
 * [coarray/](./coarray): modern Fortran is the only major compiled language standard with intrinsic massively parallel arrays.
 * [contiguous/](./contiguous): Fortran 2008 `contiguous` array examples, including Fortran preprocessor with modern CMake.
 * [git/](./git) Git tracability
-* [mpi/](./mpi): MPI parallel computing examples
+* [mpi/](https://github.com/scivision/fortran-mpi-examples):
 * [namelist/](./namelist): Fortran 90 / 2003 Namelist parsing -- native text config files for Fortran
 * [openmp/](./openmp): OpenMP threading exmaples
 * [random/](./random): random numbers with modern Fortran

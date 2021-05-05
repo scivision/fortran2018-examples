@@ -38,33 +38,6 @@ f18prop = fc.links('complex :: z; print *,z%re,z%im,z%kind; end', name: 'F2018 p
 
 f18assumed_rank = fc.links(files('../array/assumed-rank.f90'), name: 'F2018 assumed rank')
 
-
-# -- Fortran coarray
-
-coarray = dependency('coarray', required : false, disabler: true)
-# must be "run" in case of broken MPI library that only shows up on run.
-if not (fc.run('sync all; end', dependencies: coarray, name:'Coarray').returncode() == 0)
-  coarray = disabler()
-endif
-
-f18coarray = fc.run('real :: x[*]; call co_sum(x); sync all; end', dependencies: coarray, name: 'F2018 coarray').returncode() == 0
-
-
-# -- MPI
-
-mpi = dependency('mpi', language : 'fortran', required : false, disabler: true)
-code = '''
-use mpi
-integer :: i
-call mpi_init(i)
-call mpi_finalize(i)
-end program'''
-if not fc.links(code, dependencies : mpi, name: 'Fortran MPI links')
-  mpi = disabler()
-endif
-
-mpiexec = find_program('mpiexec', required : false, disabler: true)  # MS-MPI has only mpiexec
-
 # == Intel OpenMP
 mklroot = get_option('mklroot')
 mkllib_root = mklroot/'lib/intel64'

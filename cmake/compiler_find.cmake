@@ -19,9 +19,8 @@ endif()
 function(find_fortran)
 
 if(NOT DEFINED ENV{FC})
-  # temporarily removed ifort, because Intel oneAPI release Dec 8, 2020 is broken for HDF5 and MPI in general.
   find_program(FC
-    NAMES gfortran gfortran-11 gfortran-10 gfortran-9 gfortran-8 gfortran-7
+    NAMES ifort gfortran gfortran-11 gfortran-10 gfortran-9 gfortran-8 gfortran-7
     PATHS ${_paths})
   if(FC)
     set(ENV{FC} ${FC})
