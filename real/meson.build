@@ -10,13 +10,13 @@ test('CastInt2Real', cast, suite: 'real')
 polymorph = executable('polymorph', meson.current_build_dir() / 'polymorphic.f90')
 test('Polymorphic', polymorph, suite: 'real')
 
-coerce = executable('coerce', 'coerce.f90')
-test('Coerce', coerce, suite: 'real')
-
 eps = executable('epsilon', 'epsilon.f90')
 test('Epsilon1', eps, suite: 'real')
 
 if f08kind
+  coerce = executable('coerce', 'coerce.f90')
+  test('Coerce', coerce, suite: 'real')
+
   divprec = executable('divprec', 'div_precision.f90')
   test('DivisionPrecision', divprec, suite: 'real')
 

@@ -22,13 +22,14 @@ configure_file(polymorphic.in.f90 polymorphic.f90)
 add_executable(polymorph ${CMAKE_CURRENT_BINARY_DIR}/polymorphic.f90)
 add_test(NAME real:polymorphic COMMAND $<TARGET_FILE:polymorph>)
 
-add_executable(coerce coerce.f90)
-add_test(NAME real:coerce COMMAND $<TARGET_FILE:coerce>)
-
 add_executable(epsilon epsilon.f90)
 add_test(NAME real:epsilon COMMAND $<TARGET_FILE:epsilon>)
 
 if(f08kind)
+
+  add_executable(coerce coerce.f90)
+  add_test(NAME real:coerce COMMAND $<TARGET_FILE:coerce>)
+
   add_executable(divprec div_precision.f90)
   add_test(NAME real:divisionPrecision COMMAND divprec)
 
