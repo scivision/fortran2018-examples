@@ -121,7 +121,8 @@ logical, intent(in), optional :: equal_nan
 character(*), intent(in), optional :: err_msg
 
 if (.not.isclose(actual,desired,rtol,atol,equal_nan)) then
-  write(stderr,*) merge(err_msg,'',present(err_msg)),': actual',actual,'desired',desired
+  if (present(err_msg)) write(stderr,'(A)', advance='no') err_msg
+  write(stderr,*) ': actual',actual,'desired',desired
   error stop
 endif
 
@@ -146,7 +147,8 @@ logical, intent(in), optional :: equal_nan
 character(*), intent(in), optional :: err_msg
 
 if (.not.isclose(actual,desired,rtol,atol,equal_nan)) then
-  write(stderr,*) merge(err_msg,'',present(err_msg)),': actual',actual,'desired',desired
+  if (present(err_msg)) write(stderr,'(A)', advance='no') err_msg
+  write(stderr,*) ': actual',actual,'desired',desired
   error stop
 endif
 

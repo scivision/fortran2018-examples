@@ -1,3 +1,5 @@
+set_directory_properties(PROPERTIES LABELS character)
+
 add_executable(ascii ascii.f90)
 add_test(NAME char:AsciiSpecial COMMAND $<TARGET_FILE:ascii>)
 

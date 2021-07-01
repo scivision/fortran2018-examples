@@ -10,6 +10,8 @@ FetchContent_Declare(submodules_proj
 
 FetchContent_MakeAvailable(submodules_proj)
 
+set_directory_properties(PROPERTIES LABELS submodule)
+
 add_executable(useext use_ext.f90)
 target_link_libraries(useext math_const)
 add_test(NAME submodule:external COMMAND $<TARGET_FILE:useext>)

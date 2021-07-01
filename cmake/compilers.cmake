@@ -1,4 +1,4 @@
-include(CheckFortranSourceCompiles)
+include(CheckSourceCompiles)
 
 # check C and Fortran compiler ABI compatibility
 
@@ -15,6 +15,7 @@ endif()
 # --- compiler checks
 
 include(${CMAKE_CURRENT_LIST_DIR}/f18impnone.cmake)
+include(${CMAKE_CURRENT_LIST_DIR}/f08block.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/f08contig.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/f18errorstop.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/f18random.cmake)
@@ -27,7 +28,7 @@ include(${CMAKE_CURRENT_LIST_DIR}/f03utf8.cmake)
 
 # -- compiler feature checks BEFORE setting flags to avoid intermittant failures in general
 
-if(CMAKE_Fortran_COMPILER_ID STREQUAL Intel OR CMAKE_Fortran_COMPILER_ID STREQUAL IntelLLVM)
+if(CMAKE_Fortran_COMPILER_ID MATCHES Intel)
   if(WIN32)
     add_compile_options(/QxHost)
     string(APPEND CMAKE_Fortran_FLAGS " /traceback /heap-arrays")

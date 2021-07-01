@@ -9,10 +9,9 @@ test('LeadingZeros', leading_zeros,
 notermsize = executable('notermsize', 'noenv.f90')
 test('NoTermSize', notermsize)
 
-if not(os == 'windows' and fc.get_id() == 'pgi')
-  null = executable('null', 'devnull.f90')
-  test('Nullfile', null, timeout: 10, suite: 'io')
-endif
+null = executable('null', 'devnull.f90')
+test('Nullfile', null, timeout: 10, suite: 'io')
+
 
 # --- pathlib
 conf_data = configuration_data()

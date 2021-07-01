@@ -1,17 +1,17 @@
-cmake_minimum_required(VERSION 3.14...3.20)
+cmake_minimum_required(VERSION 3.14...3.21)
 project(fortran2018io
-LANGUAGES Fortran)
+  LANGUAGES Fortran)
 enable_testing()
 
-add_library(logging OBJECT logging.f90)
+set_directory_properties(PROPERTIES LABELS io)
 
-if(CMAKE_Fortran_COMPILER_ID STREQUAL PGI)
-  message(STATUS "PGI doesn't work correctly for this append_file example, even alone")
-else()
+if(f08block)
+  add_library(logging OBJECT logging.f90)
+
   add_executable(append_file append_file.f90)
   target_link_libraries(append_file PRIVATE logging pathlib)
   add_test(NAME io:appendFile COMMAND append_file)
-endif()
+endif(f08block)
 
 add_executable(termio terminal_io.f90)
 if(NOT WIN32)
@@ -34,7 +34,7 @@ add_executable(null devnull.f90)
 add_test(NAME io:nullfile COMMAND null)
 
 # --- pathlib
-if(CMAKE_Fortran_COMPILER_ID STREQUAL Intel)
+if(CMAKE_Fortran_COMPILER_ID MATCHES Intel)
   set(dir_exist "inquire(directory=path, exist=exists)")
 else()
   set(dir_exist "inquire(file=path, exist=exists)")

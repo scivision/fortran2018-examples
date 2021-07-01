@@ -1,5 +1,6 @@
 check_source_compiles(Fortran
 "program test
-call random_init(.false., .false.)
+block
+end block
 end program"
-f18random)
+f08block)

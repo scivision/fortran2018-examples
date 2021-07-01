@@ -10,6 +10,7 @@ implicit none (type, external)
 real, parameter :: pi = 4*atan(1.)
 
 real :: nan, inf
+real :: A(10)
 
 ! NOTE: this triggers nuisance exceptions IEEE_INVALID_FLAG, IEEE_OVERFLOW_FLAG
 nan = ieee_value(1.,ieee_quiet_nan)
@@ -46,11 +47,8 @@ if (isclose(1e-38, 0., atol=0.)) write(stderr,*) 'single precision denormal'
 
 !--- test array of values
 
-block
-  real :: A(10)
-  call fib(size(A), A)
-  call assert_isclose(A,[0.,1.,1.,2.,3.,5.,8.,13.,21.,34.],err_msg='array fail')
-end block
+call fib(size(A), A)
+call assert_isclose(A,[0.,1.,1.,2.,3.,5.,8.,13.,21.,34.],err_msg='array fail')
 
 print *, 'Finite precision: test OK'
 
