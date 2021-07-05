@@ -87,7 +87,6 @@ function(atlas_libs)
 
 find_library(ATLAS_LIB
   NAMES atlas
-  NAMES_PER_DIR
   PATH_SUFFIXES atlas)
 
 pkg_check_modules(pc_atlas_lapack lapack-atlas)
@@ -138,13 +137,10 @@ function(netlib_libs)
 if(LAPACK95 IN_LIST LAPACK_FIND_COMPONENTS)
   find_path(LAPACK95_INCLUDE_DIR
               NAMES f95_lapack.mod
-              PATH_SUFFIXES include
               PATHS ${LAPACK95_ROOT})
 
   find_library(LAPACK95_LIBRARY
                  NAMES lapack95
-                 NAMES_PER_DIR
-                 PATH_SUFFIXES lib
                  PATHS ${LAPACK95_ROOT})
 
   if(LAPACK95_LIBRARY AND LAPACK95_INCLUDE_DIR)
@@ -165,7 +161,6 @@ pkg_search_module(pc_lapack lapack-netlib lapack)
 
 find_library(LAPACK_LIB
   NAMES lapack
-  NAMES_PER_DIR
   PATHS /usr/local/opt  # homebrew
   HINTS ${_lapack_hints} ${pc_lapack_LIBRARY_DIRS} ${pc_lapack_LIBDIR}
   PATH_SUFFIXES lib lapack lapack/lib)
@@ -179,7 +174,6 @@ if(LAPACKE IN_LIST LAPACK_FIND_COMPONENTS)
   pkg_check_modules(pc_lapacke lapacke)
   find_library(LAPACKE_LIBRARY
     NAMES lapacke
-    NAMES_PER_DIR
     PATHS /usr/local/opt
     HINTS ${pc_lapacke_LIBRARY_DIRS} ${pc_lapacke_LIBDIR}
     PATH_SUFFIXES lapack lapack/lib)
@@ -238,7 +232,6 @@ function(openblas_libs)
 pkg_check_modules(pc_lapack lapack-openblas)
 find_library(LAPACK_LIBRARY
   NAMES lapack
-  NAMES_PER_DIR
   HINTS ${pc_lapack_LIBRARY_DIRS} ${pc_lapack_LIBDIR}
   PATH_SUFFIXES openblas)
 
@@ -289,7 +282,6 @@ endif()
 foreach(s ${_mkl_libs})
   find_library(LAPACK_${s}_LIBRARY
            NAMES ${s}
-           NAMES_PER_DIR
            PATHS ${MKLROOT} ENV TBBROOT
            PATH_SUFFIXES
              lib lib/intel64 lib/intel64_win
@@ -306,7 +298,7 @@ foreach(s ${_mkl_libs})
   list(APPEND LAPACK_LIB ${LAPACK_${s}_LIBRARY})
 endforeach()
 
-if(NOT BUILD_SHARED_LIBS AND (UNIX AND NOT APPLE))
+if(NOT BUILD_SHARED_LIBS AND CMAKE_SYSTEM_NAME STREQUAL Linux)
   set(LAPACK_LIB -Wl,--start-group ${LAPACK_LIB} -Wl,--end-group)
 endif()
 
