@@ -1,6 +1,6 @@
 module assert
 
-use, intrinsic:: iso_fortran_env, stderr=>error_unit, sp=>real32, dp=>real64
+use, intrinsic:: iso_fortran_env, only: sp=>real32, dp=>real64, stderr=>error_unit
 use, intrinsic:: ieee_arithmetic
 
 implicit none (type, external)

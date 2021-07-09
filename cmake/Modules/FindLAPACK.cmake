@@ -136,37 +136,31 @@ function(netlib_libs)
 
 if(LAPACK95 IN_LIST LAPACK_FIND_COMPONENTS)
   find_path(LAPACK95_INCLUDE_DIR
-              NAMES f95_lapack.mod
-              PATHS ${LAPACK95_ROOT})
+    NAMES f95_lapack.mod
+    HINTS ${LAPACK95_ROOT}
+    PATH_SUFFIXES include)
 
   find_library(LAPACK95_LIBRARY
-                 NAMES lapack95
-                 PATHS ${LAPACK95_ROOT})
+    NAMES lapack95
+    HINTS ${LAPACK95_ROOT})
 
-  if(LAPACK95_LIBRARY AND LAPACK95_INCLUDE_DIR)
-    set(LAPACK_INCLUDE_DIR ${LAPACK95_INCLUDE_DIR})
-    set(LAPACK_LIBRARY ${LAPACK95_LIBRARY})
-  else()
+  if(NOT (LAPACK95_LIBRARY AND LAPACK95_INCLUDE_DIR))
     return()
   endif()
+
+  set(LAPACK95_INCLUDE_DIR ${LAPACK95_INCLUDE_DIR} PARENT_SCOPE)
+  set(LAPACK95_LIBRARY ${LAPACK95_LIBRARY} PARENT_SCOPE)
+  set(LAPACK_LAPACK95_FOUND true PARENT_SCOPE)
 endif(LAPACK95 IN_LIST LAPACK_FIND_COMPONENTS)
 
-set(_lapack_hints)
-if(CMAKE_Fortran_COMPILER_ID STREQUAL PGI)
-  get_filename_component(_pgi_path ${CMAKE_Fortran_COMPILER} DIRECTORY)
-  set(_lapack_hints ${_pgi_path}/../)
-endif()
 
 pkg_search_module(pc_lapack lapack-netlib lapack)
 
-find_library(LAPACK_LIB
+find_library(LAPACK_LIBRARY
   NAMES lapack
-  PATHS /usr/local/opt  # homebrew
-  HINTS ${_lapack_hints} ${pc_lapack_LIBRARY_DIRS} ${pc_lapack_LIBDIR}
-  PATH_SUFFIXES lib lapack lapack/lib)
-if(LAPACK_LIB)
-  list(APPEND LAPACK_LIBRARY ${LAPACK_LIB})
-else()
+  HINTS ${pc_lapack_LIBRARY_DIRS} ${pc_lapack_LIBDIR}
+  PATH_SUFFIXES lapack lapack/lib)
+if(NOT LAPACK_LIBRARY)
   return()
 endif()
 
@@ -174,25 +168,21 @@ if(LAPACKE IN_LIST LAPACK_FIND_COMPONENTS)
   pkg_check_modules(pc_lapacke lapacke)
   find_library(LAPACKE_LIBRARY
     NAMES lapacke
-    PATHS /usr/local/opt
     HINTS ${pc_lapacke_LIBRARY_DIRS} ${pc_lapacke_LIBDIR}
     PATH_SUFFIXES lapack lapack/lib)
 
   # lapack/include for Homebrew
   find_path(LAPACKE_INCLUDE_DIR
     NAMES lapacke.h
-    PATHS /usr/local/opt
     HINTS ${pc_lapacke_INCLUDE_DIRS} ${pc_lapacke_LIBDIR}
     PATH_SUFFIXES lapack lapack/include)
-
-  if(LAPACKE_LIBRARY AND LAPACKE_INCLUDE_DIR)
-    set(LAPACK_LAPACKE_FOUND true PARENT_SCOPE)
-    list(APPEND LAPACK_INCLUDE_DIR ${LAPACKE_INCLUDE_DIR})
-    list(APPEND LAPACK_LIBRARY ${LAPACKE_LIBRARY})
-  else()
+  if(NOT (LAPACKE_LIBRARY AND LAPACKE_INCLUDE_DIR))
     return()
   endif()
 
+  set(LAPACK_LAPACKE_FOUND true PARENT_SCOPE)
+  list(APPEND LAPACK_INCLUDE_DIR ${LAPACKE_INCLUDE_DIR})
+  list(APPEND LAPACK_LIBRARY ${LAPACKE_LIBRARY})
   mark_as_advanced(LAPACKE_LIBRARY LAPACKE_INCLUDE_DIR)
 endif(LAPACKE IN_LIST LAPACK_FIND_COMPONENTS)
 
@@ -202,23 +192,18 @@ pkg_search_module(pc_blas blas-netlib blas)
 find_library(BLAS_LIBRARY
   NAMES refblas blas
   NAMES_PER_DIR
-  PATHS /usr/local/opt
-  HINTS ${_lapack_hints} ${pc_blas_LIBRARY_DIRS} ${pc_blas_LIBDIR}
-  PATH_SUFFIXES lib lapack lapack/lib blas)
+  HINTS ${pc_blas_LIBRARY_DIRS} ${pc_blas_LIBDIR}
+  PATH_SUFFIXES lapack lapack/lib blas)
 
-if(BLAS_LIBRARY)
-  list(APPEND LAPACK_LIBRARY ${BLAS_LIBRARY})
-  set(LAPACK_Netlib_FOUND true PARENT_SCOPE)
-else()
+if(NOT BLAS_LIBRARY)
   return()
 endif()
 
+list(APPEND LAPACK_LIBRARY ${BLAS_LIBRARY})
+set(LAPACK_Netlib_FOUND true PARENT_SCOPE)
+
 if(NOT WIN32)
   list(APPEND LAPACK_LIBRARY ${CMAKE_THREAD_LIBS_INIT})
-endif()
-
-if(LAPACK95_LIBRARY)
-  set(LAPACK_LAPACK95_FOUND true PARENT_SCOPE)
 endif()
 
 set(LAPACK_LIBRARY ${LAPACK_LIBRARY} PARENT_SCOPE)
@@ -235,7 +220,6 @@ find_library(LAPACK_LIBRARY
   HINTS ${pc_lapack_LIBRARY_DIRS} ${pc_lapack_LIBDIR}
   PATH_SUFFIXES openblas)
 
-
 pkg_check_modules(pc_blas blas-openblas)
 find_library(BLAS_LIBRARY
   NAMES openblas blas
@@ -244,15 +228,15 @@ find_library(BLAS_LIBRARY
   PATH_SUFFIXES openblas)
 
 find_path(LAPACK_INCLUDE_DIR
-    NAMES cblas-openblas.h cblas.h f77blas.h openblas_config.h
-    HINTS ${pc_lapack_INCLUDE_DIRS})
+  NAMES cblas-openblas.h cblas.h f77blas.h openblas_config.h
+  HINTS ${pc_lapack_INCLUDE_DIRS})
 
-if(LAPACK_LIBRARY AND BLAS_LIBRARY)
-  list(APPEND LAPACK_LIBRARY ${BLAS_LIBRARY})
-  set(LAPACK_OpenBLAS_FOUND true PARENT_SCOPE)
-else()
+if(NOT (LAPACK_LIBRARY AND BLAS_LIBRARY))
   return()
 endif()
+
+list(APPEND LAPACK_LIBRARY ${BLAS_LIBRARY})
+set(LAPACK_OpenBLAS_FOUND true PARENT_SCOPE)
 
 if(NOT WIN32)
  find_package(Threads)  # not required--for example Flang
@@ -295,15 +279,14 @@ foreach(s ${_mkl_libs})
     return()
   endif()
 
-  list(APPEND LAPACK_LIB ${LAPACK_${s}_LIBRARY})
+  list(APPEND LAPACK_LIBRARY ${LAPACK_${s}_LIBRARY})
 endforeach()
 
 if(NOT BUILD_SHARED_LIBS AND CMAKE_SYSTEM_NAME STREQUAL Linux)
-  set(LAPACK_LIB -Wl,--start-group ${LAPACK_LIB} -Wl,--end-group)
+  set(LAPACK_LIBRARY -Wl,--start-group ${LAPACK_LIBRARY} -Wl,--end-group)
 endif()
 
-set(BLAS_LIBRARY PARENT_SCOPE)
-set(LAPACK_LIBRARY ${LAPACK_LIB} PARENT_SCOPE)
+set(LAPACK_LIBRARY ${LAPACK_LIBRARY} PARENT_SCOPE)
 set(LAPACK_INCLUDE_DIR
   ${MKLROOT}/include
   ${MKLROOT}/include/intel64/${_mkl_bitflag}lp64
@@ -352,9 +335,15 @@ if(MKL IN_LIST LAPACK_FIND_COMPONENTS)
     set(_mkl_bitflag)
   endif()
 
-  unset(_mkl_libs)
+  set(_mkl_libs)
   if(LAPACK95 IN_LIST LAPACK_FIND_COMPONENTS)
-    set(_mkl_libs mkl_blas95_${_mkl_bitflag}lp64 mkl_lapack95_${_mkl_bitflag}lp64)
+    find_mkl_libs(mkl_blas95_${_mkl_bitflag}lp64 mkl_lapack95_${_mkl_bitflag}lp64)
+    if(LAPACK_LIBRARY)
+      set(LAPACK95_LIBRARY ${LAPACK_LIBRARY})
+      set(LAPACK_LIBRARY)
+      set(LAPACK95_INCLUDE_DIR ${LAPACK_INCLUDE_DIR})
+      set(LAPACK_LAPACK95_FOUND true)
+    endif()
   endif()
 
   unset(_tbb)
@@ -394,10 +383,6 @@ if(MKL IN_LIST LAPACK_FIND_COMPONENTS)
       set(LAPACK_MKL64_FOUND true)
     endif()
 
-    if(LAPACK95 IN_LIST LAPACK_FIND_COMPONENTS)
-      set(LAPACK_LAPACK95_FOUND true)
-    endif()
-
     if(OpenMP IN_LIST LAPACK_FIND_COMPONENTS)
       set(LAPACK_OpenMP_FOUND true)
     endif()
@@ -423,37 +408,43 @@ endif()
 
 # -- verify library works
 
+function(lapack_check)
+
+get_property(enabled_langs GLOBAL PROPERTY ENABLED_LANGUAGES)
+if(NOT Fortran IN_LIST enabled_langs)
+  set(LAPACK_links true PARENT_SCOPE)
+  return()
+endif()
+
 set(CMAKE_REQUIRED_FLAGS)
 set(CMAKE_REQUIRED_LINK_OPTIONS)
 set(CMAKE_REQUIRED_INCLUDES)
 set(CMAKE_REQUIRED_LIBRARIES ${LAPACK_LIBRARY})
 
-get_property(enabled_langs GLOBAL PROPERTY ENABLED_LANGUAGES)
-set(LAPACK_links true)  # complex to check across distinct LapackE APIs
-
-if(LAPACK_LIBRARY AND Fortran IN_LIST enabled_langs)
-
+foreach(i s d)
   check_source_compiles(Fortran
   "program check_lapack
-  implicit none
-  double precision, external :: disnan
-  print *, disnan(0.)
-  end" LAPACK_real64_links)
+  implicit none (type, external)
+  external :: ${i}isnan
+  end program" LAPACK_${i}_links)
 
-  check_source_compiles(Fortran
-  "program check_lapack
-  implicit none
-  real, external :: sisnan
-  print *, sisnan(0.)
-  end" LAPACK_real32_links)
-
-  if(NOT (LAPACK_real64_links AND LAPACK_real32_links))
-    set(LAPACK_links false)
+  if(LAPACK_${i}_links)
+    set(LAPACK_${i}_FOUND true PARENT_SCOPE)
+    set(LAPACK_links true)
   endif()
 
+endforeach()
+
+set(LAPACK_links ${LAPACK_links} PARENT_SCOPE)
+
+endfunction(lapack_check)
+
+# --- Check that Scalapack links
+
+if(LAPACK_LIBRARY)
+  lapack_check()
 endif()
 
-set(CMAKE_REQUIRED_LIBRARIES)
 
 include(FindPackageHandleStandardArgs)
 find_package_handle_standard_args(LAPACK
@@ -479,6 +470,19 @@ if(LAPACK_FOUND)
                           INTERFACE_LINK_LIBRARIES "${LAPACK_LIBRARY}"
                           INTERFACE_INCLUDE_DIRECTORIES "${LAPACK_INCLUDE_DIR}"
                         )
+  endif()
+
+  if(LAPACK_LAPACK95_FOUND)
+    set(LAPACK95_LIBRARIES ${LAPACK95_LIBRARY})
+    set(LAPACK95_INCLUDE_DIRS ${LAPACK95_INCLUDE_DIR})
+
+    if(NOT TARGET LAPACK::LAPACK95)
+      add_library(LAPACK::LAPACK95 INTERFACE IMPORTED)
+      set_target_properties(LAPACK::LAPACK95 PROPERTIES
+        INTERFACE_LINK_LIBRARIES "${LAPACK95_LIBRARY}"
+        INTERFACE_INCLUDE_DIRECTORIES "${LAPACK95_INCLUDE_DIR}"
+      )
+    endif()
   endif()
 endif()
 
