@@ -8,10 +8,7 @@ project(Fortran2018Examples
   DESCRIPTION "Example of using modern Fortran syntax"
   VERSION ${PROJECT_VERSION})
 
-include(CTest)
-if(NOT DEFINED ${PROJECT_NAME}_BUILD_TESTING)
-  set(${PROJECT_NAME}_BUILD_TESTING ${BUILD_TESTING})
-endif()
+enable_testing()
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/)
 
@@ -29,7 +26,6 @@ add_subdirectory(contiguous)
 add_subdirectory(git)
 add_subdirectory(io)
 add_subdirectory(debug)
-add_subdirectory(lapack95)
 add_subdirectory(maximum)
 add_subdirectory(namelist)
 # add_subdirectory(openacc)

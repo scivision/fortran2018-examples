@@ -18,7 +18,8 @@ test('BigInteger', big_integer, suite: 'standard', timeout: 5)
 
 justwait_exe = executable('justwait', 'pause.f90')
 
-sleep_std = library('sleep_std', 'sleep_std.F90')
+sleep_src = os == 'windows' ? files('sleep_win.f90') : files('sleep_unix.f90')
+sleep_std = library('sleep_std', sleep_src)
 
 sleep_demo = executable('sleep_demo', 'sleep_demo.f90',
   link_with: sleep_std)

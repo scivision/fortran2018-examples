@@ -14,19 +14,15 @@ test('Nullfile', null, timeout: 10, suite: 'io')
 
 
 # --- pathlib
-conf_data = configuration_data()
 pathlib_src = os == 'windows' ? files('pathlib_windows.f90') : files('pathlib_unix.f90')
 if ['intel', 'intel-cl'].contains(fc.get_id())
-  conf_data.set('dir_exist', 'inquire(directory=path, exist=exists)')
+  pathlib_src += files('pathlib_intel.f90')
 else
-  conf_data.set('dir_exist', 'inquire(file=path, exist=exists)')
+  pathlib_src += files('pathlib_gcc.f90')
 endif
-configure_file(input : 'pathlib.in.f90',
-               output : 'pathlib.f90',
-               configuration : conf_data)
 
 pathlib = library('pathlib',
-  sources: [meson.current_build_dir() / 'pathlib.f90', pathlib_src])
+  sources: ['pathlib.f90', pathlib_src])
 test_pathlib = executable('test_pathlib', 'test_pathlib.f90', link_with: pathlib)
 test('pathlib', test_pathlib, suite: 'io', timeout: 20)
 

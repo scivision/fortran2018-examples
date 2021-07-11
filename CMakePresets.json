@@ -11,11 +11,11 @@
 {
   "name": "intel", "inherits": "default",
   "displayName": "Intel Classic compiler: Linux/MacOS",
+  "binaryDir": "${sourceDir}/build-intel",
   "environment": {
     "CC": "icc",
     "CXX": "icpc",
-    "FC": "ifort",
-    "LAPACK_ROOT": "$env{MKLROOT}"
+    "FC": "ifort"
   }
 },
 {
@@ -31,7 +31,6 @@
   "displayName": "Intel oneAPI LLVM",
   "environment": {
     "CC": "icx",
-    "CXX": "icx",
     "FC": "ifx"
   }
 }

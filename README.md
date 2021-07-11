@@ -57,7 +57,7 @@ Use Intel compilers  (oneAPI or Parallel Studio) by:
     ```
 * Windows
 
-    ```post
+    ```sh
     cmake --preset=intelwin
     ```
 
@@ -65,7 +65,7 @@ Use Intel compilers  (oneAPI or Parallel Studio) by:
 
 Each directory has its own README and examples.
 
-* [array/](./array): Array math in modern CMake and Fortran, including MKL, BLAS, LAPACK and LAPACK95.
+* [array/](./array): Array math in modern CMake and Fortran
 * [block/](./block): Highly useful `block` element is demonstrated
 * [coarray](https://github.com/scivision/fortran-mpi-examples): modern Fortran is the only major compiled language standard with intrinsic massively parallel arrays.
 * [contiguous/](./contiguous): Fortran 2008 `contiguous` array examples, including Fortran preprocessor with modern CMake.

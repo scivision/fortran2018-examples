@@ -35,7 +35,12 @@ add_executable(justwait pause.f90)
 # NO test
 
 # -- sleep
-add_library(sleep_std OBJECT sleep_std.F90)
+add_library(sleep_std OBJECT)
+if(WIN32)
+  target_sources(sleep_std PRIVATE sleep_win.f90)
+else()
+  target_sources(sleep_std PRIVATE sleep_unix.f90)
+endif()
 target_include_directories(sleep_std INTERFACE
   $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
   $<INSTALL_INTERFACE:include>)

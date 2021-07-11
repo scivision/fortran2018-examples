@@ -48,23 +48,6 @@ if mklroot != ''
   intelMP_lib = fc.find_library(n, dirs: mklroot / '../compiler/lib/intel64')
 endif
 
-# --- Lapack
-if mklroot == ''
-  lapack = dependency('lapack', required: false, disabler: true)
-else # MKL
-  lapack = []
-  n1 = fc.get_id() == 'gcc' ? 'mkl_gf_lp64' : 'mkl_intel_lp64'
-  names = [n1, 'mkl_intel_thread', 'mkl_core']
-  foreach n : names
-    lapack += fc.find_library(n, dirs: mkllib_root)
-  endforeach
-  lapack += intelMP_lib
-endif
-
-if not fc.links('print *,disnan(0.); end', dependencies: lapack, name: 'LAPACK')
-  lapack = disabler()
-endif
-
 # -- OpenMP
 openmp = dependency('openmp', language : 'fortran', required : false, disabler: true)
 

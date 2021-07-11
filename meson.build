@@ -1,7 +1,7 @@
 project('Fortran2018examples', 'fortran', 'c',
   version : files('VERSION'),
   meson_version: '>= 0.57.0',
-  default_options : ['default_library=static', 'buildtype=release'])
+  default_options : ['default_library=static', 'buildtype=release', 'warning_level=0'])
 
 realbits = get_option('realbits')
 
@@ -16,7 +16,6 @@ subdir('character')
 subdir('contiguous')
 subdir('debug')
 subdir('io')
-subdir('lapack95')
 subdir('maximum')
 subdir('namelist')
 subdir('openmp')
