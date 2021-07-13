@@ -39,8 +39,8 @@ else
 endif
 
 !---  BENCHMARK NUL -----------
-! do NOT use status='old' as this can fail on various OS, compiler including PGI + Windows
-open(newunit=u,file=nullfile,iostat=ios, action='write')
+! do NOT use status='old' as this can fail on various OS
+open(newunit=u, file=nullfile,iostat=ios, action='write')
 if (ios /= 0) error stop 'could not open NULL file: ' // nullfile
 
 tnul = writetime(u,Nrun)

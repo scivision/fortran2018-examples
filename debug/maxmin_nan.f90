@@ -12,7 +12,6 @@ real :: A(4), x, y, nan, inf
 nan = ieee_value(0., ieee_quiet_nan)
 inf = ieee_value(0., ieee_positive_inf)
 
-! PGI 19.10 says 0 instad of NaN here
 if(.not.ieee_is_nan(nan)) then
   write(stderr,*) 'NaN: ',nan
 endif
@@ -25,7 +24,7 @@ y = 1.
 
 print '(F10.7,F10.7,A,F10.7)', x,y, ' maximum is ',max(x,y)
 
-! Gfortran, Flang 7 say inf; PGI, Intel say NaN
+! Gfortran, Flang 7 say inf; Intel says NaN
 print *,'max of inf() and NaN is', max(inf, nan)
 
 end program

@@ -10,7 +10,7 @@ character, parameter :: &
 nul = c_null_char, &
 etx = char(3), &
 tab = char(9), &
-backslash = char(92)   ! necessary for strict compilers like PGI and Flang in strings
+backslash = char(92)   ! necessary for strict compilers like Flang in strings
 
 print *, 'null'
 print '(A1)', nul

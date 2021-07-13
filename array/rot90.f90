@@ -1,10 +1,7 @@
 module rotflip
 
 ! This module provides rot90, flipud, fliplr for Fortran like Matlab and NumPy
-!
-! Note: PGI 19.10 still doesn't run this code correctly
-! (compiles but falls through to class default)
-!
+
 use, intrinsic:: iso_fortran_env, only: error_unit
 
 implicit none (type, external)
