@@ -1,5 +1,9 @@
 name: cmake
 
+env:
+  CMAKE_BUILD_PARALLEL_LEVEL: 3
+  CTEST_PARALLEL_LEVEL: 3
+
 on:
   push:
     paths:
@@ -19,8 +23,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - run: cmake --preset default -G "Unix Makefiles"
-    - run: cmake --build build --parallel
+    - run: cmake --preset default
+    - run: cmake --build --preset default
     - run: ctest --preset default
 
   windows:
@@ -31,5 +35,5 @@ jobs:
     - uses: actions/checkout@v2
 
     - run: cmake --preset default -G "MinGW Makefiles"
-    - run: cmake --build build --parallel
+    - run: cmake --build --preset default
     - run: ctest --preset default

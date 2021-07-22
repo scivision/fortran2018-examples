@@ -1,12 +1,13 @@
 {
-  "version": 2,
+  "version": 3,
 
 "configurePresets": [
 {
   "name": "default",
   "binaryDir": "${sourceDir}/build",
-  "generator": "Ninja",
-  "cacheVariables": {"CMAKE_BUILD_TYPE": "Release"}
+  "cacheVariables": {
+    "CMAKE_BUILD_TYPE": "Release"
+  }
 },
 {
   "name": "intel", "inherits": "default",
@@ -14,7 +15,6 @@
   "binaryDir": "${sourceDir}/build-intel",
   "environment": {
     "CC": "icc",
-    "CXX": "icpc",
     "FC": "ifort"
   }
 },
@@ -22,8 +22,7 @@
   "name": "intelwin", "inherits": "intel",
   "displayName": "Intel Classic compiler: Windows",
   "environment": {
-    "CC": "icl",
-    "CXX": "icl"
+    "CC": "icl"
   }
 },
 {
@@ -51,7 +50,8 @@
   },
   "execution": {
     "noTestsAction": "error",
-    "stopOnFailure": false}
+    "stopOnFailure": false
+  }
 }
 ]
 }
