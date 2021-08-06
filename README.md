@@ -31,7 +31,7 @@ cmake -B build
 cmake --build build --parallel
 
 cd build
-ctest --parallel 4 --output-on-failure
+ctest --output-on-failure
 ```
 
 ### Meson

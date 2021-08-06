@@ -28,7 +28,7 @@ include(${CMAKE_CURRENT_LIST_DIR}/f03utf8.cmake)
 
 # -- compiler feature checks BEFORE setting flags to avoid intermittant failures in general
 
-if(CMAKE_Fortran_COMPILER_ID MATCHES Intel)
+if(CMAKE_Fortran_COMPILER_ID MATCHES "^Intel")
   if(WIN32)
     add_compile_options(/QxHost)
     string(APPEND CMAKE_Fortran_FLAGS " /traceback /heap-arrays")
