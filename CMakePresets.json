@@ -11,25 +11,17 @@
 },
 {
   "name": "intel", "inherits": "default",
-  "displayName": "Intel Classic compiler: Linux/MacOS",
+  "displayName": "Intel Classic Fortran",
   "binaryDir": "${sourceDir}/build-intel",
   "environment": {
-    "CC": "icc",
+    "CC": "icx",
     "FC": "ifort"
-  }
-},
-{
-  "name": "intelwin", "inherits": "intel",
-  "displayName": "Intel Classic compiler: Windows",
-  "environment": {
-    "CC": "icl"
   }
 },
 {
   "name": "intelnext", "inherits": "intel",
   "displayName": "Intel oneAPI LLVM",
   "environment": {
-    "CC": "icx",
     "FC": "ifx"
   }
 }
