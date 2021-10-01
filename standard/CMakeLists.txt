@@ -1,9 +1,6 @@
-cmake_minimum_required(VERSION 3.14...3.20)
-
-project(standard_fortran
-  LANGUAGES C Fortran)
-
-include(CTest)
+if(f18abstract)
+  add_executable(abstract_interface abstract.f90)
+endif()
 
 add_executable(shortcircuit short_circuit.f90)
 # shaky result, don't CI test

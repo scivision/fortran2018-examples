@@ -14,6 +14,7 @@ endif()
 
 # --- compiler checks
 
+include(${CMAKE_CURRENT_LIST_DIR}/f18abstract.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/f18impnone.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/f08block.cmake)
 include(${CMAKE_CURRENT_LIST_DIR}/f08contig.cmake)

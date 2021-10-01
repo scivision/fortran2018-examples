@@ -1,3 +1,5 @@
+abstract_interface = executable('abstract_interface', 'abstract.f90')
+
 short_circuit = executable('shortcircuit', 'short_circuit.f90')
 # test is too unreliable--sometimes pass sometimes fail, that's the point.
 
