@@ -11,17 +11,10 @@
 },
 {
   "name": "intel", "inherits": "default",
-  "displayName": "Intel Classic Fortran",
+  "displayName": "Intel Compilers",
   "binaryDir": "${sourceDir}/build-intel",
   "environment": {
     "CC": "icx",
-    "FC": "ifort"
-  }
-},
-{
-  "name": "intelnext", "inherits": "intel",
-  "displayName": "Intel oneAPI LLVM",
-  "environment": {
     "FC": "ifx"
   }
 }
