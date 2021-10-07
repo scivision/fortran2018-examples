@@ -4,14 +4,16 @@
 "configurePresets": [
 {
   "name": "default",
-  "binaryDir": "${sourceDir}/build",
-  "cacheVariables": {
-    "CMAKE_BUILD_TYPE": "Release"
-  }
+  "binaryDir": "${sourceDir}/build"
+},
+{
+  "name": "multi", "inherits": "default",
+  "displayName": "Ninja Multi-Config",
+  "generator": "Ninja Multi-Config"
 },
 {
   "name": "intel", "inherits": "default",
-  "displayName": "Intel Compilers",
+  "displayName": "Intel oneAPI compiler",
   "binaryDir": "${sourceDir}/build-intel",
   "environment": {
     "CC": "icx",
@@ -23,6 +25,20 @@
   {
     "name": "default",
     "configurePreset": "default"
+  },
+  {
+    "name": "release",
+    "configurePreset": "multi",
+    "configuration": "Release"
+  },
+  {
+    "name": "debug",
+    "configurePreset": "multi",
+    "configuration": "Debug"
+  },
+  {
+    "name": "intel",
+    "configurePreset": "intel"
   }
 ],
 "testPresets": [
@@ -37,6 +53,20 @@
     "noTestsAction": "error",
     "stopOnFailure": false
   }
+},
+{
+  "name": "release", "inherits": "default",
+  "configurePreset": "multi",
+  "configuration": "Release"
+},
+{
+  "name": "debug", "inherits": "default",
+  "configurePreset": "multi",
+  "configuration": "Debug"
+},
+{
+  "name": "intel", "inherits": "default",
+  "configurePreset": "intel"
 }
 ]
 }

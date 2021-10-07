@@ -3,6 +3,7 @@ name: cmake
 env:
   CMAKE_BUILD_PARALLEL_LEVEL: 3
   CTEST_PARALLEL_LEVEL: 3
+  CMAKE_BUILD_TYPE: Release
 
 on:
   push:
@@ -18,8 +19,6 @@ jobs:
 
   linux:
     runs-on: ubuntu-latest
-    env:
-      CTEST_PARALLEL_LEVEL: 2
     steps:
     - uses: actions/checkout@v2
 
@@ -30,10 +29,11 @@ jobs:
   windows:
     runs-on: windows-latest
     env:
-      CTEST_PARALLEL_LEVEL: 2
+      CMAKE_GENERATOR: "MinGW Makefiles"
+
     steps:
     - uses: actions/checkout@v2
 
-    - run: cmake --preset default -G "MinGW Makefiles"
+    - run: cmake --preset default
     - run: cmake --build --preset default
     - run: ctest --preset default
