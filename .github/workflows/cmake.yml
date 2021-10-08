@@ -22,9 +22,17 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - run: cmake --preset default
-    - run: cmake --build --preset default
-    - run: ctest --preset default
+    - run: |
+        sudo apt update
+        sudo apt install ninja-build
+
+    - run: cmake --preset multi
+
+    - run: cmake --build --preset debug
+    - run: ctest --preset debug
+
+    - run: cmake --build --preset release
+    - run: ctest --preset release
 
   windows:
     runs-on: windows-latest
