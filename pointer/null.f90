@@ -6,6 +6,8 @@ implicit none (type, external)
 REAL, POINTER :: arrow(:)
 REAL, ALLOCATABLE, TARGET :: bullseye(:,:)
 
+nullify(arrow)
+
 if(associated(arrow)) error stop "null pointers are not associated before use"
 
 allocate(arrow(1:8))
