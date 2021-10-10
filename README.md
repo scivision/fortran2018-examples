@@ -42,24 +42,8 @@ meson build
 meson test -C build
 ```
 
-## Compilers
-
-### Intel oneAPI
-
 [Intel oneAPI](https://www.scivision.dev/intel-oneapi-fortran-install)
 has complete Fortran 2018 support.
-Use Intel compilers  (oneAPI or Parallel Studio) by:
-
-* MacOS or Linux:
-
-    ```sh
-    cmake --preset=intel
-    ```
-* Windows
-
-    ```sh
-    cmake --preset=intelwin
-    ```
 
 ## Programs
 
@@ -93,7 +77,6 @@ Each directory has its own README and examples.
 * [h5fortran](https://github.com/scivision/h5fortran)
 * [netcdf4fortran](https://github.com/scivision/netcdf4fortran)
 * [sparse-fortran](https://github.com/scivision/sparse-fortran)
-
 
 ## Resources
 

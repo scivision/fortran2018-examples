@@ -30,27 +30,21 @@ include(${CMAKE_CURRENT_LIST_DIR}/f03utf8.cmake)
 # -- compiler feature checks BEFORE setting flags to avoid intermittant failures in general
 
 if(CMAKE_Fortran_COMPILER_ID MATCHES "^Intel")
-  if(WIN32)
-    add_compile_options(/QxHost)
-    string(APPEND CMAKE_Fortran_FLAGS " /traceback /heap-arrays")
-    string(APPEND CMAKE_Fortran_FLAGS_DEBUG " /stand:f18 /warn")
-    string(APPEND CMAKE_Fortran_FLAGS_DEBUG " /debug /check:all")
-  else()
-    add_compile_options(-xHost)
-    string(APPEND CMAKE_Fortran_FLAGS " -traceback -heap-arrays")
-    string(APPEND CMAKE_Fortran_FLAGS_DEBUG " -stand f18 -warn")
-    string(APPEND CMAKE_Fortran_FLAGS_DEBUG " -debug extended -check all")
-  endif()
+  add_compile_options(
+  $<IF:$<BOOL:${WIN32}>,/QxHost,-xHost>
+  "$<$<COMPILE_LANGUAGE:Fortran>:-traceback;-heap-arrays>"
+  "$<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<CONFIG:Debug>>:-warn;-debug extended;-check all>"
+  )
 elseif(CMAKE_Fortran_COMPILER_ID STREQUAL GNU)
-  # add_compile_options(-mtune=native -Wall)
-  # if(CMAKE_Fortran_COMPILER_VERSION VERSION_GREATER_EQUAL 8)
-  #   string(APPEND CMAKE_Fortran_FLAGS " -std=f2018")
-  # endif()
 
-  string(APPEND CMAKE_Fortran_FLAGS " -fimplicit-none")
-  # string(APPEND CMAKE_Fortran_FLAGS " -Wrealloc-lhs")  # not -Wrealloc-lhs-all which warns on character
-  string(APPEND CMAKE_Fortran_FLAGS " -Werror=array-bounds -fcheck=all")
+  add_compile_options(-mtune=native -Wall
+  "$<$<COMPILE_LANGUAGE:Fortran>:-fimplicit-none;-Werror=array-bounds;-fcheck=all>"
+  )
+
+#   "$<$<COMPILE_LANGAUGE:Fortran>:-Wrealloc-lhs>"  # not -Wrealloc-lhs-all which warns on character
 elseif(CMAKE_Fortran_COMPILER_ID STREQUAL NAG)
   # https://www.nag.co.uk/nagware/np/r70_doc/manual/compiler_2_4.html#OPTIONS
-  string(APPEND CMAKE_Fortran_FLAGS " -f2018 -C -colour -gline -nan -info -u")
+  add_compile_options(
+  "$<$<COMPILE_LANGUAGE:Fortran>:-f2018;-C;-colour;-gline;-nan;-info;-u>"
+  )
 endif()
