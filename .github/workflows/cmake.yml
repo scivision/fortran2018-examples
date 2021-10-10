@@ -42,6 +42,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - run: cmake --preset default
-    - run: cmake --build --preset default
-    - run: ctest --preset default
+    - run: cmake -B build
+    - run: cmake --build build
+    - run: ctest --test-dir build --preset default
