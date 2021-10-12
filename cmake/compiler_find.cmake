@@ -1,11 +1,3 @@
-# this must be include() before CMakeLists.txt project()
-
-if(NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE RelWithDebInfo CACHE STRING "Debug or Release")
-endif()
-
-set(CMAKE_CONFIGURATION_TYPES "Release;RelWithDebInfo;Debug" CACHE STRING "Build type selections" FORCE)
-
 # Help CMake find matching compilers, especially needed for MacOS
 
 if(APPLE)
