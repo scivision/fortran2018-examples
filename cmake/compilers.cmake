@@ -33,7 +33,7 @@ if(CMAKE_Fortran_COMPILER_ID MATCHES "^Intel")
   add_compile_options(
   $<IF:$<BOOL:${WIN32}>,/QxHost,-xHost>
   "$<$<COMPILE_LANGUAGE:Fortran>:-traceback;-heap-arrays>"
-  "$<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<CONFIG:Debug>>:-warn;-debug extended;-check all>"
+  "$<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<CONFIG:Debug>>:-warn;-debug;-check>"
   )
 elseif(CMAKE_Fortran_COMPILER_ID STREQUAL GNU)
 
