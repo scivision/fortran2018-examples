@@ -14,14 +14,14 @@ add_executable(complog compiler_log.f90)
 add_test(NAME system:Compiler COMMAND complog)
 
 find_package(Python3 COMPONENTS Interpreter)
-if(Python3_FOUND)
-  add_executable(callpython call_python_script.f90)
-  add_test(NAME system:CallPython COMMAND callpython)
-endif()
+add_executable(callpython call_python_script.f90)
+add_test(NAME system:CallPython COMMAND callpython)
+set_tests_properties(system:CallPython PROPERTIES DISABLED $<NOT:$<BOOL:${Python3_FOUND}>>)
 
 find_program(FFPLAY NAMES ffplay)
-if(FFPLAY)
-  add_executable(playsound play_sound.f90)
-  add_test(NAME system:PlaySound COMMAND $<TARGET_FILE:playsound> ${CMAKE_CURRENT_SOURCE_DIR}/bell.aac)
-  set_tests_properties(system:PlaySound PROPERTIES TIMEOUT 15)
-endif()
+add_executable(playsound play_sound.f90)
+add_test(NAME system:PlaySound COMMAND $<TARGET_FILE:playsound> ${CMAKE_CURRENT_SOURCE_DIR}/bell.aac)
+set_tests_properties(system:PlaySound PROPERTIES
+TIMEOUT 15
+DISABLED $<NOT:$<BOOL:${FFPLAY}>>
+)
