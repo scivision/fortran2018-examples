@@ -1,8 +1,10 @@
 program auto_allocate
 !! demonstrate Fortran 2003 automatic allocation of arrays
 !!
-!! NOTE: if an array is manually allocated, Fortran 2003 allows auto-reallocation bigger or smaller
+!! NOTE: even if an array allocate(), Fortran 2003 still allows auto-reallocation bigger or smaller
+!! The A(:) syntax preserves previously allocated LHS shape, truncating RHS
 
+use, intrinsic :: iso_fortran_env, only : stderr=>error_unit
 implicit none (type, external)
 
 real, allocatable, dimension(:) :: A, B, C, D, E
@@ -36,8 +38,21 @@ allocate(D(3), E(3))
 D = [1,2]
 E = [3,4,5,7]
 
-if (size(D) /= 2) error stop 'auto-allocate smaller'
-if (size(E) /= 4) error stop 'auto-allocate bigger'
+if (size(D) /= 2) error stop 'allocate() auto-allocate small'
+if (size(E) /= 4) error stop 'allocate() auto-allocate big'
+
+!> (:) syntax truncates, does not change shape, whether or not allocate() used first
+A(:) = [9,8,7]
+if (size(A) /= 2) error stop '(:) syntax smaller'
+if (any(A /= [9,8])) error stop '(:) assign small'
+
+E(:) = [1,2,3]
+if (size(E) /= 4) error stop 'allocate() (:) syntax small'
+if (any(E /= [1,2,3,7])) error stop 'allocate() (:) assign small'
+
+E(:) = [5,4,3,2,1]
+if (size(E) /= 4) error stop 'allocate() (:) syntax: big'
+if (any(E /= [5,4,3,2])) error stop 'allocate() (:) assign: big'
 
 print *, 'OK: auto-allocate array'
 
