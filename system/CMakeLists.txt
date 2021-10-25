@@ -1,8 +1,3 @@
-cmake_minimum_required(VERSION 3.14...3.20)
-project(F18system Fortran)
-
-enable_testing()
-
 set_directory_properties(PROPERTIES LABELS system)
 
 add_executable(color color_text.f90)

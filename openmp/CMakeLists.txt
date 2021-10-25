@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.19...3.21)
+cmake_minimum_required(VERSION 3.19...3.22)
 project(OpenMP_Fortran
 LANGUAGES Fortran)
 
@@ -21,13 +21,12 @@ rate = omp_get_wtick()
 end program"
 hasOMP)
 
-if(NOT hasOMP)
-  message(STATUS "${CMAKE_Fortran_COMPILER_ID} ${CMAKE_Fortran_COMPILER_VERSION} does not support OpenMP.")
-  return()
-endif()
 
 set_directory_properties(PROPERTIES LABELS openmp)
 
 add_executable(timeprec timeprec.f90)
+set_target_properties(timeprec PROPERTIES EXCLUDE_FROM_ALL $<NOT:${hasOMP}>)
 target_link_libraries(timeprec PRIVATE OpenMP::OpenMP_Fortran)
-add_test(NAME "OpenMP:TimeMeasure" COMMAND timeprec)
+
+add_test(NAME OpenMP:TimeMeasure COMMAND timeprec)
+set_tests_properties(OpenMP:TimeMeasure PROPERTIES DISABLED $<NOT:${hasOMP}>)
