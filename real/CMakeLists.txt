@@ -57,5 +57,5 @@ if(f08kind)
 
   add_executable(test_assert finite.f90)
   target_link_libraries(test_assert PRIVATE assert)
-  add_test(NAME real:assert COMMAND $<TARGET_FILE:test_assert>)
+  add_test(NAME real:assert COMMAND test_assert)
 endif(f08kind)

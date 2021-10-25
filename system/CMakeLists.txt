@@ -15,7 +15,7 @@ set_tests_properties(system:CallPython PROPERTIES DISABLED $<NOT:$<BOOL:${Python
 
 find_program(FFPLAY NAMES ffplay)
 add_executable(playsound play_sound.f90)
-add_test(NAME system:PlaySound COMMAND $<TARGET_FILE:playsound> ${CMAKE_CURRENT_SOURCE_DIR}/bell.aac)
+add_test(NAME system:PlaySound COMMAND playsound ${CMAKE_CURRENT_SOURCE_DIR}/bell.aac)
 set_tests_properties(system:PlaySound PROPERTIES
 TIMEOUT 15
 DISABLED $<NOT:$<BOOL:${FFPLAY}>>
