@@ -30,6 +30,6 @@ endif()
 message(STATUS "${PROJECT_NAME}  git revision: ${git_rev}  git_branch: ${git_branch}  git_porcelain: ${git_porcelain}")
 
 # example
-configure_file(main.in.f90 main.f90)
+configure_file(main.in.f90 main.f90 @ONLY)
 add_executable(git_rev ${CMAKE_CURRENT_BINARY_DIR}/main.f90)
 add_test(NAME git:revision COMMAND $<TARGET_FILE:git_rev>)

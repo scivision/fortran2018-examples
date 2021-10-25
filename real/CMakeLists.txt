@@ -16,19 +16,19 @@ endif()
 set(real_prec "integer,parameter :: wp=real${realbits}")
 
 add_executable(cast_int2real cast_int2real.f90)
-add_test(NAME real:cast_int2real COMMAND $<TARGET_FILE:cast_int2real>)
+add_test(NAME real:cast_int2real COMMAND cast_int2real)
 
-configure_file(polymorphic.in.f90 polymorphic.f90)
+configure_file(polymorphic.in.f90 polymorphic.f90 @ONLY)
 add_executable(polymorph ${CMAKE_CURRENT_BINARY_DIR}/polymorphic.f90)
-add_test(NAME real:polymorphic COMMAND $<TARGET_FILE:polymorph>)
+add_test(NAME real:polymorphic COMMAND polymorph)
 
 add_executable(epsilon epsilon.f90)
-add_test(NAME real:epsilon COMMAND $<TARGET_FILE:epsilon>)
+add_test(NAME real:epsilon COMMAND epsilon)
 
 if(f08kind)
 
   add_executable(coerce coerce.f90)
-  add_test(NAME real:coerce COMMAND $<TARGET_FILE:coerce>)
+  add_test(NAME real:coerce COMMAND coerce)
 
   add_executable(divprec div_precision.f90)
   add_test(NAME real:divisionPrecision COMMAND divprec)
