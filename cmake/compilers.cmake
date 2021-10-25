@@ -31,19 +31,20 @@ include(${CMAKE_CURRENT_LIST_DIR}/f03utf8.cmake)
 if(CMAKE_Fortran_COMPILER_ID MATCHES "^Intel")
   add_compile_options(
   $<IF:$<BOOL:${WIN32}>,/QxHost,-xHost>
-  "$<$<COMPILE_LANGUAGE:Fortran>:-traceback;-heap-arrays>"
-  "$<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<CONFIG:Debug>>:-warn;-debug;-check>"
+  $<$<COMPILE_LANGUAGE:Fortran>:-traceback;-heap-arrays>
+  $<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<CONFIG:Debug>>:-warn;-debug;-check>
   )
 elseif(CMAKE_Fortran_COMPILER_ID STREQUAL GNU)
 
   add_compile_options(-mtune=native -Wall
   "$<$<COMPILE_LANGUAGE:Fortran>:-fimplicit-none;-Werror=array-bounds;-fcheck=all>"
+  $<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<CONFIG:Release>>:-fno-backtrace>
   )
 
 #   "$<$<COMPILE_LANGAUGE:Fortran>:-Wrealloc-lhs>"  # not -Wrealloc-lhs-all which warns on character
 elseif(CMAKE_Fortran_COMPILER_ID STREQUAL NAG)
   # https://www.nag.co.uk/nagware/np/r70_doc/manual/compiler_2_4.html#OPTIONS
   add_compile_options(
-  "$<$<COMPILE_LANGUAGE:Fortran>:-f2018;-C;-colour;-gline;-nan;-info;-u>"
+  $<$<COMPILE_LANGUAGE:Fortran>:-f2018;-C;-colour;-gline;-nan;-info;-u>
   )
 endif()
