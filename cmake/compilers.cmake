@@ -31,14 +31,15 @@ include(${CMAKE_CURRENT_LIST_DIR}/f03utf8.cmake)
 if(CMAKE_Fortran_COMPILER_ID MATCHES "^Intel")
   add_compile_options(
   $<IF:$<BOOL:${WIN32}>,/QxHost,-xHost>
-  $<$<COMPILE_LANGUAGE:Fortran>:-traceback;-heap-arrays>
-  $<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<CONFIG:Debug>>:-warn;-debug;-check>
+  "$<$<COMPILE_LANGUAGE:Fortran>:-traceback;-heap-arrays>"
+  "$<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<CONFIG:Debug>>:-warn;-debug;-check>"
   )
 elseif(CMAKE_Fortran_COMPILER_ID STREQUAL GNU)
 
-  add_compile_options(-mtune=native -Wall
-  "$<$<COMPILE_LANGUAGE:Fortran>:-fimplicit-none;-Werror=array-bounds;-fcheck=all>"
+  add_compile_options(-mtune=native
+  $<$<COMPILE_LANGUAGE:Fortran>:-fimplicit-none>
   $<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<CONFIG:Release>>:-fno-backtrace>
+  "$<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<CONFIG:Debug>>:-Wall;-fcheck=all;-Werror=array-bounds>"
   )
 
 #   "$<$<COMPILE_LANGAUGE:Fortran>:-Wrealloc-lhs>"  # not -Wrealloc-lhs-all which warns on character

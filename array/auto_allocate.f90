@@ -4,11 +4,13 @@ program auto_allocate
 !! NOTE: even if an array allocate(), Fortran 2003 still allows auto-reallocation bigger or smaller
 !! The A(:) syntax preserves previously allocated LHS shape, truncating RHS
 
-use, intrinsic :: iso_fortran_env, only : stderr=>error_unit
+use, intrinsic :: iso_fortran_env, only : stderr=>error_unit, compiler_options
 implicit none (type, external)
 
 real, allocatable, dimension(:) :: A, B, C, D, E
 real :: C3(3)
+
+print *, compiler_options()
 
 !> Initial auto-allocate
 A = [1,2,3]
@@ -53,6 +55,14 @@ if (any(E /= [1,2,3,7])) error stop 'allocate() (:) assign small'
 E(:) = [5,4,3,2,1]
 if (size(E) /= 4) error stop 'allocate() (:) syntax: big'
 if (any(E /= [5,4,3,2])) error stop 'allocate() (:) assign: big'
+
+!> (lbound:ubound)
+! A(1:3) = [4,5,6]
+! gfortran -fcheck=bounds
+! Fortran runtime error: Index '3' of dimension 1 of array 'a' outside of expected range (2:1)
+! ifort -CB
+! forrtl: severe (408): fort: (10): Subscript #1 of the array A has value 3 which is greater than the upper bound of 2
+if (size(A) /= 2) error stop '(l:u) syntax smaller'
 
 print *, 'OK: auto-allocate array'
 
