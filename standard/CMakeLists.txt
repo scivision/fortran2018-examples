@@ -53,3 +53,6 @@ add_test(NAME sleep COMMAND sleep_demo 150)
 # --
 add_executable(statement statement_function.f90)
 add_test(NAME statement_function COMMAND statement)
+
+add_executable(nanmaxmin maxmin_nan.f90)
+add_test(NAME NaNminmax COMMAND nanmaxmin)

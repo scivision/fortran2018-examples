@@ -30,3 +30,8 @@ test('sleep', sleep_demo, suite: 'standard', timeout : 5)
 
 statement = executable('statement', 'statement_function.f90')
 test('Statement', statement, suite: 'standard', timeout: 10)
+
+nanmaxmin_exe = executable('nanmaxmin', 'maxmin_nan.f90')
+test('NaNminmax', nanmaxmin_exe,
+  suite: 'debug',
+  timeout: 10)

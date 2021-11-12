@@ -1,3 +1,5 @@
+set_directory_properties(PROPERTIES LABELS maximum)
+
 set(_alpha "abcdefghijklmnopqrstuvwxyz")
 
 string(RANDOM LENGTH 63 ALPHABET ${_alpha} _name63)

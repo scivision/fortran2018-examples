@@ -1,3 +1,5 @@
+set_directory_properties(PROPERTIES LABELS git)
+
 find_package(Git)
 
 set(_max_len 80) # arbitrary limit, so as not to exceed maximum 132 character Fortran line length.
@@ -32,4 +34,4 @@ message(STATUS "${PROJECT_NAME}  git revision: ${git_rev}  git_branch: ${git_bra
 # example
 configure_file(main.in.f90 main.f90 @ONLY)
 add_executable(git_rev ${CMAKE_CURRENT_BINARY_DIR}/main.f90)
-add_test(NAME git:revision COMMAND git_rev)
+add_test(NAME revision COMMAND git_rev)
