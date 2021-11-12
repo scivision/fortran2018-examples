@@ -60,3 +60,6 @@ add_test(NAME NaNminmax COMMAND nan_max_min)
 
 add_executable(minloc_maxloc_mask minloc_maxloc_mask.f90)
 add_test(NAME MinlocMaxlocMask COMMAND minloc_maxloc_mask)
+
+add_executable(minval_maxval_mask minval_maxval_mask.f90)
+add_test(NAME MinvalMaxvalMask COMMAND minval_maxval_mask)

@@ -42,3 +42,9 @@ test('Minloc Maxloc Mask', maxloc_minloc_mask,
 suite: 'standard',
 timeout: 10
 )
+
+maxval_minval_mask = executable('maxval_minval_mask', 'minval_maxval_mask.f90')
+test('Minval Maxval Mask', maxval_minval_mask,
+suite: 'standard',
+timeout: 10
+)
