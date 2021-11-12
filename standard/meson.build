@@ -33,5 +33,12 @@ test('Statement', statement, suite: 'standard', timeout: 10)
 
 nanmaxmin_exe = executable('nanmaxmin', 'maxmin_nan.f90')
 test('NaNminmax', nanmaxmin_exe,
-  suite: 'debug',
-  timeout: 10)
+suite: 'standard',
+timeout: 10
+)
+
+maxloc_minloc_mask = executable('maxloc_minloc_mask', 'minloc_maxloc_mask.f90')
+test('Minloc Maxloc Mask', maxloc_minloc_mask,
+suite: 'standard',
+timeout: 10
+)

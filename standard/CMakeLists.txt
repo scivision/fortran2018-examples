@@ -50,9 +50,13 @@ add_executable(sleep_demo sleep_demo.f90)
 target_link_libraries(sleep_demo sleep_std)
 add_test(NAME sleep COMMAND sleep_demo 150)
 
-# --
+# --- Fortran 77 statement functions (obsolete)
 add_executable(statement statement_function.f90)
 add_test(NAME statement_function COMMAND statement)
 
-add_executable(nanmaxmin maxmin_nan.f90)
-add_test(NAME NaNminmax COMMAND nanmaxmin)
+# --- possibly suprising behaviors
+add_executable(nan_max_min maxmin_nan.f90)
+add_test(NAME NaNminmax COMMAND nan_max_min)
+
+add_executable(minloc_maxloc_mask minloc_maxloc_mask.f90)
+add_test(NAME MinlocMaxlocMask COMMAND minloc_maxloc_mask)
