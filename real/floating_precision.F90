@@ -4,7 +4,6 @@ implicit none (type, external)
 
 real(real32) :: pi32 = 4*atan(1.0_real32)
 real(real64) :: pi64 = 4*atan(1.0_real64)
-real(real128) :: pi128 = 4*atan(1.0_real128)
 
 print *,compiler_version()
 
@@ -20,13 +19,17 @@ if (storage_size(pi32) /= 32) then
 endif
 print *,'32-bit PI',pi32
 
+#ifdef r128
+block
+real(real128) :: pi128 = 4*atan(1.0_real128)
+
 if (storage_size(pi128) /= 128) then
   write(stderr,*) 'expected real128 but you have real bits: ', storage_size(pi128)
   error stop
 endif
 print *,'128-bit PI',pi128
-
-
+end block
+#endif
 
 ! output should be:
 ! 32-bit PI   3.14159274

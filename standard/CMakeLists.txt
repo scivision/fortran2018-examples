@@ -1,3 +1,5 @@
+set_directory_properties(PROPERTIES LABELS standard)
+
 if(f18abstract)
   add_executable(abstract_interface abstract.f90)
 endif()
@@ -6,27 +8,28 @@ add_executable(shortcircuit short_circuit.f90)
 # shaky result, don't CI test
 
 add_executable(bitpat bitpat.f90)
-add_test(NAME standard:bit_pattern COMMAND bitpat)
+add_test(NAME bit_pattern COMMAND bitpat)
 
 add_executable(do_cycle do_cycle.f90)
-add_test(NAME standard:doCycle COMMAND do_cycle)
+add_test(NAME doCycle COMMAND do_cycle)
 
 # --- logical / boolean sized
 include(CheckTypeSize)
 set(CMAKE_EXTRA_INCLUDE_FILES stdbool.h)
 check_type_size(bool _size_bool)
-if(_size_bool EQUAL 1)
-  add_executable(boolean_c logical_kind.c)
-  add_test(NAME standard:boolean_c COMMAND boolean_c)
 
-  add_executable(logical_f logical_kind.f90)
-  add_test(NAME standard:logical_kind COMMAND logical_f)
-else()
-  message(STATUS "SKIP: This platform does not have 1-byte C bool")
-endif()
+add_executable(boolean_c logical_kind.c)
+add_test(NAME boolean_c COMMAND boolean_c)
+
+add_executable(logical_f logical_kind.f90)
+add_test(NAME logical_kind COMMAND logical_f)
+
+set_tests_properties(boolean_c logical_kind PROPERTIES
+DISABLED $<EQUAL:${_size_bool},1>
+)
 # ---
 add_executable(big_integer big_integer.f90)
-add_test(NAME standard:big_integer COMMAND big_integer)
+add_test(NAME big_integer COMMAND big_integer)
 
 add_executable(justwait pause.f90)
 # NO test
@@ -43,8 +46,8 @@ set_target_properties(sleep_std PROPERTIES
 
 add_executable(sleep_demo sleep_demo.f90)
 target_link_libraries(sleep_demo sleep_std)
-add_test(NAME standard:sleep COMMAND sleep_demo 150)
+add_test(NAME sleep COMMAND sleep_demo 150)
 
 # --
 add_executable(statement statement_function.f90)
-add_test(NAME standard:statement_function COMMAND statement)
+add_test(NAME statement_function COMMAND statement)

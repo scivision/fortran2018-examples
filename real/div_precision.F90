@@ -11,7 +11,6 @@ implicit none (type, external)
 
 real(real32) :: huge32 = 9/5.0_real32
 real(real64) :: huge64 = 9/5.0_real64
-real(real128) :: huge128 = 9/5.0_real128
 integer(int64) :: hugeint64 = 9/5_int64
 
 real(real64) :: imdouble = 9/5.
@@ -40,11 +39,6 @@ if (storage_size(huge32) /= 32) then
 endif
 print *,'32-bit',huge32
 
-if (storage_size(huge128) /= 128) then
-  write(stderr,*) 'expected real128 but you have real bits: ', storage_size(huge128)
-  error stop
-endif
-print *,'128-bit',huge128
 
 if (storage_size(hugeint64) /= 64) then
   write(stderr,*) 'expected int64 but you have integer bits: ', storage_size(hugeint64)
@@ -53,7 +47,18 @@ endif
 print *,'64-bit Integer ',hugeint64
 
 
+#ifdef r128
+block
 
+real(real128) :: huge128 = 9/5.0_real128
+
+if (storage_size(huge128) /= 128) then
+  write(stderr,*) 'expected real128 but you have real bits: ', storage_size(huge128)
+  error stop
+endif
+print *,'128-bit',huge128
+end block
+#endif
 !  64-bit variable with 32-bit constants   1.7999999523162842
 ! 64-bit variable, 32-bit constants equal to all 64-bit constants? F
 ! 32-bit   1.79999995
