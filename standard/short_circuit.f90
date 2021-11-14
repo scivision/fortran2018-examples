@@ -3,7 +3,7 @@ program sc
 !! but some compilers enact short-circuit logic anyway.
 !! This can lead to confusion between different users.
 !!
-!! Compilers will et you compile this, but some will segfault on run.
+!! Compilers will let you compile this, but some will segfault on run.
 !! NAG will raise Runtime error noting reference to not present variable.
 !!
 

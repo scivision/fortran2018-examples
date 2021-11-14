@@ -46,6 +46,6 @@ elseif(CMAKE_Fortran_COMPILER_ID STREQUAL GNU)
 elseif(CMAKE_Fortran_COMPILER_ID STREQUAL NAG)
   # https://www.nag.co.uk/nagware/np/r70_doc/manual/compiler_2_4.html#OPTIONS
   add_compile_options(
-  $<$<COMPILE_LANGUAGE:Fortran>:-f2018;-C;-colour;-gline;-nan;-info;-u>
+  "$<$<COMPILE_LANGUAGE:Fortran>:-f2018;-C;-colour;-gline;-nan;-info;-u>"
   )
 endif()
