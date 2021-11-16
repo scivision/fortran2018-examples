@@ -3,26 +3,27 @@ program null_ptr
 
 implicit none (type, external)
 
-REAL, POINTER :: arrow(:)
-REAL, ALLOCATABLE, TARGET :: bullseye(:,:)
+integer, POINTER :: arrow(:)
+integer, ALLOCATABLE, TARGET :: bullseye(:,:)
 
 nullify(arrow)
 
 if(associated(arrow)) error stop "null pointers are not associated before use"
 
 allocate(arrow(1:8))
-arrow = 5.
+arrow = 5
 if (any(arrow /= [5,5,5,5,5,5,5,5])) stop "arrow is not allocated"
 
 if(.not.associated(arrow)) error stop "null pointers are associated after allocation"
 
 allocate(bullseye(1:8, 3))
-bullseye = 1.
-bullseye(1:8:2, 2) = 10.
+bullseye = 1
+bullseye(1:8:2, 2) = 10
 
 !! reassociate pointer arrow
 arrow => bullseye(2:7, 2)
-if(any(abs(arrow - [1,10,1,10,1,10,1]) > 1e-5)) error stop "pointer arrow is not reassociated"
+if(size(arrow) /= 6) error stop "size of arrow is not 6"
+if(any(arrow /= [1,10,1,10,1,10])) error stop "pointer arrow is not reassociated"
 
 print *, "OK: pointer"
 
