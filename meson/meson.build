@@ -38,16 +38,6 @@ f18prop = fc.links('complex :: z; print *,z%re,z%im,z%kind; end', name: 'F2018 p
 
 f18assumed_rank = fc.links(files('../array/assumed-rank.f90'), name: 'F2018 assumed rank')
 
-# == Intel OpenMP
-mklroot = get_option('mklroot')
-mkllib_root = mklroot/'lib/intel64'
-
-intelMP_lib = []
-if mklroot != ''
-  n = os == 'windows' ? 'iomp5md' : 'iomp5'
-  intelMP_lib = fc.find_library(n, dirs: mklroot / '../compiler/lib/intel64')
-endif
-
 # -- OpenMP
 openmp = dependency('openmp', language : 'fortran', required : false, disabler: true)
 

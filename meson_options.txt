@@ -1,2 +1,1 @@
 option('realbits', type : 'combo', value : '64', choices: ['64', '32', '128'], description : 'real bits')
-option('mklroot', type: 'string', description: '-Dmklroot=$MKLROOT')
