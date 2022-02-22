@@ -1,7 +1,6 @@
 program overwrite_stdout
 !! overwrites terminal stdout in place e.g. for update status
 !! char(13) is carriage return
-use, intrinsic:: iso_c_binding, only: c_int
 use, intrinsic:: iso_fortran_env, only: stdout=>output_unit
 use sleep_std, only : sleep
 

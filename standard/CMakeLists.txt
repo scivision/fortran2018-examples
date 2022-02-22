@@ -59,6 +59,13 @@ add_executable(nan_max_min maxmin_nan.f90)
 add_test(NAME NaNminmax COMMAND nan_max_min)
 
 add_executable(minloc_maxloc_mask minloc_maxloc_mask.f90)
+if(CMAKE_Fortran_COMPILER_ID MATCHES "^Intel")
+  if(WIN32)
+    target_compile_options(minloc_maxloc_mask PRIVATE /assume:noold_maxminloc)
+  else()
+    target_compile_options(minloc_maxloc_mask PRIVATE -assume noold_maxminloc)
+  endif()
+endif()
 add_test(NAME MinlocMaxlocMask COMMAND minloc_maxloc_mask)
 
 add_executable(minval_maxval_mask minval_maxval_mask.f90)

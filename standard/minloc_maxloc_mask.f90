@@ -34,8 +34,8 @@ if(minloc(A, dim=1, mask=[.false., .true., .true., .true., .true.]) /= 3) error 
 !! ifort/ifx: 1 -assume old_maxminloc (default)
 !! ifort/ifx: 0 -assume noold_maxminloc
 mask = .false.
-print *, "maxloc mask = .false.", maxloc(A, dim=1, mask=mask)
-print *, "minloc mask = .false.", minloc(A, dim=1, mask=mask)
+if (maxloc(A, dim=1, mask=mask) /= 0) error stop "maxloc mask = .false."
+if (minloc(A, dim=1, mask=mask) /= 0) error stop "minloc mask = .false."
 
 print *, "OK: minloc_maxloc_mask"
 
