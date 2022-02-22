@@ -9,12 +9,6 @@ test('Bit Pattern', bitpat, suite: 'standard', timeout: 10)
 cycler = executable('do_cycle', 'do_cycle.f90')
 test('doCycle', cycler, suite: 'standard', timeout: 5)
 
-boolean_c = executable('boolean_c', 'logical_kind.c')
-test('boolean_c', boolean_c, suite : 'standard')
-
-logical_f = executable('logical_f', 'logical_kind.f90')
-test('logical_kind', logical_f, suite : 'standard')
-
 big_integer = executable('big_integer', 'big_integer.f90')
 test('BigInteger', big_integer, suite: 'standard', timeout: 5)
 

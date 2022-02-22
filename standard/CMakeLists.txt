@@ -13,21 +13,6 @@ add_test(NAME bit_pattern COMMAND bitpat)
 add_executable(do_cycle do_cycle.f90)
 add_test(NAME doCycle COMMAND do_cycle)
 
-# --- logical / boolean sized
-include(CheckTypeSize)
-set(CMAKE_EXTRA_INCLUDE_FILES stdbool.h)
-check_type_size(bool _size_bool)
-
-add_executable(boolean_c logical_kind.c)
-add_test(NAME boolean_c COMMAND boolean_c)
-
-add_executable(logical_f logical_kind.f90)
-add_test(NAME logical_kind COMMAND logical_f)
-
-set_tests_properties(boolean_c logical_kind PROPERTIES
-DISABLED $<EQUAL:${_size_bool},1>
-)
-# ---
 add_executable(big_integer big_integer.f90)
 add_test(NAME big_integer COMMAND big_integer)
 
