@@ -23,26 +23,26 @@ add_executable(epsilon epsilon.f90)
 add_test(NAME epsilon COMMAND epsilon)
 
 add_executable(coerce coerce.F90)
-target_compile_definitions(coerce PRIVATE $<${f08kind}:r128>)
+target_compile_definitions(coerce PRIVATE $<$<BOOL:${f08kind}>:r128>)
 add_test(NAME coerce COMMAND coerce)
 
 add_executable(divprec div_precision.F90)
-target_compile_definitions(divprec PRIVATE $<${f08kind}:r128>)
+target_compile_definitions(divprec PRIVATE $<$<BOOL:${f08kind}>:r128>)
 add_test(NAME divisionPrecision COMMAND divprec)
 
 add_executable(floatprec floating_precision.F90)
-target_compile_definitions(floatprec PRIVATE $<${f08kind}:r128>)
+target_compile_definitions(floatprec PRIVATE $<$<BOOL:${f08kind}>:r128>)
 add_test(NAME floatPrecision COMMAND floatprec)
 
 add_executable(hugeprec huge_precision.F90)
-target_compile_definitions(hugeprec PRIVATE $<${f08kind}:r128>)
+target_compile_definitions(hugeprec PRIVATE $<$<BOOL:${f08kind}>:r128>)
 add_test(NAME hugePrecision COMMAND hugeprec)
 
 add_executable(precprob precision_problems.f90)
 add_test(NAME precisionProblems COMMAND precprob)
 
 add_executable(nan nans.F90)
-target_compile_definitions(nan PRIVATE $<${f08kind}:r128>)
+target_compile_definitions(nan PRIVATE $<$<BOOL:${f08kind}>:r128>)
 add_test(NAME NaN COMMAND nan)
 
 
