@@ -1,5 +1,16 @@
-file(READ ${CMAKE_CURRENT_LIST_DIR}/../array/assumed-rank.f90 _code)
-
 check_source_compiles(Fortran
-"${_code}"
+"
+program test
+implicit none (type, external)
+contains
+
+subroutine r(A)
+integer, intent(inout) :: A(..)
+select rank(A)
+  rank default
+    error stop
+end select
+end subroutine r
+end program
+"
 f18assumed_rank)
