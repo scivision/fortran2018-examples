@@ -2,12 +2,6 @@ module random
 
   implicit none (type, external)
 
-interface
-  module subroutine rand_init(repeatable, image_distinct)
-  logical, intent(in) :: repeatable, image_distinct
-  end subroutine rand_init
-end interface
-
 contains
 
 impure elemental integer function randint(lo, hi)

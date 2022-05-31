@@ -1,18 +1,15 @@
 program demo_rand
-use random, only: rand_init
 
 implicit none (type, external)
 
-real :: r
-integer :: i
-
-call rand_init(.false., .false.)
+real :: r1, r2
 
 print *, 'these two random number should not match if random_init is working'
 
-do i = 1, 2
-  call random_number(r)
-  print *,r
-enddo
+call random_init(.false., .false.)
+call random_number(r1)
+call random_init(.false., .false.)
+call random_number(r2)
+if (r1==r2) error stop 'random_init fail'
 
 end program
