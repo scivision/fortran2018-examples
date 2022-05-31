@@ -1,7 +1,6 @@
 # Fortran 2018 Examples
 
 ![Actions Status](https://github.com/scivision/fortran2018-examples/workflows/cmake/badge.svg)
-![Actions Status](https://github.com/scivision/fortran2018-examples/workflows/meson/badge.svg)
 
 Easy examples of scientific computing with modern, powerful, easy Fortran 2018 standard.
 Fortran 2018 began as the TS18508 extension, formerly known as Fortran 2015.
@@ -22,10 +21,6 @@ Based on widespread compiler support and beneficial features, most new and upgra
 
 ## Build
 
-The CMake or Meson build system automatically walks through the subdirectories:
-
-### CMake
-
 ```sh
 cmake -B build
 cmake --build build --parallel
@@ -33,17 +28,6 @@ cmake --build build --parallel
 cd build
 ctest --output-on-failure
 ```
-
-### Meson
-
-```sh
-meson build
-
-meson test -C build
-```
-
-[Intel oneAPI](https://www.scivision.dev/intel-oneapi-fortran-install)
-has complete Fortran 2018 support.
 
 ## Programs
 
@@ -75,7 +59,7 @@ Each directory has its own README and examples.
 
 * [C / C++ interfaced with Fortran](https://github.com/scivision/fortran-c-cpp-interface)
 * [h5fortran](https://github.com/scivision/h5fortran)
-* [netcdf4fortran](https://github.com/scivision/netcdf4fortran)
+* [nc4fortran](https://github.com/scivision/nc4fortran)
 * [sparse-fortran](https://github.com/scivision/sparse-fortran)
 
 ## Resources
