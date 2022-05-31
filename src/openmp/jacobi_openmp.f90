@@ -53,6 +53,6 @@ end do
 
 call system_clock(toc)
 
-print *, (toc-tic)*1000./trate, iter
+print *, real(toc-tic)*1000./ real(trate), iter
 
 end program
