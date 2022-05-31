@@ -12,6 +12,6 @@ if(NOT OpenACC_Fortran_FOUND)
 endif()
 
 add_executable(simple_openacc simple_openacc.f90)
-target_compile_options(simple_openacc PRIVATE ${OpenACC_Fortran_FLAGS})
+target_link_libraries(simple_openacc PRIVATE OpenACC::OpenACC_Fortran)
 
 add_test(NAME OpenACCsimple COMMAND simple_openacc)
