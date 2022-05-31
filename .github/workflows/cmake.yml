@@ -1,7 +1,6 @@
 name: cmake
 
 env:
-  CMAKE_BUILD_PARALLEL_LEVEL: 3
   CTEST_PARALLEL_LEVEL: 3
   CMAKE_BUILD_TYPE: Release
 
@@ -34,14 +33,35 @@ jobs:
     - run: cmake --build --preset release
     - run: ctest --preset release
 
+  mac:
+    runs-on: macos-latest
+
+    env:
+      HOMEBREW_NO_INSTALL_CLEANUP: 1
+      FC: gfortran-11
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - run: brew install ninja
+
+    - run: cmake --preset multi
+
+    - run: cmake --build --preset debug
+    - run: ctest --preset debug
+
+    - run: cmake --build --preset release
+    - run: ctest --preset release
+
   windows:
     runs-on: windows-latest
-    env:
-      CMAKE_GENERATOR: "MinGW Makefiles"
 
     steps:
     - uses: actions/checkout@v2
 
     - run: cmake -B build
-    - run: cmake --build build
+      env:
+        CMAKE_GENERATOR: "MinGW Makefiles"
+
+    - run: cmake --build build --parallel
     - run: ctest --test-dir build --preset default
