@@ -1,5 +1,5 @@
 # N*N is faster than N**2 if the compiler can't optimize away constants.
-# Howver, contemporary compilers simply optimize integer powers
+# Howver, contemporary compilers typically optimize integer powers
 # Floating-point powers are handled the "slow" way
 
 cmake_minimum_required(VERSION 3.14)

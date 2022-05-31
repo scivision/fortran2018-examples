@@ -33,27 +33,27 @@ ctest --output-on-failure
 
 Each directory has its own README and examples.
 
-* [array/](./array): Array math in modern CMake and Fortran
-* [block/](./block): Highly useful `block` element is demonstrated
+* [array/](./src/array): Array math in modern CMake and Fortran
+* [block/](./src/block): Highly useful `block` element is demonstrated
 * [coarray](https://github.com/scivision/fortran-mpi-examples): modern Fortran is the only major compiled language standard with intrinsic massively parallel arrays.
-* [contiguous/](./contiguous): Fortran 2008 `contiguous` array examples, including Fortran preprocessor with modern CMake.
-* [git/](./git) Git tracability
+* [contiguous/](./src/contiguous): Fortran 2008 `contiguous` array examples, including Fortran preprocessor with modern CMake.
+* [git/](./src/git) Git tracability
 * [mpi](https://github.com/scivision/fortran-mpi-examples):
-* [namelist/](./namelist): Fortran 90 / 2003 Namelist parsing -- native text config files for Fortran
-* [openmp/](./openmp): OpenMP threading exmaples
-* [random/](./random): random numbers with modern Fortran
+* [namelist/](./src/namelist): Fortran 90 / 2003 Namelist parsing -- native text config files for Fortran
+* [openmp/](./src/openmp): OpenMP threading exmaples
+* [random/](./src/random): random numbers with modern Fortran
 
 ---
 
-* [io/](./io): modern Fortran File I/O including resolving absolute path
+* [io/](./src/io): modern Fortran File I/O including resolving absolute path
 
 ---
 
-* [real/](./real): Numerous examples dealing with practical features of real floating point numbers, including sentinel NaN and polymorphism.
-* [character/](./character): String handling is easy and performant in modern Fortran.
-* [standard/](./standard): advanced features that can be done with Fortran standard coding
+* [real/](./src/real): Numerous examples dealing with practical features of real floating point numbers, including sentinel NaN and polymorphism.
+* [character/](./src/character): String handling is easy and performant in modern Fortran.
+* [standard/](./src/standard): advanced features that can be done with Fortran standard coding
 * [submodule](https://github.com/scivision/fortran-submodule): Fortran 2008 and CMake &ge; 3.12 enable even better large program architecture with `submodule`
-* [system/](./system): system (hardware) functionality accessible via Fortran
+* [system/](./src/system): system (hardware) functionality accessible via Fortran
 
 ## Companion libraries and examples
 

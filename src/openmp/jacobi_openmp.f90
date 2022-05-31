@@ -17,7 +17,7 @@ n = 200
 
 tol = 0.01
 
-iter_max = 1000000
+iter_max = 10000
 iter = 0
 err = 1.
 

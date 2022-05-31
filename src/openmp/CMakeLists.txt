@@ -1,9 +1,3 @@
-cmake_minimum_required(VERSION 3.19)
-project(OpenMP_Fortran
-LANGUAGES Fortran)
-
-enable_testing()
-
 find_package(OpenMP COMPONENTS Fortran)
 
 include(CheckSourceCompiles)
@@ -13,7 +7,7 @@ set(CMAKE_REQUIRED_LIBRARIES ${OpenMP_Fortran_LIBRARIES})
 
 check_source_compiles(Fortran
 "program test
-use, intrinsic:: iso_fortran_env, only: dp=>real64, int64
+use, intrinsic:: iso_fortran_env, only: int64
 implicit none (type, external)
 integer(int64), external :: omp_get_wtick
 integer(int64) :: rate
@@ -28,7 +22,12 @@ endif()
 
 set_directory_properties(PROPERTIES LABELS openmp)
 
+
 add_executable(timeprec timeprec.f90)
 target_link_libraries(timeprec PRIVATE OpenMP::OpenMP_Fortran)
+add_test(NAME TimeMeasure COMMAND timeprec)
 
-add_test(NAME OpenMP:TimeMeasure COMMAND timeprec)
+add_executable(jacobi jacobi_openmp.f90)
+target_link_libraries(jacobi PRIVATE OpenMP::OpenMP_Fortran)
+add_test(NAME Jacobi COMMAND jacobi)
+set_tests_properties(Jacobi PROPERTIES TIMEOUT 15)

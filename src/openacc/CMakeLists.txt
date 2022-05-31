@@ -1,9 +1,3 @@
-# https://cmake.org/cmake/help/latest/module/FindOpenACC.html
-
-cmake_minimum_required(VERSION 3.14)
-project(DemoOpenACC Fortran)
-enable_testing()
-
 find_package(OpenACC)
 
 if(NOT OpenACC_Fortran_FOUND)
