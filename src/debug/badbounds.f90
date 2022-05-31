@@ -20,5 +20,3 @@ print *,A(i-1:j)
 print *, A
 
 end program
-
-

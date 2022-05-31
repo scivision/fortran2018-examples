@@ -40,5 +40,3 @@ Ack = Ap(M, N)
 
 print *, Ack
 end program AckermannPeter
-
-

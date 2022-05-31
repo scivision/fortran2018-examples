@@ -27,7 +27,6 @@ include(${CMAKE_CURRENT_LIST_DIR}/f03utf8.cmake)
 
 if(CMAKE_Fortran_COMPILER_ID MATCHES "^Intel")
   add_compile_options(
-  $<IF:$<BOOL:${WIN32}>,/QxHost,-xHost>
   "$<$<COMPILE_LANGUAGE:Fortran>:-traceback;-heap-arrays>"
   "$<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<CONFIG:Debug>>:-warn;-debug;-check>"
   )

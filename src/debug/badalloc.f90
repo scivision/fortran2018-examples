@@ -27,5 +27,3 @@ print '(10F5.1)',A(i-1:j)
 print *, A
 
 end program
-
-

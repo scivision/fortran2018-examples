@@ -2,7 +2,7 @@
 # Howver, contemporary compilers simply optimize integer powers
 # Floating-point powers are handled the "slow" way
 
-cmake_minimum_required(VERSION 3.14...3.20)
+cmake_minimum_required(VERSION 3.14)
 project(assemblyOut LANGUAGES C Fortran)
 
 include(asm.cmake)

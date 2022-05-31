@@ -27,4 +27,3 @@ This is in program [real/nans.f90](./real/nans.f90)
 
 * must NOT use `-Ofast` or `-ffast-math` because IEEE standards are broken by these options--NaN detection will intermittently fail!
 * `gfortran` &ge; 6 needed for `ieee_arithmetic: ieee_is_nan`
-
