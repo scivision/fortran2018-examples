@@ -19,22 +19,6 @@ add_test(NAME big_integer COMMAND big_integer)
 add_executable(justwait pause.f90)
 # NO test
 
-# -- sleep
-add_library(sleep_std OBJECT
-$<IF:$<BOOL:${WIN32}>,sleep_win.f90,sleep_unix.f90>
-)
-target_include_directories(sleep_std INTERFACE
-$<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}/include>
-$<INSTALL_INTERFACE:include>
-)
-set_target_properties(sleep_std PROPERTIES
-Fortran_MODULE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/include
-)
-
-add_executable(sleep_demo sleep_demo.f90)
-target_link_libraries(sleep_demo sleep_std)
-add_test(NAME sleep COMMAND sleep_demo 150)
-
 # --- Fortran 77 statement functions (obsolete)
 add_executable(statement statement_function.f90)
 add_test(NAME statement_function COMMAND statement)

@@ -57,7 +57,7 @@ Each directory has its own README and examples.
 
 ## Companion libraries and examples
 
-* [C / C++ interfaced with Fortran](https://github.com/scivision/fortran-c-cpp-interface)
+* [C / C++ interface to/from Fortran](https://github.com/scivision/fortran-c-cpp-interface)
 * [h5fortran](https://github.com/scivision/h5fortran)
 * [nc4fortran](https://github.com/scivision/nc4fortran)
 * [sparse-fortran](https://github.com/scivision/sparse-fortran)
