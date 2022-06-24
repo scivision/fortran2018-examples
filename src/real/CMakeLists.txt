@@ -6,6 +6,8 @@ endif()
 
 set(real_prec "integer,parameter :: wp=real${realbits}")
 
+add_executable(array_real array.f90)
+add_test(NAME ArrayReal COMMAND array_real)
 
 add_library(assert OBJECT assert.f90)
 add_executable(test_assert finite.f90)
