@@ -24,7 +24,7 @@ if(NOT HAS_OpenMP)
   return()
 endif()
 
-set_directory_properties(PROPERTIES LABELS openmp)
+set_property(DIRECTORY PROPERTY LABELS openmp)
 
 
 add_executable(timeprec timeprec.f90)
@@ -34,4 +34,4 @@ add_test(NAME TimeMeasure COMMAND timeprec)
 add_executable(jacobi jacobi_openmp.f90)
 target_link_libraries(jacobi PRIVATE OpenMP::OpenMP_Fortran)
 add_test(NAME Jacobi COMMAND jacobi)
-set_tests_properties(Jacobi PROPERTIES TIMEOUT 15)
+set_property(TEST Jacobi PROPERTY TIMEOUT 15)

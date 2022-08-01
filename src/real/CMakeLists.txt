@@ -1,4 +1,4 @@
-set_directory_properties(PROPERTIES LABELS real)
+set_property(DIRECTORY PROPERTY LABELS real)
 
 if(NOT realbits)
   set(realbits 64)

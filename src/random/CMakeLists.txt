@@ -1,4 +1,4 @@
-set_directory_properties(PROPERTIES LABELS random)
+set_property(DIRECTORY PROPERTY LABELS random)
 
 if(NOT f18random)
   message(STATUS "SKIP: random_init not compiler supported")

@@ -1,4 +1,4 @@
-set_directory_properties(PROPERTIES LABELS io)
+set_property(DIRECTORY PROPERTY LABELS io)
 
 add_library(logging OBJECT logging.f90)
 
@@ -8,13 +8,11 @@ add_test(NAME appendFile COMMAND append_file)
 
 add_executable(termio terminal_io.f90)
 add_test(NAME terminal COMMAND bash -c "$<TARGET_FILE:termio> <<< 0")
-set_tests_properties(terminal PROPERTIES DISABLED $<BOOL:${WIN32}>)
+set_property(TEST terminal PROPERTY DISABLED $<BOOL:${WIN32}>)
 
 add_executable(leading_zeros leading_zeros.f90)
 add_test(NAME leading_zeros COMMAND leading_zeros)
-set_tests_properties(leading_zeros PROPERTIES
-PASS_REGULAR_EXPRESSION "hello1234.5600000"
-)
+set_property(TEST leading_zeros PROPERTY PASS_REGULAR_EXPRESSION "hello1234.5600000")
 
 add_executable(notermsize noenv.f90)
 add_test(NAME NoTermSize COMMAND notermsize)

@@ -1,4 +1,4 @@
-set_directory_properties(PROPERTIES LABELS maximum)
+set_property(DIRECTORY PROPERTY LABELS maximum)
 
 set(_alpha "abcdefghijklmnopqrstuvwxyz")
 

@@ -1,4 +1,4 @@
-set_directory_properties(PROPERTIES LABELS git)
+set_property(DIRECTORY PROPERTY LABELS git)
 
 find_package(Git)
 

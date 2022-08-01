@@ -1,4 +1,4 @@
-set_directory_properties(PROPERTIES LABELS debug)
+set_property(DIRECTORY PROPERTY LABELS debug)
 
 add_executable(bad_alloc badalloc.f90)
 

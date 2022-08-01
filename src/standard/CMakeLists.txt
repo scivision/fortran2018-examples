@@ -1,4 +1,4 @@
-set_directory_properties(PROPERTIES LABELS standard)
+set_property(DIRECTORY PROPERTY LABELS standard)
 
 if(f18abstract)
   add_executable(abstract_interface abstract.f90)

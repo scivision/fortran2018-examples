@@ -10,7 +10,7 @@ GIT_TAG v1.3.1
 
 FetchContent_MakeAvailable(submodules_proj)
 
-set_directory_properties(PROPERTIES LABELS submodule)
+set_property(DIRECTORY PROPERTY LABELS submodule)
 
 add_executable(useext use_ext.f90)
 target_link_libraries(useext math_const)

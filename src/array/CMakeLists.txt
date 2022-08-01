@@ -1,4 +1,4 @@
-set_directory_properties(PROPERTIES LABELS array)
+set_property(DIRECTORY PROPERTY LABELS array)
 
 add_executable(rotflip test_rot90.f90 rot90.f90)
 add_test(NAME RotFlip COMMAND rotflip)

@@ -1,4 +1,4 @@
-set_directory_properties(PROPERTIES LABELS pointer)
+set_property(DIRECTORY PROPERTY LABELS pointer)
 
 add_executable(null_pointer null.f90)
 add_test(NAME Null COMMAND null_pointer)

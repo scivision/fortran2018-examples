@@ -1,4 +1,4 @@
-set_directory_properties(PROPERTIES LABELS character)
+set_property(DIRECTORY PROPERTY LABELS character)
 
 add_executable(ascii ascii.f90)
 add_test(NAME AsciiSpecial COMMAND ascii)
@@ -17,9 +17,9 @@ add_executable(str2int str2int.f90)
 add_test(NAME Str2Int COMMAND str2int)
 
 add_executable(utf8 utf8.f90)
-set_target_properties(utf8 PROPERTIES EXCLUDE_FROM_ALL $<NOT:$<BOOL:${f03utf8}>>)
+set_property(TARGET utf8 PROPERTY EXCLUDE_FROM_ALL $<NOT:$<BOOL:${f03utf8}>>)
 add_test(NAME utf8 COMMAND utf8)
-set_tests_properties(utf8 PROPERTIES DISABLED $<NOT:$<BOOL:${f03utf8}>>)
+set_property(TEST utf8 PROPERTY DISABLED $<NOT:$<BOOL:${f03utf8}>>)
 
 add_executable(printorwrite print_vs_write.f90)
 add_test(NAME print_utf8 COMMAND printorwrite)
