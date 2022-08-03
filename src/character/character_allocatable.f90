@@ -44,4 +44,13 @@ if (size(flex) /= 4) error stop
 if (len(flex(1)) /= 8) error stop
 if (len_trim(flex(1)) /= 3) error stop
 
+deallocate(flex)
+allocate(character(3) :: flex(2))
+flex = [character(3) :: 'hi', 'bye']
+if (size(flex) /= 2) error stop
+if (len(flex(1)) /= 3) error stop
+if (len_trim(flex(1)) /= 2) error stop
+
+print *, "OK: allocatable character"
+
 end program
