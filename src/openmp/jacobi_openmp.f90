@@ -17,7 +17,7 @@ n = 200
 
 tol = 0.01
 
-iter_max = 10000
+iter_max = 1000  !< 1000: accurate to 4 digits
 iter = 0
 err = 1.
 

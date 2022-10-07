@@ -46,7 +46,10 @@ if (size(E) /= 4) error stop 'allocate() auto-allocate big'
 !> (:) syntax truncates, does not change shape, whether or not allocate() used first
 A(:) = [9,8,7]
 if (size(A) /= 2) error stop '(:) syntax smaller'
-if (any(A /= [9,8])) error stop '(:) assign small'
+if (any(A /= [9,8])) then
+  write(stderr,*) '(:) assign small: ', A
+  error stop
+endif
 
 E(:) = [1,2,3]
 if (size(E) /= 4) error stop 'allocate() (:) syntax small'
