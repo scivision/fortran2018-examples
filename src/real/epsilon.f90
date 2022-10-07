@@ -14,8 +14,8 @@ eps64 = epsilon(0._real64)
 print *, "epsilon real32", eps32
 print *, "epsilon real64", eps64
 
-one32_eps = ieee_next_after(1._real32, 2.)
-one64_eps = ieee_next_after(1._real64, 2.)
+one32_eps = ieee_next_after(1._real32, 2._real32)
+one64_eps = ieee_next_after(1._real64, 2._real64)
 
 print *, "ieee_next_after(1, 2) eps real32", one32_eps - 1
 print *, "ieee_next_after(1, 2) eps real64", one64_eps - 1
