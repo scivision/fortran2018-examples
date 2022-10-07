@@ -2,7 +2,7 @@ name: cmake
 
 env:
   CTEST_PARALLEL_LEVEL: 3
-  CMAKE_BUILD_TYPE: Release
+  HOMEBREW_NO_INSTALL_CLEANUP: 1
 
 on:
   push:
@@ -16,14 +16,27 @@ on:
 
 jobs:
 
-  linux:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
+  core:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
 
-    - run: |
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Linux prereqs
+      if: runner.os == 'Linux'
+      run: |
         sudo apt update
-        sudo apt install ninja-build
+        sudo apt install --no-install-recommends ninja-build
+
+    - name: macOS prereqs
+      if: runner.os == 'macOS'
+      run: |
+        brew install ninja
+        brew reinstall gcc
 
     - run: cmake --preset multi
 
@@ -33,35 +46,28 @@ jobs:
     - run: cmake --build --preset release
     - run: ctest --preset release
 
-  mac:
-    runs-on: macos-latest
-
-    env:
-      HOMEBREW_NO_INSTALL_CLEANUP: 1
-      FC: gfortran-11
-
-    steps:
-    - uses: actions/checkout@v2
-
-    - run: brew install ninja
-
-    - run: cmake --preset multi
-
-    - run: cmake --build --preset debug
-    - run: ctest --preset debug
-
-    - run: cmake --build --preset release
-    - run: ctest --preset release
 
   windows:
     runs-on: windows-latest
+    timeout-minutes: 10
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: msys2/setup-msys2@v2
+      with:
+        update: true
+        install: >-
+          mingw-w64-x86_64-ninja
+          mingw-w64-x86_64-gcc-fortran
 
-    - run: cmake -B build
-      env:
-        CMAKE_GENERATOR: "MinGW Makefiles"
+    - name: Put MSYS2_MinGW64 on PATH
+      run: echo "${{ runner.temp }}/msys64/mingw64/bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
-    - run: cmake --build build --parallel
-    - run: ctest --test-dir build --preset default
+    - uses: actions/checkout@v3
+
+    - run: cmake --preset multi
+
+    - run: cmake --build --preset debug
+    - run: ctest --preset debug
+
+    - run: cmake --build --preset release
+    - run: ctest --preset release
