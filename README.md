@@ -13,6 +13,8 @@ Modern Fortran benefits from modern CMake, which supports Fortran features such 
 
 Based on widespread compiler support and beneficial features, most new and upgraded Fortran programs should use at least portions of the Fortran 2008 standard.
 
+Compilers known to work include: GCC, Intel oneAPI, Nvidia HPC SDK, AOCC (AMD), Flang, Cray.
+
 ## Prereq
 
 * Linux: `apt install cmake gfortran`
