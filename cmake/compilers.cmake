@@ -18,6 +18,11 @@ if(CMAKE_Fortran_COMPILER_ID MATCHES "^Intel")
   "$<$<COMPILE_LANGUAGE:Fortran>:-traceback;-heap-arrays>"
   "$<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<CONFIG:Debug>>:-warn;-debug;-check>"
   )
+  if(WIN32)
+    add_compile_options($<$<CONFIG:Debug>:/Od>)
+  else()
+    add_compile_options($<$<CONFIG:Debug>:-O0>)
+  endif()
 elseif(CMAKE_Fortran_COMPILER_ID STREQUAL "GNU")
 
   add_compile_options(
