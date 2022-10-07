@@ -1,4 +1,4 @@
-check_source_compiles(Fortran
+check_fortran_source_compiles(
 "
 program test
 implicit none
@@ -13,4 +13,6 @@ end select
 end subroutine r
 end program
 "
-f18assumed_rank)
+f18assumed_rank
+SRC_EXT f90
+)

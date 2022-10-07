@@ -4,22 +4,26 @@ set(_alpha "abcdefghijklmnopqrstuvwxyz")
 
 string(RANDOM LENGTH 63 ALPHABET ${_alpha} _name63)
 
-check_source_compiles(Fortran
+check_fortran_source_compiles(
 "program test
 module ${_name63}
 end module
 end program"
-module_63char)
+module_63char
+SRC_EXT f90
+)
 
-check_source_compiles(Fortran
+check_fortran_source_compiles(
 "program test
 real :: ${_name63}
 end program"
-variable_63char)
+variable_63char
+SRC_EXT f90
+)
 
 string(RANDOM LENGTH 63 ALPHABET ${_alpha} _name63a)
 
-check_source_compiles(Fortran
+check_fortran_source_compiles(
 "program test
 module ${_name63}
 interface
@@ -39,4 +43,6 @@ end procedure nothing
 end submodule ${_name63a}
 
 end program"
-submodule_63char)
+submodule_63char
+SRC_EXT f90
+)

@@ -6,7 +6,7 @@ set(CMAKE_REQUIRED_LIBRARIES)
 
 if(OpenACC_Fortran_FOUND)
 
-check_source_compiles(Fortran
+check_fortran_source_compiles(
 "
 program simple
 implicit none
@@ -19,7 +19,9 @@ enddo
 
 end program
 "
-HAS_OpenACC)
+HAS_OpenACC
+SRC_EXT f90
+)
 
 endif()
 
