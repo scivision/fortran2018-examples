@@ -53,8 +53,8 @@ endif
 
 E(:) = [1,2,3]
 if (size(E) /= 4) error stop 'allocate() (:) syntax small'
-if (any(E /= [1,2,3,7])) then
-  write(stderr,*) 'allocate() (:) assign small: E=', E
+if (any(E(:3) /= [1,2,3])) then
+  write(stderr,*) 'allocate() (:) assign small: E=', E(:3)
   error stop
 endif
 
