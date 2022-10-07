@@ -57,9 +57,9 @@ Each directory has its own README and examples.
 
 ## Companion libraries and examples
 
-* [C / C++ interface to/from Fortran](https://github.com/scivision/fortran-c-cpp-interface)
-* [h5fortran](https://github.com/scivision/h5fortran)
-* [nc4fortran](https://github.com/scivision/nc4fortran)
+* [C / C++ interface to/from Fortran](https://github.com/scivision/fortran-cpp-interface)
+* [h5fortran](https://github.com/geospace-code/h5fortran-mpi)
+* [nc4fortran](https://github.com/geospace-code/nc4fortran)
 * [sparse-fortran](https://github.com/scivision/sparse-fortran)
 
 ## Resources
@@ -90,13 +90,13 @@ Each directory has its own README and examples.
 
 ### Compiler User Guides
 
-* [Cray Fortran](http://pubs.cray.com/content/S-3901/8.7/cray-fortran-reference-manual/fortran-compiler-introduction)
+* [Cray Fortran](https://support.hpe.com/hpesc/public/docDisplay?docId=a00115296en_us)
 * [Flang Wiki](https://github.com/flang-compiler/flang/wiki)
 * [GNU Fortran docs](https://gcc.gnu.org/onlinedocs/)
-* [IBM XL](https://www-01.ibm.com/support/docview.wss?uid=swg27036672)
-* [Intel Fortran](https://software.intel.com/en-us/fortran-compiler-developer-guide-and-reference)
-* [NAG Fortran](https://www.nag.com/nagware/np/r62_doc/manual/compiler.html)
-* [Nvidia HPC SDK](https://docs.nvidia.com/hpc-sdk/index.html)
+* [IBM Open XL](https://www.ibm.com/support/pages/ibm-open-xl-fortran-linux-power-and-xl-fortran-linux-documentation-library)
+* [Intel Fortran](https://www.intel.com/content/www/us/en/develop/documentation/fortran-compiler-oneapi-dev-guide-and-reference/top.html)
+* [NAG Fortran](https://www.nag.com/content/nag-fortran-compiler-documentation)
+* [Nvidia HPC SDK](https://docs.nvidia.com/hpc-sdk)
 
 ### Surveys
 
