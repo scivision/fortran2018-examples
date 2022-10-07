@@ -2,7 +2,7 @@ program big_integer
 !! this gets to 20! with int64 or 12! with int32
 use, intrinsic :: iso_fortran_env, only : int64, real128
 
-implicit none (type, external)
+implicit none
 
 integer(int64) :: n, i, fac
 integer :: ios

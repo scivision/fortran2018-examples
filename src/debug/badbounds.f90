@@ -1,7 +1,7 @@
 program badbounds
 !! This program should trigger array bounds checking
 
-implicit none (type, external)
+implicit none
 
 
 real :: A(-1:2) = [-1,0,1,2]

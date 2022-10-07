@@ -1,6 +1,6 @@
 module add_dummy
 
-implicit none (type, external)
+implicit none
 
 contains
 

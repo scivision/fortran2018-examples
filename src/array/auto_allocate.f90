@@ -5,7 +5,7 @@ program auto_allocate
 !! The A(:) syntax preserves previously allocated LHS shape, truncating RHS
 
 use, intrinsic :: iso_fortran_env, only : stderr=>error_unit, compiler_options
-implicit none (type, external)
+implicit none
 
 real, allocatable, dimension(:) :: A, B, C, D, E
 real :: C3(3)

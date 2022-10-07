@@ -3,7 +3,7 @@ module string_utils
 
 use, intrinsic:: iso_c_binding, only: c_null_char
 
-implicit none (type, external)
+implicit none
 
 contains
 

@@ -26,7 +26,7 @@ program nans
 
 use, intrinsic :: iso_fortran_env
 use, intrinsic :: ieee_arithmetic, only: ieee_value, ieee_quiet_nan, ieee_is_nan
-implicit none (type, external)
+implicit none
 
 real(real32) :: nan_real32
 real(real64) :: nan_real64

@@ -2,7 +2,7 @@ program play_sound
 !! recommend using all lower case filenames and no spaces.
 !! plays sound in Fortran 2003+
 
-implicit none (type, external)
+implicit none
 
 ! configure ffplay -- could make if/else to allow other players
 character(*),parameter :: playexe='ffplay'

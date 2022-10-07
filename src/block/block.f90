@@ -9,7 +9,7 @@ program demo_block
 !!  outer scope i=          10
 !!  A allocated T size(a)           4
 
-implicit none (type, external)
+implicit none
 
 integer :: i, j
 real, allocatable :: A(:)

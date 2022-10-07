@@ -3,7 +3,7 @@ program test_string
 use, intrinsic:: iso_c_binding, only: c_null_char
 use string_utils
 
-implicit none (type, external)
+implicit none
 
 call test_lowercase()
 print *,'PASSED: HDF5 character'

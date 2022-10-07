@@ -1,6 +1,6 @@
 module stuff
 
-implicit none (type, external)
+implicit none
 
 
 type, abstract :: L1
@@ -26,7 +26,7 @@ program derived_type
 !! https://software.intel.com/content/www/us/en/develop/documentation/fortran-compiler-oneapi-dev-guide-and-reference/top/language-reference/a-to-z-reference/o-to-p/pointer-fortran.html
 
 use stuff, only : L2,obj
-implicit none (type, external)
+implicit none
 
 type :: A
 

@@ -1,6 +1,6 @@
 program es
 !! Fortran 2018 allows variable character for error stop, which is highly useful
-implicit none (type, external)
+implicit none
 character(:), allocatable :: b
 
 b = 'this message is dynamic'

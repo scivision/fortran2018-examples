@@ -4,7 +4,7 @@
 !! * "b"  output result from accelerator
 program simple
 use, intrinsic :: iso_fortran_env, only : int64
-implicit none (type, external)
+implicit none
 
 character(16) :: argv
 integer :: i, N = 1000

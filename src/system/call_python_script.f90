@@ -3,7 +3,7 @@ program call_python
 !! this technique works in general, as Fortran will crash if calling a non-existant program
 !! without exitstat= and/or cmdstat= parameter
 
-implicit none (type, external)
+implicit none
 
 character(:), allocatable :: cmd
 character(*), parameter :: exe='python'

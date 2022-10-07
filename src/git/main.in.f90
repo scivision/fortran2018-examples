@@ -1,6 +1,6 @@
 program git_demo
 !! we don't make porcelain a character because it could go beyond max fortran line length
-implicit none (type, external)
+implicit none
 
 character(:), allocatable :: git_version, branch, rev
 logical :: porcelain

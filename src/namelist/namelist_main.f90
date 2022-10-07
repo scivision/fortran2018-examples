@@ -1,7 +1,7 @@
 program nml
 !! example of using namelist .nml in modern Fortran
 !! here, we didn't specify "bar" in config.nml, so default values are used.
-implicit none (type, external)
+implicit none
 
 character(*), parameter :: conffile = 'config.nml'
 real :: x(3), y, z, a, b, c

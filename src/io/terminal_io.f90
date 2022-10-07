@@ -1,6 +1,6 @@
 program terminal_io
 use, intrinsic:: iso_fortran_env
-implicit none (type, external)
+implicit none
 
 character(80) :: txt
 

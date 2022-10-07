@@ -9,7 +9,7 @@ if(OpenACC_Fortran_FOUND)
 check_source_compiles(Fortran
 "
 program simple
-implicit none (type, external)
+implicit none
 integer :: i, x(2)
 
 !$acc parallel loop

@@ -2,7 +2,7 @@ program cast_int2real
 !! show Fortran standard casting rules.
 !! This helps avoid needless 1._real64 etc.
 
-implicit none (type, external)
+implicit none
 
 call assert_equal(1 / 5., 0.2)
 call assert_equal(1. / 5, 0.2)

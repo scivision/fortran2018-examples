@@ -7,7 +7,7 @@ program sc
 !! NAG will raise Runtime error noting reference to not present variable.
 !!
 
-implicit none (type, external)
+implicit none
 
 call msg_bad_code('I did it')
 

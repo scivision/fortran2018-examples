@@ -4,7 +4,7 @@ program character_array
 !! longest string you will need.
 !! trim() each element when actually used if needed.
 
-implicit none (type, external)
+implicit none
 
 !> specify (*) or maximum len=, else each will be length one.
 character(*), parameter :: foo(3) = [character(9) :: 'hi', 'hello', 'greetings']

@@ -1,7 +1,7 @@
 program file_or_console
 use, intrinsic:: iso_fortran_env, only: stdout=>output_unit
 
-implicit none (type, external)
+implicit none
 
 character(:), allocatable :: filename
 character(256) :: buf

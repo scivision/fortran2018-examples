@@ -7,7 +7,7 @@ program poly
 ! cmake -Drealbits=128     2pi   6.28318530717958647692528676655900559
 
 use, intrinsic:: iso_fortran_env
-implicit none (type, external)
+implicit none
 
 @real_prec@
 

@@ -2,7 +2,7 @@
 module strutils
 !! split a string about a delimiter token, return part before delim
 
-implicit none (type, external)
+implicit none
 
 contains
 
@@ -25,7 +25,7 @@ end module strutils
 program split_string
 use strutils, only: split
 !! split a string about a delimiter token, return part before delim
-implicit none (type, external)
+implicit none
 
 character(*),parameter :: mystr="hello.txt"
 character(:),allocatable :: stem

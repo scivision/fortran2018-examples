@@ -2,7 +2,7 @@ module contig
 
 use, intrinsic:: iso_fortran_env, only: int64, real64
 
-implicit none (type, external)
+implicit none
 
 contains
 
@@ -34,7 +34,7 @@ program test_contigous
 !! which could be faster for some operations
 use contig
 
-implicit none (type, external)
+implicit none
 
 integer, parameter :: N = 1000000
 

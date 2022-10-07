@@ -1,6 +1,6 @@
 program devnull
 use, intrinsic:: iso_fortran_env, only: int64, wp=>real64
-implicit none (type, external)
+implicit none
 ! Benchmarks platform independent null file writing behavior
 ! NUL: works on Windows 10
 ! /dev/null is used for Mac, Linux, BSD, Unix, WSL, Cygwin...

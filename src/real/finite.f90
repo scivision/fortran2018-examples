@@ -5,7 +5,7 @@ use, intrinsic:: iso_fortran_env, only: stderr=>error_unit, sp=>real32, dp=>real
 
 use assert, only: isclose, assert_isclose
 
-implicit none (type, external)
+implicit none
 
 real, parameter :: pi = 4*atan(1.)
 

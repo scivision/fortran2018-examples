@@ -1,6 +1,6 @@
 module Ackp
 
-implicit none (type, external)
+implicit none
 
 contains
 
@@ -23,7 +23,7 @@ program AckermannPeter
 
 use Ackp
 
-implicit none (type, external)
+implicit none
 
 integer :: Ack, M, N
 character(8) :: buf

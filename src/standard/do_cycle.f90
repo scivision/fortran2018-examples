@@ -1,6 +1,6 @@
 program nested_cycler
 
-implicit none (type, external)
+implicit none
 
 integer :: i,j,k,c
 integer :: R(18,3) !>if not for cycle, it would be R(27,3)

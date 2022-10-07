@@ -3,7 +3,7 @@ program utf8_char
 !! if characters print garbled, ensure UTF8 is enabled in your system locale.
 !! this is also true for Windows, which will work in PowerShell once UTF8 is enabled
 
-implicit none (type, external)
+implicit none
 
 character(:), allocatable :: ascii
 character(len=:, kind=selected_char_kind('ISO_10646')), allocatable :: utf8

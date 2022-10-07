@@ -1,6 +1,6 @@
 module demo
 
-implicit none (type, external)
+implicit none
 
 contains
 
@@ -19,7 +19,7 @@ program character_alloctable
 !! shows Fortran 2003 allocatable character and auto-allocated array
 
 use demo, only : drop_last_char
-implicit none (type, external)
+implicit none
 
 character(:), allocatable :: flex(:), scalar
 

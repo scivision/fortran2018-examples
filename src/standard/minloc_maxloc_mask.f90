@@ -14,7 +14,7 @@
 
 program minloc_maxloc_mask
 
-implicit none (type, external)
+implicit none
 
 real :: A(5) = [0, 5, 1, 2, 3]
 integer :: L

@@ -3,7 +3,7 @@ program epstest
 use, intrinsic :: iso_fortran_env, only : real32, real64
 use, intrinsic :: ieee_arithmetic, only : ieee_next_after
 
-implicit none (type, external)
+implicit none
 
 real(real32) :: one32_eps, eps32
 real(real64) :: one64_eps, eps64

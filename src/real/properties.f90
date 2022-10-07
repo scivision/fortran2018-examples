@@ -4,7 +4,7 @@ program prop
 !! * %len property of character
 
 use, intrinsic :: iso_fortran_env, only: real32
-implicit none (type, external)
+implicit none
 
 character(:), allocatable :: c
 complex :: z

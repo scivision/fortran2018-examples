@@ -4,7 +4,7 @@ program special_characters
 
 use iso_c_binding, only: c_null_char
 
-implicit none (type, external)
+implicit none
 
 character, parameter :: &
 nul = c_null_char, &

@@ -1,5 +1,5 @@
 program logger
-implicit none (type, external)
+implicit none
 
 
 call compiler_log('./compiler.log')

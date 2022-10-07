@@ -1,6 +1,6 @@
 program coerce
 use,intrinsic:: iso_fortran_env, stderr=>error_unit
-implicit none (type, external)
+implicit none
 
 real(real32) :: four32 = 2._real32 * 2._real32, four32coerce = 2*2
 real(real64) :: four64 = 2._real64 * 2._real64, four64coerce = 2*2

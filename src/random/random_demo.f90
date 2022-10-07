@@ -1,6 +1,6 @@
 program demo_rand
 
-implicit none (type, external)
+implicit none
 
 real :: r1, r2
 

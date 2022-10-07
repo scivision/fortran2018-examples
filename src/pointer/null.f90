@@ -1,7 +1,7 @@
 program null_ptr
 !! https://software.intel.com/content/www/us/en/develop/documentation/fortran-compiler-oneapi-dev-guide-and-reference/top/language-reference/a-to-z-reference/o-to-p/pointer-fortran.html
 
-implicit none (type, external)
+implicit none
 
 integer, POINTER :: arrow(:)
 integer, ALLOCATABLE, TARGET :: bullseye(:,:)

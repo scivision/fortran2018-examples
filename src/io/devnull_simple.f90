@@ -1,7 +1,7 @@
 
 program devnull
 use, intrinsic:: iso_fortran_env, only: int64
-implicit none (type, external)
+implicit none
 
 
 integer(int64) :: tic,toc,rate

@@ -1,7 +1,7 @@
 program open_ro
 !! NOTE: chmod is non-standard, and will crash ifort runtime.
 
-implicit none (type, external)
+implicit none
 
 external :: unlink
 

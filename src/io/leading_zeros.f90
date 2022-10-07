@@ -1,7 +1,7 @@
 !! Print leading zeros for real, integer in Fortran
 use, intrinsic :: iso_fortran_env, only: stdout=>output_unit, dp=>real64
 
-implicit none (type, external)
+implicit none
 
 real(dp):: x
 integer :: i

@@ -5,7 +5,7 @@ program overwrite_stdout
 
 use, intrinsic:: iso_fortran_env, only: stdout=>output_unit
 
-implicit none (type, external)
+implicit none
 
 integer :: i
 integer, parameter :: N=5

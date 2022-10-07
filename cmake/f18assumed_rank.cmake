@@ -1,7 +1,7 @@
 check_source_compiles(Fortran
 "
 program test
-implicit none (type, external)
+implicit none
 contains
 
 subroutine r(A)

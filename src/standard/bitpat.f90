@@ -4,7 +4,7 @@ program bitpat
 
 use, intrinsic:: iso_fortran_env, only: int64
 
-implicit none (type, external)
+implicit none
 
 ! note that if you want other than default elements of array, you must use e.g. int( , int64) on each element
 ! or use a DATA statement, as per
