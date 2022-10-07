@@ -48,10 +48,13 @@ add_test(NAME hugePrecision COMMAND hugeprec)
 add_executable(precprob precision_problems.f90)
 add_test(NAME precisionProblems COMMAND precprob)
 
-add_executable(nan nans.F90)
-target_compile_definitions(nan PRIVATE $<$<BOOL:${f08kind}>:r128>)
+add_executable(nan nans.f90)
 add_test(NAME NaN COMMAND nan)
 
+if(f08kind)
+add_executable(nan_128 nans_128.f90)
+add_test(NAME NaN128 COMMAND nan_128)
+endif()
 
 if(f18prop)
   add_executable(properties properties.f90)
