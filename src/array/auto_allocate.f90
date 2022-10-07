@@ -47,17 +47,23 @@ if (size(E) /= 4) error stop 'allocate() auto-allocate big'
 A(:) = [9,8,7]
 if (size(A) /= 2) error stop '(:) syntax smaller'
 if (any(A /= [9,8])) then
-  write(stderr,*) '(:) assign small: ', A
+  write(stderr,*) 'allocate() (:) assign small: A=', A
   error stop
 endif
 
 E(:) = [1,2,3]
 if (size(E) /= 4) error stop 'allocate() (:) syntax small'
-if (any(E /= [1,2,3,7])) error stop 'allocate() (:) assign small'
+if (any(E /= [1,2,3,7])) then
+  write(stderr,*) 'allocate() (:) assign small: E=', E
+  error stop
+endif
 
 E(:) = [5,4,3,2,1]
 if (size(E) /= 4) error stop 'allocate() (:) syntax: big'
-if (any(E /= [5,4,3,2])) error stop 'allocate() (:) assign: big'
+if (any(E /= [5,4,3,2])) then
+  write(stderr,*) 'allocate() (:) assign: big: E=', E
+  error stop
+endif
 
 !> (lbound:ubound)
 ! A(1:3) = [4,5,6]
