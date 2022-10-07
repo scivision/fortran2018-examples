@@ -10,9 +10,12 @@ add_executable(array_real array.f90)
 add_test(NAME ArrayReal COMMAND array_real)
 
 add_library(assert OBJECT assert.f90)
+
+if(f03ieee)
 add_executable(test_assert finite.f90)
 target_link_libraries(test_assert PRIVATE assert)
 add_test(NAME assert COMMAND test_assert)
+endif()
 
 add_executable(cast_int2real cast_int2real.f90)
 add_test(NAME cast_int2real COMMAND cast_int2real)
@@ -21,8 +24,10 @@ configure_file(polymorphic.in.f90 polymorphic.f90 @ONLY)
 add_executable(polymorph ${CMAKE_CURRENT_BINARY_DIR}/polymorphic.f90)
 add_test(NAME polymorphic COMMAND polymorph)
 
+if(f03ieee)
 add_executable(epsilon epsilon.f90)
 add_test(NAME epsilon COMMAND epsilon)
+endif()
 
 add_executable(coerce coerce.F90)
 target_compile_definitions(coerce PRIVATE $<$<BOOL:${f08kind}>:r128>)
