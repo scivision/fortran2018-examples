@@ -1,5 +1,34 @@
 set_property(DIRECTORY PROPERTY LABELS maximum)
 
+if(CMAKE_Fortran_COMPILER_ID STREQUAL "GNU")
+  set(long_flags -ffree-line-length-none)
+elseif(CMAKE_Fortran_COMPILER_ID STREQUAL "Cray")
+  set(long_flags -N 1023)
+endif()
+# Intel: Default 7200 max line length  https://www.intel.com/content/www/us/en/develop/documentation/fortran-compiler-oneapi-dev-guide-and-reference/top/compiler-reference/compiler-limits.html
+# NVHPC: no way to extend past 132
+# Flang: Default 1000 max line length
+
+
+set(CMAKE_REQUIRED_FLAGS ${long_flags})
+
+string(RANDOM LENGTH 966 _long)
+
+check_fortran_source_compiles(
+[=[
+program long
+implicit none
+character(*), parameter :: a = "${_long}"
+end program
+]=]
+long_line
+SRC_EXT f90
+)
+
+set(CMAKE_REQUIRED_FLAGS)
+
+# --- long module name
+
 set(_alpha "abcdefghijklmnopqrstuvwxyz")
 
 string(RANDOM LENGTH 63 ALPHABET ${_alpha} _name63)
