@@ -6,8 +6,8 @@ elseif(CMAKE_Fortran_COMPILER_ID STREQUAL "Cray")
   set(long_flags -N 1023)
 endif()
 # Intel: Default 7200 max line length  https://www.intel.com/content/www/us/en/develop/documentation/fortran-compiler-oneapi-dev-guide-and-reference/top/compiler-reference/compiler-limits.html
-# NVHPC: no way to extend past 132
-# Flang: Default 1000 max line length
+# NVHPC: Default ~1000 max line length
+# Flang/AOCC: Default 1000 max line length
 
 
 set(CMAKE_REQUIRED_FLAGS ${long_flags})
