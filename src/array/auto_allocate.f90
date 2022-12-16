@@ -48,8 +48,9 @@ if (size(D) /= 2) error stop 'allocate() auto-allocate small'
 if (size(E) /= 4) error stop 'allocate() auto-allocate big'
 print *, "OK: auto-allocate fixed allocate first"
 
-!> (:) syntax truncates, does not change shape, whether or not allocate() used first
-A(:) = [9,8,7]
+!> if lhs(:) = rhs and shape(lhs) /= shape(rhs) behavior is UNDEFINED.
+!> Ifx/ifort 2023.0 newly detect with -CB -check bounds option.
+A(:) = [9,8]
 if (size(A) /= 2) error stop '(:) syntax smaller'
 if (any(A /= [9,8])) then
   write(stderr,*) 'allocate() (:) assign small: A=', A
