@@ -5,5 +5,5 @@ if(NOT f18random)
   return()
 endif()
 
-add_executable(random random.f90 random_demo.f90)
-add_test(NAME RandomInit COMMAND random)
+add_executable(random_init random_init.f90)
+add_test(NAME random_init COMMAND random_init)
