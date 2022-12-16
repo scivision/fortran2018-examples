@@ -1,9 +1,12 @@
 program demo_rand
 
-use, intrinsic :: iso_fortran_env, only : stderr=>error_unit
+use, intrinsic :: iso_fortran_env, only : stderr=>error_unit, compiler_version
 implicit none
 
 real :: r1, r2
+
+
+print *, compiler_version()
 
 call random_init(.false., .false.)
 call random_number(r1)
