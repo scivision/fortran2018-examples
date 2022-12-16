@@ -4,12 +4,13 @@ program auto_allocate
 !! NOTE: even if an array allocate(), Fortran 2003 still allows auto-reallocation bigger or smaller
 !! The A(:) syntax preserves previously allocated LHS shape, truncating RHS
 
-use, intrinsic :: iso_fortran_env, only : stderr=>error_unit, compiler_options
+use, intrinsic :: iso_fortran_env, only : stderr=>error_unit, compiler_options, compiler_version
 implicit none
 
 real, allocatable, dimension(:) :: A, B, C, D, E
 real :: C3(3)
 
+print *, compiler_version()
 print *, compiler_options()
 
 !> Initial auto-allocate
@@ -20,13 +21,15 @@ C3 = A + B
 C = A + B
 if (any(C3 /= C)) error stop 'initial auto-allocate'
 if (size(C) /= 3) error stop 'initial auto-alloc size'
+print *, "OK: initial auto-allocate"
 
 !> allocate bigger
 A = [1,2,3,4]
 B = [5,6,7,8]
 C = A + B
-if (any(C /= [6,8,10,12])) error stop 'auto-alloc smaller'
+if (any(C /= [6,8,10,12])) error stop 'auto-alloc bigger'
 if (size(C) /= 4) error stop 'auto-alloc bigger size'
+print *, "OK: auto-allocate bigger"
 
 !> allocate smaller
 A = [1,2]
@@ -34,6 +37,7 @@ B = [3,4]
 C = A + B
 if (any(C /= [4,6])) error stop 'auto-alloc smaller'
 if (size(C) /= 2) error stop 'auto-alloc smaller size'
+print *, "OK: auto-allocate smaller"
 
 !> fixed allocate first
 allocate(D(3), E(3))
@@ -42,6 +46,7 @@ E = [3,4,5,7]
 
 if (size(D) /= 2) error stop 'allocate() auto-allocate small'
 if (size(E) /= 4) error stop 'allocate() auto-allocate big'
+print *, "OK: auto-allocate fixed allocate first"
 
 !> (:) syntax truncates, does not change shape, whether or not allocate() used first
 A(:) = [9,8,7]
@@ -50,6 +55,7 @@ if (any(A /= [9,8])) then
   write(stderr,*) 'allocate() (:) assign small: A=', A
   error stop
 endif
+print *, "OK: auto-allocate (:) syntax smaller"
 
 E(:) = [1,2,3]
 if (size(E) /= 4) error stop 'allocate() (:) syntax small'
@@ -57,6 +63,7 @@ if (any(E(:3) /= [1,2,3])) then
   write(stderr,*) 'allocate() (:) assign small: E=', E(:3)
   error stop
 endif
+print *, "OK: auto-allocate (:) syntax small"
 
 E(:) = [5,4,3,2,1]
 if (size(E) /= 4) error stop 'allocate() (:) syntax: big'
@@ -64,6 +71,7 @@ if (any(E /= [5,4,3,2])) then
   write(stderr,*) 'allocate() (:) assign: big: E=', E
   error stop
 endif
+print *, "OK: auto-allocate (:) syntax big"
 
 !> (lbound:ubound)
 ! A(1:3) = [4,5,6]
