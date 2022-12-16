@@ -13,6 +13,13 @@
   "name": "multi", "inherits": "default",
   "displayName": "Ninja Multi-Config",
   "generator": "Ninja Multi-Config"
+},
+{
+  "name": "debug", "inherits": "multi",
+  "displayName": "For Ninja Multi-Config Debug build",
+  "cacheVariables": {
+    "CMAKE_COMPILE_WARNING_AS_ERROR": false
+  }
 }
 ],
 "buildPresets": [
@@ -27,7 +34,7 @@
   },
   {
     "name": "debug",
-    "configurePreset": "multi",
+    "configurePreset": "debug",
     "configuration": "Debug"
   }
 ],
@@ -53,7 +60,7 @@
 },
 {
   "name": "debug", "inherits": "default",
-  "configurePreset": "multi",
+  "configurePreset": "debug",
   "configuration": "Debug"
 }
 ],
@@ -80,7 +87,7 @@
     "steps": [
       {
         "type": "configure",
-        "name": "multi"
+        "name": "debug"
       },
       {
         "type": "build",
