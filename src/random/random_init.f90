@@ -1,22 +1,27 @@
-program demo_rand
+program rand_init_seed
+!! by Michael Hirsch, enhanced by Steve Lionel to better match Fortran Standard specification.
 
-use, intrinsic :: iso_fortran_env, only : stderr=>error_unit, compiler_version
+use, intrinsic :: iso_fortran_env, only : compiler_version
 implicit none
 
-real :: r1, r2
-
+integer :: s
+integer, allocatable :: seed1(:),seed2(:)
 
 print *, compiler_version()
 
-call random_init(.false., .false.)
-call random_number(r1)
-call random_init(.false., .false.)
-call random_number(r2)
-if (r1==r2) then
-  write(stderr,*) 'random_init fail: ', r1, ' == ', r2
-  error stop 'these two random number should not match if random_init is working'
-endif
+call random_seed(size=s)
+allocate (seed1(s),seed2(s))
 
-print *, "OK: random_init: ", r1, " /= ", r2
+call random_init(.false., .false.)
+call random_seed (get=seed1)
+print *, "Seed 1:", seed1
+
+call random_init(.false., .false.)
+call random_seed(get=seed2)
+print *, "Seed 2:", seed2
+
+if (all(seed1==seed2)) error stop 'random_init fail: these two seeds should not match if random_init is working'
+
+print *, "OK: random_init"
 
 end program
