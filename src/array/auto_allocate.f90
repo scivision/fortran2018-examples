@@ -66,7 +66,7 @@ if (any(E(:3) /= [1,2,3])) then
 endif
 print *, "OK: auto-allocate (:) syntax small"
 
-E(:) = [5,4,3,2,1]
+E(:) = [5,4,3,2]
 if (size(E) /= 4) error stop 'allocate() (:) syntax: big'
 if (any(E /= [5,4,3,2])) then
   write(stderr,*) 'allocate() (:) assign: big: E=', E
