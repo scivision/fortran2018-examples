@@ -7,8 +7,12 @@ target_link_libraries(append_file PRIVATE logging)
 add_test(NAME appendFile COMMAND append_file)
 
 add_executable(termio terminal_io.f90)
-add_test(NAME terminal COMMAND bash -c "$<TARGET_FILE:termio> <<< 0")
-set_property(TEST terminal PROPERTY DISABLED $<BOOL:${WIN32}>)
+add_test(NAME terminal
+COMMAND ${CMAKE_COMMAND}
+  -Dtgt:FILEPATH=$<TARGET_FILE:termio>
+  -Dtxt:FILEPATH=${CMAKE_CURRENT_SOURCE_DIR}/zero.asc
+  -P ${PROJECT_SOURCE_DIR}/cmake/test_stdin.cmake
+)
 
 add_executable(leading_zeros leading_zeros.f90)
 add_test(NAME leading_zeros COMMAND leading_zeros)
