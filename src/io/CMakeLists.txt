@@ -17,8 +17,5 @@ set_property(TEST leading_zeros PROPERTY PASS_REGULAR_EXPRESSION "hello1234.5600
 add_executable(notermsize noenv.f90)
 add_test(NAME NoTermSize COMMAND notermsize)
 
-add_executable(readonly fileopen-readonly.f90 unlink.f90)
-add_test(NAME ReadOnly COMMAND readonly)
-
 add_executable(null devnull.f90)
 add_test(NAME nullfile COMMAND null)

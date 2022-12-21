@@ -11,11 +11,3 @@ procedure.
 Simply repoint the "open" statements to `/dev/null` to speedup the procedure.
 [Benchmarks of NUL vs. scratch vs. file](./devnull.f90)
 show NUL can be fastest by far, when file output is not needed with least modification of old source code.
-
-## Read-only files and deletion in Fortran
-
-The `readonly` program shows that even operation system read-only files
-can be deleted by Fortran, like `rm -f` with the
-`close(u,status='delete')` option:
-
-    ./readonly
