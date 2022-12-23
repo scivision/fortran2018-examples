@@ -1,6 +1,6 @@
 set_property(DIRECTORY PROPERTY LABELS array)
 
-add_executable(rotflip test_rot90.f90 rot90.f90)
+add_executable(rotflip test_rot90.f90 ${PROJECT_SOURCE_DIR}/src/array/rot90.f90)
 add_test(NAME RotFlip COMMAND rotflip)
 
 add_executable(auto_allocate_array auto_allocate.f90)

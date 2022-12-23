@@ -1,0 +1,3 @@
+name = "Fortran 2018 examples"
+description = "Examples of modern Fortran"
+version = "1.4.0"

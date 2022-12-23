@@ -10,4 +10,5 @@ enable_testing()
 
 include(cmake/compilers.cmake)
 
+add_subdirectory(app/array)
 add_subdirectory(src)

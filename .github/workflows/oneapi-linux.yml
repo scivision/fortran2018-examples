@@ -1,7 +1,6 @@
-name: intel-oneapi
+name: oneapi-linux
 
 env:
-  CTEST_PARALLEL_LEVEL: 2
   CC: icx
   CXX: icpx
   FC: ifx
@@ -15,7 +14,7 @@ on:
       - "**.cpp"
       - "**.cmake"
       - "**/CMakeLists.txt"
-      - ".github/workflows/intel-oneapi.yml"
+      - ".github/workflows/oneapi-linux.yml"
 
 
 jobs:

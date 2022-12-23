@@ -1,3 +1,4 @@
+program test_rot90
 ! demo rotating a 2-D array 90 degrees clockwise
 use rotflip, only: rot90, flipud, fliplr
 

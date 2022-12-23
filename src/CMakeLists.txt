@@ -1,4 +1,3 @@
-add_subdirectory(array)
 add_subdirectory(benchmarks)
 add_subdirectory(block)
 add_subdirectory(character)
