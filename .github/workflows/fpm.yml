@@ -1,0 +1,25 @@
+name: fpm
+
+on:
+  push:
+    paths:
+      - "fpm.toml"
+      - ".github/workflows/fpm.yml"
+
+
+jobs:
+
+  linux:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+
+    - uses: fortran-lang/setup-fpm@v5
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+
+    - uses: actions/checkout@v3
+
+    - run: fpm build
+    # - run: fpm test
