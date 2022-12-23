@@ -1,27 +1,4 @@
-module Ackp
-
-implicit none
-
-contains
-
-recursive pure integer function Ap(m, n) result(A)
-integer, intent(in) :: m,n
-
-if (m == 0) then
-  A = n+1
-elseif (n == 0) then
-  A = Ap(m-1, 1)
-else
-  A = Ap(m-1, Ap(m, n-1))
-end if
-end function Ap
-
-end module Ackp
-
-
 program AckermannPeter
-
-use Ackp
 
 implicit none
 
@@ -39,4 +16,19 @@ read(buf, *) N
 Ack = Ap(M, N)
 
 print *, Ack
+
+contains
+
+recursive pure integer function Ap(m, n) result(A)
+integer, intent(in) :: m,n
+
+if (m == 0) then
+  A = n+1
+elseif (n == 0) then
+  A = Ap(m-1, 1)
+else
+  A = Ap(m-1, Ap(m, n-1))
+end if
+end function Ap
+
 end program AckermannPeter

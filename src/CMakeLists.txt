@@ -1,6 +1,4 @@
-add_subdirectory(benchmarks)
-add_subdirectory(block)
-add_subdirectory(character)
+
 add_subdirectory(compile)
 add_subdirectory(contiguous)
 add_subdirectory(git)

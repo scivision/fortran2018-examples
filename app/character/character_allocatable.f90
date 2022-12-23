@@ -1,24 +1,6 @@
-module demo
-
-implicit none
-
-contains
-
-pure function drop_last_char(instr)
-
-character(*), intent(in) :: instr
-character(:), allocatable :: drop_last_char
-
-drop_last_char = instr(1:len_trim(instr)-1)
-
-end function drop_last_char
-
-end module demo
-
 program character_alloctable
 !! shows Fortran 2003 allocatable character and auto-allocated array
 
-use demo, only : drop_last_char
 implicit none
 
 character(:), allocatable :: flex(:), scalar
@@ -55,5 +37,16 @@ if (flex(2) /= 'bye') error stop "flex: flex(2) /= 'bye'"
 
 
 print *, "OK: allocatable character"
+
+contains
+
+pure function drop_last_char(instr)
+
+character(*), intent(in) :: instr
+character(:), allocatable :: drop_last_char
+
+drop_last_char = instr(1:len_trim(instr)-1)
+
+end function drop_last_char
 
 end program

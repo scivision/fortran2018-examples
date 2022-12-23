@@ -10,5 +10,8 @@ enable_testing()
 
 include(cmake/compilers.cmake)
 
-add_subdirectory(app/array)
+foreach(a array benchmarks block character)
+  add_subdirectory(app/${a})
+endforeach()
+
 add_subdirectory(src)

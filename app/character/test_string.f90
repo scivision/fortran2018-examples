@@ -5,12 +5,28 @@ use string_utils
 
 implicit none
 
+call test_split()
+print *,'PASSED: split'
 call test_lowercase()
 print *,'PASSED: HDF5 character'
 call test_strip_null()
 print *,'PASSED: null strip'
 
 contains
+
+subroutine test_split()
+
+
+character(*),parameter :: mystr="hello.txt"
+character(:),allocatable :: stem
+
+stem = split(mystr,'.')
+print '(A)', stem
+
+if (len(stem) /= 5) error stop 'allocatable character of unexpected length'
+
+
+end subroutine test_split
 
 subroutine test_lowercase()
 

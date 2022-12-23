@@ -9,10 +9,6 @@ add_test(NAME array COMMAND character_array)
 add_executable(character_allocatable character_allocatable.f90)
 add_test(NAME allocatable COMMAND character_allocatable)
 
-
-add_executable(split split_string.f90)
-add_test(NAME SplitString COMMAND split)
-
 add_executable(str2int str2int.f90)
 add_test(NAME Str2Int COMMAND str2int)
 
@@ -33,5 +29,5 @@ add_test(NAME Len COMMAND charlen)
 add_executable(overwrite_stdout overwrite_stdout.f90)
 add_test(NAME OverwriteStdout COMMAND overwrite_stdout)
 
-add_executable(string_utils string_utils.f90 test_string.f90)
+add_executable(string_utils ${PROJECT_SOURCE_DIR}/src/character/string_utils.f90 test_string.f90)
 add_test(NAME utils COMMAND string_utils)

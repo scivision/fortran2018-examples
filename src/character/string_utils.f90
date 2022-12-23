@@ -7,6 +7,19 @@ implicit none
 
 contains
 
+pure function split(instr,  delimiter)
+!! split a string about a delimiter token, return part before delim
+character(*), intent(in) :: instr
+character(1), intent(in) :: delimiter
+character(:), allocatable :: split
+
+integer :: idx
+
+idx = scan(instr, delimiter)
+split = instr(1:idx-1)
+
+end function split
+
 pure function toLower(str)
 character(*), intent(in) :: str
 character(len(str)) :: toLower

@@ -19,5 +19,4 @@ bar = foo
 
 if (.not. all(bar==foo)) error stop
 
-
 end program
