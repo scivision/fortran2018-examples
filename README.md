@@ -1,6 +1,7 @@
 # Fortran 2018 Examples
 
-![Actions Status](https://github.com/scivision/fortran2018-examples/workflows/cmake/badge.svg)
+[![cmake](https://github.com/scivision/fortran2018-examples/actions/workflows/cmake.yml/badge.svg)](https://github.com/scivision/fortran2018-examples/actions/workflows/cmake.yml)
+[![oneapi-linux](https://github.com/scivision/fortran2018-examples/actions/workflows/oneapi-linux.yml/badge.svg)](https://github.com/scivision/fortran2018-examples/actions/workflows/oneapi-linux.yml)
 
 Easy examples of scientific computing with modern, powerful, easy Fortran 2018 standard.
 Fortran 2018 began as the TS18508 extension, formerly known as Fortran 2015.
@@ -24,11 +25,7 @@ Compilers known to work include: GCC, Intel oneAPI, Nvidia HPC SDK, AOCC (AMD), 
 ## Build
 
 ```sh
-cmake -B build
-cmake --build build --parallel
-
-cd build
-ctest --output-on-failure
+cmake --workflow --preset default
 ```
 
 ## Programs
