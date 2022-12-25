@@ -3,6 +3,7 @@ name: fpm
 on:
   push:
     paths:
+      - "**.f90"
       - "fpm.toml"
       - ".github/workflows/fpm.yml"
 
