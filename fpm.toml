@@ -1,6 +1,2 @@
 name = "Fortran2018_examples"
 description = "Examples of modern Fortran"
-version = "1.4.0"
-
-[build]
-auto-tests = false

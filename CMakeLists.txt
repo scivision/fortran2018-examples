@@ -10,8 +10,8 @@ enable_testing()
 
 include(cmake/compilers.cmake)
 
-foreach(a array benchmarks block character)
-  add_subdirectory(app/${a})
+foreach(a IN ITEMS array benchmarks block character)
+  add_subdirectory(test/${a})
 endforeach()
 
 add_subdirectory(src)
