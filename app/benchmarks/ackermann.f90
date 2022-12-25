@@ -5,7 +5,7 @@ implicit none
 integer :: Ack, M, N
 character(8) :: buf
 
-if (command_argument_count() /= 2) stop 'input M,N positive integers'
+if (command_argument_count() /= 2) error stop 'input M,N positive integers'
 
 call get_command_argument(1, buf)
 read(buf,*) M

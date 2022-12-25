@@ -1,12 +1,12 @@
 set_property(DIRECTORY PROPERTY LABELS io)
 
-add_library(logging OBJECT logging.f90)
+add_library(logging OBJECT ${PROJECT_SOURCE_DIR}/src/io/logging.f90)
 
 add_executable(append_file append_file.f90 unlink.f90)
 target_link_libraries(append_file PRIVATE logging)
 add_test(NAME appendFile COMMAND append_file)
 
-add_executable(termio terminal_io.f90)
+add_executable(termio ${PROJECT_SOURCE_DIR}/app/io/terminal_io.f90)
 add_test(NAME terminal
 COMMAND ${CMAKE_COMMAND}
   -Dtgt:FILEPATH=$<TARGET_FILE:termio>

@@ -1,4 +1,4 @@
-add_library(add_dummy OBJECT addone.f90)
+add_library(add_dummy OBJECT add_dummy.f90)
 
 # add_library(add_dummy2 OBJECT addone.f90)
 # this would fail with Ninja generator because the module name is not unique.

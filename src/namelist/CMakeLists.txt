@@ -1,6 +1,0 @@
-set_property(DIRECTORY PROPERTY LABELS namelist)
-
-add_executable(namelist namelist_main.f90)
-add_test(NAME NamelistRead COMMAND namelist
-WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-)
