@@ -4,7 +4,7 @@ if(f18abstract)
   add_executable(abstract_interface abstract.f90)
 endif()
 
-add_executable(shortcircuit short_circuit.f90)
+add_executable(shortcircuit ${PROJECT_SOURCE_DIR}/app/standard/short_circuit.f90)
 # shaky result, don't CI test
 
 add_executable(bitpat bitpat.f90)
@@ -16,7 +16,8 @@ add_test(NAME doCycle COMMAND do_cycle)
 add_executable(big_integer big_integer.f90)
 add_test(NAME big_integer COMMAND big_integer)
 
-add_executable(justwait pause.f90)
+add_executable(errstop_dynamic ${PROJECT_SOURCE_DIR}/app/standard/errorstop_variable.f90)
+add_executable(justwait ${PROJECT_SOURCE_DIR}/app/standard/pause.f90)
 # NO test
 
 # --- Fortran 77 statement functions (obsolete)

@@ -30,7 +30,7 @@ if(NOT HAS_OpenACC)
   return()
 endif()
 
-add_executable(simple_openacc simple_openacc.f90)
+add_executable(simple_openacc ${PROJECT_SOURCE_DIR}/app/openacc/simple_openacc.f90)
 target_link_libraries(simple_openacc PRIVATE OpenACC::OpenACC_Fortran)
 
 add_test(NAME OpenACCsimple COMMAND simple_openacc)

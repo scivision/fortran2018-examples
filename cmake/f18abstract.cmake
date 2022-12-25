@@ -1,4 +1,4 @@
-file(READ ${CMAKE_CURRENT_LIST_DIR}/../src/standard/abstract.f90 _code)
+file(READ ${PROJECT_SOURCE_DIR}/test/standard/abstract.f90 _code)
 
 check_fortran_source_compiles(
 "${_code}"
