@@ -17,7 +17,6 @@ program minloc_maxloc_mask
 implicit none
 
 real :: A(5) = [0, 5, 1, 2, 3]
-integer :: L
 
 logical :: mask(size(A))
 

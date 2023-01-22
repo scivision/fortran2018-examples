@@ -3,7 +3,6 @@ program minval_maxval_mask
 implicit none
 
 integer :: A(5) = [0, 5, 1, 2, 3]
-integer :: L
 
 logical :: mask(size(A))
 
