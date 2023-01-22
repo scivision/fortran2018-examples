@@ -13,7 +13,7 @@ program nans
 !  complex128    NaN      T                  FFF8000000000000
 !  complex256    NaN      T  FFFF8000000000000000000000000000
 
-!> Ifort 2021.1 Winodws and Ifx 2021.1 Windows
+!> Gfortran 12.2.0 Windows, Ifort./Ifx 2021.1/2023.0 Windows/Linux
 !       IEEE   value   isnan                         hex
 !     real 32    NaN      T                          7FC00000
 !     real 64    NaN      T                  7FF8000000000000
