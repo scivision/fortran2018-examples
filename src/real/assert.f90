@@ -1,7 +1,7 @@
 module assert
 
 use, intrinsic:: iso_fortran_env, only: sp=>real32, dp=>real64, stderr=>error_unit
-use, intrinsic:: ieee_arithmetic
+use, intrinsic:: ieee_arithmetic, only: ieee_is_nan, ieee_is_finite
 
 implicit none
 private

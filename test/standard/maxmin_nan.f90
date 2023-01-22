@@ -2,7 +2,7 @@ program maxmin
 !! Fortran standard does NOT specify how to handle NaN vis-a-vis max and min
 !! https://gcc.gnu.org/onlinedocs/gfortran/MAX-and-MIN-intrinsics-with-REAL-NaN-arguments.html
 
-use, intrinsic :: ieee_arithmetic
+use, intrinsic :: ieee_arithmetic, only: ieee_value, ieee_is_nan, ieee_quiet_nan, ieee_positive_inf
 use, intrinsic :: iso_fortran_env, stderr=>error_unit
 implicit none
 

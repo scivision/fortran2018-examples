@@ -25,8 +25,10 @@ add_executable(statement statement_function.f90)
 add_test(NAME statement_function COMMAND statement)
 
 # --- possibly suprising behaviors
-add_executable(nan_max_min maxmin_nan.f90)
-add_test(NAME NaNminmax COMMAND nan_max_min)
+if(f03ieee)
+  add_executable(nan_max_min maxmin_nan.f90)
+  add_test(NAME NaNminmax COMMAND nan_max_min)
+endif()
 
 add_executable(minloc_maxloc_mask minloc_maxloc_mask.f90)
 if(CMAKE_Fortran_COMPILER_ID MATCHES "^Intel")
