@@ -11,11 +11,11 @@ enable_testing()
 include(cmake/compilers.cmake)
 
 foreach(a IN ITEMS array benchmarks block character compile contiguous debug io maximum namelist
-  openacc openmp overloading pointer random real standard)
+  openacc openmp overloading pointer random real standard submodule)
   add_subdirectory(test/${a})
 endforeach()
 
-foreach(a IN ITEMS git submodule system)
+foreach(a IN ITEMS git system)
   add_subdirectory(src/${a})
 endforeach()
 
