@@ -6,16 +6,15 @@ endif()
 
 set(real_prec "integer,parameter :: wp=real${realbits}")
 
-add_executable(array_real array.f90)
-add_test(NAME ArrayReal COMMAND array_real)
+foreach(t IN ITEMS array_real cast_int2real)
+  add_executable(${t} ${t}.f90)
+  add_test(NAME ${t} COMMAND ${t})
+endforeach()
 
 if(f03ieee)
   add_executable(test_assert finite.f90 ${PROJECT_SOURCE_DIR}/src/real/assert.f90)
   add_test(NAME assert COMMAND test_assert)
 endif()
-
-add_executable(cast_int2real cast_int2real.f90)
-add_test(NAME cast_int2real COMMAND cast_int2real)
 
 configure_file(${PROJECT_SOURCE_DIR}/src/real/polymorphic.in.f90 polymorphic.f90 @ONLY)
 add_executable(polymorph ${CMAKE_CURRENT_BINARY_DIR}/polymorphic.f90)

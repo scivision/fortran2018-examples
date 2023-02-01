@@ -1,5 +1,20 @@
 set_property(DIRECTORY PROPERTY LABELS standard)
 
+set(names big_integer bit_pattern block contiguous do_cycle
+minloc_maxloc_mask minval_maxval_mask statement_function
+)
+if(f03ieee)
+  list(APPEND names nan_max_min)
+endif()
+if(f18random)
+  list(APPEND names random_init)
+endif()
+
+foreach(t IN LISTS names)
+  add_executable(${t} ${t}.f90)
+  add_test(NAME ${t} COMMAND ${t})
+endforeach()
+
 if(f18abstract)
   add_executable(abstract_interface abstract.f90)
 endif()
@@ -7,30 +22,13 @@ endif()
 add_executable(shortcircuit ${PROJECT_SOURCE_DIR}/app/standard/short_circuit.f90)
 # shaky result, don't CI test
 
-add_executable(bitpat bitpat.f90)
-add_test(NAME bit_pattern COMMAND bitpat)
-
-add_executable(do_cycle do_cycle.f90)
-add_test(NAME doCycle COMMAND do_cycle)
-
-add_executable(big_integer big_integer.f90)
-add_test(NAME big_integer COMMAND big_integer)
-
 add_executable(errstop_dynamic ${PROJECT_SOURCE_DIR}/app/standard/errorstop_variable.f90)
 add_executable(justwait ${PROJECT_SOURCE_DIR}/app/standard/pause.f90)
 # NO test
 
-# --- Fortran 77 statement functions (obsolete)
-add_executable(statement statement_function.f90)
-add_test(NAME statement_function COMMAND statement)
+set_property(TARGET contiguous PROPERTY EXCLUDE_FROM_ALL $<NOT:$<BOOL:${f08contig}>>)
+set_property(TEST contiguous PROPERTY DISABLED $<NOT:$<BOOL:${f08contig}>>)
 
-# --- possibly suprising behaviors
-if(f03ieee)
-  add_executable(nan_max_min maxmin_nan.f90)
-  add_test(NAME NaNminmax COMMAND nan_max_min)
-endif()
-
-add_executable(minloc_maxloc_mask minloc_maxloc_mask.f90)
 if(CMAKE_Fortran_COMPILER_ID MATCHES "^Intel")
   if(WIN32)
     target_compile_options(minloc_maxloc_mask PRIVATE /assume:noold_maxminloc)
@@ -38,7 +36,3 @@ if(CMAKE_Fortran_COMPILER_ID MATCHES "^Intel")
     target_compile_options(minloc_maxloc_mask PRIVATE -assume noold_maxminloc)
   endif()
 endif()
-add_test(NAME MinlocMaxlocMask COMMAND minloc_maxloc_mask)
-
-add_executable(minval_maxval_mask minval_maxval_mask.f90)
-add_test(NAME MinvalMaxvalMask COMMAND minval_maxval_mask)

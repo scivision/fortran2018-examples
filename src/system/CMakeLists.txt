@@ -1,12 +1,6 @@
 set_property(DIRECTORY PROPERTY LABELS system)
 
-add_executable(color color_text.f90)
-add_test(NAME Color COMMAND color)
-
 add_library(osdet OBJECT os_detect.f90)
-
-add_executable(complog compiler_log.f90)
-add_test(NAME Compiler COMMAND complog)
 
 find_package(Python COMPONENTS Interpreter)
 

@@ -44,12 +44,9 @@ cmake --workflow --preset default
 Each test/ directory has its own README and examples.
 
 * array: Array math in modern CMake and Fortran
-* block: Highly useful `block` element is demonstrated
-* contiguous: Fortran 2008 `contiguous` array examples, including Fortran preprocessor with modern CMake.
 * Git tracability
 * namelist: Fortran 90 / 2003 Namelist parsing -- native text config files for Fortran
 * openmp: OpenMP threading exmaples
-* random: random numbers with modern Fortran
 * io: modern Fortran File I/O including resolving absolute path
 * real: Numerous examples dealing with practical features of real floating point numbers, including sentinel NaN and polymorphism.
 * character: String handling is easy and performant in modern Fortran.

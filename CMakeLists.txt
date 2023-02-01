@@ -10,8 +10,8 @@ enable_testing()
 
 include(cmake/compilers.cmake)
 
-foreach(a IN ITEMS array benchmarks block character compile contiguous debug io maximum namelist
-  openacc openmp overloading pointer random real standard submodule)
+foreach(a IN ITEMS array benchmarks character compile debug io maximum namelist
+  openacc openmp overloading pointer real standard submodule)
   add_subdirectory(test/${a})
 endforeach()
 
