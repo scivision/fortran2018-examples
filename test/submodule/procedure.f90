@@ -14,7 +14,7 @@ end interface
 end module sm_proc
 
 
-submodule (sm_proc) smod
+submodule (sm_proc) smodp
 
 implicit none
 
@@ -34,7 +34,7 @@ end select
 
 end procedure sel
 
-end submodule smod
+end submodule smodp
 
 
 program aaaa

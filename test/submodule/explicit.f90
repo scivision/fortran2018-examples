@@ -14,7 +14,7 @@ end interface
 end module sm_exp
 
 
-submodule (sm_exp) smod
+submodule (sm_exp) smode
 
 implicit none
 
@@ -35,7 +35,7 @@ end select
 
 end subroutine sel
 
-end submodule smod
+end submodule smode
 
 
 program aaaa
