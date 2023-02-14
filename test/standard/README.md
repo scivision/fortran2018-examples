@@ -10,18 +10,15 @@ Examples of standard and non-standard coding
 
 Fortran 2018 `contiguous` arrays are discussed in pp.139-145 of "Modern Fortran Explained: Incorporating Fortran 2018".
 In general, operating on contiguous arrays is faster than non-contiguous arrays.
-A non-contiguous array actual argument into a `contiguous` subroutine dummy argument is **incorrect** syntax.
-GCC &lt; 9 may fail with SIGSEGV or SIGABRT in this case, dependent on array size.
-Other compiler correct this incorrect syntax by temporary array opy-in, copy-out which is slower.
+A non-contiguous array actual argument into a `contiguous` subroutine dummy argument is made contiguous by copy-in, copy-out.
+This copy-in copy-out as needed is part of the
+[Fortran 2008](https://j3-fortran.org/doc/year/11/11-199r2.txt)
+and
+[Fortran 2018](https://groups.google.com/g/comp.lang.fortran/c/QiFkx8b48uw/m/ztIzsJ7sFwAJ)
+standard.
+[GCC &ge; 9](https://gcc.gnu.org/gcc-9/changes.html),
+[Intel oneAPI](https://www.intel.com/content/www/us/en/developer/articles/technical/fortran-array-data-and-arguments-and-vectorization.html),
+[IBM Open XL Fortran](https://www.ibm.com/docs/en/openxl-fortran-aix/17.1.1?topic=attributes-contiguous-fortran-2008),
+etc. work to Fortran 2008+ standard for `contiguous` dummy argument copy-in, copy-out for non-contiguous actual argument.
 
-Example output:
-
-```
- .\build\contiguous\contig.exe
-At line 56 of file ../contiguous/contiguous.f90
-Fortran runtime warning: An array temporary was created
- F contig:   0.001 sec.
- T contig:   0.005 sec.
-```
-
-[Fortran 2008 Contiguity](https://www.ibm.com/support/knowledgecenter/bs/SSGH4D_16.1.0/com.ibm.xlf161.aix.doc/language_ref/contiguity.html)
+References: [Fortran 2008 Contiguity](https://www.ibm.com/docs/en/openxl-fortran-aix/17.1.0?topic=concepts-contiguity-fortran-2008)
