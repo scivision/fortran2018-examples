@@ -1,7 +1,7 @@
 name: cmake
 
 env:
-  CTEST_PARALLEL_LEVEL: 3
+  CTEST_NO_TESTS_ACTION: error
   HOMEBREW_NO_INSTALL_CLEANUP: 1
 
 on:
@@ -16,27 +16,41 @@ on:
 
 jobs:
 
-  core:
+  linux:
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        fc: [gfortran-9, gfortran-10, gfortran-11, gfortran-12]
 
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
+
+    env:
+      FC: ${{ matrix.fc }}
 
     steps:
     - uses: actions/checkout@v3
 
-    - name: Linux prereqs
-      if: runner.os == 'Linux'
-      run: |
-        sudo apt update
-        sudo apt install --no-install-recommends ninja-build
+    - name: install Ninja
+      run: sudo apt install --no-install-recommends ninja-build
 
-    - name: macOS prereqs
-      if: runner.os == 'macOS'
-      run: |
-        brew install ninja
-        brew reinstall gcc
+    - run: cmake --workflow --preset debug
+    - run: cmake --workflow --preset release
+
+
+  macos:
+    strategy:
+      matrix:
+        fc: [gfortran-12]
+
+    runs-on: macos-latest
+
+    env:
+      FC: ${{ matrix.fc }}
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: install Ninja
+      run: brew install ninja
 
     - run: cmake --workflow --preset debug
     - run: cmake --workflow --preset release

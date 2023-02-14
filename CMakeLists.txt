@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.15...3.25)
+cmake_minimum_required(VERSION 3.15...3.26)
 # 3.15 for $<COMPILE_LANG_AND_ID:...>
 
 project(Fortran2018Examples
