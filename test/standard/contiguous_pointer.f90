@@ -8,6 +8,7 @@ integer, target :: t(6) = [1, 2, 3, 4, 5, 6]
 p => t(::2)
 
 call psub(p)
+print *, "OK: contiguous_pointer"
 
 contains
 
