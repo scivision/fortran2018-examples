@@ -6,21 +6,19 @@ implicit none
 
 contains
 
-pure subroutine timestwo_contig(x, contig)
+pure subroutine timestwo_contig(x)
 real, contiguous, intent(inout) :: x(:,:)
-logical, intent(out) :: contig
 
-contig = is_contiguous(x)
+if (.not.is_contiguous(x)) error stop "should be contiguous per Fortran 2008 standard"
 
 x = 2*x
 end subroutine timestwo_contig
 
 
-pure subroutine timestwo(x, contig)
+pure subroutine timestwo(x)
 real, intent(inout) :: x(:,:)
-logical, intent(out), optional :: contig
 
-contig = is_contiguous(x)
+if(is_contiguous(x)) error stop "should not be contiguous"
 
 x = 2*x
 end subroutine timestwo
@@ -41,24 +39,23 @@ integer, parameter :: N = 1000000
 real, allocatable :: x(:,:)
 integer(int64) :: tic, toc, rate
 real(real64) :: t1, t2
-logical :: iscontig1, iscontig2
 
 allocate(x(2,N))
 
 x = 1.
 
 call system_clock(tic)
-call timestwo(x(:, ::2), iscontig1)
+call timestwo(x(:, ::2))
 call system_clock(toc, rate)
-t1 = (toc-tic) / real(rate, real64)
+t1 = (toc-tic) / real(rate, real64) * 1000
 
 call system_clock(tic)
-call timestwo_contig(x(:, ::2), iscontig2)
+call timestwo_contig(x(:, ::2))
 call system_clock(toc, rate)
-t2 = (toc-tic) / real(rate, real64)
-if (.not.iscontig2) error stop 'contiguous array not contiguous'
+t2 = (toc-tic) / real(rate, real64) * 1000
 
-print '(L2,A,F7.3,A)', iscontig1,' contig: ',t1,' sec.'
-print '(L2,A,F7.3,A)', iscontig2,' contig: ',t2,' sec.'
+print '(a,i0)', "Benchmark time (milliseconds) for N = ", N
+print '(A,F7.3)', 'non-contiguous:                   ',t1
+print '(A,F7.3)', 'copy-in, copy-out is_contiguous:  ',t2
 
 end program
