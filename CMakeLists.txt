@@ -19,7 +19,4 @@ foreach(a IN ITEMS git system)
   add_subdirectory(src/${a})
 endforeach()
 
-# --- auto-ignore build directory
-if(NOT EXISTS ${PROJECT_BINARY_DIR}/.gitignore)
-  file(WRITE ${PROJECT_BINARY_DIR}/.gitignore "*")
-endif()
+file(GENERATE OUTPUT .gitignore CONTENT "*")
