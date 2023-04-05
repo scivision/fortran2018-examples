@@ -27,14 +27,6 @@ Compilers known to work include: GCC, Intel oneAPI, Nvidia HPC SDK, AOCC (AMD), 
 
 ## Build
 
-Fortran Package Manager:
-
-```sh
-fpm build
-```
-
-or CMake:
-
 ```sh
 cmake --workflow --preset default
 ```
@@ -46,6 +38,7 @@ Each test/ directory has its own README and examples.
 * array: Array math in modern CMake and Fortran
 * Git tracability
 * namelist: Fortran 90 / 2003 Namelist parsing -- native text config files for Fortran
+* OpenACC: Not suppored by [Intel oneAPI](https://www.intel.com/content/www/us/en/developer/articles/technical/openmp-accelerator-offload.html)
 * openmp: OpenMP threading exmaples
 * io: modern Fortran File I/O including resolving absolute path
 * real: Numerous examples dealing with practical features of real floating point numbers, including sentinel NaN and polymorphism.
