@@ -22,4 +22,8 @@ print *, yellow // 'this is yellow on stdout'
 print *, 'this stdout is also yellow because the prior statement did not set normal'
 
 write(stderr,*) 'stderr is also yellow.'
+
+print *, normal // "reset normal text to stdout"
+write(stderr,*) normal // "reset normal text to stderr"
+
 end program
