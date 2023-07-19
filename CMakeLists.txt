@@ -14,6 +14,9 @@ enable_testing()
 
 include(cmake/compilers.cmake)
 
+set(CMAKE_Fortran_MODULE_DIRECTORY ${PROJECT_BINARY_DIR}/include)
+# for ease of use
+
 foreach(a IN ITEMS array benchmarks character compile debug io maximum namelist
   openacc openmp overloading pointer real standard submodule)
   add_subdirectory(test/${a})
