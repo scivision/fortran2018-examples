@@ -20,6 +20,13 @@ if(CMAKE_Fortran_COMPILER_ID MATCHES "^Intel")
   "$<$<COMPILE_LANGUAGE:Fortran>:-traceback;-heap-arrays>"
   "$<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<CONFIG:Debug>>:-warn;-debug;-check>"
   )
+
+  # parallel options--needed for "do concurrent" also.
+  if(CMAKE_Fortran_COMPILER_ID STREQUAL "IntelLLVM")
+    add_compile_options($<IF:$<BOOL:${WIN32}>,/Qiopenmp,-fiopenmp>)
+  endif()
+  add_link_options(-qopenmp)
+
   if(WIN32)
     add_compile_options($<$<CONFIG:Debug>:/Od>)
   else()
