@@ -1,4 +1,4 @@
-include(CheckFortranSourceCompiles)
+include(CheckSourceCompiles)
 
 # --- compiler checks
 

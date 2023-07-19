@@ -14,7 +14,7 @@ set(CMAKE_REQUIRED_FLAGS ${long_flags})
 
 string(RANDOM LENGTH 966 _long)
 
-check_fortran_source_compiles(
+check_source_compiles(Fortran
 [=[
 program long
 implicit none
@@ -22,7 +22,6 @@ character(*), parameter :: a = "${_long}"
 end program
 ]=]
 long_line
-SRC_EXT f90
 )
 
 set(CMAKE_REQUIRED_FLAGS)
@@ -33,26 +32,24 @@ set(_alpha "abcdefghijklmnopqrstuvwxyz")
 
 string(RANDOM LENGTH 63 ALPHABET ${_alpha} _name63)
 
-check_fortran_source_compiles(
+check_source_compiles(Fortran
 "program test
 module ${_name63}
 end module
 end program"
 module_63char
-SRC_EXT f90
 )
 
-check_fortran_source_compiles(
+check_source_compiles(Fortran
 "program test
 real :: ${_name63}
 end program"
 variable_63char
-SRC_EXT f90
 )
 
 string(RANDOM LENGTH 63 ALPHABET ${_alpha} _name63a)
 
-check_fortran_source_compiles(
+check_source_compiles(Fortran
 "program test
 module ${_name63}
 interface
@@ -73,5 +70,4 @@ end submodule ${_name63a}
 
 end program"
 submodule_63char
-SRC_EXT f90
 )

@@ -1,5 +1,9 @@
-cmake_minimum_required(VERSION 3.15...3.26)
-# 3.15 for $<COMPILE_LANG_AND_ID:...>
+cmake_minimum_required(VERSION 3.19...3.27)
+
+if(CMAKE_SOURCE_DIR STREQUAL CMAKE_BINARY_DIR)
+  message(FATAL_ERROR "Please specify build directory like:
+  cmake -B build")
+endif()
 
 project(Fortran2018Examples
 LANGUAGES Fortran

@@ -6,7 +6,7 @@ set(CMAKE_REQUIRED_FLAGS ${OpenACC_Fortran_FLAGS} ${OpenACC_Fortran_OPTIONS})
 set(CMAKE_REQUIRED_INCLUDES)
 set(CMAKE_REQUIRED_LIBRARIES)
 
-check_fortran_source_compiles(
+check_source_compiles(Fortran
 "
 program simple
 implicit none
@@ -20,7 +20,6 @@ enddo
 end program
 "
 HAS_OpenACC
-SRC_EXT f90
 )
 
 endif()

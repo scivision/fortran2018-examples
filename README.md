@@ -7,6 +7,8 @@
 Easy examples of scientific computing with modern, powerful, easy Fortran 2018 standard.
 Fortran 2018 began as the TS18508 extension, formerly known as Fortran 2015.
 
+As compilers begin to support the Fortran 202x standard, we will add examples of those features.
+
 Modern Fortran benefits from modern CMake, which supports Fortran features such as
 
 * [submodule](https://github.com/scivision/fortran-submodule)
