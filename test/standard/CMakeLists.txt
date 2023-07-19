@@ -2,7 +2,7 @@ set_property(DIRECTORY PROPERTY LABELS standard)
 
 set(names big_integer bit_pattern block
 do_cycle
-minloc_maxloc_mask minval_maxval_mask statement_function
+minloc_maxloc_mask minval_maxval_mask recursive statement_function
 )
 if(f03ieee)
   list(APPEND names nan_max_min)
@@ -12,9 +12,6 @@ if(f18random)
 endif()
 if(f08contig)
   list(APPEND names contiguous_assumed_shape contiguous_pointer)
-endif()
-if(f18doconcurrent)
-  list(APPEND names do_concurrent_reduction)
 endif()
 
 foreach(t IN LISTS names)
