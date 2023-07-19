@@ -17,8 +17,8 @@ include(cmake/compilers.cmake)
 set(CMAKE_Fortran_MODULE_DIRECTORY ${PROJECT_BINARY_DIR}/include)
 # for ease of use
 
-foreach(a IN ITEMS array character compile debug do_concurrent io maximum namelist
-  openacc openmp overloading pointer real standard submodule)
+foreach(a IN ITEMS array character compile debug io maximum namelist
+         overloading pointer real standard submodule)
   add_subdirectory(test/${a})
 endforeach()
 

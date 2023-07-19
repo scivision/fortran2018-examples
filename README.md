@@ -14,8 +14,8 @@ Modern Fortran benefits from modern CMake, which supports Fortran features such 
 * [submodule](https://github.com/scivision/fortran-submodule)
 * preprocessing
 * detecting specific support of Fortran features (so users know their compiler is too old)
-* [coarray](https://github.com/scivision/fortran-mpi-examples): modern Fortran is the only major compiled language standard with intrinsic massively parallel arrays.
-* [mpi](https://github.com/scivision/fortran-mpi-examples):
+* [coarray](https://github.com/scivision/fortran-coarray-mpi-examples): modern Fortran is the only major compiled language standard with intrinsic massively parallel arrays. Also contains MPI examples.
+* [do concurrent, OpenMP, OpenACC](https://github.com/scivision/fortran-parallel-examples): parallel execution with Fortran directives and native syntax.
 
 Based on widespread compiler support and beneficial features, most new and upgraded Fortran programs should use at least portions of the Fortran 2008 standard.
 
@@ -40,8 +40,6 @@ Each test/ directory has its own README and examples.
 * array: Array math in modern CMake and Fortran
 * Git tracability
 * namelist: Fortran 90 / 2003 Namelist parsing -- native text config files for Fortran
-* OpenACC: Not suppored by [Intel oneAPI](https://www.intel.com/content/www/us/en/developer/articles/technical/openmp-accelerator-offload.html)
-* openmp: OpenMP threading exmaples
 * io: modern Fortran File I/O including resolving absolute path
 * real: Numerous examples dealing with practical features of real floating point numbers, including sentinel NaN and polymorphism.
 * character: String handling is easy and performant in modern Fortran.
