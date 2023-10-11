@@ -27,7 +27,7 @@ jobs:
       FC: ${{ matrix.fc }}
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: install Ninja
       run: sudo apt install --no-install-recommends ninja-build
@@ -47,7 +47,7 @@ jobs:
       FC: ${{ matrix.fc }}
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: install Ninja
       run: brew install ninja
@@ -71,7 +71,7 @@ jobs:
     - name: Put MSYS2_MinGW64 on PATH
       run: echo "${{ runner.temp }}/msys64/mingw64/bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - run: cmake --workflow --preset debug
     - run: cmake --workflow --preset release
