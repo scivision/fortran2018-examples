@@ -8,7 +8,11 @@ use logging, only : logger
 
 implicit none
 
-external :: unlink
+interface
+subroutine unlink(file)
+character(*), intent(in) :: file
+end subroutine
+end interface
 
 integer :: u, i
 character(*), parameter :: logfn = 'test_append.txt'
