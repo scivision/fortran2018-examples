@@ -1,9 +1,6 @@
 name: oneapi-linux
 
 env:
-  CC: icx
-  CXX: icpx
-  FC: ifx
   CTEST_NO_TESTS_ACTION: error
 
 on:
