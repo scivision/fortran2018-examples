@@ -4,5 +4,5 @@ check_source_compiles(Fortran
 use, intrinsic :: iso_fortran_env, only: real16
 
 end program"
-f2Xreal16
+f2023real16
 )

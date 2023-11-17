@@ -16,18 +16,12 @@ include(CheckSourceCompiles)
 
 # --- compiler checks
 
-include(cmake/f18abstract.cmake)
-include(cmake/f08contig.cmake)
-include(cmake/f18random.cmake)
-include(cmake/f18assumed_rank.cmake)
-include(cmake/f08kind.cmake)
-include(cmake/f18prop.cmake)
-include(cmake/f03utf8.cmake)
-include(cmake/f03ieee.cmake)
-include(cmake/f2Xrank_integer.cmake)
-include(cmake/f2Xternary.cmake)
-include(cmake/f2Xtokenize.cmake)
-include(cmake/f2Xreal16.cmake)
+foreach(i IN ITEMS f03ieee f03utf8
+  f08contig f08kind
+  f18abstract f18assumed_rank f18prop f18random
+  f2023rank_integer f2023ternary f2023tokenize f2023real16)
+  include(cmake/${i}.cmake)
+endforeach()
 
 include(cmake/compilers.cmake)
 

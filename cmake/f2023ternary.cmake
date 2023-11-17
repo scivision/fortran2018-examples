@@ -7,5 +7,5 @@ value = ( a > 0.0 ? a : 0.0)
 
 end program
 "
-f2Xternary
+f2023ternary
 )
