@@ -2,6 +2,7 @@ name: oneapi-linux
 
 env:
   CTEST_NO_TESTS_ACTION: error
+  LINUX_FORTRAN_COMPONENTS: intel-oneapi-compiler-fortran
 
 on:
   push:
@@ -25,23 +26,32 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Intel Apt repository
-      timeout-minutes: 1
+    - name: cache install oneAPI
+      id: cache-install
+      uses: actions/cache@v3
+      with:
+        path: |
+          /opt/intel/oneapi
+        key: install-apt
+
+    - name: non-cache install oneAPI
+      if: steps.cache-install.outputs.cache-hit != 'true'
+      timeout-minutes: 10
       run: |
-        wget https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS-2023.PUB
-        sudo apt-key add GPG-PUB-KEY-INTEL-SW-PRODUCTS-2023.PUB
-        rm GPG-PUB-KEY-INTEL-SW-PRODUCTS-2023.PUB
-        echo "deb https://apt.repos.intel.com/oneapi all main" | sudo tee /etc/apt/sources.list.d/oneAPI.list
-        sudo apt-get update
-
-    - name: Install Intel oneAPI
-      timeout-minutes: 5
-      run: sudo apt-get install intel-oneapi-compiler-fortran intel-oneapi-compiler-dpcpp-cpp-and-cpp-classic ninja-build
-
+        sh -c .github/workflows/oneapi_setup_apt_repo_linux.sh
+        sudo apt install ${{ env.LINUX_FORTRAN_COMPONENTS }}
     - name: Setup Intel oneAPI environment
       run: |
         source /opt/intel/oneapi/setvars.sh
         printenv >> $GITHUB_ENV
 
+    - name: Install Ninja (separate from cache)
+      timeout-minutes: 5
+      run: sudo apt-get install ninja-build
+
     - run: cmake --workflow --preset debug
     - run: cmake --workflow --preset release
+
+    - name: exclude unused files from cache
+      if: steps.cache-install.outputs.cache-hit != 'true'
+      run: sh -c .github/workflows/oneapi_cache_exclude_linux.sh
