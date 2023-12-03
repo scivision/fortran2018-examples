@@ -19,12 +19,12 @@ jobs:
   linux:
     strategy:
       matrix:
-        fc: [gfortran-9, gfortran-10, gfortran-11, gfortran-12]
+        fc: [9, 10, 11, 12, 13]
 
     runs-on: ubuntu-latest
 
     env:
-      FC: ${{ matrix.fc }}
+      FC: gfortran-${{ matrix.fc }}
 
     steps:
     - uses: actions/checkout@v4
@@ -39,7 +39,7 @@ jobs:
   macos:
     strategy:
       matrix:
-        fc: [gfortran-12]
+        fc: [gfortran-13]
 
     runs-on: macos-latest
 
