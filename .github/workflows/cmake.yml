@@ -16,12 +16,16 @@ on:
 
 jobs:
 
-  linux:
+  unix:
     strategy:
       matrix:
+        os: [ubuntu-latest]
         fc: [9, 10, 11, 12, 13]
+        include:
+        - os: macos-latest
+          fc: 13
 
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
 
     env:
       FC: gfortran-${{ matrix.fc }}
@@ -30,31 +34,15 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: install Ninja
+      if: runner.os == 'Linux'
       run: sudo apt install --no-install-recommends ninja-build
 
-    - run: cmake --workflow --preset debug
-    - run: cmake --workflow --preset release
-
-
-  macos:
-    strategy:
-      matrix:
-        fc: [gfortran-13]
-
-    runs-on: macos-latest
-
-    env:
-      FC: ${{ matrix.fc }}
-
-    steps:
-    - uses: actions/checkout@v4
-
     - name: install Ninja
+      if: runner.os == 'macOS'
       run: brew install ninja
 
     - run: cmake --workflow --preset debug
     - run: cmake --workflow --preset release
-
 
   windows:
     runs-on: windows-latest
