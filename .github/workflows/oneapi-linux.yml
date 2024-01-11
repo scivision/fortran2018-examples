@@ -2,6 +2,8 @@ name: oneapi-linux
 
 env:
   CTEST_NO_TESTS_ACTION: error
+  CMAKE_BUILD_PARALLEL_LEVEL: 4
+  CMAKE_BUILD_TYPE: Release
 
 on:
   push:
@@ -29,11 +31,6 @@ jobs:
         compiler: intel
         version: '2023.2'
 
-    - name: Install Ninja
-      run: sudo apt-get install ninja-build
-
     - uses: actions/checkout@v4
 
-    - run: cmake --workflow --preset debug
-
-    - run: cmake --workflow --preset release
+    - run: cmake --workflow --preset default
