@@ -1,8 +1,14 @@
 set_property(DIRECTORY PROPERTY LABELS character)
 
-foreach(t IN ITEMS ascii character_allocatable character_array charlen
+set(tests ascii character_array charlen
 color_text
 print_vs_write overwrite_stdout special_characters str2int utf8)
+
+if(f03charalloc)
+  list(APPEND tests character_allocatable)
+endif()
+
+foreach(t IN LISTS tests)
   add_executable(${t} ${t}.f90)
   add_test(NAME ${t} COMMAND ${t})
 endforeach()

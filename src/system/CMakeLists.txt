@@ -2,6 +2,7 @@ set_property(DIRECTORY PROPERTY LABELS system)
 
 add_library(osdet OBJECT os_detect.f90)
 
+if(f08execute)
 find_package(Python COMPONENTS Interpreter)
 
 add_executable(callpython call_python_script.f90)
@@ -12,3 +13,4 @@ find_program(FFPLAY NAMES ffplay)
 add_executable(playsound play_sound.f90)
 add_test(NAME PlaySound COMMAND playsound ${CMAKE_CURRENT_SOURCE_DIR}/bell.aac)
 set_property(TEST PlaySound PROPERTY DISABLED $<NOT:$<BOOL:${FFPLAY}>>)
+endif()
