@@ -67,6 +67,7 @@ The standalone examples are organized under [test/](./test/) directory, includin
 * Fortran [2003](https://wg5-fortran.org/f2003.html)
 * Fortran [2008](https://wg5-fortran.org/f2008.html)
 * Fortran [2018](https://wg5-fortran.org/f2018.html)
+* Fortran [2023](https://wg5-fortran.org/f2023.html)
 
 ### Books
 
