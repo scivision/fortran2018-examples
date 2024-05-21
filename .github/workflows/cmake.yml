@@ -16,11 +16,12 @@ on:
 
 jobs:
 
-  unix:
+
+  gcc-new:
     strategy:
       matrix:
-        os: [ubuntu-latest]
-        fc: [9, 10, 11, 12, 13]
+        os: [ubuntu-24.04]
+        fc: [12, 13, 14]
         include:
         - os: macos-latest
           fc: 13
@@ -43,6 +44,28 @@ jobs:
 
     - run: cmake --workflow --preset debug
     - run: cmake --workflow --preset release
+
+
+  gcc-old:
+    strategy:
+      matrix:
+        os: [ubuntu-22.04]
+        fc: [9, 10, 11]
+
+    runs-on: ${{ matrix.os }}
+
+    env:
+      FC: gfortran-${{ matrix.fc }}
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: install Ninja
+      run: sudo apt install --no-install-recommends ninja-build
+
+    - run: cmake --workflow --preset debug
+    - run: cmake --workflow --preset release
+
 
   windows:
     runs-on: windows-latest
