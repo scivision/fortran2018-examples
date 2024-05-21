@@ -1,9 +1,8 @@
 # -- compiler feature checks BEFORE setting flags to avoid intermittant failures in general
 
 if(CMAKE_Fortran_COMPILER_ID MATCHES "^Intel")
-  add_compile_options(
-  "$<$<COMPILE_LANGUAGE:Fortran>:-traceback;-heap-arrays>"
-  "$<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<CONFIG:Debug>>:-warn;-debug;-check>"
+  add_compile_options(-traceback -heap-arrays
+  "$<$<CONFIG:Debug,RelWithDebInfo>:-warn;-debug;-check>"
   )
 
   if(WIN32)
@@ -15,8 +14,8 @@ elseif(CMAKE_Fortran_COMPILER_ID STREQUAL "GNU")
 
   add_compile_options(
   $<$<COMPILE_LANGUAGE:Fortran>:-fimplicit-none>
-  "$<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<CONFIG:Release>>:-fno-backtrace;-Wno-maybe-uninitialized>"
-  "$<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<CONFIG:Debug>>:-Wall;-fcheck=all;-Werror=array-bounds>"
+  "$<$<CONFIG:Release>:-fno-backtrace;-Wno-maybe-uninitialized>"
+  "$<$<CONFIG:Debug,RelWithDebInfo>:-Wall;-fcheck=all;-Werror=array-bounds>"
   )
 
 #   "$<$<COMPILE_LANGAUGE:Fortran>:-Wrealloc-lhs>"  # not -Wrealloc-lhs-all which warns on character
