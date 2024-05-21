@@ -4,6 +4,7 @@ env:
   CTEST_NO_TESTS_ACTION: error
   CMAKE_BUILD_PARALLEL_LEVEL: 4
   CMAKE_BUILD_TYPE: Release
+  CTEST_PARALLEL_LEVEL: 0
 
 on:
   push:
@@ -23,7 +24,8 @@ jobs:
 
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-latest]
+# Windows takes tens of minutes to install oneAPI
 
     runs-on: ${{ matrix.os }}
     timeout-minutes: 10

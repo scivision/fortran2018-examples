@@ -3,6 +3,8 @@ name: cmake
 env:
   CTEST_NO_TESTS_ACTION: error
   HOMEBREW_NO_INSTALL_CLEANUP: 1
+  CTEST_PARALLEL_LEVEL: 0
+  CMAKE_BUILD_PARALLEL_LEVEL: 4
 
 on:
   push:
@@ -65,6 +67,28 @@ jobs:
 
     - run: cmake --workflow --preset debug
     - run: cmake --workflow --preset release
+
+
+  linux-flang:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+
+    strategy:
+      matrix:
+        clang-version: [18]
+
+    env:
+      CC: clang-${{ matrix.clang-version }}
+      CXX: clang++-${{ matrix.clang-version }}
+      FC: flang-new
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: install Flang
+      run: sudo apt install --no-install-recommends flang
+
+    - run: cmake --workflow --preset default
 
 
   windows:
