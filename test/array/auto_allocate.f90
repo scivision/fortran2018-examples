@@ -49,7 +49,7 @@ if (size(E) /= 4) error stop 'allocate() auto-allocate big'
 print *, "OK: auto-allocate fixed allocate first"
 
 !> if lhs(:) = rhs and shape(lhs) /= shape(rhs) behavior is UNDEFINED.
-!> Ifx/ifort 2023.0 newly detect with -CB -check bounds option.
+!> oneAPI 2023.0 newly detect with -CB -check bounds option.
 A(:) = [9,8]
 if (size(A) /= 2) error stop '(:) syntax smaller'
 if (any(A /= [9,8])) then
@@ -58,21 +58,25 @@ if (any(A /= [9,8])) then
 endif
 print *, "OK: auto-allocate (:) syntax smaller"
 
-E(:) = [1,2,3]
-if (size(E) /= 4) error stop 'allocate() (:) syntax small'
-if (any(E(:3) /= [1,2,3])) then
-  write(stderr,*) 'allocate() (:) assign small: E=', E(:3)
-  error stop
-endif
-print *, "OK: auto-allocate (:) syntax small"
+!> new for Gfortran 14
+!! Fortran runtime error: Array bound mismatch for dimension 1 of array 'e' (4/3)
+! E(:) = [1,2,3]
+! if (size(E) /= 4) error stop 'allocate() (:) syntax small'
+! if (any(E(:3) /= [1,2,3])) then
+!   write(stderr,*) 'allocate() (:) assign small: E=', E(:3)
+!   error stop
+! endif
+! print *, "OK: auto-allocate (:) syntax small"
 
-E(:) = [5,4,3,2]
-if (size(E) /= 4) error stop 'allocate() (:) syntax: big'
-if (any(E /= [5,4,3,2])) then
-  write(stderr,*) 'allocate() (:) assign: big: E=', E
-  error stop
-endif
-print *, "OK: auto-allocate (:) syntax big"
+!> new for Gfortran 14
+!! Fortran runtime error: Array bound mismatch for dimension 1 of array 'e' (4/5)
+! E(:) = [5,4,3,2,1]
+! if (size(E) /= 5) error stop 'allocate() (:) syntax: big'
+! if (any(E /= [5,4,3,2,1])) then
+!   write(stderr,*) 'allocate() (:) assign: big: E=', E
+!   error stop
+! endif
+! print *, "OK: auto-allocate (:) syntax big"
 
 !> (lbound:ubound)
 ! A(1:3) = [4,5,6]
