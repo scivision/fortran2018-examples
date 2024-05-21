@@ -13,6 +13,7 @@ VERSION 1.4.0)
 enable_testing()
 
 include(CheckSourceCompiles)
+include(CheckSourceRuns)
 
 # --- compiler checks
 

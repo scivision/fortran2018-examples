@@ -7,7 +7,7 @@ minloc_maxloc_mask minval_maxval_mask recursive statement_function
 if(f03ieee)
   list(APPEND names nan_max_min)
 endif()
-if(f18random)
+if(f18random_init)
   list(APPEND names random_init)
 endif()
 if(f08contig)
