@@ -17,10 +17,10 @@ contains
 subroutine test_split()
 
 
-character(*),parameter :: mystr="hello.txt"
-character(:),allocatable :: stem
+character(*), parameter :: mystr = "hello.txt"
+character(:), allocatable :: stem
 
-stem = split(mystr,'.')
+stem = split(mystr, '.')
 print '(A)', stem
 
 if (len(stem) /= 5) error stop 'allocatable character of unexpected length'
@@ -33,9 +33,9 @@ subroutine test_lowercase()
 character(*), parameter :: hello = 'HeLl0 Th3rE !>? '
   !! Fortran 2003 allocatable string
 
-if (.not.(toLower(hello)=='hell0 th3re !>? ')) error stop 'error: lowercase conversion'
+if (.not.(toLower(hello) == 'hell0 th3re !>? ')) error stop 'error: lowercase conversion'
 
-if (.not.(trim(toLower(hello))=='hell0 th3re !>?')) error stop 'Allocatable lowercase conversion error'
+if (.not.(trim(toLower(hello)) == 'hell0 th3re !>?')) error stop 'Allocatable lowercase conversion error'
 
 end subroutine test_lowercase
 

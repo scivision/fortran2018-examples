@@ -1,17 +1,12 @@
-check_source_compiles(Fortran
-"
-program test
-implicit none
-contains
+set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
 
-subroutine r(A)
+check_source_compiles(Fortran "subroutine r(A)
 integer, intent(inout) :: A(..)
 select rank(A)
   rank default
     error stop
 end select
 end subroutine r
-end program
 "
 f18assumed_rank
 )

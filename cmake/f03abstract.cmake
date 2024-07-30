@@ -1,8 +1,6 @@
-check_source_compiles(Fortran
-"program abst
+set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
 
-implicit none
-
+check_source_compiles(Fortran "subroutine r()
 type, abstract :: L1
 integer, pointer :: bullseye(:,:)
 end type L1
@@ -13,7 +11,6 @@ end type L2
 
 class(L2), allocatable :: obj
 
-end program
-"
+end subroutine"
 f03abstract
 )

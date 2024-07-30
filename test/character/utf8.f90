@@ -9,9 +9,12 @@ character(:), allocatable :: ascii
 character(len=:, kind=selected_char_kind('ISO_10646')), allocatable :: utf8
 
 ascii = '☀ ☁ ☂ ☃ ☄'
-utf8 = '☀ ☁ ☂ ☃ ☄'
+utf8  = '☀ ☁ ☂ ☃ ☄'
 
-print *, 'ascii', ascii, ' some compilers allow UTF-8 to be packed into ASCII per Fortran 2003 standard (optional)'
-print *, 'utf8', utf8, ' this is 4-byte characters.'
+print '(a)', 'ASCII:'
+print '(a)', ascii
+
+print '(a)', 'UCS4:'
+print '(a)', utf8
 
 end program

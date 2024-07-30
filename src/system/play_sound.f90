@@ -9,23 +9,27 @@ character(*),parameter :: playexe='ffplay'
 ! -autoexit clips off the end of the sound slightly, but otherwise thread hangs open even after Fortran program ends.
 character(*),parameter :: cmdopts='-autoexit -loglevel warning -nodisp'
 
-character(:), allocatable :: fn, pcmd
-character(2048) :: argv
+character(:), allocatable :: pcmd, buf
 logical :: fexist
-integer :: ierr, istat
+integer :: ierr, istat, L
 
-call get_command_argument(1, argv, status=ierr)
-if (ierr /= 0) error stop 'please include audio filename in command'
-fn = trim(argv)
+valgrind : block
 
-inquire(file=fn, exist=fexist)
+call get_command_argument(1, length=L, status=ierr)
+if (ierr /= 0) error stop "please specify sound file"
+allocate(character(L) :: buf)
+call get_command_argument(1, value=buf)
 
-if (.not. fexist) error stop 'did not find FILE ' // fn
+inquire(file=buf, exist=fexist)
 
-pcmd = playexe//' '//cmdopts//' '//trim(fn)
+if (.not. fexist) error stop 'did not find FILE ' // buf
+
+pcmd = playexe//' '//cmdopts//' '//trim(buf)
 
 call execute_command_line(pcmd, cmdstat=ierr, exitstat=istat)
 if(ierr /= 0) error stop 'could not open player'
 if(istat /= 0) error stop 'problem playing file'
+
+end block valgrind
 
 end program

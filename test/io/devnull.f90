@@ -19,19 +19,19 @@ implicit none
 ! making mistakes in doing so.
 !
 !
-character(*),parameter :: fout='out.txt'
+character(*), parameter :: fout='out.txt'
 character(:), allocatable :: nullfile
 character(2048) :: argv
 integer,parameter :: Nrun=10000
-integer :: ios,u
+integer :: ios,u, L
 real(wp) :: tnul, tscratch, tfile
 
 call get_command_argument(1, argv, status=ios)
 if (ios == 0) then
   nullfile = trim(argv)
 else
-  call get_environment_variable('userprofile', status=ios)
-  if (ios==0) then
+  call get_environment_variable('userprofile', status=ios, length=L)
+  if (ios==0 .and. L > 0) then
     nullfile = 'NUL'
   else
     nullfile = '/dev/null'
@@ -40,38 +40,38 @@ endif
 
 !---  BENCHMARK NUL -----------
 ! do NOT use status='old' as this can fail on various OS
-open(newunit=u, file=nullfile,iostat=ios, action='write')
+open(newunit=u, file=nullfile, iostat=ios, action='write')
 if (ios /= 0) error stop 'could not open NULL file: ' // nullfile
 
-tnul = writetime(u,Nrun)
-print '(A10,F10.3,A)','nul: ',tnul,' ms'
+tnul = writetime(u, Nrun)
+print '(A10,F10.3,A)', 'nul: ', tnul, ' ms'
 !---- BENCHMARK SCRATCH --------------
-open(newunit=u,status='scratch')
-tscratch = writetime(u,Nrun)
-print '(A10,F10.3,A)','scratch: ',tscratch,' ms'
+open(newunit=u, status='scratch')
+tscratch = writetime(u, Nrun)
+print '(A10,F10.3,A)', 'scratch: ', tscratch, ' ms'
 !---- BENCHMARK FILE --------
 ! note that open() default position=asis, access=sequential
-open(newunit=u,status='replace',file=fout)
-tfile = writetime(u,Nrun)
-print '(A10,F10.3,A)','file: ',tfile,' ms'
+open(newunit=u, status='replace', file=fout)
+tfile = writetime(u, Nrun)
+print '(A10,F10.3,A)','file: ', tfile, ' ms'
 
 
 contains
 
-real(wp) function writetime(u,Nrun)
+real(wp) function writetime(u, Nrun)
 
-  integer, intent(in) :: u,Nrun
+  integer, intent(in) :: u, Nrun
   integer(int64) :: tic,toc,tmin, rate
   integer, volatile :: i
   integer j
 
-  tmin  = huge(0_int64) ! need to avoid SAVE behavior by not assigning at initialization
+  tmin = huge(0_int64) ! need to avoid SAVE behavior by not assigning at initialization
   call system_clock(count_rate=rate)
 
   do j=1,3
     call system_clock(tic)
     do i=1,Nrun
-      write(u,*) 'into nothingness I go....',i
+      write(u, '(a,i0)') 'into nothingness I go....', i
       flush(u)
     enddo
     call system_clock(toc)

@@ -7,7 +7,7 @@ integer :: m
 
 x = '42'
 m = str2int(x)
-if (m/=42) error stop
+if (m /= 42) error stop
 
 contains
 

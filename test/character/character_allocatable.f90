@@ -5,6 +5,8 @@ implicit none
 
 character(:), allocatable :: flex(:), scalar
 
+valgrind : block
+
 scalar = 'hi'
 if (len(scalar) /= 2) error stop 'auto-alloc char scalar'
 scalar = 'hello'
@@ -35,6 +37,7 @@ if (len_trim(flex(1)) /= 2) error stop "flex: len_trim(flex(1)) /= 2"
 if (flex(1) /= 'hi') error stop "flex: flex(1) /= 'hi'"
 if (flex(2) /= 'bye') error stop "flex: flex(2) /= 'bye'"
 
+end block valgrind
 
 print *, "OK: allocatable character"
 

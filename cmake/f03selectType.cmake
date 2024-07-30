@@ -1,29 +1,16 @@
-check_source_compiles(Fortran
-"
-program selectType
-implicit none
-real :: r
-integer :: i
+set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
 
-call selector(r)
-call selector(i)
-
-contains
-
-subroutine selector(x)
+check_source_compiles(Fortran "subroutine selector(x)
 
 class(*), intent(in) :: x
 
 select type (x)
   type is (real)
-    print *, 'real'
+    print '(a)', 'real'
   type is (integer)
-    print *, 'integer'
+    print '(a)', 'integer'
 end select
 
-end subroutine
-
-end program
-"
+end subroutine"
 f03selectType
 )
