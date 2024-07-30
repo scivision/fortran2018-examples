@@ -7,11 +7,11 @@ implicit none
 integer :: s
 integer, allocatable :: seed1(:),seed2(:)
 
-print *, compiler_version()
+print '(a)', compiler_version()
 
 call random_seed(size=s)
 print '(a,i0)', "random_seed size: ", s
-allocate (seed1(s),seed2(s))
+allocate (seed1(s), seed2(s))
 
 call random_init(.false., .false.)
 call random_seed (get=seed1)
@@ -22,10 +22,9 @@ call random_seed(get=seed2)
 print *, "Seed 2: ", seed2
 
 if (all(seed1==seed2)) then
-    write(stderr, '(a)') 'ERROR: random_init(.false., .false.): two seeds above should not match if random_init is working'
-    error stop
+  write(stderr, '(a)') 'ERROR: random_init(.false., .false.): two seeds above should not match if random_init is working'
+else
+  print *, "OK: random_init"
 endif
-
-print *, "OK: random_init"
 
 end program
