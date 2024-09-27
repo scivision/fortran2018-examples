@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.19...3.29)
+cmake_minimum_required(VERSION 3.19...3.30)
 
 if(CMAKE_SOURCE_DIR STREQUAL CMAKE_BINARY_DIR)
   message(FATAL_ERROR "Please specify build directory like:

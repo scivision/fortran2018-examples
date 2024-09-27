@@ -2,7 +2,7 @@
 
 if(CMAKE_Fortran_COMPILER_ID MATCHES "^Intel")
   add_compile_options(-traceback -heap-arrays
-  "$<$<CONFIG:Debug,RelWithDebInfo>:-warn;-debug;-check>"
+  "$<$<CONFIG:Debug,RelWithDebInfo>:SHELL:-warn all;SHELL:-debug all;SHELL:-check all>"
   )
 
   if(WIN32)
