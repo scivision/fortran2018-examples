@@ -17,11 +17,12 @@ include(CheckSourceRuns)
 
 # --- compiler checks
 
-foreach(i IN ITEMS f03abstract f03charalloc f03ieee f03utf8 f03selectType
-  f08contig f08execute f08kind
-  f18abstract f18assumed_rank f18prop f18random f2018rank
-  f2023rank_integer f2023ternary f2023tokenize f2023real16)
+set(f2003features f03abstract f03charalloc f03ieee f03utf8 f03selectType)
+set(f2008features f08contig f08execute f08kind)
+set(f2018features f18abstract f18assumed_rank f18prop f18random f2018rank)
+set(f2023features f2023rank_integer f2023ternary f2023tokenize f2023real16)
 
+foreach(i IN LISTS f2003features f2008features f2018features f2023features)
   include(cmake/${i}.cmake)
 endforeach()
 
@@ -40,3 +41,5 @@ foreach(a IN ITEMS git system)
 endforeach()
 
 file(GENERATE OUTPUT .gitignore CONTENT "*")
+
+include(cmake/features.cmake)
