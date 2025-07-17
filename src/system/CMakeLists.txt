@@ -1,7 +1,5 @@
 set_property(DIRECTORY PROPERTY LABELS system)
 
-add_library(osdet OBJECT os_detect.f90)
-
 if(f08execute)
 find_package(Python COMPONENTS Interpreter)
 
