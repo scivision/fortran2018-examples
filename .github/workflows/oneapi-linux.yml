@@ -21,9 +21,6 @@ on:
       - "**/CMakeLists.txt"
       - ".github/workflows/oneapi-linux.yml"
       - ".github/workflows/oneapi*.sh"
-      - "!memcheck.cmake"
-      - "!coverage.cmake"
-      - "!example/*"
   workflow_dispatch:
 
 # avoid wasted runs
@@ -40,7 +37,7 @@ jobs:
 
     strategy:
       matrix:
-        oneapi: [2025.1]
+        oneapi: [2025.2]
     steps:
     - uses: actions/checkout@v4
 
@@ -57,7 +54,7 @@ jobs:
       timeout-minutes: 5
       run: |
         .github/workflows/oneapi_setup_apt_repo_linux.sh
-        sudo apt install --no-install-recommends intel-oneapi-compiler-dpcpp-cpp-${{ matrix.oneapi }} intel-oneapi-compiler-fortran-${{ matrix.oneapi }}
+        sudo apt install --no-install-recommends intel-oneapi-compiler-fortran-${{ matrix.oneapi }}
 
     - name: Setup Intel oneAPI environment
       run: |
@@ -71,7 +68,7 @@ jobs:
       if: failure()
       uses: actions/upload-artifact@v4
       with:
-        name: oneapi-${{ matrix.onapi }}-${{ runner.os }}-CMakeConfigureLog.yaml
+        name: oneapi-${{ matrix.oneapi }}-${{ runner.os }}-CMakeConfigureLog.yaml
         path: build/CMakeFiles/CMakeConfigureLog.yaml
 
     - name: exclude unused files from cache
