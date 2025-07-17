@@ -8,15 +8,21 @@ character(:), allocatable :: flex(:), scalar
 valgrind : block
 
 scalar = 'hi'
-if (len(scalar) /= 2) error stop 'auto-alloc char scalar'
-scalar = 'hello'
-if (len(scalar) /= 5) error stop 'auto-alloc longer'
-scalar = 'bye'
-if (len(scalar) /= 3) error stop 'auto-alloc shorter'
 
+if (.not.allocated(scalar)) error stop 'F2003 auto-allocate on variable assignment failed'
+if (len(scalar) /= 2) error stop 'auto-alloc char scalar'
+
+scalar = 'hello'
+if (len(scalar) /= 5) error stop 'auto-alloc 2 => 5'
+scalar = 'bye'
+if (len(scalar) /= 3) error stop 'auto-alloc 5 => 3'
+
+!> alloctable character function
 if(drop_last_char('hello.') /= 'hello') error stop 'allocatable char function'
 
+!> array auto-allocate
 flex = [character(9) :: 'hi', 'hello', 'greetings']
+if (.not. allocated(flex)) error stop 'F2003 auto-allocate on array assignment failed'
 
 if (size(flex) /= 3) error stop
 if (len(flex(1)) /= 9) error stop

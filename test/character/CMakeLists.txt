@@ -4,9 +4,11 @@ set(tests ascii character_array charlen
 color_text
 print_vs_write overwrite_stdout special_characters str2int utf8)
 
-if(f03charalloc)
-  list(APPEND tests character_allocatable)
-endif()
+foreach(f IN ITEMS f03character_allocatable f2023character_allocatable)
+  if(${f})
+    list(APPEND tests ${f})
+  endif()
+endforeach()
 
 foreach(t IN LISTS tests)
   add_executable(${t} ${t}.f90)

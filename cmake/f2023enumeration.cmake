@@ -1,10 +1,11 @@
 set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
 
 # https://wg5-fortran.org/N2201-N2250/N2212.pdf
-# section 8.3 Using an integer constant to specify rank
+# section 9.2
 
 check_source_compiles(Fortran "program test
-real, rank(2) :: a
-!! Equivalent to real :: a(:,:)
+enumeration type :: colour
+ enumerator :: red, orange, green
+ end enumeration type
 end program"
-f2023rank_integer)
+f2023enumeration)

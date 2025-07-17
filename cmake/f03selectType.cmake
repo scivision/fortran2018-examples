@@ -1,3 +1,5 @@
+block()
+
 set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
 
 check_source_compiles(Fortran "subroutine selector(x)
@@ -14,3 +16,5 @@ end select
 end subroutine"
 f03selectType
 )
+
+endblock()
