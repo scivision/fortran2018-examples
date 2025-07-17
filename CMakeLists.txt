@@ -15,15 +15,17 @@ enable_testing()
 include(CheckSourceCompiles)
 include(CheckSourceRuns)
 
+option(python "Fortran call Python demo")
+
 # --- compiler checks
 
-set(f2003features f03abstract f03charalloc f03ieee f03utf8 f03selectType)
-set(f2008features f08contig f08execute f08kind)
-set(f2018features f18abstract f18assumed_rank f18prop f18random f2018rank)
-set(f2023features f2023rank_integer f2023ternary f2023tokenize f2023real16)
+file(GLOB f2003features RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}/cmake cmake/f03*.cmake)
+file(GLOB f2008features RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}/cmake cmake/f08*.cmake)
+file(GLOB f2018features RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}/cmake cmake/f18*.cmake)
+file(GLOB f2023features RELATIVE ${CMAKE_CURRENT_SOURCE_DIR}/cmake cmake/f2023*.cmake)
 
 foreach(i IN LISTS f2003features f2008features f2018features f2023features)
-  include(cmake/${i}.cmake)
+  include(cmake/${i})
 endforeach()
 
 include(cmake/compilers.cmake)

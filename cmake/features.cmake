@@ -1,6 +1,7 @@
 set(j "{}")
 
 foreach(s IN LISTS f2003features f2008features f2018features f2023features)
+  string(REPLACE ".cmake" "" s ${s})
   foreach(f IN LISTS s)
     if(${f})
       set(hasf true)
