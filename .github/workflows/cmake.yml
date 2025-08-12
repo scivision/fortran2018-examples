@@ -51,7 +51,8 @@ jobs:
       FC: gfortran-${{ matrix.fc }}
 
     steps:
-    - uses: actions/checkout@v4
+    - &checkout
+      uses: actions/checkout@v4
 
     - run: cmake --workflow debug
     - run: cmake --workflow release
@@ -71,12 +72,13 @@ jobs:
       FC: flang-new
 
     steps:
-    - uses: actions/checkout@v4
-
     - name: install Flang
       run: sudo apt install --no-install-recommends flang
 
-    - run: cmake --workflow default
+    - *checkout
+
+    - &default
+      run: cmake --workflow default
 
 
   windows:
@@ -94,7 +96,6 @@ jobs:
     - name: Put MSYS2_MinGW64 on PATH
       run: echo "${{ steps.msys2.outputs.msys2-location }}/ucrt64/bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
-    - uses: actions/checkout@v4
+    - *checkout
 
-    - run: cmake --workflow debug
-    - run: cmake --workflow release
+    - *default

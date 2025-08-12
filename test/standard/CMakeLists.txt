@@ -21,7 +21,11 @@ endforeach()
 
 if(f18abstract)
   add_executable(abstract_interface abstract.f90)
+  add_executable(abstract_procedure abstract_procedure.f90)
 endif()
+
+add_executable(lubounds bounds.f90)
+add_test(NAME LUbounds COMMAND lubounds)
 
 add_executable(shortcircuit ${PROJECT_SOURCE_DIR}/app/standard/short_circuit.f90)
 # shaky result, don't CI test
