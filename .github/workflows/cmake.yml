@@ -33,7 +33,8 @@ jobs:
       FC: gfortran-${{ matrix.fc }}
 
     steps:
-    - uses: actions/checkout@v4
+    - &checkout
+      uses: actions/checkout@v5
 
     - run: cmake --workflow debug
     - run: cmake --workflow release
@@ -43,16 +44,22 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-22.04]
-        fc: [9, 10, 11]
+        gcc-version: [9, 10, 11]
 
     runs-on: ${{ matrix.os }}
 
     env:
-      FC: gfortran-${{ matrix.fc }}
+      FC: gfortran-${{ matrix.gcc-version }}
 
     steps:
-    - &checkout
-      uses: actions/checkout@v4
+    - *checkout
+
+    - name: GCC APT
+      if: matrix.gcc-version < 11
+      run: |
+        sudo apt update -y
+        sudo apt install -y --no-install-recommends gfortran-${{ matrix.gcc-version }}
+
 
     - run: cmake --workflow debug
     - run: cmake --workflow release

@@ -39,7 +39,7 @@ jobs:
       matrix:
         oneapi: [2025.2]
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
 
     - name: cache install oneAPI
       id: cache-install
