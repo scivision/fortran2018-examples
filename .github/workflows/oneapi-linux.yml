@@ -35,9 +35,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
-    strategy:
-      matrix:
-        oneapi: [2025.2]
+    # strategy:
+    #   matrix:
+    #     oneapi: [2025.2]
     steps:
     - uses: actions/checkout@v5
 
@@ -47,14 +47,14 @@ jobs:
       with:
         path: |
           /opt/intel/oneapi
-        key: oneapi-${{ matrix.oneapi }}-apt
+        key: oneapi-apt
 
     - name: non-cache install oneAPI
       if: steps.cache-install.outputs.cache-hit != 'true'
       timeout-minutes: 5
       run: |
         .github/workflows/oneapi_setup_apt_repo_linux.sh
-        sudo apt install --no-install-recommends intel-oneapi-compiler-fortran-${{ matrix.oneapi }}
+        sudo apt install --no-install-recommends intel-oneapi-compiler-fortran
 
     - name: Setup Intel oneAPI environment
       run: |
@@ -68,7 +68,7 @@ jobs:
       if: failure()
       uses: actions/upload-artifact@v4
       with:
-        name: oneapi-${{ matrix.oneapi }}-${{ runner.os }}-CMakeConfigureLog.yaml
+        name: oneapi-${{ runner.os }}-CMakeConfigureLog.yaml
         path: build/CMakeFiles/CMakeConfigureLog.yaml
 
     - name: exclude unused files from cache
