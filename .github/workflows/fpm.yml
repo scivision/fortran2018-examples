@@ -16,11 +16,11 @@ jobs:
 
     steps:
 
-    - uses: fortran-lang/setup-fpm@v7
+    - uses: fortran-lang/setup-fpm@v8
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
 
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
 
     - run: fpm build
     - run: fpm test

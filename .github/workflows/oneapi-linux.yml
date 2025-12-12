@@ -39,11 +39,11 @@ jobs:
     #   matrix:
     #     oneapi: [2025.2]
     steps:
-    - uses: actions/checkout@v5
+    - uses: actions/checkout@v6
 
     - name: cache install oneAPI
       id: cache-install
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       with:
         path: |
           /opt/intel/oneapi
@@ -66,7 +66,7 @@ jobs:
 
     - name: Upload log failure
       if: failure()
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v6
       with:
         name: oneapi-${{ runner.os }}-CMakeConfigureLog.yaml
         path: build/CMakeFiles/CMakeConfigureLog.yaml
