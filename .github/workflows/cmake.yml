@@ -25,7 +25,7 @@ jobs:
         fc: [12, 13, 14]
         include:
         - os: macos-latest
-          fc: 13
+          fc: 15
 
     runs-on: ${{ matrix.os }}
 
