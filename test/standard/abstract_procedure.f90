@@ -2,7 +2,7 @@ module newton
 
 use, intrinsic :: iso_fortran_env, only: wp => real64, stderr => error_unit
 
-implicit none (type, external)
+implicit none
 
 private
 public :: wp, newtopts, newton_exact, objfun, objfun_deriv
