@@ -4,6 +4,7 @@ env:
   CTEST_NO_TESTS_ACTION: error
   HOMEBREW_NO_INSTALL_CLEANUP: 1
   CTEST_PARALLEL_LEVEL: 0
+  CMAKE_GENERATOR: Ninja
 
 on:
   push:
@@ -13,10 +14,15 @@ on:
       - "**.cmake"
       - "**/CMakeLists.txt"
       - ".github/workflows/cmake.yml"
+  workflow_dispatch:
+
+# avoid wasted runs
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 
 jobs:
-
 
   gcc-new:
     strategy:
@@ -36,8 +42,8 @@ jobs:
     - &checkout
       uses: actions/checkout@v6
 
-    - run: cmake --workflow debug
-    - run: cmake --workflow release
+    - &default
+      run: cmake --workflow default
 
 
   gcc-old:
@@ -52,40 +58,45 @@ jobs:
       FC: gfortran-${{ matrix.gcc-version }}
 
     steps:
-    - *checkout
-
     - name: GCC APT
       if: matrix.gcc-version < 11
       run: |
         sudo apt update -y
         sudo apt install -y --no-install-recommends gfortran-${{ matrix.gcc-version }}
 
-
-    - run: cmake --workflow debug
-    - run: cmake --workflow release
+    - *checkout
+    - *default
 
 
   linux-flang:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     timeout-minutes: 15
 
     strategy:
       matrix:
-        clang-version: [18]
+        llvm-version: [21]
+        cpp: [true, false]
+        shared: [false]
 
     env:
-      CC: clang-${{ matrix.clang-version }}
-      CXX: clang++-${{ matrix.clang-version }}
-      FC: flang-new
+      CC: clang-${{ matrix.llvm-version }}
+      CXX: clang++-${{ matrix.llvm-version }}
+      FC: flang-${{ matrix.llvm-version }}
 
     steps:
+    - name: Apt LLVM
+      run: |
+          wget https://apt.llvm.org/llvm.sh
+          chmod +x llvm.sh
+          sudo ./llvm.sh ${{ matrix.llvm-version }}
+          sudo apt-get update
+
     - name: install Flang
-      run: sudo apt install --no-install-recommends flang
+      run: sudo apt install --no-install-recommends clang-${{ matrix.llvm-version }} flang-${{ matrix.llvm-version }}
 
     - *checkout
 
-    - &default
-      run: cmake --workflow default
+    - *default
 
 
   windows:
