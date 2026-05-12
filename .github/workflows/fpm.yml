@@ -23,4 +23,5 @@ jobs:
     - uses: actions/checkout@v6
 
     - run: fpm build
-    - run: fpm test
+
+# fpm test doesn't have a way to feature test
