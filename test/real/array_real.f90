@@ -3,12 +3,12 @@ program array_real_precision
 
 use, intrinsic :: iso_fortran_env, only : real32, real64
 
-implicit none
+implicit none (type, external)
 
 real(real64) :: s64, s6432
 real(real32) :: s32
 
-s64 = sum([real(real64) :: 0.1, 0.2])
+s64 = sum([real(real64) :: 0.1_real64, 0.2_real64])
 s6432 = sum([real(real32) :: 0.1, 0.2])
 s32 = sum([real(real32) :: 0.1, 0.2])
 
@@ -19,4 +19,4 @@ print '(a, f15.12)', "sum(real64): ",s64
 print '(a, f15.12)', "sum(real32): ", s32
 print '(a, f15.12)', "real64 sum(real32): ",s6432
 
-end program
+end program array_real_precision

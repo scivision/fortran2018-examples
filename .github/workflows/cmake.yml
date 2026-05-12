@@ -1,10 +1,7 @@
 name: cmake
 
 env:
-  CTEST_NO_TESTS_ACTION: error
   HOMEBREW_NO_INSTALL_CLEANUP: 1
-  CTEST_PARALLEL_LEVEL: 0
-  CMAKE_GENERATOR: Ninja
 
 on:
   push:
@@ -24,16 +21,13 @@ concurrency:
 
 jobs:
 
+
   gcc-new:
     strategy:
       matrix:
-        os: [ubuntu-24.04]
         fc: [12, 13, 14]
-        include:
-        - os: macos-latest
-          fc: 15
 
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-24.04
 
     env:
       FC: gfortran-${{ matrix.fc }}
@@ -41,6 +35,9 @@ jobs:
     steps:
     - &checkout
       uses: actions/checkout@v6
+
+    - if: matrix.fc >= 14
+      run: cmake --workflow debug
 
     - &default
       run: cmake --workflow default
@@ -50,7 +47,8 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-22.04]
-        gcc-version: [9, 10, 11]
+        gcc-version: [10, 11]
+  # gfortran-9 works, dropped to save CI time
 
     runs-on: ${{ matrix.os }}
 
@@ -58,43 +56,35 @@ jobs:
       FC: gfortran-${{ matrix.gcc-version }}
 
     steps:
+
     - name: GCC APT
-      if: matrix.gcc-version < 11
+      if: matrix.gcc-version < 10
       run: |
         sudo apt update -y
         sudo apt install -y --no-install-recommends gfortran-${{ matrix.gcc-version }}
 
     - *checkout
+
     - *default
 
-
-  linux-flang:
-    runs-on: ubuntu-latest
-    timeout-minutes: 15
-
+  macos:
     strategy:
       matrix:
-        llvm-version: [21]
-        cpp: [true, false]
-        shared: [false]
+        fc: [gfortran-15, flang]
+
+    runs-on: macos-latest
 
     env:
-      CC: clang-${{ matrix.llvm-version }}
-      CXX: clang++-${{ matrix.llvm-version }}
-      FC: flang-${{ matrix.llvm-version }}
+      FC: ${{ matrix.fc }}
 
     steps:
-    - name: Apt LLVM
-      run: |
-          wget https://apt.llvm.org/llvm.sh
-          chmod +x llvm.sh
-          sudo ./llvm.sh ${{ matrix.llvm-version }}
-          sudo apt-get update
+    - &checkout
+      uses: actions/checkout@v6
 
-    - name: install Flang
-      run: sudo apt install --no-install-recommends clang-${{ matrix.llvm-version }} flang-${{ matrix.llvm-version }}
+    - if: matrix.fc == 'flang'
+      run: brew install flang
 
-    - *checkout
+    - run: cmake --workflow debug
 
     - *default
 

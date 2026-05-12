@@ -3,11 +3,7 @@ name: oneapi-linux
 env:
   FC: ifx
 # https://github.com/oneapi-src/oneapi-ci/blob/master/.github/workflows/build_all.yml
-  CTEST_NO_TESTS_ACTION: error
   CMAKE_BUILD_TYPE: Release
-  CMAKE_GENERATOR: Ninja
-# don't need Ninja but it prints the command lines by default which is good for debugging
-
   # debug triggers asan build errors, peculiar to GitHub Actions
 
 on:
@@ -66,7 +62,7 @@ jobs:
 
     - name: Upload log failure
       if: failure()
-      uses: actions/upload-artifact@v6
+      uses: actions/upload-artifact@v7
       with:
         name: oneapi-${{ runner.os }}-CMakeConfigureLog.yaml
         path: build/CMakeFiles/CMakeConfigureLog.yaml

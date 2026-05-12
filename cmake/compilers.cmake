@@ -7,10 +7,10 @@ if(CMAKE_Fortran_COMPILER_ID STREQUAL "IntelLLVM")
 elseif(CMAKE_Fortran_COMPILER_ID STREQUAL "GNU")
 
   add_compile_options(
-  $<$<COMPILE_LANGUAGE:Fortran>:-fimplicit-none>
+  "$<$<COMPILE_LANGUAGE:Fortran>:-fimplicit-none;-Werror=line-truncation>"
   "$<$<CONFIG:Release>:-fno-backtrace;-Wno-maybe-uninitialized>"
   "$<$<CONFIG:Debug,RelWithDebInfo>:-Wall;-fcheck=all;-Werror=array-bounds>"
   )
 
-#   "$<$<COMPILE_LANGAUGE:Fortran>:-Wrealloc-lhs>"  # not -Wrealloc-lhs-all which warns on character
+#   "$<$<COMPILE_LANGUAGE:Fortran>:-Wrealloc-lhs>"  # not -Wrealloc-lhs-all which warns on character
 endif()

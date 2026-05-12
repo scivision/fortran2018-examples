@@ -4,39 +4,36 @@
 "configurePresets": [
 {
   "name": "default",
-  "binaryDir": "${sourceDir}/build",
+  "binaryDir": "build",
+  "generator": "Ninja",
   "cacheVariables": {
-    "CMAKE_COMPILE_WARNING_AS_ERROR": true
+    "CMAKE_COMPILE_WARNING_AS_ERROR": true,
+    "CMAKE_BUILD_TYPE": "Release"
   }
 },
 {
-  "name": "multi", "inherits": "default",
-  "displayName": "Ninja Multi-Config",
-  "generator": "Ninja Multi-Config"
+  "name": "debug", "inherits": "default",
+  "displayName": "Debug mode",
+  "cacheVariables": {
+    "CMAKE_COMPILE_WARNING_AS_ERROR": false,
+    "CMAKE_BUILD_TYPE": "Debug"
+  }
 },
 {
-  "name": "debug", "inherits": "multi",
-  "displayName": "For Ninja Multi-Config Debug build",
+  "name": "reldebug", "inherits": "default",
+  "displayName": "RelWithDebInfo mode",
   "cacheVariables": {
-    "CMAKE_COMPILE_WARNING_AS_ERROR": false
+    "CMAKE_COMPILE_WARNING_AS_ERROR": false,
+    "CMAKE_BUILD_TYPE": "RelWithDebInfo"
   }
 }
+
 ],
 "buildPresets": [
-  {
-    "name": "default",
-    "configurePreset": "default"
-  },
-  {
-    "name": "release",
-    "configurePreset": "multi",
-    "configuration": "Release"
-  },
-  {
-    "name": "debug",
-    "configurePreset": "debug",
-    "configuration": "Debug"
-  }
+  { "name": "default", "configurePreset": "default", "configuration": "Release" },
+  { "name": "build", "inherits": "default" },
+  { "name": "debug", "configurePreset": "debug", "configuration": "Debug" },
+  { "name": "reldebug", "configurePreset": "reldebug", "configuration": "RelWithDebInfo" }
 ],
 "testPresets": [
 {
@@ -55,65 +52,44 @@
 },
 {
   "name": "release", "inherits": "default",
-  "configurePreset": "multi",
+  "configurePreset": "default",
   "configuration": "Release"
 },
 {
   "name": "debug", "inherits": "default",
   "configurePreset": "debug",
   "configuration": "Debug"
+},
+{
+  "name": "reldebug", "inherits": "default",
+  "configurePreset": "reldebug",
+  "configuration": "RelWithDebInfo"
 }
 ],
 "workflowPresets": [
   {
-    "name": "default",
-    "steps": [
-      {
-        "type": "configure",
-        "name": "default"
-      },
-      {
-        "type": "build",
-        "name": "default"
-      },
-      {
-        "type": "test",
-        "name": "default"
-      }
+    "name": "default", "steps": [
+      { "type": "configure", "name": "default"},
+      { "type": "build", "name": "default" },
+      { "type": "test", "name": "default" }
+    ]
+  },
+  { "name": "build", "steps": [
+    { "type": "configure", "name": "default" },
+    { "type": "build", "name": "build" } ]
+  },
+  {
+    "name": "debug", "steps": [
+      { "type": "configure", "name": "debug" },
+      { "type": "build", "name": "debug" },
+      { "type": "test", "name": "debug" }
     ]
   },
   {
-    "name": "debug",
-    "steps": [
-      {
-        "type": "configure",
-        "name": "debug"
-      },
-      {
-        "type": "build",
-        "name": "debug"
-      },
-      {
-        "type": "test",
-        "name": "debug"
-      }
-    ]
-  },
-  {
-    "name": "release",
-    "steps": [
-      {
-        "type": "configure",
-        "name": "multi"
-      },
-      {
-        "type": "build",
-        "name": "release"
-      },
-      {
-        "type": "test",
-        "name": "release"
-      }
+    "name": "reldebug", "steps": [
+      { "type": "configure", "name": "reldebug" },
+      { "type": "build", "name": "reldebug" },
+      { "type": "test", "name": "reldebug" }
     ]
   }
 ]
