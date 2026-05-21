@@ -31,7 +31,6 @@
 ],
 "buildPresets": [
   { "name": "default", "configurePreset": "default", "configuration": "Release" },
-  { "name": "build", "inherits": "default" },
   { "name": "debug", "configurePreset": "debug", "configuration": "Debug" },
   { "name": "reldebug", "configurePreset": "reldebug", "configuration": "RelWithDebInfo" }
 ],
@@ -76,7 +75,7 @@
   },
   { "name": "build", "steps": [
     { "type": "configure", "name": "default" },
-    { "type": "build", "name": "build" } ]
+    { "type": "build", "name": "default" } ]
   },
   {
     "name": "debug", "steps": [

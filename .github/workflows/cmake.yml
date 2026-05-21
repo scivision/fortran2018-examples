@@ -1,8 +1,5 @@
 name: cmake
 
-env:
-  HOMEBREW_NO_INSTALL_CLEANUP: 1
-
 on:
   push:
     paths:
@@ -23,6 +20,8 @@ jobs:
 
 
   gcc-new:
+    timeout-minutes: 10
+
     strategy:
       matrix:
         fc: [12, 13, 14]
@@ -44,6 +43,8 @@ jobs:
 
 
   gcc-old:
+    timeout-minutes: 10
+
     strategy:
       matrix:
         os: [ubuntu-22.04]
@@ -68,6 +69,8 @@ jobs:
     - *default
 
   macos:
+    timeout-minutes: 15
+
     strategy:
       matrix:
         fc: [gfortran-15, flang]
@@ -76,6 +79,7 @@ jobs:
 
     env:
       FC: ${{ matrix.fc }}
+      HOMEBREW_NO_INSTALL_CLEANUP: 1
 
     steps:
     - &checkout
@@ -93,19 +97,12 @@ jobs:
     runs-on: windows-latest
     timeout-minutes: 10
 
-    env:
-      CMAKE_GENERATOR: Ninja
-
     steps:
-    - uses: msys2/setup-msys2@v2
-      id: msys2
+    - uses: fortran-lang/setup-fortran@v1
+      id: setup-fortran
       with:
-        update: true
-        install: >-
-          mingw-w64-ucrt-x86_64-gcc-fortran
-
-    - name: Put MSYS2_MinGW64 on PATH
-      run: echo "${{ steps.msys2.outputs.msys2-location }}/ucrt64/bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+        compiler: gcc
+        version: 15
 
     - *checkout
 
