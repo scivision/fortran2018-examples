@@ -2,7 +2,9 @@
 
 if(CMAKE_Fortran_COMPILER_ID STREQUAL "IntelLLVM")
   add_compile_options(-traceback -heap-arrays
-  "$<$<CONFIG:Debug,RelWithDebInfo>:SHELL:-warn all;SHELL:-debug all;SHELL:-check all>"
+    "$<$<CONFIG:Debug,RelWithDebInfo>:-warn:all>"
+    "$<$<CONFIG:Debug,RelWithDebInfo>:-debug:all>"
+    "$<$<CONFIG:Debug,RelWithDebInfo>:-check:all>"
   )
 elseif(CMAKE_Fortran_COMPILER_ID STREQUAL "GNU")
 
