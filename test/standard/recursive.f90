@@ -1,14 +1,13 @@
 program AckermannPeter
 
-!! two-argument Ackermann–Péter function
+!! two-argument Ackermann-Péter function
 !! https://en.wikipedia.org/wiki/Ackermann_function
 
 implicit none
 
-integer :: Ack
 integer, parameter :: M=3, N=5
 
-print '(a,i0,a,i0)', "recursive two-argument Ackermann–Péter function, M=", M, ", N=", N
+print '(a,i0,a,i0)', "recursive two-argument Ackermann-Péter function, M=", M, ", N=", N
 
 print *, Ap(M, N)
 
