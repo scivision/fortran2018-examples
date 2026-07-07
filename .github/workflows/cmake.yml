@@ -18,55 +18,50 @@ concurrency:
 
 jobs:
 
-
-  gcc-new:
-    timeout-minutes: 10
-
-    strategy:
-      matrix:
-        fc: [12, 13, 14]
-
-    runs-on: ubuntu-24.04
-
-    env:
-      FC: gfortran-${{ matrix.fc }}
-
-    steps:
-    - &checkout
-      uses: actions/checkout@v6
-
-    - if: matrix.fc >= 14
-      run: cmake --workflow debug
-
-    - &default
-      run: cmake --workflow default
-
-
-  gcc-old:
-    timeout-minutes: 10
+  ubuntu26:
+    timeout-minutes: 5
 
     strategy:
       matrix:
-        os: [ubuntu-22.04]
-        gcc-version: [10, 11]
-  # gfortran-9 works, dropped to save CI time
+        gcc-version: [15]
 
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-26.04
 
     env:
       FC: gfortran-${{ matrix.gcc-version }}
 
     steps:
+    - &checkout
+      uses: actions/checkout@v6
 
+    - run: cmake --workflow debug
+
+    - &default
+      run: cmake --workflow default
+
+
+  ubuntu24:
+    timeout-minutes: 10
+
+    strategy:
+      matrix:
+        gcc-version: [10, 11, 12, 13, 14]
+
+    runs-on: ubuntu-24.04
+
+    env:
+      FC: gfortran-${{ matrix.gcc-version }}
+
+    steps:
     - name: GCC APT
-      if: matrix.gcc-version < 10
+      if: matrix.gcc-version < 12
       run: |
         sudo apt update -y
         sudo apt install -y --no-install-recommends gfortran-${{ matrix.gcc-version }}
 
     - *checkout
-
     - *default
+
 
   macos:
     timeout-minutes: 15
@@ -82,8 +77,7 @@ jobs:
       HOMEBREW_NO_INSTALL_CLEANUP: 1
 
     steps:
-    - &checkout
-      uses: actions/checkout@v6
+    - *checkout
 
     - if: matrix.fc == 'flang'
       run: brew install flang
@@ -105,5 +99,4 @@ jobs:
         version: 15
 
     - *checkout
-
     - *default
