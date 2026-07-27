@@ -16,6 +16,9 @@ Some standard Fortran features are so distinctive that we've put examples in sep
 * [Fortran coarray](https://github.com/scivision/fortran-coarray-mpi-examples): modern Fortran is the only major compiled language standard with intrinsic massively parallel arrays. Also contains MPI examples.
 * [do concurrent, OpenMP, OpenACC](https://github.com/scivision/fortran-parallel-examples): parallel execution with Fortran directives and native syntax.
 
+We also have a repository for bad syntax that we wish Fortran compilers should
+[reject](https://github.com/fortran-compiler-check).
+
 The examples are built with CMake:
 
 ```sh
