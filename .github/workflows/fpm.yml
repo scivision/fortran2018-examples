@@ -16,11 +16,11 @@ jobs:
 
     steps:
 
-    - uses: fortran-lang/setup-fpm@v9
+    - uses: fortran-lang/setup-fpm@v10
       with:
         fpm-version: "current"
 
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
 
     - run: fpm build
 

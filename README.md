@@ -17,7 +17,7 @@ Some standard Fortran features are so distinctive that we've put examples in sep
 * [do concurrent, OpenMP, OpenACC](https://github.com/scivision/fortran-parallel-examples): parallel execution with Fortran directives and native syntax.
 
 We also have a repository for bad syntax that we wish Fortran compilers should
-[reject](https://github.com/fortran-compiler-check).
+[reject](https://github.com/scivision/fortran-compiler-checks).
 
 The examples are built with CMake:
 
