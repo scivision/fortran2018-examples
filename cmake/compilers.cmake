@@ -16,4 +16,8 @@ elseif(CMAKE_Fortran_COMPILER_ID STREQUAL "GNU")
   )
 
 #   "$<$<COMPILE_LANGUAGE:Fortran>:-Wrealloc-lhs>"  # not -Wrealloc-lhs-all which warns on character
+elseif(CMAKE_Fortran_COMPILER_ID STREQUAL "LLVMFlang")
+  add_compile_options(
+  "$<$<AND:$<COMPILE_LANGUAGE:Fortran>,$<CONFIG:Debug,RelWithDebInfo>>:-pedantic>"
+  )
 endif()
