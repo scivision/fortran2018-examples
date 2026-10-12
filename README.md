@@ -1,7 +1,6 @@
 # Fortran 2018 Examples
 
 [![cmake](https://github.com/scivision/fortran2018-examples/actions/workflows/cmake.yml/badge.svg)](https://github.com/scivision/fortran2018-examples/actions/workflows/cmake.yml)
-[![oneapi-linux](https://github.com/scivision/fortran2018-examples/actions/workflows/oneapi-linux.yml/badge.svg)](https://github.com/scivision/fortran2018-examples/actions/workflows/oneapi-linux.yml)
 [![fpm](https://github.com/scivision/fortran2018-examples/actions/workflows/fpm.yml/badge.svg)](https://github.com/scivision/fortran2018-examples/actions/workflows/fpm.yml)
 
 Standalone examples of Fortran 2018 and 2023 standard features.
