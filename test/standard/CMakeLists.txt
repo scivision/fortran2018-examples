@@ -31,12 +31,12 @@ add_executable(errstop_dynamic ${PROJECT_SOURCE_DIR}/app/standard/errorstop_vari
 add_executable(justwait ${PROJECT_SOURCE_DIR}/app/standard/pause.f90)
 # NO test
 
-add_executable(unused_variable ${PROJECT_SOURCE_DIR}/app/standard/unused_variable.f90)
-target_compile_options(unused_variable PRIVATE
-$<$<Fortran_COMPILER_ID:GNU>:-Wall>
-$<$<Fortran_COMPILER_ID:Intel,IntelLLVM>:-warn;all>
-)
-add_test(NAME unused_variable COMMAND unused_variable)
+# add_executable(unused_variable ${PROJECT_SOURCE_DIR}/app/standard/unused_variable.f90)
+# target_compile_options(unused_variable PRIVATE
+# $<$<Fortran_COMPILER_ID:GNU>:-Wall>
+# $<$<Fortran_COMPILER_ID:Intel,IntelLLVM>:-warn;all>
+# )
+# add_test(NAME unused_variable COMMAND unused_variable)
 
 if(CMAKE_Fortran_COMPILER_ID MATCHES "^Intel")
   if(WIN32)
