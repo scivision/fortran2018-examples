@@ -4,9 +4,7 @@ set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
 # section 7.1
 
 check_source_compiles(Fortran "program test
-
 real :: x
-
 x = real(2.)
 
 contains

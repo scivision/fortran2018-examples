@@ -2,12 +2,9 @@ block()
 
 set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
 
-check_source_compiles(Fortran "subroutine test_typeof(a)
-
+check_source_compiles(Fortran "subroutine work(a)
 class(*), intent(in) :: a
-
-class(classof(a)),  :: b
-
+classof(a), allocatable :: b
 end subroutine"
 f2023classof
 )
